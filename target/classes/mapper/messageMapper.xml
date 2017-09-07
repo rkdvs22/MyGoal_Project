@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.test.goal.dao.MessageMapper">
+	
+	<!-- 메시지 쓰기 -->
+	<insert id="writeMsg" parameterType="MessageVO">
+		insert into message values (message_seq.nextVal, #{sender}, #{receiver}, #{msgTitle}, #{msgContent}, sysdate)
+	</insert>
+	
+	<!-- 받은 메시지 목록 -->
+	<!--
+	<select id="receivedMsgList" parameterType="MemberVO" resultType="MessageVO">
+		select * from message where receiver=#{userid} order by msgdate desc
+	</select>
+	 -->
+	 
+	<!-- 보낸 메시지 목록  -->
+	<!-- 
+	<select id="sentMsgList" parameterType="MemberVO" resultType="MessageVO">
+		select * from message where sender=#{userid} order by msgdate desc
+	</select>
+	 -->
+	 
+	<!-- 친구 목록 불러오기 -->
+	<select id="friendList" parameterType="MemberVO" resultType="MyFriendVO">
+		select * from myfriend where userid=#{userid}
+	</select>
+	
+	<!-- 채팅 형식 메시지 출력 -->
+	<select id="msgList" parameterType="string" resultType="MessageVO">
+		select * from message
+		where (receiver=#{userid} or sender=#{userid})
+		and (receiver=#{friend} or sender=#{friend})
+		order by msgdate
+	</select>
+	
+	<!-- 메시지 읽기 -->
+	<select id="readMsg" parameterType="int" resultType="MessageVO">
+		select * from message where msgnum=#{msgNum}
+	</select>
+	
+	<!-- 메시지 삭제 -->
+	<delete id="deleteMsg" parameterType="int">
+		delete from message where msgnum=#{msgNum}
+	</delete>
+</mapper>

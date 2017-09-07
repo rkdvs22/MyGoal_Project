@@ -1,0 +1,237 @@
+<%@ page language="java" contentType="text/html; charset= utf-8"
+    pageEncoding="utf-8"%>
+<%@taglib uri = "http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<html> 
+     <head> 
+        <link rel="stylesheet" href="/goal/resources/css/lib/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/goal/resources/css/lib/mindMap/mindMap.css">
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+        <script language="javascript" type="text/javascript" src="/mind/resources/js/arbor.js?version=1"></script> 
+        <script language="javascript" type="text/javascript" src="/mind/resources/js/graphics.js?version=1"></script> 
+        <script language="javascript" type="text/javascript" src="/mind/resources/js/renderer.js?version=2"></script> 
+     </head> 
+     <body> 
+       	<div id = "playingGoal">
+				${sessionScope.userid}님은
+			</div>	
+       <canvas id="viewport" width="800" height="520"></canvas> 
+       <script language="javascript" type="text/javascript">
+       
+       //공통적으로 사용할 sys변수를 바깥에 정의한 후 sendBTMSectionList 함수 실행
+	   var sys;
+       //현재 유저의 상태를 나타내는 문구를 append 하기 위해 선언한 변수
+	   var str = "";
+       //새로 시작하는 텍스트를 담는 변수
+       var title = "";
+       //최초 페이지 이동이 되자마자 시작.
+       $(function(){
+    		  sendBTMSectionList(); 
+    		
+    		// modal창 설정
+    			$("#modal").dialog({
+    				autoOpen: false,
+    				position: [380, 50],
+    				modal: true,
+    				width: 500,
+    				height: 500,
+    				resizable: false,
+    				buttons:{
+    						"확인":function() {
+    						$(this).dialog("close");
+    						}
+    				}
+    			});
+    		
+    			// alert modal창 설정
+    			$("#alert").dialog({
+    				autoOpen: false,
+    				position: [440, 150],
+    				modal: true,
+    				width: 400,
+    				height: 200,
+    				resizable: false,
+    				buttons:{
+    						"확인":function() {
+    						$(this).dialog("close");
+    						}
+    				}
+    			});
+    			
+    			$("#newStart").dialog({
+    				autoOpen: false,
+    				position: [440, 150],
+    				modal: true,
+    				width: 400,
+    				height: 200,
+    				resizable: false,
+    				buttons:{
+    						"확인":function() {
+    						$(this).dialog("close");
+    						}
+    				}
+    			});
+    			
+    		    // 모달 관련해서 ajax를 통해 list를 받아와 기록을 보여주는 곳.
+    			$("#recordButton").click(function() {
+   			 		$("#modal").dialog("open");
+    			});
+    		    
+         });
+       
+		   // 페이지가 시작하면서 가장 먼저 실행되는 함수로 sys변수를 정의하고 랜더링할 캔버스를 연결, 필요한 데이터를 페이지 이동없이 a.jax로 가져옴
+	       function sendBTMSectionList(){
+	    	   sys = arbor.ParticleSystem(200,400,1);
+		       sys.parameters({gravity:true});
+		       sys.renderer = Renderer("#viewport"); 
+		   
+	    	   $.ajax({
+					url:"/goal/mind/getBTMSection",
+					type:"post",
+					dataType:"json",
+					success:startMindMap,
+					error: function(){
+						alert('실패');
+					}
+				});
+	       }//end sendBTMSection 
+	       
+	        //마인드맵을 시작하는 함수(랜더링 시작) 
+       		function startMindMap(sendInfo){
+	    	   
+       		   var mTitle = '${requestScope.midGoalVO.mGoalTitle}';
+		       var mGoalNum = '${requestScope.midGoalVO.mGoalNum}';
+		       sys.addNode('중간목표',{'color':'red','label':mTitle,'shape':'dot',"mapping":mGoalNum});	
+       		    
+	       	   for(var i =0; i < sendInfo.BTMSectionList.length; i++){
+			   	   sys.addNode(sendInfo.BTMGoalList[i].bGoalTitle,{'color':'black','label':sendInfo.BTMGoalList[i].bGoalTitle,
+		  		   'shape':'square','BTMSectionNum':sendInfo.BTMSectionList[i].btmsectionNum,'bGoalNum':sendInfo.BTMGoalList[i].bGoalNum});   
+		           sys.addEdge('중간목표',sendInfo.BTMGoalList[i].bGoalTitle,{'color':'black'});
+		       }
+	       	   
+	       	   // 여기서 지금 임의로 progressNum을 줬지만 웅희씨에게 넘겨 받아야 함.
+	       	   var progressNum = 16;
+		       	$.ajax({
+					url:"/goal/mind/getBTMRecord?progressNum="+progressNum+"&isClick="+""+"&clickedNodeTitle="+""+"&clickedNodeNum="+0+"&BTMSectionNum="+0,
+					type:"get",
+					dataType:"json",
+					success:function(resultMapping){
+			       	   for(var i =0; i < resultMapping.memberId.length; i++){
+			       		  sys.addNode(resultMapping.memberId[i],{'color':resultMapping.memberColor[i],'label':resultMapping.memberId[i],
+				     	  'shape':'dot'});   
+					      sys.addEdge(resultMapping.bGoalTitleList[i],resultMapping.memberId[i],{'color':'black'});
+					      if(i == 0){
+					        str += " " +resultMapping.bGoalTitleList[i];
+					      }else{
+					    	str += ", "+ resultMapping.bGoalTitleList[i];
+					      }
+				       }  
+			       	      if(resultMapping.memberId.length !=0){
+					      	$("#playingGoal").append(" "+str+" 목표를 진행중입니다..");
+			       	      }else{
+			       	    	$("#playingGoal").append(" 현재 진행중인 목표가 없습니다 설정해 주세요..");  
+			       	      }
+					},
+					error: function(){
+						alert('다시 시도해 주세요');
+					}
+				});
+		       	     
+       		}//end startMindMap
+		           		
+		   //유저가 세부목표를 클릭을 함으로써 진행을 하게끔 하는 함수. 클릭시 해당 세부목표에 데이터가 있는지 여부를 확인하고 없으면 insert(데이터 생성) 후 노드 생성 			   
+        	function startGoal(clickedNode){
+       			
+		 	    // 여기서 지금 임의로 progressNum을 줬지만 웅희씨에게 넘겨 받아야 함.
+		        var progressNum = 16;	
+		 	    
+	 			$.ajax({
+					url:"/goal/mind/getBTMRecord?progressNum="+progressNum+"&isClick="+"Y"+"&clickedNodeTitle="+clickedNode.name+"&clickedNodeNum="+clickedNode.data.bGoalNum+
+							"&BTMSectionNum="
+							+clickedNode.data.BTMSectionNum,
+					type:"get",
+					dataType:"json",
+					success:function(resultMapping){
+					   console.log(resultMapping.bGoalTitleList[0]);
+			       	   for(var i =0; i < resultMapping.memberId.length; i++){
+			       		  $("#playingGoal").empty();
+			       		  str = '${sessionScope.userid}'+'님은';
+			       		  sys.addNode(resultMapping.memberId[i],{'color':resultMapping.memberColor[i],'label':resultMapping.memberId[i],
+				     	  'shape':'dot'});   
+					      sys.addEdge(clickedNode.name,resultMapping.memberId[i],{'color':'black'});
+					      
+					      if(i == 0){
+						        str += " " + clickedNode.name;
+						  }else{
+						    	str += ", "+ resultMapping.bGoalTitleList[i];
+					      }
+					      title = resultMapping.bGoalTitleList[i];
+				       } // end for
+					    if(str != ""){
+						    $("#playingGoal").append(" "+str+"을 새롭게 실행합니다..");
+				        }else if(resultMapping.memberId[i].length == 0){
+				       	    $("#playingGoal").append(" 현재 진행중인 목표가 없습니다 설정해 주세요..");  
+				        }
+				       console.log(resultMapping.bGoalTitleList[i]);
+					    $("#startTitle").empty();
+			       	    $("#startTitle").append(title + '을 시작합니다.');
+			       		$("#newStart").dialog("open");
+					},
+					error: function(){
+						$("#alert").dialog("open");
+					}
+				});
+ 			 
+ 		   }//end startGoal  
+ 	
+       </script>
+        
+ 	   		<!-- 모달영역 -->   
+ 	   		<div id = "recordButtonDiv"><button type="button" id="recordButton"><span id = "modalButtonText">check</span></div>
+	       		<div id="modal" title="세부목표별 맴버기록">
+					<div class="midgoal">
+						 <c:forEach items="${requestScope.btmGoalList}" var="title">
+							<table class = "memberRecord">
+									<tr class="titleline">
+										<td colspan="3" height="40" width="300">세부목표명 : ${title.bGoalTitle}</td>
+									</tr>
+									<tr height="30" class="th_line">
+										<th width="70" align="left">아이디</th>
+										<th width="110" align="center">기록(시,분단위)</th>
+										<th width="70" align="right">완료여부</th>
+									</tr>	
+										<c:forEach items="${requestScope.recordList}" var="record">
+										<c:if test="${title.bGoalTitle eq record.bGoalTitle}">
+											<tr>
+												<td align="left">${record.memberId}</td>
+												<td align="center">${record.takeTime}</td>
+												<td align="center">${record.isEnd}</td>
+											</tr>
+										</c:if>	
+										</c:forEach>
+							</table>
+							<hr>
+						</c:forEach>		
+					</div>
+					힘내세요!
+			</div>
+			
+			<!-- alert모달영역 -->   
+	       		<div id="alert" title="알림">
+	       			<div align="center">
+		       			<p>현재진행중이거나 완료된 목표입니다.</p> 
+		       			- 기록을 확인해 주세요 -
+	       		  </div>
+				</div>
+				
+			<!-- alert모달영역 -->   
+	       		<div id="newStart" title="새로운 목표를 시작해요!">
+	       			<div id = "startTitle" align="center">
+	       			</div>
+				</div>	
+				
+     </body> 
+ </html> 

@@ -1,0 +1,69 @@
+@CHARSET "UTF-8";
+
+body {
+	background-image: url("/goal/resources/img/goaltree/background.png");
+	background-position: center top;
+	background-size: 1300px auto;
+	background-repeat: no-repeat;
+}
+
+/* 이미지 */
+img {
+	position: relative;
+	z-index: 2;
+}
+
+/* 타이틀 div */
+.treeTitle {
+	text-align: center;
+	position: relative;
+}
+
+/* 나무 div */
+.trees {
+	width: 60%;
+	float: left;
+}
+
+.appletree1 {
+	width: 120px;
+	margin: 0 auto;
+	positon: relative;
+	z-index: 1;
+	border: solid black 2px;
+}
+
+.appletree2 {
+	width: 300px;
+	margin: 0 auto;
+	positon: relative;
+	z-index: 1;
+	border: solid black 2px;
+}
+
+.appletree3 {
+	width: 530px;
+	margin: 0 auto;
+	position: relative;
+	z-index: 1;
+	border: solid black 2px;
+}
+
+/* 열매 div */
+.apple {
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	background: #e60012;
+	border-radius: 50%;
+	z-index: 3;
+}
+
+/* 레이어 팝업 */
+.pop {
+	border: solid aquamarine 1px;
+ 	background-color: azure;
+	opacity: 0.9;
+	position: absolute;
+	z-index: 4;
+}
