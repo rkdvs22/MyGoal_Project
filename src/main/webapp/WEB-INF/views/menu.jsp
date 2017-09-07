@@ -41,7 +41,6 @@
 
 </head>
 <body>
-잘되나요?
 <script>
 	// 로그인 화면으로 이동
 	function loginForm() {
