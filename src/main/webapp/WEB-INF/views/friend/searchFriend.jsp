@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
+<!DOCTYPE>
 <html>
 <head lang="en">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Friends</title>
+<title>Search Friend</title>
 
 	<link href="/goal/resources/img/favicon.144x144.png" rel="apple-touch-icon" type="image/png" sizes="144x144">
 	<link href="/goal/resources/img/favicon.114x114.png" rel="apple-touch-icon" type="image/png" sizes="114x114">
@@ -19,47 +19,35 @@
     <link rel="stylesheet" href="/goal/resources/css/lib/font-awesome/font-awesome.min.css">
     <link rel="stylesheet" href="/goal/resources/css/lib/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="/goal/resources/css/main.css">
-
+    
 </head>
 <body class="with-side-menu">
 
 	<%@ include file="../menu.jsp" %>
-	
-<script>
-	$(function() {
-		$("#deleteFriend").click(function() {
-			var result = confirm("정말로 삭제하시겠습니까?");
-			if(result) {
-				$.ajax({
-					url: "/goal/member/deleteFriend",
-					type: "post",
-					data: {"frdid":frdid},
-					success: function() {alert("삭제되었습니다.")}
-				});
-			}
-		});
-	});
 
-
-	/* function delete() {
-		var result = confirm("정말로 삭제 하시겠습니까?");
-		if(result) {
-			location.href = "/goal/member/deleteFriend?frdid=${frd.frdid}";
-		}
-	} */
-</script>
-	
-<form action="friend" method="post">
+<form action="searchFriend" method="get">
 <div class="page-content">
 		<header class="page-content-header">
 			<div class="container-fluid">
 				<div class="tbl">
 					<div class="tbl-row">
-						<div class="tbl-cell">
-							<h3>My Friends <small class="text-muted">${userid}</small></h3>
-						</div>
-						<div class="tbl-cell tbl-cell-action">
-							<a href="/goal/member/searchFriend" class="btn btn-rounded btn-success">Add friend</a>
+						<h3>My Friends <small class="text-muted">${userid}</small></h3>
+					</div>
+					<div class="row">
+						<div class="col-md-10">
+							<div class="typeahead-container">
+								<div class="typeahead-field">
+									<span class="typeahead-query">
+										<input id="typeahead-search-country-v1"
+											   class="form-control form-control-rounded"
+											   name="searchKeyid"
+											   type="search"
+											   autocomplete="off"
+											   placeholder="ID Search">
+										<button type="submit" class="font-icon-search"></button>
+									</span>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -69,18 +57,15 @@
 		<!-- 친구목록 -->
 		<div class="container-fluid">
 			<div class="row card-user-grid">
-				<c:forEach items="${friend}" var="frd">
-					<c:if test="${userid == frd.userid}">
+				<c:forEach items="${searchFriend}" var="searchFrd">
+					<c:if test="${userid == searchFrd.userid}">
 						<div class="col-sm-6 col-md-4 col-xl-3">
 							<article class="card-user box-typical">
 								<div class="card-user-photo">
 									<img src="/goal/resources/img/photo-184-1.jpg" alt="">
 								</div>
-								<div class="card-user-name">${frd.frdid}</div>
-								<%-- <div class="card-user-status">${frd.userid}</div> --%>
-								<!-- <a href="#" class="btn btn-rounded btn-success">Follow</a> -->
-								<a href="#"><big><i class="font-icon font-icon-mail"></i></big></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<a href="/goal/member/deleteFriend?frdid=${frd.frdid}"><big><i class="font-icon font-icon-trash" id="deleteFriend" name="deleteFriend" onclick="delete()"></i></big></a>
+								<div class="card-user-name">${searchFrd.frdid}</div>
+								<input type="button" class="btn btn-rounded btn-success" value="Add" onclick="/goal/friend/searchFriend">
 							</article><!--.card-user-->
 						</div>
 					</c:if>
@@ -89,6 +74,7 @@
 		</div><!--.container-fluid-->
 	</div><!--.page-content-->
 </form>
+
 	<script src="/goal/resources/js/lib/jquery/jquery.min.js"></script>
 	<script src="/goal/resources/js/lib/tether/tether.min.js"></script>
 	<script src="/goal/resources/js/lib/bootstrap/bootstrap.min.js"></script>

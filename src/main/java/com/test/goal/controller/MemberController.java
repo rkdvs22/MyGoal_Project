@@ -136,42 +136,6 @@ public class MemberController {
 		rttr.addFlashAttribute("result", false);
 		return "/member/find";
 	}
-	
-	// 친구목록
-	@RequestMapping(value = "friend", method = RequestMethod.GET)
-	public String friend(MyFriendVO fvo, Model model) {
-		model.addAttribute("friend", dao.friend(fvo));
-		return "/member/friend";
-	}
-	
-	// 친구 삭제
-/*	@RequestMapping(value = "deleteFriend", method = RequestMethod.GET)
-	public String deleteFriend(String frdid, RedirectAttributes rttr) {
-		//rttr.addFlashAttribute("result", dao.deleteFriend(frdid));
-		if(dao.deleteFriend(frdid) != 1) {
-			rttr.addFlashAttribute("result", false);
-		}
-		rttr.addFlashAttribute("result", true);
-		return "redirect:/member/friend";
-	}*/
-	@RequestMapping(value = "deleteFriend", method = RequestMethod.POST)
-	@ResponseBody
-	public void deleteFriend(String frdid) {
-		dao.deleteFriend(frdid);
-	}
-	
-	// 친구검색
-	@RequestMapping(value = "searchFriend", method = RequestMethod.GET)
-	public String searchFriend(@RequestParam(value = "searchKeyid", defaultValue = "1") String searchKeyid,
-			Map<String, String> map, Model model) {
-		map.put("searchKeyid", searchKeyid);
-		
-		model.addAttribute("searchFriend", dao.searchFriend(map));
-		model.addAttribute("searchKeyid", searchKeyid);
-		return "/member/searchFriend";
-	}
-	
-	
-	
+
 	
 }

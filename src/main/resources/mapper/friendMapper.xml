@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.test.goal.dao.FriendMapper">
+	
+
+	<!-- 친구목록 -->
+	<select id="friend" parameterType="MyFriendVO" resultType="MyFriendVO">
+		select * from Myfriend
+	</select>
+	
+	<!-- 친구삭제 (내 입장) -->
+	<delete id="deleteFriend1" parameterType="string">
+		delete from Myfriend where userid = #{userid} and frdid = #{frdid}
+	</delete>
+	
+	<!-- 친구삭제 (상대방 입장) -->
+	<delete id="deleteFriend2" parameterType="string">
+		delete from Myfriend where userid = #{frdid} and frdid = #{userid}
+	</delete>
+	
+	<!-- 친구검색 -->
+	<select id="searchFriend" parameterType="map" resultType="MemberVO">
+		select * from Member where not userid = #{userid} and userid like '%'||#{searchKeyid}||'%'	
+	</select>
+	
+
+	
+</mapper>

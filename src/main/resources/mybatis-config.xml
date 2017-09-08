@@ -22,5 +22,6 @@
 		<mapper resource="mapper/memberMapper.xml" />
 		<mapper resource="mapper/goalTreeMapper.xml" />
 		<mapper resource="mapper/messageMapper.xml" />
+		<mapper resource="mapper/friendMapper.xml"/>
 	</mappers>
 </configuration>

@@ -59,25 +59,5 @@ public class MemberDAOImpl implements MemberDAO {
 		return mapper.updateMember(vo);
 	}
 
-	// 친구목록
-	@Override
-	public ArrayList<MyFriendVO> friend(MyFriendVO fvo) {
-		MemberMapper mapper = sqlsession.getMapper(MemberMapper.class);
-		return mapper.friend(fvo);
-	}
-	
-	// 친구삭제
-	@Override
-	public void deleteFriend(String frdid) {
-		MemberMapper mapper = sqlsession.getMapper(MemberMapper.class);
-		mapper.deleteFriend(frdid);
-	}
 
-	// 친구검색
-	@Override
-	public ArrayList<MemberVO> searchFriend(Map<String, String> map) {
-		MemberMapper mapper = sqlsession.getMapper(MemberMapper.class);
-		return mapper.searchFriend(map);
-	}
-	
 }

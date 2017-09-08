@@ -15,8 +15,6 @@ public interface MemberDAO {
 	public MemberVO find(String email); //ID, pwd 찾기
 	public int updateMember(MemberVO vo); // 회원정보수정
 	public ArrayList<MemberVO> memberList(String userid); // 회원목록
-	public ArrayList<MyFriendVO> friend(MyFriendVO fvo); // 친구목록
-	public void deleteFriend(String frdid); // 친구삭제
-	public ArrayList<MemberVO> searchFriend(Map<String, String> map); // 친구검색
+	
 	
 }

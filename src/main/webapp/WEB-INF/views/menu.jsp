@@ -212,7 +212,7 @@
 				</a>
 			</li> -->
 			<li class="blue">
-				<a href="/goal/member/friend">
+				<a href="/goal/friend/friend">
 					<i class="font-icon font-icon-users"></i>
 					<span class="lbl">Friend</span>
 				</a>
