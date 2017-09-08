@@ -42,6 +42,12 @@
 </head>
 <body>
 <script>
+	$(function(){
+		$(".brown").on("click",function(){
+			calendarForm();
+		});	
+	});
+	
 	// 로그인 화면으로 이동
 	function loginForm() {
 		location.href = "/goal/member/loginForm";
@@ -50,6 +56,10 @@
 	// 회원가입 화면으로 이동
 	function joinForm() {
 		location.href = "/goal/member/joinForm";
+	}
+	
+	function calendarForm(){
+		location.href = "/goal/calendar/calendar";
 	}
 </script>
 
