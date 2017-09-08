@@ -38,9 +38,14 @@
 		select * from Myfriend
 	</select>
 	
-	<!-- 친구삭제 -->
-	<delete id="deleteFriend" parameterType="int">
-		delete from Myfriend where frdid = #{frdid}	
+	<!-- 친구삭제 (내 입장) -->
+	<delete id="deleteFriend1" parameterType="string">
+		delete from Myfriend where userid = #{userid} and frdid = #{frdid}
+	</delete>
+	
+	<!-- 친구삭제 (상대방 입장) -->
+	<delete id="deleteFriend2" parameterType="string">
+		delete from Myfriend where userid = #{frdid} and frdid = #{userid}
 	</delete>
 	
 	<!-- 친구검색 -->
