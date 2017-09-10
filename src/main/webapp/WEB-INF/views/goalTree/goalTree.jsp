@@ -317,7 +317,10 @@
 </script>
 <style>
 	/* 배경 */
+	
 	body {
+		position: absolute;
+		top:200px;
 		background-image: url("/goal/resources/img/goaltree/background.png");
 		background-position: center top;
 		background-size: 1300px auto;
