@@ -23,13 +23,19 @@
 		select * from message where sender=#{userid} order by msgdate desc
 	</select>
 	 -->
-	 
-	<!-- 친구 목록 불러오기 -->
-	<select id="friendList" parameterType="MemberVO" resultType="MyFriendVO">
-		select * from myfriend where userid=#{userid}
+	
+	<!-- 쪽지 주고 받은 사람 목록 불러오기 -->
+	<!-- 이유정 : 9/8 생성, 친구 아닌 사람이 보낸 쪽지도 불러오게 함 -->
+	<select id="sendNReceiveList" parameterType="string" resultType="MemberVO">
+		SELECT sender FROM (
+		SELECT MAX(msgnum) AS msgnum, sender FROM 
+		((SELECT sender, msgnum FROM message) UNION (SELECT receiver, msgnum FROM message)) GROUP BY sender
+		) WHERE NOT sender=#{userid}
+		ORDER BY msgnum desc
 	</select>
 	
 	<!-- 채팅 형식 메시지 출력 -->
+	<!-- 이유정 : 9/7 생성, 최신 메시지가 아래로 오도록 -->
 	<select id="msgList" parameterType="string" resultType="MessageVO">
 		select * from message
 		where (receiver=#{userid} or sender=#{userid})

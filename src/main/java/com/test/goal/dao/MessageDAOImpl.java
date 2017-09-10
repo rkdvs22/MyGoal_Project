@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.test.goal.vo.MemberVO;
 import com.test.goal.vo.MessageVO;
 import com.test.goal.vo.MyFriendVO;
 
@@ -47,12 +49,12 @@ public class MessageDAOImpl implements MessageDAO {
 		return mapper.receivedMsgList(userid);
 	}
 */
-	
-	//친구 목록 불러오기
+
+	//메시지를 주고 받은 사람 목록 불러오기
 	@Override
-	public ArrayList<MyFriendVO> friendList(String userid) {
+	public ArrayList<MemberVO> sendNReceiveList(String userid) {
 		MessageMapper mapper = sqlsession.getMapper(MessageMapper.class);
-		return mapper.friendList(userid);
+		return mapper.sendNReceiveList(userid);
 	}
 	
 	//채팅 형식으로 메시지 출력
@@ -61,5 +63,5 @@ public class MessageDAOImpl implements MessageDAO {
 		MessageMapper mapper = sqlsession.getMapper(MessageMapper.class);
 		return mapper.msgList(userid, friend);
 	}
-	
+
 }

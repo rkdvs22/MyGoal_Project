@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.test.goal.dao.MessageDAO;
 import com.test.goal.vo.MessageVO;
@@ -58,19 +59,19 @@ public class MessageController {
 	}
 	*/
 	
-	//메시지 창에서 친구 목록 불러오기
-	@RequestMapping(value = "friendList", method=RequestMethod.GET)
-	public String friendList(HttpSession session, Model model) {
+	//메시지 주고 받은 사람 목록 불러오기(9/8 생성)
+	@RequestMapping(value = "sendNReceiveList", method=RequestMethod.GET)
+	public String sendNReceiveList(HttpSession session, Model model) {
 		String userid = (String) session.getAttribute("userid");
-		model.addAttribute("friendList", dao.friendList(userid));
+		model.addAttribute("list", dao.sendNReceiveList(userid));
 		return "/message/msgList";
 	}
 	
 	//메시지 채팅 형식으로 출력(9/7 생성)
 	@RequestMapping(value = "msgList", method = RequestMethod.GET)
-	public String msgList(HttpSession session, String friend, Model model) {
+	public String msgList(HttpSession session, String id, Model model) {
 		String userid = (String) session.getAttribute("userid");
-		model.addAttribute("msgList", dao.msgList(userid, friend));
+		model.addAttribute("msgList", dao.msgList(userid, id));
 		return "redirect:/message/msgList";
 	}
 	

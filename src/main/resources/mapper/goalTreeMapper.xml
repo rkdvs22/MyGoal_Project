@@ -7,7 +7,7 @@
 	
 	<!-- 최상위 목표 불러오기 -->
 	<select id="goalList" parameterType="GoalTreeVO" resultType="GoalTreeVO">
-		select USERID, TGOALNUM, TGOALTITLE from TOPGOAL T
+		select USERID, TGOALNUM, TSTARTDATE, TGOALTITLE from TOPGOAL T
 		where USERID = #{USERID}
 	</select>
 </mapper>

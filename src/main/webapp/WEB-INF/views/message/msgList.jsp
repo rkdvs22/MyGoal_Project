@@ -10,21 +10,25 @@
 <title>Insert title here</title>
 <script src="/goal/resources/js/jquery-3.2.1.min.js"></script>
 <script>
-	function msgList(frdid) {
+	function msgList(id) {
 		$.ajax({
 			url: "/message/msgList",
 			type: "post",
-			data: {"friend": frdid},
+			data: {"id": id},
 			success: function() {alert("성공");},
 			erre: function() {alert("실패");}
 		});
 	}
 </script>
 <style>
-	div {
+	.msgList {
+		margin: 0 auto;
 		border: solid black 1px;
+		width: 600px;
+		height: 400px;
+		top: 500px;
 	}
-
+/* 
 	.top {
 		height: 150px;
 		float: top;
@@ -53,27 +57,25 @@
 	
 	.msgList {
 		width: 60%;
-		/* height: 100%; */
+		height: 100%;
 		float: right;
 	}
+ */	
 </style>
 </head>
 <body>
 <%@ include file="../menu.jsp"%>
-<div class="top">top</div>
-<div class="left">left</div>
-<div class="right">right</div>
+<br><br><br><br><br><br><br><br><br>
 <div class="msgList">
 	<div class="friendList">
 		<table>
-			<c:forEach items="${friendList}" var="frd">
+			<c:forEach items="${list}" var="list">
 			<tr>
-				<td><a href="#" onclick="msgList('${frd.frdid}')">${frd.frdid}</a></td>
+				<td><a href="#" onclick="msgList()">${list.sender}</a></td>
 			</tr>
 			</c:forEach>
 		</table>
 	</div>
-	<div class="msgList">msgList</div>
 </div>
 </body>
 </html>
