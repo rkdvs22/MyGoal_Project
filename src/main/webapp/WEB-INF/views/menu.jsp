@@ -230,7 +230,7 @@
 			</li>
 			
 			<li class="aquamarine">
-				<a href="/goal/message/friendList">
+				<a href="/goal/message/sendNReceiveList">
 					<i class="font-icon font-icon-mail"></i>
 					<span class="lbl">Message</span>
 				</a>
