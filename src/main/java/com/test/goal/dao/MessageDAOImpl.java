@@ -36,19 +36,6 @@ public class MessageDAOImpl implements MessageDAO {
 		MessageMapper mapper = sqlsession.getMapper(MessageMapper.class);
 		mapper.deleteMsg(msgNum);
 	}
-/*
-	@Override
-	public ArrayList<MessageVO> receivedMsgList(String userid) {
-		MessageMapper mapper = sqlsession.getMapper(MessageMapper.class);
-		return mapper.receivedMsgList(userid);
-	}
-
-	@Override
-	public ArrayList<MessageVO> sentMsgList(String userid) {
-		MessageMapper mapper = sqlsession.getMapper(MessageMapper.class);
-		return mapper.receivedMsgList(userid);
-	}
-*/
 
 	//메시지를 주고 받은 사람 목록 불러오기
 	@Override

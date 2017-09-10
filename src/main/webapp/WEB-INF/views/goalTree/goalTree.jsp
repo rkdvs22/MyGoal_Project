@@ -27,18 +27,21 @@
 			$(".smalltree").append(str);
 			$(".apple").css("width", "43px");
 			$(".apple").css("height", "43px");
-			$(".smalltree").show();
 			smallApple();
 		} else if (result > 1 && result <= 4) {
 			$(".midtree").append(str);
 			$(".apple").css("width", "43px");
 			$(".apple").css("height", "43px");
-			$(".midtree").show();
 			midApple();
-		} else {
+		} else if (result > 4 && result <= 10){
 			$(".bigtree").append(str);
-			$(".bigtree").show();
 			bigApple();
+		} else if (result > 10 && result <= 11){
+			$(".bigNSmalltree").append(str);
+			bigApple();
+		} else {
+			$(".bigNMidtree").append(str);
+			bigNMidApple();
 		}
 	}
 	
@@ -124,6 +127,88 @@
 			left: 400,
 			top: 220
 		});
+		
+		$("#a11").css({
+			left: 580,
+			top: 420
+		});
+	}
+	
+	function bigNMidApple() {
+		$("#a1").css({
+			left: 100,
+			top: 100
+		});
+		
+		$("#a2").css({
+			left: 200,
+			top: 170
+		});
+		
+		$("#a3").css({
+			left: 300,
+			top: 200
+		});
+		
+		$("#a4").css({
+			left: 160,
+			top: 270
+		});
+		
+		$("#a5").css({
+			left: 300,
+			top: 120
+		});
+		
+		$("#a6").css({
+			left: 80,
+			top: 240
+		});
+		
+		$("#a7").css({
+			left: 70,
+			top: 190
+		});
+		
+		$("#a8").css({
+			left: 305,
+			top: 255
+		});
+		
+		$("#a9").css({
+			left: 210,
+			top: 50
+		});
+		
+		$("#a10").css({
+			left: 400,
+			top: 220
+		});
+		
+		$("#a11").css({
+			left: 580,
+			top: 400
+		});
+		
+		$("#a12").css({
+			left: 600,
+			top: 320
+		})
+		
+		$("#a13").css({
+			left: 680,
+			top: 360
+		})
+		
+		$("#a14").css({
+			left: 540,
+			top: 340
+		})
+		
+		$("#a15").css({
+			left: 590,
+			top: 250
+		})
 	}
 	
 	//해당 마방진으로 이동
@@ -194,6 +279,36 @@
 	        $("#pop10").css("top", e.clientY);
 		});
 		
+		$("#a11").mouseover(function(e) {
+			$("#pop11").show();
+			$("#pop11").css("left", e.clientX);
+	        $("#pop11").css("top", e.clientY);
+		});
+		
+		$("#a12").mouseover(function(e) {
+			$("#pop12").show();
+			$("#pop12").css("left", e.clientX);
+	        $("#pop12").css("top", e.clientY);
+		});
+		
+		$("#a13").mouseover(function(e) {
+			$("#pop13").show();
+			$("#pop13").css("left", e.clientX);
+	        $("#pop13").css("top", e.clientY);
+		});
+		
+		$("#a14").mouseover(function(e) {
+			$("#pop14").show();
+			$("#pop14").css("left", e.clientX);
+	        $("#pop14").css("top", e.clientY);
+		});
+		
+		$("#a15").mouseover(function(e) {
+			$("#pop15").show();
+			$("#pop15").css("left", e.clientX);
+	        $("#pop15").css("top", e.clientY);
+		});
+		
 	    $(".apple").mouseleave(function() {
 	        //마우스 떼면 : 팝업 사라짐
 	        $(".pop").hide();
@@ -230,6 +345,20 @@
 		margin: 0 auto;
 	}
 	
+	/* 중간&작은 나무*/
+	.bigNSmalltree {
+		width: 680px;
+		position: relative;
+		margin: 0 auto;
+	}
+	
+	/* 큰&중간 나무*/
+	.bigNMidtree {
+		width: 800px;
+		position: relative;
+		margin: 0 auto;
+	}
+	
 	/* 열매 */
 	.apple {
 		position: absolute;
@@ -251,22 +380,13 @@
 		opacity: 0.9;
 		position: absolute;
 	}
-	
-	.pop.after {
-		border-top: 0 solid transparent;
-	    border-left: 10px solid transparent;
-		border-right: 10px solid transparent; 
-		border-bottom:10px solid pink; 
-		content: ""; 
-		position:absolute;
-		top:21px; left:200px;		
-	}
+
 </style>
 </head>
 <body>
-<%-- 
+
 <%@ include file="../menu.jsp" %>
- --%>
+
 <!-- 작은 나무(목표 0~1개) -->
 <c:if test="${goalNum <= 1}">
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -283,10 +403,25 @@
 </div>
 </c:if>
 
-<!-- 큰 나무(목표 5개 이상) -->
-<c:if test="${goalNum >= 5}">
+<!-- 큰 나무(목표 5~10개) -->
+<c:if test="${goalNum >= 5 && goalNum <= 10}">
 <div class="bigtree">
 	<img src="/goal/resources/img/goaltree/tree3.png" width="480px">
+</div>
+</c:if>
+
+<!-- 여러 나무(목표 11개) -->
+<c:if test="${goalNum > 10 && goalNum <= 11}">
+<div class="bigNSmalltree">
+	<img src="/goal/resources/img/goaltree/tree3.png" width="480px">
+	<img src="/goal/resources/img/goaltree/tree1.png" width="180px">
+</div>
+</c:if>
+
+<c:if test="${goalNum > 11}">
+<div class="bigNMidtree">
+	<img src="/goal/resources/img/goaltree/tree3.png" width="480px">
+	<img src="/goal/resources/img/goaltree/tree2.png" width="300px">
 </div>
 </c:if>
 
@@ -297,7 +432,6 @@
    	${goalList.tGoalTitle}
 	</div>
 </c:forEach>
-
 
 </body>
 </html>
