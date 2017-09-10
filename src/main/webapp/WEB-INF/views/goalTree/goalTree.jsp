@@ -317,10 +317,7 @@
 </script>
 <style>
 	/* 배경 */
-	
 	body {
-		position: absolute;
-		top:200px;
 		background-image: url("/goal/resources/img/goaltree/background.png");
 		background-position: center top;
 		background-size: 1300px auto;
@@ -421,7 +418,6 @@
 </div>
 </c:if>
 
-<!-- 여러 나무(목표 12개 이상) -->
 <c:if test="${goalNum > 11}">
 <div class="bigNMidtree">
 	<img src="/goal/resources/img/goaltree/tree3.png" width="480px">

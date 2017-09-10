@@ -16,6 +16,7 @@ $(document).ready(function(){
             prevYear: 'font-icon font-icon-arrow-left',
             nextYear: 'font-icon font-icon-arrow-right'
         },
+
         defaultDate: '2016-01-12',
         editable: true,
         selectable: true,
@@ -96,13 +97,11 @@ $(document).ready(function(){
             $('.fc-popover.click').remove();
         },
         eventClick: function(calEvent, jsEvent, view) {
-
             var eventEl = $(this);
-
             // Add and remove event border class
             if (!$(this).hasClass('event-clicked')) {
                 $('.fc-event').removeClass('event-clicked');
-
+                
                 $(this).addClass('event-clicked');
             }
 
@@ -221,7 +220,40 @@ $(document).ready(function(){
                 $('.fc-popover.click .main-screen').hide();
                 $('.fc-popover.click .remove-confirm').show();
             });
-        }
+        },
+        
+        dayClick: function(date, jsEvent, view) {
+        	      /*alert('Clicked on: ' + date.format());
+        	      alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+        	      alert('Current view: ' + view.name);*/
+        	      var time = new Date() 
+        	      
+        	      var year = time.getYear()+1900 
+        	      var month = time.getMonth() +1 
+        	      if((month+"").length <2){
+        	    	  month = "0"+month;
+        	      }
+        	      var day = time.getDate() 
+        	      if((day+"").length <2){
+        	    	  day = "0"+day;
+        	      }
+        	      
+        	      var today = year+""+month+""+day
+        	      
+        	      var dateSplit = date.format().split("-");
+        	      date_year = dateSplit[0]; 
+        	      date_month = dateSplit[1]; 
+        	      date_day = dateSplit[2]; 
+        	      var dateSplited = date_year + "" + date_month + "" + date_day
+        	      
+        	      if(parseInt(today) == parseInt(dateSplited)){
+        	    	  isToday = 1;
+        	    	  alert(isToday);
+        	      }
+        	      
+        	      	$("#modal").dialog("open");
+       }
+
     });
 
 
