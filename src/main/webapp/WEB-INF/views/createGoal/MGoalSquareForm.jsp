@@ -55,7 +55,7 @@
 	footer {
 		position: absolute;
 		top: 700px;
-		left: 600px;
+		left: 900px;
 	}
 </style>
 
@@ -249,10 +249,10 @@ $(function() {
 				if(click_flag == true) {
 					inputMbtnValue(bBtn_num);
 					$("#m_eventdays").text("");
-					$(".midgoal > input").val("");
-					$("#bGoalcount").val("");
-					$(".bg_content > input").val("");
-					$("#m_eventdays").val("");
+// 					$(".midgoal > input").val("");
+// 					$("#bGoalcount").val("");
+// 					$(".bg_content > input").val("");
+// 					$("#m_eventdays").val("");
 				} else {
 					updateMbtnValue(bBtn_num);
 				}
@@ -437,6 +437,9 @@ $(function() {
 <!-- 최종목표, 중간목표 마방진 버튼 -->
 <article>
 	<section>
+		<div class="subject">
+			<p>방제 : ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</p>
+		</div>
 		<div class="squares">
 			<div class="btn-group">
 				<input type="button" value="1" id="mBtn1" name="1" class="btn btn-default-outline">
