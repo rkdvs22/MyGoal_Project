@@ -37,8 +37,8 @@ public class FriendController {
 	
 	// 친구목록
 	@RequestMapping(value = "openFriend", method = RequestMethod.GET)
-	public String friend(MyFriendVO fvo, Model model) {
-		model.addAttribute("friend", dao.friend(fvo));
+	public String openFriend(MyFriendVO fvo, Model model) {
+		model.addAttribute("friend", dao.openFriend(fvo));
 		return "/friend/friend";
 	}
 	//친구삭제

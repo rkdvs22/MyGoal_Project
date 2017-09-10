@@ -14,12 +14,12 @@
 	<link href="/goal/resources/img/favicon.png" rel="icon" type="image/png">
 	<link href="/goal/resources/img/favicon.ico" rel="shortcut icon">
 	
-	<link rel="stylesheet" href="/goal/resources/css/separate/vendor/bootstrap-datetimepicker.min.css">
-	<link rel="stylesheet" href="/goal/resources/css/lib/fullcalendar/fullcalendar.min.css">
-	<link rel="stylesheet" href="/goal/resources/css/separate/pages/calendar.min.css">
-    <link rel="stylesheet" href="/goal/resources/css/lib/font-awesome/font-awesome.min.css">
-    <link rel="stylesheet" href="/goal/resources/css/lib/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="/goal/resources/css/main.css">
+	<link rel="stylesheet" href="/goal/resources/css/separate/vendor/bootstrap-datetimepicker.min.css?version=4">
+	<link rel="stylesheet" href="/goal/resources/css/lib/fullcalendar/fullcalendar.min.css?version=4">
+	<link rel="stylesheet" href="/goal/resources/css/separate/pages/calendar.min.css?version=4">
+    <link rel="stylesheet" href="/goal/resources/css/lib/font-awesome/font-awesome.min.css?version=4">
+    <link rel="stylesheet" href="/goal/resources/css/lib/bootstrap/bootstrap.min.css?version=4">
+    <link rel="stylesheet" href="/goal/resources/css/main.css?version=4">
     
 </head>
 <body class="with-side-menu">
@@ -791,18 +791,18 @@
 	    </div>
 	</div><!--.modal-->
 
-	<script src="/goal/resources/js/lib/jquery/jquery.min.js"></script>
-	<script src="/goal/resources/js/lib/tether/tether.min.js"></script>
-	<script src="/goal/resources/js/lib/bootstrap/bootstrap.min.js"></script>
-	<script src="/goal/resources/js/plugins.js"></script>
+	<script src="/goal/resources/js/lib/jquery/jquery.min.js?version=4"></script>
+	<script src="/goal/resources/js/lib/tether/tether.min.js?version=4"></script>
+	<script src="/goal/resources/js/lib/bootstrap/bootstrap.min.js?version=4"></script>
+	<script src="/goal/resources/js/plugins.js?version=4"></script>
 
-	<script type="text/javascript" src="/goal/resources/js/lib/match-height/jquery.matchHeight.min.js"></script>
-	<script type="text/javascript" src="/goal/resources/js/lib/moment/moment-with-locales.min.js"></script>
-	<script type="text/javascript" src="/goal/resources/js/lib/eonasdan-bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
-	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar.min.js"></script>
-	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js"></script>
-
-<script src="/goal/resources/js/app.js"></script>
+	<script type="text/javascript" src="/goal/resources/js/lib/match-height/jquery.matchHeight.min.js?version=4"></script>
+	<script type="text/javascript" src="/goal/resources/js/lib/moment/moment-with-locales.min.js?version=4"></script>
+	<script type="text/javascript" src="/goal/resources/js/lib/eonasdan-bootstrap-datetimepicker/bootstrap-datetimepicker.min.js?version=4"></script>
+	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar.min.js?version=4"></script>
+	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=4"></script>
+    <script src="/goal/resources/js/app.js?version=4">
+</script>
 
 
 </body>

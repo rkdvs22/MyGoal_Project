@@ -18,9 +18,9 @@ public class FriendDAOImpl implements FriendDAO {
 	
 	// 친구목록
 	@Override
-	public ArrayList<MyFriendVO> friend(MyFriendVO fvo) {
+	public ArrayList<MyFriendVO> openFriend(MyFriendVO fvo) {
 		FriendMapper mapper = sqlsession.getMapper(FriendMapper.class);
-		return mapper.friend(fvo);
+		return mapper.openFriend(fvo);
 	}
 
 	// 친구삭제 (내 입장)

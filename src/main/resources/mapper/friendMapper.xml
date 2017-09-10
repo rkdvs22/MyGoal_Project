@@ -7,7 +7,7 @@
 	
 
 	<!-- 친구목록 -->
-	<select id="friend" parameterType="MyFriendVO" resultType="MyFriendVO">
+	<select id="openFriend" parameterType="MyFriendVO" resultType="MyFriendVO">
 		select * from Myfriend
 	</select>                            
 	
