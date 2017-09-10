@@ -27,9 +27,9 @@
 
 <script>
 
-	$(function() {
-		
-	})
+/* 	$(function search() {
+		location.href = "/goal/friend/searchFriend";
+	}) */
 </script>
 
 <div class="page-content">
@@ -50,7 +50,7 @@
 											   type="search"
 											   autocomplete="off"
 											   placeholder="ID Search">
-									    <a href="#"><i class="font-icon-search"></i></a>
+									    <a href="#" onclick="search()"><i class="font-icon-search"></i></a>
 										<button type="submit" class="font-icon-search"></button>
 									</span>
 								</div>
