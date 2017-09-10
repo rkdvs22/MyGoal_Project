@@ -19,8 +19,8 @@
 		width: 540px;
 		height: 540px;
 		position: relative;
-		top: 100px;
-		left: 150px;
+		top: 200px;
+		left: 200px;
 	}
 	
 	/* 각 마방진 버튼 크기 지정 */
@@ -48,8 +48,8 @@
 	
 	aside {
 		position: absolute;
-		top: 100px;
-		left: 800px;
+		top: 200px;
+		left: 900px;
 	}
 	
 	footer {
@@ -248,16 +248,16 @@ $(function() {
 				
 				if(click_flag == true) {
 					inputMbtnValue(bBtn_num);
+					$("#m_eventdays").text("");
+					$(".midgoal > input").val("");
+					$("#bGoalcount").val("");
+					$(".bg_content > input").val("");
+					$("#m_eventdays").val("");
 				} else {
 					updateMbtnValue(bBtn_num);
 				}
 				
 				$(this).dialog("close");
-				$("#m_eventdays").text("");
-				$(".midgoal > input").val("");
-				$("#bGoalcount").val("");
-				$(".bg_content > input").val("");
-				$("#m_eventdays").val("");
 			},
 			
 			// modal의 취소버튼을 눌렀을 경우, 사용자가 입력했던 중간목표 및 세부목표와 관련된 값들을 지운다.

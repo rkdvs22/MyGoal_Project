@@ -210,7 +210,7 @@
 				</a>
 			</li>
 			<li class="red">
-				<a href="create">
+				<a href="/goal/createGoal/MGoalSquareForm">
 					<i class="font-icon font-icon-case-2"></i>
 					<span class="lbl">Create Goal</span>
 				</a>
