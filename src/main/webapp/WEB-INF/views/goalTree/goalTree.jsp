@@ -418,6 +418,7 @@
 </div>
 </c:if>
 
+<!-- 여러 나무(목표 12개 이상) -->
 <c:if test="${goalNum > 11}">
 <div class="bigNMidtree">
 	<img src="/goal/resources/img/goaltree/tree3.png" width="480px">
