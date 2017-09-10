@@ -25,16 +25,16 @@ public class FriendDAOImpl implements FriendDAO {
 
 	// 친구삭제 (내 입장)
 	@Override
-	public void deleteFriend1(String frdid) {
+	public void deleteFriend1(MyFriendVO MyFriendDelete) {
 		FriendMapper mapper = sqlsession.getMapper(FriendMapper.class);
-		mapper.deleteFriend1(frdid);
+		mapper.deleteFriend1(MyFriendDelete);
 	}
 	
 	// 친구삭제 (상대방 입장)
 	@Override
-	public void deleteFriend2(String frdid) {
+	public void deleteFriend2(MyFriendVO MyFriendDelete) {
 		FriendMapper mapper = sqlsession.getMapper(FriendMapper.class);
-		mapper.deleteFriend2(frdid);
+		mapper.deleteFriend2(MyFriendDelete);
 	}
 
 	// 친구검색

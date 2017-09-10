@@ -23,6 +23,13 @@
 </head>
 <body>
 
+<script>
+
+	function home() {
+		location.href = "/goal"
+	}
+</script>
+
     <div class="page-center">
         <div class="page-center-in">
             <div class="container-fluid">
@@ -68,10 +75,7 @@
                 },100);
             });
         });
-        
-        function home() {
-        	location.href = "/goal"
-        }
+    
     </script>
 <script src="/goal/resources/js/app.js"></script>
 

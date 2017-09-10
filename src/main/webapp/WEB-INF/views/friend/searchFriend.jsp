@@ -25,28 +25,37 @@
 
 	<%@ include file="../menu.jsp" %>
 
-<form action="searchFriend" method="get">
+<script>
+
+	$(function() {
+		
+	})
+</script>
+
 <div class="page-content">
-		<header class="page-content-header">
-			<div class="container-fluid">
-				<div class="tbl">
-					<div class="tbl-row">
-						<h3>My Friends <small class="text-muted">${userid}</small></h3>
-					</div>
+	<header class="page-content-header">
+		<div class="container-fluid">
+			<div class="tbl">
+				<div class="tbl-row">
+					<h3>My Friends <small class="text-muted">${userid}</small></h3>
+				</div>
 					<div class="row">
 						<div class="col-md-10">
 							<div class="typeahead-container">
+							<form action="searchFriend" method="get">
 								<div class="typeahead-field">
 									<span class="typeahead-query">
-										<input id="typeahead-search-country-v1"
-											   class="form-control form-control-rounded"
+										<input class="form-control form-control-rounded"
 											   name="searchKeyid"
 											   type="search"
 											   autocomplete="off"
 											   placeholder="ID Search">
+									    <a href="#"><i class="font-icon-search"></i></a>
 										<button type="submit" class="font-icon-search"></button>
 									</span>
 								</div>
+								<%-- <input type="hidden" name="searchId" value="${userid}"> --%>
+							</form>
 							</div>
 						</div>
 					</div>
@@ -57,23 +66,22 @@
 		<!-- 친구목록 -->
 		<div class="container-fluid">
 			<div class="row card-user-grid">
-				<c:forEach items="${searchFriend}" var="searchFrd">
-					<c:if test="${userid == searchFrd.userid}">
+				<c:forEach items="${searchFriend}" var="searchFriend">
+					<%-- <c:if test="${userid == searchFriend.userid}"> --%>
 						<div class="col-sm-6 col-md-4 col-xl-3">
 							<article class="card-user box-typical">
 								<div class="card-user-photo">
 									<img src="/goal/resources/img/photo-184-1.jpg" alt="">
 								</div>
-								<div class="card-user-name">${searchFrd.frdid}</div>
+								<div class="card-user-name">${searchFriend}</div>
 								<input type="button" class="btn btn-rounded btn-success" value="Add" onclick="/goal/friend/searchFriend">
 							</article><!--.card-user-->
 						</div>
-					</c:if>
+					<%-- </c:if> --%>
 				</c:forEach>
 			</div><!--.card-user-grid-->
 		</div><!--.container-fluid-->
 	</div><!--.page-content-->
-</form>
 
 	<script src="/goal/resources/js/lib/jquery/jquery.min.js"></script>
 	<script src="/goal/resources/js/lib/tether/tether.min.js"></script>

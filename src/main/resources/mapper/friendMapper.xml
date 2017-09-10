@@ -9,15 +9,15 @@
 	<!-- 친구목록 -->
 	<select id="friend" parameterType="MyFriendVO" resultType="MyFriendVO">
 		select * from Myfriend
-	</select>
+	</select>                            
 	
 	<!-- 친구삭제 (내 입장) -->
-	<delete id="deleteFriend1" parameterType="string">
+	<delete id="deleteFriend1" parameterType="MyFriendVO">
 		delete from Myfriend where userid = #{userid} and frdid = #{frdid}
 	</delete>
 	
 	<!-- 친구삭제 (상대방 입장) -->
-	<delete id="deleteFriend2" parameterType="string">
+	<delete id="deleteFriend2" parameterType="MyFriendVO">
 		delete from Myfriend where userid = #{frdid} and frdid = #{userid}
 	</delete>
 	

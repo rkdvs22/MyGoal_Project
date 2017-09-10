@@ -15,41 +15,42 @@
 	<link href="/goal/resources/img/favicon.png" rel="icon" type="image/png">
 	<link href="/goal/resources/img/favicon.ico" rel="shortcut icon">
 	
-	<link rel="stylesheet" href="/goal/resources/css/separate/pages/user.min.css">
-    <link rel="stylesheet" href="/goal/resources/css/lib/font-awesome/font-awesome.min.css">
-    <link rel="stylesheet" href="/goal/resources/css/lib/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="/goal/resources/css/main.css">
+	<link rel="stylesheet" href="/goal/resources/css/separate/pages/user.min.css?version=1">
+    <link rel="stylesheet" href="/goal/resources/css/lib/font-awesome/font-awesome.min.css?version=1">
+    <link rel="stylesheet" href="/goal/resources/css/lib/bootstrap/bootstrap.min.css?version=1">
+    <link rel="stylesheet" href="/goal/resources/css/main.css?version=1">
 
 </head>
 <body class="with-side-menu">
-
+	
 	<%@ include file="../menu.jsp" %>
 	
 <script>
-	$(function() {
-		$("#deleteFriend").click(function() {
-			var result = confirm("정말로 삭제하시겠습니까?");
-			if(result) {
-				$.ajax({
-					url: "/goal/friend/deleteFriend",
-					type: "post",
-					data: {"frdid":frdid},
-					success: function() {alert("삭제되었습니다.")}
-				});
-			}
-		});
-	});
-
-
-	/* function delete() {
-		var result = confirm("정말로 삭제 하시겠습니까?");
+	
+	
+	//$("#deleteFriend").click(function() {
+	function test() {
+		var result = confirm("정말로 삭제하시겠습니까?");
+		var frd = $("#deleteFriend").attr("value");
 		if(result) {
-			location.href = "/goal/friend/deleteFriend?frdid=${frd.frdid}";
+			$.ajax({
+				url:"/goal/friend/deleteFriend?frd="+frd,
+				type:"post",
+				success:function(){
+					location.href = "/goal/friend/openFriend";
+				},
+				error: function(){
+					alert('실패');
+				}
+			});
 		}
-	} */
+	}
+		
+	//});
+
+
 </script>
 	
-<form action="friend" method="post">
 <div class="page-content">
 		<header class="page-content-header">
 			<div class="container-fluid">
@@ -59,7 +60,7 @@
 							<h3>My Friends <small class="text-muted">${userid}</small></h3>
 						</div>
 						<div class="tbl-cell tbl-cell-action">
-							<a href="/goal/friend/searchFriend" class="btn btn-rounded btn-success">Add friend</a>
+							<a href="/goal/friend/searchFriendForm" class="btn btn-rounded btn-success">Add friend</a>
 						</div>
 					</div>
 				</div>
@@ -73,15 +74,19 @@
 					<c:if test="${userid == frd.userid}">
 						<div class="col-sm-6 col-md-4 col-xl-3">
 							<article class="card-user box-typical">
+								<c:if test="${empty frd.frdid eq true}">
+								<div class="card-user-photo">
+									<img src="/goal/resources/img/profileImg/${image}" alt="">
+								</div>
+								</c:if>
+								<c:if test="${empty frd.frdid eq false}">
 								<div class="card-user-photo">
 									<img src="/goal/resources/img/photo-184-1.jpg" alt="">
 								</div>
+								</c:if>
 								<div class="card-user-name">${frd.frdid}</div>
-								<%-- <div class="card-user-status">${frd.userid}</div> --%>
-								<!-- <a href="#" class="btn btn-rounded btn-success">Follow</a> -->
-								<a href="#"><big><i class="font-icon font-icon-mail"></i></big></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<button class="font-icon font-icon-trash" id="deleteFriend" style="width:50px"></button>
-								<!-- <a href=""><big><i class="font-icon font-icon-trash" id="deleteFriend" name="deleteFriend"></i></big></a> -->
+								<a href="#"><i class="font-icon font-icon-mail"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<a href="#" onclick="test()"><i class="font-icon font-icon-trash" id="deleteFriend" value="${frd.frdid}"></i></a>
 							</article><!--.card-user-->
 						</div>
 					</c:if>
@@ -89,7 +94,6 @@
 			</div><!--.card-user-grid-->
 		</div><!--.container-fluid-->
 	</div><!--.page-content-->
-</form>
 	<script src="/goal/resources/js/lib/jquery/jquery.min.js"></script>
 	<script src="/goal/resources/js/lib/tether/tether.min.js"></script>
 	<script src="/goal/resources/js/lib/bootstrap/bootstrap.min.js"></script>

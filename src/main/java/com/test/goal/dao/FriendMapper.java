@@ -12,9 +12,9 @@ public interface FriendMapper {
 
 	public ArrayList<MyFriendVO> friend(MyFriendVO fvo); // 친구목록
 
-	public int deleteFriend1(String frdid); // 친구삭제(내 입장)
+	public void deleteFriend1(MyFriendVO MyFriendDelete); // 친구삭제(내 입장)
 	
-	public int deleteFriend2(String frdid); // 친구삭제(상대방 입장)
+	public void deleteFriend2(MyFriendVO MyFriendDelete); // 친구삭제(상대방 입장)
 
 	public ArrayList<MemberVO> searchFriend(Map<String, String> map); // 친구검색
 

@@ -66,7 +66,7 @@
 <!--헤더(상단메뉴)-->
 <header class="site-header">
 	<div class="container-fluid">
-		<a href="home" class="site-logo-text">みんなのゴール</a>
+		<a href="/goal" class="site-logo-text">みんなのゴール</a>
 		<button class="hamburger hamburger--htla">
 			<span>toggle menu</span>
 		</button>
@@ -221,12 +221,14 @@
 					<span class="lbl">My Goal List</span>
 				</a>
 			</li> -->
+			
 			<li class="blue">
-				<a href="/goal/friend/friend">
+				<a href="/goal/friend/openFriend">
 					<i class="font-icon font-icon-users"></i>
 					<span class="lbl">Friend</span>
 				</a>
 			</li>
+			
 			<li class="aquamarine">
 				<a href="/goal/message/friendList">
 					<i class="font-icon font-icon-mail"></i>

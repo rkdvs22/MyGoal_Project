@@ -3,6 +3,7 @@ package com.test.goal.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -35,27 +36,28 @@ public class FriendController {
 	
 	
 	// 친구목록
-	@RequestMapping(value = "friend", method = RequestMethod.GET)
+	@RequestMapping(value = "openFriend", method = RequestMethod.GET)
 	public String friend(MyFriendVO fvo, Model model) {
 		model.addAttribute("friend", dao.friend(fvo));
 		return "/friend/friend";
 	}
-	
-	// 친구 삭제
-/*	@RequestMapping(value = "deleteFriend", method = RequestMethod.GET)
-	public String deleteFriend(String frdid, RedirectAttributes rttr) {
-		//rttr.addFlashAttribute("result", dao.deleteFriend(frdid));
-		if(dao.deleteFriend(frdid) != 1) {
-			rttr.addFlashAttribute("result", false);
-		}
-		rttr.addFlashAttribute("result", true);
-		return "redirect:/friend/friend";
-	}*/
+	//친구삭제
 	@RequestMapping(value = "deleteFriend", method = RequestMethod.POST)
 	@ResponseBody
-	public void deleteFriend(String frdid) {
-		dao.deleteFriend1(frdid); // 내 입장
-		dao.deleteFriend2(frdid); // 상대방 입장
+	public void deleteFriend(String frd,HttpServletRequest request) {
+		String sessionId = (String) request.getSession().getAttribute("userid");
+		MyFriendVO MyFriendDelete = new MyFriendVO();
+		MyFriendDelete.setUserid(sessionId);
+		MyFriendDelete.setFrdid(frd);
+		
+		dao.deleteFriend1(MyFriendDelete); // 내 입장
+		dao.deleteFriend2(MyFriendDelete); // 상대방 입장
+	}
+	
+	// 친구검색 화면이동
+	@RequestMapping(value = "searchFriendForm", method = RequestMethod.GET)
+	public String searchFriendForm() {
+		return "/friend/searchFriend";
 	}
 	
 	// 친구검색
@@ -63,7 +65,7 @@ public class FriendController {
 	public String searchFriend(@RequestParam(value = "searchKeyid", defaultValue = "1") String searchKeyid,
 			Map<String, String> map, Model model) {
 		map.put("searchKeyid", searchKeyid);
-		
+
 		model.addAttribute("searchFriend", dao.searchFriend(map));
 		model.addAttribute("searchKeyid", searchKeyid);
 		return "/friend/searchFriend";
