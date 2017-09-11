@@ -24,8 +24,9 @@
 	</select>
 	 -->
 	
-	<!-- 쪽지 주고 받은 사람 목록 불러오기 -->
-	<!-- 이유정 : 9/8 생성, 친구 아닌 사람이 보낸 쪽지도 불러오게 함 -->
+	<!-- 
+	쪽지 주고 받은 사람 목록 불러오기
+	이유정 : 9/8 생성, 친구 아닌 사람이 보낸 쪽지도 불러오게 함
 	<select id="sendNReceiveList" parameterType="string" resultType="MemberVO">
 		SELECT sender FROM (
 		SELECT MAX(msgnum) AS msgnum, sender FROM 
@@ -33,13 +34,30 @@
 		) WHERE NOT sender=#{userid}
 		ORDER BY msgnum desc
 	</select>
+	 -->
+	 
+	<!-- 나에게 쪽지 보낸 사람 목록 불러오기(가나다순) -->
+	<!-- 유정 : 9/11 임시 생성 -->
+	<select id="senderList" parameterType="MemberVO" resultType="MemberVO">
+		select userid from member
+		where userid in (select sender from message where receiver = #{userid})
+		order by userid
+	</select>
+	
+	<!-- 내가 쪽지 보낸 사람 목록 불러오기(가나다순) -->
+	<select id="receiverList" parameterType="MemberVO" resultType="MemberVO">
+		select userid from member
+		where userid in (select receiver from message where sender = #{userid})
+		order by userid
+	</select>
+	
 	
 	<!-- 채팅 형식 메시지 출력 -->
 	<!-- 이유정 : 9/7 생성, 최신 메시지가 아래로 오도록 -->
 	<select id="msgList" parameterType="string" resultType="MessageVO">
 		select * from message
 		where (receiver=#{userid} or sender=#{userid})
-		and (receiver=#{friend} or sender=#{friend})
+		and (receiver=#{id} or sender=#{id})
 		order by msgdate
 	</select>
 	
