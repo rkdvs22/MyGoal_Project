@@ -30,11 +30,7 @@ public class CalendarController {
 	private CalendarService service;
 	
 	@RequestMapping(value = "calendar", method = RequestMethod.GET)
-	public String openCalendar(HttpServletRequest request,Model model) {
-		ArrayList<BTMRecordVO> BTMRecordlist = new ArrayList<>();
-		System.out.println();
-		BTMRecordlist = service.getRecordList((String)request.getSession().getAttribute("userid"));
-		model.addAttribute("BTMRecordlist", BTMRecordlist);
+	public String openCalendar() {
 		
 		return "/calendar/calendar";
 	}
@@ -42,10 +38,12 @@ public class CalendarController {
 	
 	@RequestMapping(value = "getCalendarInfo", method = RequestMethod.POST)
 	@ResponseBody
-	public int getCalendarInfo() {
-			
-		return 0;
+	public ArrayList<BTMRecordVO> getCalendarInfo(HttpServletRequest request) {
+		
+		ArrayList<BTMRecordVO> BTMRecordlist = new ArrayList<>();
+		BTMRecordlist = service.getRecordList((String)request.getSession().getAttribute("userid"));
+		
+		return BTMRecordlist;
 	}
-	
 	
 }

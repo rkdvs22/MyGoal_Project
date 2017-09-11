@@ -3,13 +3,26 @@ $(document).ready(function(){
 /* ==========================================================================
     Fullcalendar
     ========================================================================== */
-
-	var evt = [
-		
-	];
-	
-	
-	
+    
+    /*$(function getRecordList(){
+	  $.ajax({
+   	    type: "POST",
+   	    contentType: "application/json; charset=utf-8",
+   	    url: "/goal/calendar/getCalendarInfo",
+   	    dataType: "json",
+   	    success: function (data) {
+   	        $.each(data, function (i, li) {
+   	        	 var source = 
+   	                    {
+   	                        title:li.bgoalTitle,start:li.startDate,end:li.endDate
+   	                    }
+   	             eventlist.push(source);
+   	            }); // end for
+   	        }
+   	    });// end ajax
+  });*/
+    
+ 
     $('#calendar').fullCalendar({
         header: {
             left: '',
@@ -23,11 +36,31 @@ $(document).ready(function(){
             nextYear: 'font-icon font-icon-arrow-right'
         },
         lang:"ko",
+        events:
+        	function(start, end, timezone, callback) {
+            	$.ajax({
+                	url: '/goal/calendar/getCalendarInfo',
+                	type: "POST",
+                	dataType: "json",
+                	success: function(result) {
+                		console.log(result);
+                    	var events = [];
+                    	$(result).each(function() {
+                        	events.push({
+                            	title: $(this).attr('bgoalTitle'),
+                            	start: $(this).attr('startDate'), // will be parsed
+                            	end : $(this).attr('endDate'),
+                            	color : "blue"
+                        	});
+                    	});
+                    	callback(events);
+                	}
+            	});
+        	},
         defaultDate: '2016-01-12',
         editable: true,
         selectable: true,
         eventLimit: true, // allow "more" link when too many events
-        events:evt,
         viewRender: function(view, element) {
             if (!("ontouchstart" in document.documentElement)) {
                 $('.fc-scroller').jScrollPane({
@@ -294,7 +327,7 @@ $(document).ready(function(){
        }
 
     });
-
+    
 
 /* ==========================================================================
     Side datepicker
