@@ -146,7 +146,7 @@
 							</c:if>
 						</button>
 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
-							<a class="dropdown-item" href="/goal/member/updateMember"><span class="font-icon glyphicon glyphicon-user"></span>My Page</a>
+							<a class="dropdown-item" href="/goal/member/updateMemberForm"><span class="font-icon glyphicon glyphicon-user"></span>My Page</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href="/goal/member/logout"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
 						</div>

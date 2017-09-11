@@ -85,17 +85,14 @@ public class MemberController {
 	// 회원정보수정 화면전환
 	@RequestMapping(value = "updateMemberForm", method = RequestMethod.GET)
 	public String updateMemberForm(String userid, Model model) {
-		model.addAttribute("vo", dao.memberList(userid));
+		model.addAttribute("vo", dao.memberList(userid)); // 해당 user에 대한 정보
 		return "/member/updateMember";
 	}
 	
 	// 회원정보수정 기능
 	@RequestMapping(value = "updateMember", method = RequestMethod.POST)
 	public String updateMember(MemberVO vo, Model model, MultipartFile uploadFile) {
-		model.addAttribute("result", dao.updateMember(vo));
-		model.addAttribute("userid", vo.getUserid());
-		
-		String oldImage = memberList(vo.getUserid());/*.getImage();*/
+		String oldImage = memberList(vo.getImage());
 		if(!uploadFile.isEmpty()) {
 			String originalFileName = uploadFile.getOriginalFilename();
 			String image = FileService.saveFile(uploadFile);
@@ -104,6 +101,9 @@ public class MemberController {
 		} if(dao.updateMember(vo) != 1) {
 			FileService.deleteFile(vo.getImage());
 		} if(!uploadFile.isEmpty()) FileService.deleteFile(oldImage);
+		
+		model.addAttribute("result", dao.updateMember(vo));
+		model.addAttribute("userid", vo.getUserid());
 		
 		return "forward:/member/updateMember";
 	}

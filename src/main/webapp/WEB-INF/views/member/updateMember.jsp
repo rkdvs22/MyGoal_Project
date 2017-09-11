@@ -27,7 +27,7 @@
         <div class="page-center-in">
             <div class="container-fluid">
                 <form class="sign-box" action="updateMember" method="post" enctype="multipart/form-data">
-                    <header class="sign-title">Sign Up</header>
+                    <header class="sign-title">Update Member</header>
                     <div class="form-group">
                         <input type="text" class="form-control" value="${userid}" id="userid" name="userid" placeholder="ID" readonly="readonly"/>
                         <!-- <button type="button" class="btn btn-rounded btn-inline btn-success btn-sm" id="checkId" name="checkId" dis>중복확인</button> -->
@@ -59,7 +59,7 @@
                     </div>
                     <button type="submit" class="btn btn-rounded btn-success sign-up">Update</button>
                     <button type="button" class="btn btn-rounded btn-success" onclick="/goal/home">Cancel</button>
-                    
+                    <input type="hidden" name="userid" value="${userid}">
                 </form>
             </div>
         </div>

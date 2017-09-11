@@ -17,7 +17,7 @@ public interface MemberMapper {
 
 	public MemberVO find(String email); // ID,Pwd 찾기
 
-	public ArrayList<MemberVO> memberList(String userid); // 회원목록
+	public MemberVO memberList(String userid); // 회원목록
 
 
 

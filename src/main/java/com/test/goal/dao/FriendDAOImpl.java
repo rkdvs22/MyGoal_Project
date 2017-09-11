@@ -43,6 +43,21 @@ public class FriendDAOImpl implements FriendDAO {
 		FriendMapper mapper = sqlsession.getMapper(FriendMapper.class);
 		return mapper.searchFriend(map);
 	}
+
+	// 친구등록
+	@Override
+	public void addFriend(String userid, String frdid) {
+		FriendMapper mapper = sqlsession.getMapper(FriendMapper.class);
+		mapper.addFriend(userid, frdid);
+	}
+
+	// 친구여부 : null이 아닐 때 친구 추가 버튼 활성화
+	@Override
+	public String isFriend(MyFriendVO fvo) {
+		FriendMapper mapper = sqlsession.getMapper(FriendMapper.class);
+		return mapper.isFriend(fvo);
+	}
+
 	
 	
 }

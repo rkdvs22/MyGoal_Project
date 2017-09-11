@@ -14,7 +14,7 @@ public interface MemberDAO {
 	public void logout();	// 로그아웃
 	public MemberVO find(String email); //ID, pwd 찾기
 	public int updateMember(MemberVO vo); // 회원정보수정
-	public ArrayList<MemberVO> memberList(String userid); // 회원목록
+	public MemberVO memberList(String userid); // 회원목록
 	
 	
 }

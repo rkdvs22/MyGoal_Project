@@ -61,17 +61,25 @@ public class FriendController {
 	}
 	
 	// 친구검색
-	@RequestMapping(value = "searchFriend", method = RequestMethod.GET)
+	@RequestMapping(value = "searchFriend", method = RequestMethod.POST)
 	public String searchFriend(@RequestParam(value = "searchKeyid", defaultValue = "1") String searchKeyid,
-			Map<String, String> map, Model model) {
+			Map<String, String> map, Model model, HttpSession session) {
+		String userid = (String)session.getAttribute("userid");
 		map.put("searchKeyid", searchKeyid);
-
-		model.addAttribute("searchFriend", dao.searchFriend(map));
+		map.put("userid", userid);
 		model.addAttribute("searchKeyid", searchKeyid);
+		model.addAttribute("searchList", dao.searchFriend(map));
 		return "/friend/searchFriend";
 	}
 	
-	
+	// 친구여부 : null이 아닐 때 친구 추가 버튼 활성화
+	// 친구등록
+	@RequestMapping(value = "addFriend", method = RequestMethod.POST)
+	@ResponseBody
+	public void addFriend(String frdid, HttpSession session) {
+		String userid = (String) session.getAttribute("userid");
+		dao.addFriend(userid, frdid);
+	}
 	
 	
 }

@@ -27,58 +27,65 @@
 
 <script>
 
-/* 	$(function search() {
-		location.href = "/goal/friend/searchFriend";
-	}) */
+	function addFriend(listUserid) {
+		//location.href = "/goal/friend/addFriend";
+		var result = confirm("친구등록 하시겠습니까?");
+		
+		if(result) {
+			$.ajax({
+				url: "/goal/friend/addFriend",
+				type: "post",
+				data: {"userid":listUserid},
+				success: $("#addFriend").attr("disabled", "disabled")
+			});
+		}
+	}
+	
 </script>
 
 <div class="page-content">
 	<header class="page-content-header">
 		<div class="container-fluid">
-			<div class="tbl">
-				<div class="tbl-row">
+			<div class="tbl-row">
+				<br>
 					<h3>My Friends <small class="text-muted">${userid}</small></h3>
-				</div>
+			</div>
+				<!-- 검색 텍스트박스 -->
+				<div class="col-lg-6">
 					<div class="row">
+					<form action="searchFriend" method="post">
 						<div class="col-md-10">
+						<br>
 							<div class="typeahead-container">
-							<form action="searchFriend" method="get">
-								<div class="typeahead-field">
-									<span class="typeahead-query">
-										<input class="form-control form-control-rounded"
-											   name="searchKeyid"
-											   type="search"
-											   autocomplete="off"
-											   placeholder="ID Search">
-									    <a href="#" onclick="search()"><i class="font-icon-search"></i></a>
-										<button type="submit" class="font-icon-search"></button>
-									</span>
-								</div>
-								<%-- <input type="hidden" name="searchId" value="${userid}"> --%>
-							</form>
+								<span class="typeahead-query">
+									<input class="form-control" id="searchKeyid" name="searchKeyid" value="${searchKeyid}" type="text" placeholder="ID Search">
+								</span>
+								<span class="typeahead-button">
+									<!-- <a href="#" onclick="search()"><i class="font-icon-search"></i></a> -->
+									<button type="submit" class="font-icon-search"></button>
+								</span>
 							</div>
 						</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</header><!--.page-content-header-->
 
-		<!-- 친구목록 -->
+		<!-- 검색 목록 -->
 		<div class="container-fluid">
 			<div class="row card-user-grid">
-				<c:forEach items="${searchFriend}" var="searchFriend">
-					<%-- <c:if test="${userid == searchFriend.userid}"> --%>
-						<div class="col-sm-6 col-md-4 col-xl-3">
-							<article class="card-user box-typical">
-								<div class="card-user-photo">
-									<img src="/goal/resources/img/photo-184-1.jpg" alt="">
-								</div>
-								<div class="card-user-name">${searchFriend}</div>
-								<input type="button" class="btn btn-rounded btn-success" value="Add" onclick="/goal/friend/searchFriend">
-							</article><!--.card-user-->
+			<c:forEach items="${searchList}" var="list">
+				<div class="col-sm-6 col-md-4 col-xl-3">
+					<article class="card-user box-typical">
+						<div class="card-user-photo">
+							<img src="/goal/resources/img/photo-184-1.jpg" alt="">
 						</div>
-					<%-- </c:if> --%>
-				</c:forEach>
+						<div class="card-user-name">${list.userid}</div>
+						<input type="button" class="btn btn-rounded btn-success" id="addFriend" value="Add" onclick="addFriend('${list.userid}')">
+					</article><!--.card-user-->
+				</div>
+			</c:forEach>
 			</div><!--.card-user-grid-->
 		</div><!--.container-fluid-->
 	</div><!--.page-content-->

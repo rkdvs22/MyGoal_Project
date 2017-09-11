@@ -26,6 +26,16 @@
 		select * from Member where not userid = #{userid} and userid like '%'||#{searchKeyid}||'%'	
 	</select>
 	
-
+	<!-- 친구여부 : null이 아닐 때 친구 추가 버튼 활성화 -->
+	<select id="isFriend" parameterType="string" resultType="MyFriendVO">
+		select * from Myfriend mf, Member me
+		where me.userid = #{searchKeyid}
+		and not mf.frdid = #{searchKeyid}
+	</select>
+	
+	<!-- 친구등록 -->
+	<insert id="addFriend" parameterType="MyFriendVO">
+		insert into Myfriend values(#{userid}, #{frdid})
+	</insert>
 	
 </mapper>

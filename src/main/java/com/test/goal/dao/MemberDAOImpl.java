@@ -47,7 +47,7 @@ public class MemberDAOImpl implements MemberDAO {
 
 	// 회원목록
 	@Override
-	public ArrayList<MemberVO> memberList(String userid) {
+	public MemberVO memberList(String userid) {
 		MemberMapper mapper = sqlsession.getMapper(MemberMapper.class);
 		return mapper.memberList(userid);
 	}

@@ -17,6 +17,10 @@ public interface FriendMapper {
 
 	public ArrayList<MemberVO> searchFriend(Map<String, String> map); // 친구검색
 
+	public void addFriend(String userid, String frdid); // 친구등록
+
+	public String isFriend(MyFriendVO fvo); // 친구여부 : null이 아닐 때 친구 추가 버튼 활성화
+
 
 	
 
