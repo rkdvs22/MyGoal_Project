@@ -99,7 +99,8 @@
 	<script type="text/javascript" src="/goal/resources/js/lib/moment/moment-with-locales.min.js?version=4"></script>
 	<script type="text/javascript" src="/goal/resources/js/lib/eonasdan-bootstrap-datetimepicker/bootstrap-datetimepicker.min.js?version=4"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar.js?version=6"></script>
-	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=9"></script>
+	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=12"></script>
+	<script src="/goal/resources/js/lib/fullcalendar/ko.js"></script>
     <script src="/goal/resources/js/app.js?version=4"></script>
     
     <script>
@@ -122,13 +123,62 @@
 	</script>
 	
 	<!-- 하루 단위 버튼 클릭시 모달부분 -->
-   	<div id="modal" title="오늘의 계획을 입력해 주세요">
-		<div class="dayPlan">
-						 
-		</div>
-	</div>
+			<div id="modal" class="fullscreen_bg">
+			<form class="form-signin">
+			        <h3 class="text-center">Schedule</h3>
+						 <table class="table table-striped table-condensed">
+						                  <thead>
+						                  <tr>
+						                      <th>시작시간</th>
+						                      <th>종료시간</th>
+						                      <th>완료여부</th>
+						                      <th>달성여부</th>
+						                  </tr>
+						              </thead>   
+						              <tbody>
+						                <tr>
+						                    <td>2015/03/06</td>
+						                    <td>12:00 PM</td>
+						                    <td>Cairo</td>
+						                    <td>Aswan</td>
+						                    <td><a href="http://www.jquery2dotnet.com" class="btn btn-sm btn-primary btn-block" role="button">buy</a></td>
+						                 
+						                    </td>                                       
+						                </tr>
+						                <tr>
+						                    <td>2015/5/07</td>
+						                    <td>8:00 PM</td>
+						                    <td>Cairo</td>
+						                    <td>Suez</td>
+						                      <td><a href="http://www.jquery2dotnet.com" class="btn btn-sm btn-primary btn-block" role="button">buy</a></td>
+						                </tr>
+						                <tr>
+						                    <td>2015/07/10</td>
+						                    <td>12:00 AM</td>
+						                    <td>Alexandria</td>
+						                    <td>Cairo</td>
+						                       <td><a href="http://www.jquery2dotnet.com" class="btn btn-sm btn-primary btn-block" role="button">buy</a></td>
+						                </tr>
+						                <tr>
+						                    <td>2015/11/11</td>
+						                    <td>3:00 PM</td>
+						                    <td>Alexandria</td>
+						                    <td>Cairo</td>
+						                      <td><a href="http://www.jquery2dotnet.com" class="btn btn-sm btn-primary btn-block" role="button">buy</a></td>
+						                </tr>
+						                <tr>
+						                    <td>2015/12/13</td>
+						                    <td>5:00 PM</td>
+						                    <td>Alexandria</td>
+						                    <td>Cairo</td>
+						                      <td><a href="http://www.jquery2dotnet.com" class="btn btn-sm btn-primary btn-block" role="button">buy</a></td>
+						                  
+						                </tr>
+						        
+						              </tbody>
+			              </table>
+			</form>
+			</div>
 	
-    
-
 </body>
 </html>

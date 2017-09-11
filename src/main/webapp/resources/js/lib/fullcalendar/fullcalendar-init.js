@@ -8,7 +8,7 @@ $(document).ready(function(){
         header: {
             left: '',
             center: 'prev, title, next',
-            right: 'today agendaDay,agendaTwoDay,agendaWeek,month'
+            right: 'agendaWeek,month'
         },
         buttonIcons: {
             prev: 'font-icon font-icon-arrow-left',
@@ -16,7 +16,7 @@ $(document).ready(function(){
             prevYear: 'font-icon font-icon-arrow-left',
             nextYear: 'font-icon font-icon-arrow-right'
         },
-
+        lang:"ko",
         defaultDate: '2016-01-12',
         editable: true,
         selectable: true,
@@ -86,7 +86,6 @@ $(document).ready(function(){
             }
         ],
         viewRender: function(view, element) {
-            // При переключении вида инициализируем нестандартный скролл
             if (!("ontouchstart" in document.documentElement)) {
                 $('.fc-scroller').jScrollPane({
                     autoReinitialise: true,
@@ -104,59 +103,130 @@ $(document).ready(function(){
                 
                 $(this).addClass('event-clicked');
             }
-
-            // Add popover
-            $('body').append(
-                '<div class="fc-popover click">' +
-                    '<div class="fc-header">' +
-                        moment(calEvent.start).format('dddd • D') +
-                        '<button type="button" class="cl"><i class="font-icon-close-2"></i></button>' +
-                    '</div>' +
-
-                    '<div class="fc-body main-screen">' +
-                        '<p>' +
-                            moment(calEvent.start).format('dddd, D YYYY, hh:mma') +
-                        '</p>' +
-                        '<p class="color-blue-grey">Name Surname Patient<br/>Surgey ACL left knee</p>' +
-                        '<ul class="actions">' +
-                            '<li><a href="#">More details</a></li>' +
-                            '<li><a href="#" class="fc-event-action-edit">Edit event</a></li>' +
-                            '<li><a href="#" class="fc-event-action-remove">Remove</a></li>' +
-                        '</ul>' +
-                    '</div>' +
-
-                    '<div class="fc-body remove-confirm">' +
-                        '<p>Are you sure to remove event?</p>' +
-                        '<div class="text-center">' +
-                            '<button type="button" class="btn btn-rounded btn-sm">Yes</button>' +
-                            '<button type="button" class="btn btn-rounded btn-sm btn-default remove-popover">No</button>' +
-                        '</div>' +
-                    '</div>' +
-
-                    '<div class="fc-body edit-event">' +
-                        '<p>Edit event</p>' +
-                        '<div class="form-group">' +
-                            '<div class="input-group date datetimepicker">' +
-                                '<input type="text" class="form-control" />' +
-                                '<span class="input-group-addon"><i class="font-icon font-icon-calend"></i></span>' +
-                            '</div>' +
-                        '</div>' +
-                        '<div class="form-group">' +
-                            '<div class="input-group date datetimepicker-2">' +
-                                '<input type="text" class="form-control" />' +
-                                '<span class="input-group-addon"><i class="font-icon font-icon-clock"></i></span>' +
-                            '</div>' +
-                        '</div>' +
-                        '<div class="form-group">' +
-                            '<textarea class="form-control" rows="2">Name Surname Patient Surgey ACL left knee</textarea>' +
-                        '</div>' +
-                        '<div class="text-center">' +
-                            '<button type="button" class="btn btn-rounded btn-sm">Save</button>' +
-                            '<button type="button" class="btn btn-rounded btn-sm btn-default remove-popover">Cancel</button>' +
-                        '</div>' +
-                    '</div>' +
-                '</div>'
-            );
+            
+            
+	          var time = new Date() 
+	  	      
+	  	      var year = time.getYear()+1900 
+	  	      var month = time.getMonth() +1 
+	  	      if((month+"").length <2){
+	  	    	  month = "0"+month;
+	  	      }
+	  	      var day = time.getDate() 
+	  	      if((day+"").length <2){
+	  	    	  day = "0"+day;
+	  	      }
+	  	      
+	  	      var today = year+""+month+""+day
+	  	      
+	  	      //calEvaent.start._i 는  DayPlan 이벤트의 해당 날짜 입니다.
+	  	      var dateSplit = calEvent.start._i.split("-");
+	  	      date_year = dateSplit[0]; 
+	  	      date_month = dateSplit[1]; 
+	  	      date_day = dateSplit[2]; 
+	  	      var dateSplited = date_year + "" + date_month + "" + date_day
+	  	  
+            if(parseInt(today) == parseInt(dateSplited) && view.name == "agendaWeek"){
+	            // Add popover
+	            $('body').append(
+	                '<div class="fc-popover click">' +
+	                    '<div class="fc-header">' +
+	                        moment(calEvent.start).format('dddd • D') +
+	                        '<button type="button" class="cl"><i class="font-icon-close-2"></i></button>' +
+	                    '</div>' +
+	
+	                    '<div class="fc-body main-screen">' +
+	                        '<p>' +
+	                            moment(calEvent.start).format('dddd, D YYYY, hh:mma') +
+	                        '</p>' +
+	                        '<p class="color-blue-grey">Name Surname Patient<br/>Surgey ACL left knee</p>' +
+	                        '<ul class="actions">' +
+	                            '<li><a href="#" class="fc-event-action-edit">Edit event</a></li>' +
+	                            '<li><a href="#" class="fc-event-action-remove">Remove</a></li>' +
+	                        '</ul>' +
+	                    '</div>' +
+	
+	                    '<div class="fc-body remove-confirm">' +
+	                        '<p>Are you sure to remove event?</p>' +
+	                        '<div class="text-center">' +
+	                            '<button type="button" class="btn btn-rounded btn-sm">Yes</button>' +
+	                            '<button type="button" class="btn btn-rounded btn-sm btn-default remove-popover">No</button>' +
+	                        '</div>' +
+	                    '</div>' +
+	
+	                    '<div class="fc-body edit-event">' +
+	                        '<p>Edit event</p>' +
+	                        '<div class="form-group">' +
+	                            '<div class="input-group date datetimepicker">' +
+	                                '<input type="text" class="form-control" />' +
+	                                '<span class="input-group-addon"><i class="font-icon font-icon-calend"></i></span>' +
+	                            '</div>' +
+	                        '</div>' +
+	                        '<div class="form-group">' +
+	                            '<div class="input-group date datetimepicker-2">' +
+	                                '<input type="text" class="form-control" />' +
+	                                '<span class="input-group-addon"><i class="font-icon font-icon-clock"></i></span>' +
+	                            '</div>' +
+	                        '</div>' +
+	                        '<div class="form-group">' +
+	                            '<textarea class="form-control" rows="2">Name Surname Patient Surgey ACL left knee</textarea>' +
+	                        '</div>' +
+	                        '<div class="text-center">' +
+	                            '<button type="button" class="btn btn-rounded btn-sm">Save</button>' +
+	                            '<button type="button" class="btn btn-rounded btn-sm btn-default remove-popover">Cancel</button>' +
+	                        '</div>' +
+	                    '</div>' +
+	                '</div>'
+	            );
+            }else{
+            	  // Add popover
+	            $('body').append(
+	                '<div class="fc-popover click">' +
+	                    '<div class="fc-header">' +
+	                        moment(calEvent.start).format('dddd • D') +
+	                        '<button type="button" class="cl"><i class="font-icon-close-2"></i></button>' +
+	                    '</div>' +
+	
+	                    '<div class="fc-body main-screen">' +
+	                        '<p>' +
+	                            moment(calEvent.start).format('YYYY-MM-DD, hh:mma') +
+	                        '</p>' +
+	                        '<p class="color-blue-grey">Name Surname Patient<br/>Surgey ACL left knee</p>' +
+	                    '</div>' +
+	
+	                    '<div class="fc-body remove-confirm">' +
+	                        '<p>Are you sure to remove event?</p>' +
+	                        '<div class="text-center">' +
+	                            '<button type="button" class="btn btn-rounded btn-sm">Yes</button>' +
+	                            '<button type="button" class="btn btn-rounded btn-sm btn-default remove-popover">No</button>' +
+	                        '</div>' +
+	                    '</div>' +
+	
+	                    '<div class="fc-body edit-event">' +
+	                        '<p>Edit event</p>' +
+	                        '<div class="form-group">' +
+	                            '<div class="input-group date datetimepicker">' +
+	                                '<input type="text" class="form-control" />' +
+	                                '<span class="input-group-addon"><i class="font-icon font-icon-calend"></i></span>' +
+	                            '</div>' +
+	                        '</div>' +
+	                        '<div class="form-group">' +
+	                            '<div class="input-group date datetimepicker-2">' +
+	                                '<input type="text" class="form-control" />' +
+	                                '<span class="input-group-addon"><i class="font-icon font-icon-clock"></i></span>' +
+	                            '</div>' +
+	                        '</div>' +
+	                        '<div class="form-group">' +
+	                            '<textarea class="form-control" rows="2">Name Surname Patient Surgey ACL left knee</textarea>' +
+	                        '</div>' +
+	                        '<div class="text-center">' +
+	                            '<button type="button" class="btn btn-rounded btn-sm">Save</button>' +
+	                            '<button type="button" class="btn btn-rounded btn-sm btn-default remove-popover">Cancel</button>' +
+	                        '</div>' +
+	                    '</div>' +
+	                '</div>'
+	            );
+            }
 
             // Datepicker init
             $('.fc-popover.click .datetimepicker').datetimepicker({
@@ -226,6 +296,11 @@ $(document).ready(function(){
         	      /*alert('Clicked on: ' + date.format());
         	      alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
         	      alert('Current view: ' + view.name);*/
+        	
+        	   /*   alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+        	      alert('Current view: ' + view.name);
+        	      alert('Clicked on: ' + date.format());
+        	      */
         	      var time = new Date() 
         	      
         	      var year = time.getYear()+1900 
@@ -246,12 +321,17 @@ $(document).ready(function(){
         	      date_day = dateSplit[2]; 
         	      var dateSplited = date_year + "" + date_month + "" + date_day
         	      
-        	      if(parseInt(today) == parseInt(dateSplited)){
+        	      if(parseInt(today) == parseInt(dateSplited) && view.name == "agendaWeek"){
         	    	  isToday = 1;
-        	    	  alert(isToday);
+        	    	  //alert(isToday);
         	      }
         	      
-        	      	$("#modal").dialog("open");
+        	      if(view.name == "agendaWeek"){
+        	    	 // alert(date.format());
+        	    	  //$("#modal").dialog("open");
+        	      }
+        	      
+        	      //	$("#modal").dialog("open");
        }
 
     });
