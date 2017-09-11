@@ -23,5 +23,6 @@
 		<mapper resource="mapper/goalTreeMapper.xml" />
 		<mapper resource="mapper/messageMapper.xml" />
 		<mapper resource="mapper/friendMapper.xml"/>
+		<mapper resource="mapper/calendarMapper.xml"/>
 	</mappers>
 </configuration>

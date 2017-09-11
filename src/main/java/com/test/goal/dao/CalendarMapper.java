@@ -1,9 +1,11 @@
 package com.test.goal.dao;
 
-public class CalendarMapper {
+import java.util.ArrayList;
 
-	public void getCalendar(String userId) {
-		
-	}
+import com.test.goal.vo.BTMRecordVO;
+
+public interface CalendarMapper {
+
+	public ArrayList<BTMRecordVO> getCalendar(String userid);
 
 }

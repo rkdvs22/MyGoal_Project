@@ -30,7 +30,11 @@ public class CalendarController {
 	private CalendarService service;
 	
 	@RequestMapping(value = "calendar", method = RequestMethod.GET)
-	public String openCalendar() {
+	public String openCalendar(HttpServletRequest request,Model model) {
+		ArrayList<BTMRecordVO> BTMRecordlist = new ArrayList<>();
+		System.out.println();
+		BTMRecordlist = service.getRecordList((String)request.getSession().getAttribute("userid"));
+		model.addAttribute("BTMRecordlist", BTMRecordlist);
 		
 		return "/calendar/calendar";
 	}

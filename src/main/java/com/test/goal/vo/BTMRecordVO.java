@@ -14,6 +14,8 @@ public class BTMRecordVO {
 	private int bGoalNum;
 	private int calendarNum;
 	private int period;
+	private String clear;
+	private String BGoalTitle;
 	
 	public BTMRecordVO() {
 	}
@@ -81,12 +83,28 @@ public class BTMRecordVO {
 	public void setPeriod(int period) {
 		this.period = period;
 	}
+	
+	public String getClear() {
+		return clear;
+	}
+
+	public void setClear(String clear) {
+		this.clear = clear;
+	}
+
+	public String getBGoalTitle() {
+		return BGoalTitle;
+	}
+
+	public void setBGoalTitle(String bGoalTitle) {
+		BGoalTitle = bGoalTitle;
+	}
 
 	@Override
 	public String toString() {
 		return "BTMRecordVO [bRecordNum=" + bRecordNum + ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", memberId=" + memberId + ", btmSectionNum=" + btmSectionNum + ", bGoalNum=" + bGoalNum
-				+ ", calendarNum=" + calendarNum + ", period=" + period + "]";
+				+ ", calendarNum=" + calendarNum + ", period=" + period + ", clear=" + clear + ", BGoalTitle="
+				+ BGoalTitle + "]";
 	}
-	
 }

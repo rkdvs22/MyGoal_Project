@@ -4,6 +4,12 @@ $(document).ready(function(){
     Fullcalendar
     ========================================================================== */
 
+	var evt = [
+		
+	];
+	
+	
+	
     $('#calendar').fullCalendar({
         header: {
             left: '',
@@ -21,70 +27,7 @@ $(document).ready(function(){
         editable: true,
         selectable: true,
         eventLimit: true, // allow "more" link when too many events
-        events: [
-            {
-                title: 'All Day Event',
-                start: '2016-01-01'
-            },
-            {
-                title: 'Long Event',
-                start: '2016-01-07',
-                end: '2016-01-10',
-                className: 'event-green'
-            },
-            {
-                id: 999,
-                title: 'Repeating Event',
-                start: '2016-01-09T16:00:00',
-                className: 'event-red'
-            },
-            {
-                id: 999,
-                title: 'Repeating Event',
-                start: '2016-01-16T16:00:00',
-                className: 'event-orange'
-            },
-            {
-                title: 'Conference',
-                start: '2016-01-11',
-                end: '2016-01-13',
-                className: 'event-coral'
-            },
-            {
-                title: 'Meeting',
-                start: '2016-01-12T10:30:00',
-                end: '2016-01-12T12:30:00',
-                className: 'event-green'
-            },
-            {
-                title: 'Lunch',
-                start: '2016-01-12T12:00:00'
-            },
-            {
-                title: 'Meeting',
-                start: '2016-01-12T14:30:00',
-                className: 'event-red'
-            },
-            {
-                title: 'Happy Hour',
-                start: '2016-01-12T17:30:00'
-            },
-            {
-                title: 'Dinner',
-                start: '2016-01-12T20:00:00',
-                className: 'event-orange'
-            },
-            {
-                title: 'Birthday Party',
-                start: '2016-01-13T07:00:00'
-            },
-            {
-                title: 'Click for Google',
-                url: 'http://google.com/',
-                start: '2016-01-28',
-                className: 'event-coral'
-            }
-        ],
+        events:evt,
         viewRender: function(view, element) {
             if (!("ontouchstart" in document.documentElement)) {
                 $('.fc-scroller').jScrollPane({
@@ -301,37 +244,53 @@ $(document).ready(function(){
         	      alert('Current view: ' + view.name);
         	      alert('Clicked on: ' + date.format());
         	      */
-        	      var time = new Date() 
+        	
+        		if(view.name == "agendaWeek"){
+	        	      var time = new Date() 
+	        	      
+	        	      var year = time.getYear()+1900 
+	        	      var month = time.getMonth() +1 
+	        	      if((month+"").length <2){
+	        	    	  month = "0"+month;
+	        	      }
+	        	      var day = time.getDate() 
+	        	      if((day+"").length <2){
+	        	    	  day = "0"+day;
+	        	      }
+	        	      
+	        	      var today = year+""+month+""+day
+	        	      
+	        	      var dateSplit = date.format().split("-");
+	        	      date_year = dateSplit[0]; 
+	        	      date_month = dateSplit[1]; 
+	        	      date_day = dateSplit[2]; 
+	        	      var dateSplited = date_year + "" + date_month + "" + date_day
+	        	      
+	        	      var date_time = date.format().split("T");
+	        	      var clickedTime = date_time[1].split(":");
+	        	      
+	        	      var hour = clickedTime[0];
+	        	      var minute = clickedTime[1];
+	        	      
+	        	      if(parseInt(today) == parseInt(dateSplited)){
+	        	    	  isToday = 1;
+	        	    	  alert(date_time[0]);
+	        	    	  alert(hour);
+	              	      alert(minute);
+	        	    	  
+	        	      }//end if
         	      
-        	      var year = time.getYear()+1900 
-        	      var month = time.getMonth() +1 
-        	      if((month+"").length <2){
-        	    	  month = "0"+month;
-        	      }
-        	      var day = time.getDate() 
-        	      if((day+"").length <2){
-        	    	  day = "0"+day;
-        	      }
-        	      
-        	      var today = year+""+month+""+day
-        	      
-        	      var dateSplit = date.format().split("-");
-        	      date_year = dateSplit[0]; 
-        	      date_month = dateSplit[1]; 
-        	      date_day = dateSplit[2]; 
-        	      var dateSplited = date_year + "" + date_month + "" + date_day
-        	      
-        	      if(parseInt(today) == parseInt(dateSplited) && view.name == "agendaWeek"){
-        	    	  isToday = 1;
-        	    	  //alert(isToday);
-        	      }
-        	      
-        	      if(view.name == "agendaWeek"){
-        	    	 // alert(date.format());
-        	    	  //$("#modal").dialog("open");
-        	      }
-        	      
-        	      //	$("#modal").dialog("open");
+        		}//end if        	      
+       },
+       
+       eventDrop: function(event, delta, revertFunc) {
+
+           alert(event.title + " was dropped on " + event.start.format());
+
+           if (!confirm("Are you sure about this change?")) {
+               revertFunc();
+           }
+           
        }
 
     });

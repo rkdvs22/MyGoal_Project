@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.test.goal.dao.CalendarMapper">
+
+	<select id = "getCalendar" parameterType="string" resultType="BTMRecordVO">
+	select BTMGoal.BGoalTitle as "bGoalTitle", BTMRecord.startDate as "startDate", BTMRecord.endDate as "endDate" 
+	from BTMGoal inner join BTMRecord 
+	on BTMGoal.bGoalNum = BTMRecord.bGoalNum 
+	where BTMRecord.memberId = #{userid}
+	order by BTMRecord.startDate desc
+	</select>
+
+</mapper>
