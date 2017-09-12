@@ -10,15 +10,13 @@
 	<link rel="stylesheet" href="/goal/resources/css/separate/vendor/lobipanel.min.css">
 	<link rel="stylesheet" href="/goal/resources/css/separate/pages/widgets.min.css">
 	<link rel="stylesheet" href="/goal/resources/css/lib/font-awesome/font-awesome.min.css">
-	<link rel="stylesheet" href="/goal/resources/css/lib/jquery-minicolors/jquery.minicolors.css">
-	<link rel="stylesheet" href="/goal/resources/css/separate/vendor/jquery.minicolors.min.css">
+
 	<link rel="stylesheet" href="/goal/resources/css/lib/bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" href="/goal/resources/css/main.css">
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
 	<link rel="/goal/resources/css/lib/clockpicker/jquery.datetimepicker.css">
 	
 	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-	<script src="/goal/resources/js/lib/jquery-minicolors/jquery.minicolors.min.js"></script>
 	<script src="/goal/resources/js/lib/bootstrap/bootstrap.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 	<script src="/goal/resources/js/plugins.js"></script>
@@ -592,29 +590,8 @@ $(function() {
 	});
 	
 	$("#selectcolor").click(function() {
+		
 		$("#color_modal").dialog("open");
-		$(".minicolors-panel.minicolors-slider-wheel").css("display", "block");
-	});
-	
-	$("#wheel-demo").focus(function() {
-		$(".minicolors-panel.minicolors-slider-wheel").css("display", "block");
-		$(".minicolors.minicolors-theme-bootstrap.minicolors-position-bottom.minicolors-position-left").attr("class", "minicolors minicolors-theme-bootstrap minicolors-position-bottom minicolors-position-left minicolors-focus");
-	});
-	
-	$('.demo').each( function() {
-		$(this).minicolors({
-			control: $(this).attr('data-control') || 'hue',
-			defaultValue: $(this).attr('data-defaultValue') || '',
-			format: $(this).attr('data-format') || 'hex',
-			keywords: $(this).attr('data-keywords') || '',
-			inline: $(this).attr('data-inline') === 'true',
-			letterCase: $(this).attr('data-letterCase') || 'lowercase',
-			opacity: $(this).attr('data-opacity'),
-			position: $(this).attr('data-position') || 'bottom left',
-			swatches: $(this).attr('data-swatches') ? $(this).attr('data-swatches').split('|') : [],
-			theme: 'bootstrap'
-		});
-
 	});
 });
 	
@@ -774,34 +751,7 @@ $(function() {
 
 <!-- 색상 지정을 하기 위한 Modal 창 -->
 <div id="color_modal" title="색상선택">
-	<div class="box-typical box-typical-padding">
-		<div class="modal_id"><b>${sessionScope.hostId}</b>님의 색상선택</div>
-		<div class="well">
-			<div class="row">
-				<div class="col-lg-4 col-sm-4 col-12">
-					<div class="form-group">
-						<div class="minicolors minicolors-theme-bootstrap minicolors-position-bottom minicolors-position-left">
-							<input type="text" id="wheel-demo" class="form-control demo minicolors-input" data-control="wheel" value="" size="7">
-							<span class="minicolors-swatch minicolors-sprite minicolors-input-swatch">
-								<span class="minicolors-swatch-color" style="background-color: rgb(255, 202, 193); opacity: 1;"></span>
-							</span>
-							<div class="minicolors-panel minicolors-slider-wheel">
-								<div class="minicolors-slider minicolors-sprite" style="background-color: rgb(255, 202, 193);"></div>
-								<div class="minicolors-opacity-slider minicolors-sprite">
-									<div class="minicolors-picker"></div>
-								</div>
-								<div class="minicolors-grid minicolors-sprite">
-									<div class="minicolors-grid-inner"></div>
-									<div class="minicolors-picker"></div>
-<!-- 									 style="top: 97.9813px; left: 55.7164px;" -->
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	<div class="modal_id"><b>${sessionScope.userid}</b>님의 색상선택</div>
 </div>
 
 <!-- alert창을 띄우기 위한 div -->
