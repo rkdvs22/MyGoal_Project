@@ -25,13 +25,9 @@
 		
 		if (result <= 1) {
 			$(".smalltree").append(str);
-			$(".apple").css("width", "43px");
-			$(".apple").css("height", "43px");
 			smallApple();
 		} else if (result > 1 && result <= 4) {
 			$(".midtree").append(str);
-			$(".apple").css("width", "43px");
-			$(".apple").css("height", "43px");
 			midApple();
 		} else if (result > 4 && result <= 10){
 			$(".bigtree").append(str);
@@ -315,75 +311,22 @@
 	    });
 	}
 </script>
-<style>
-	/* 배경 */
-	body {
-		background-image: url("/goal/resources/img/goaltree/background.png");
-		background-position: center top;
-		background-size: 1300px auto;
-		background-repeat: no-repeat;
-	}
-	
-	/* 작은 나무 */
-	.smalltree {
-		width: 180px;
-		position: relative;
-		margin: 0 auto;
-	}
-	
-	/* 중간 나무 */
-	.midtree {
-		width: 300px;
-		position: relative;
-		margin: 0 auto;
-	}
-	
-	/* 큰 나무 */
-	.bigtree {
-		width: 480px;
-		position: relative;
-		margin: 0 auto;
-	}
-	
-	/* 중간&작은 나무*/
-	.bigNSmalltree {
-		width: 680px;
-		position: relative;
-		margin: 0 auto;
-	}
-	
-	/* 큰&중간 나무*/
-	.bigNMidtree {
-		width: 800px;
-		position: relative;
-		margin: 0 auto;
-	}
-	
-	/* 열매 */
-	.apple {
-		position: absolute;
-		width: 45px;
-		height: 45px;
-		/* background: #e60012;
-		border-radius: 50%; */
-	}
-	
-	/* 레이어 팝업 */
-	.pop {
-		padding-top: 8px;
-		padding-bottom: 8px;
-		padding-left: 10px;
-		padding-right: 10px;
-		border-radius: 20px;
-		border: solid aquamarine 1px;
-	 	background-color: azure;
-		opacity: 0.9;
-		position: absolute;
-	}
-
-</style>
+<link rel="stylesheet" href="/goal/resources/css/main.css?version=1">
+<link rel="stylesheet" href="/goal/resources/css/goaltree/goaltree.css">
 </head>
 <body>
+<div class="page-content">
+<header class="page-content-header">
+	<div class="container-fluid">
+		<div class="tbl">
+			<div class="tbl-row">
+				<div class="tbl-cell">
+					<h3>Goal Tree <small class="text-muted">${sessionScope.userid}</small></h3>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
 
 <%@ include file="../menu.jsp" %>
 
@@ -433,5 +376,6 @@
 	</div>
 </c:forEach>
 
+</div>	<!-- page-content 끝 -->
 </body>
 </html>

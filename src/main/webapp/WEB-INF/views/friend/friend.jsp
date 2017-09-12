@@ -91,8 +91,7 @@
    <script src="/goal/resources/js/lib/tether/tether.min.js"></script>
    <script src="/goal/resources/js/lib/bootstrap/bootstrap.min.js"></script>
    <script src="/goal/resources/js/plugins.js"></script>
-
-<script src="/goal/resources/js/app.js"></script>
+	<script src="/goal/resources/js/app.js"></script>
 
 </body>
 </html>

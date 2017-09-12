@@ -28,7 +28,8 @@
 	    });
 	});
 
-	function msgList(id) {
+	//받은 메시지 출력
+	function receivedMsgList(id) {
 		$.ajax({
 			url: "/goal/message/msgList",
 			type: "post",
@@ -38,8 +39,8 @@
 				$(".receivedMsgList").empty();
 				$(msgList).each(function(index, item) {
 					var str = "";
-					str += "<tr><td class='msgTitle'>";
-					str += item.msgTitle;
+					str += "<tr><td class='msgTitle'> 제목 : " + item.msgTitle + "</td>";
+					str += "<td> 날짜 : " + item.msgDate;
 					str += "</td></tr>";
 					str += "<tr><td class='msgContent'>";
 					str += item.msgContent;
@@ -51,35 +52,55 @@
 			error: function(e) {
 				console.log(e);
 				alert(e);
-				}
+			}
+		});
+	}
+	
+	//보낸 메시지 출력
+	function sentMsgList(id) {
+		$.ajax({
+			url: "/goal/message/msgList",
+			type: "post",
+			data: {"id": id},
+			dataType: "json",
+			success: function(msgList) {
+				$(".sentMsgList").empty();
+				$(msgList).each(function(index, item) {
+					var str = "";
+					str += "<tr><td class='msgTitle'>";
+					str += item.msgTitle;
+					str += "</td></tr>";
+					str += "<tr><td class='msgContent'>";
+					str += item.msgContent;
+					str += "</td></tr>";
+					
+					$(".sentMsgList").append(str);
+				});
+			},
+			error: function(e) {
+				console.log(e);
+				alert(e);
+			}
 		});
 	}
 </script>
+<link rel="stylesheet" href="/goal/resources/css/main.css?version=1">
 <link rel="stylesheet" href="/goal/resources/css/message/message.css">
-<style>
-	.msgList {
-		margin: 0 auto;
-		/* border: solid black 1px; */
-		width: 800px;
-		height: 600px;
-	}
-	
-	#tab1_left, #tab2_left {
-		width: 20%;
-		/* height: 100%; */
-		float: left;
-	}
-	
-	#tab1_right, #tab2_right {
-		width: 80%;
-		/* height: 100%; */
-		float: right;
-	}
-</style>
 </head>
 <body>
-<%@ include file="../menu.jsp"%>
-<br><br><br><br><br><br>
+<%@ include file="../menu.jsp" %>
+<div class="page-content">
+<header class="page-content-header">
+	<div class="container-fluid">
+		<div class="tbl">
+			<div class="tbl-row">
+				<div class="tbl-cell">
+					<h3>Messages <small class="text-muted">${sessionScope.userid}</small></h3>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
 <div class="msgList">
 	<!-- 탭 메뉴 생성 -->
 	<div class="tabs">
@@ -96,7 +117,7 @@
 					<c:forEach items="${slist}" var="slist">
 						<tr>
 							<td>
-								<a href="#" onclick="msgList('${slist.userid}')">${slist.userid}</a>
+								<a href="#" onclick="receivedMsgList('${slist.userid}')">${slist.userid}</a>
 							</td>
 						</tr>
 					</c:forEach>
@@ -116,7 +137,7 @@
 	        		<c:forEach items='${rlist}' var='rlist'>
 	        			<tr>
 							<td>
-								<a href="#" onclick="msgList('${rlist.userid}')">${rlist.userid}</a>
+								<a href="#" onclick="sentMsgList('${rlist.userid}')">${rlist.userid}</a>
 							</td>
 						</tr>
 					</c:forEach>
@@ -129,7 +150,11 @@
         </div>
         <!-- 보낸 쪽지함 끝 -->
     </div>
-</div>
+    <!-- tab-content 끝 -->
+	</div>
+	<!-- tabs 끝 -->
+	</div>
+	<!-- msgList 끝 -->
 </div>
 </body>
 </html>
