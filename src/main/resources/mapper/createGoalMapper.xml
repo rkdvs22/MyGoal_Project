@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.test.goal.dao.CreateGoalMapper">
+	
+	<!-- 목표大 작성 -->
+	<insert id="create" parameterType="TopGoalVO">
+		insert into TopGoal values (TOPGOAL_SEQ.NEXTVAL, #{tgoaltitle}, #{tstartdate}, #{tenddate}, #{openstatus}, #{userid}, MAINPROGRESS_SEQ.NEXTVAL)	
+	</insert>
+	
+</mapper>

@@ -3,19 +3,18 @@
 <!DOCTYPE html>
 <html> 
      <head> 
-        <link rel="stylesheet" href="/goal/resources/css/lib/mindMap/mindMap.css">
+        <link rel="stylesheet" href="/goal/resources/css/lib/mindMap/mindMap.css?version=6">
      </head> 
      <body> 
-     	<%@ include file="../menu.jsp" %>
      	
+     	<%@ include file="../menu.jsp" %>
         <script language="javascript" type="text/javascript" src="/goal/resources/js/lib/mindMap/arbor.js"></script> 
         <script language="javascript" type="text/javascript" src="/goal/resources/js/lib/mindMap/graphics.js"></script> 
         <script language="javascript" type="text/javascript" src="/goal/resources/js/lib/mindMap/renderer.js"></script> 
-        <script src = "/goal/resources/js/lib/jScrollPane/jquery.jscrollpane.min.js"></script>
        	<div id = "playingGoal">
 				${sessionScope.userid}님은
 			</div>	
-       <canvas id="viewport" width="800" height="520"></canvas> 
+       <canvas id="viewport" width="1100" height="600"></canvas> 
        <script language="javascript" type="text/javascript">
        
        //공통적으로 사용할 sys변수를 바깥에 정의한 후 sendBTMSectionList 함수 실행
@@ -28,28 +27,12 @@
        $(function(){
     		  sendBTMSectionList(); 
     		
-    		// modal창 설정
-    			$("#modal").dialog({
-    				autoOpen: false,
-    				position: [680, 150],
-    				modal: true,
-    				width: 500,
-    				height: 500,
-    				resizable: false,
-    				buttons:{
-    						"확인":function() {
-    						$(this).dialog("close");
-    						}
-    				}
-    			});
-    		
-    			// alert modal창 설정
-    			$("#alert").dialog({
+    			$("#alert_modal").dialog({
     				autoOpen: false,
     				position: [440, 150],
     				modal: true,
-    				width: 400,
-    				height: 1000,
+    				width: 300,
+    				height: 200,
     				resizable: false,
     				buttons:{
     						"확인":function() {
@@ -70,11 +53,6 @@
     						$(this).dialog("close");
     						}
     				}
-    			});
-    			
-    		    // 모달 관련해서 ajax를 통해 list를 받아와 기록을 보여주는 곳.
-    			$("#recordButton").click(function() {
-   			 		$("#modal").dialog("open");
     			});
     		    
          });
@@ -176,60 +154,88 @@
 				        }
 					    $("#startTitle").empty();
 			       	    $("#startTitle").append(title + '을 시작합니다.');
-			       		$("#newStart").dialog("open");
+			       		
 					},
 					error: function(){
-						$("#alert").dialog("open");
+						$("#alert_modal").dialog("open");
 					}
 				});
  			 
  		   }//end startGoal  
- 	
+ 		   
        </script>
-       
- 	   			<!-- 모달영역 -->   
- 	   		<div id = "recordButtonDiv"><button type="button" id="recordButton"><span id = "modalButtonText">check</span></div>
-	       		<div id="modal" title="세부목표별 맴버기록">
-					<div class="midgoal">
-						 <c:forEach items="${requestScope.btmGoalList}" var="title">
-							<table class = "memberRecord">
-									<tr class="titleline">
-										<td colspan="3" height="40" width="300">세부목표명 : ${title.bGoalTitle}</td>
-									</tr>
-									<tr height="30" class="th_line">
-										<th width="70" align="left">아이디</th>
-										<th width="110" align="center">기록(시,분단위)</th>
-										<th width="70" align="right">완료여부</th>
-									</tr>	
-										<c:forEach items="${requestScope.recordList}" var="record">
-										<c:if test="${title.bGoalTitle eq record.bGoalTitle}">
-											<tr>
-												<td align="left">${record.memberId}</td>
-												<td align="center">${record.takeTime}</td>
-												<td align="center">${record.isEnd}</td>
-											</tr>
-										</c:if>	
-										</c:forEach>
-							</table>
-							<hr>
-						</c:forEach>		
-					</div>
-					힘내세요!
-			</div>
+ 	
+			<!-- alert모달영역 -->   
+				 <!-- Modal -->
+				    <button class="btn btn-danger" data-toggle="modal" hidden="true"></button>
+				    <!-- Modal -->
+				    <div class="modal fade" id="danger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				        <div class="modal-dialog">
+				            <div class="modal-content">
+				                <div class="modal-header modal-header-danger">
+				                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				                    <h1> Danger Modal</h1>
+				                </div>
+				                <div class="modal-body">
+				                </div>
+				                <div class="modal-footer">
+				                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+				                </div>
+				            </div><!-- /.modal-content -->
+				        </div><!-- /.modal-dialog -->
+				    </div><!-- /.modal -->
+  				  <!-- Modal -->
+			<!-- alert모달영역 -->  
 			
-			<!-- alert모달영역 -->   
-	       		<div id="alert" title="알림">
-	       			<div align="center">
-		       			<p>현재진행중이거나 완료된 목표입니다.</p> 
-		       			- 기록을 확인해 주세요 -
-	       		  </div>
-				</div>
-				
-			<!-- alert모달영역 -->   
+			 <!-- 목표 시작시 뜨는 팝업모달-->
 	       		<div id="newStart" title="새로운 목표를 시작해요!">
 	       			<div id = "startTitle" align="center">
 	       			</div>
 				</div>	
+				
+				 <!-- Modal -->
+				<div id = "recordModal">
+				    <a class="btn btn-warning" href="#warning" data-toggle="modal"><h4>세부 기록확인</h4></a>
+				    <!-- Modal -->
+				    <div class="modal fade" id="warning" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				        <div class="modal-dialog">
+				            <div class="modal-content">
+				                <div class="modal-header modal-header-warning">
+				                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				                    <h1>세부목표별 맴버기록</h1>
+				                </div>
+				                <div class="modal-body">
+				                 <c:forEach items="${requestScope.btmGoalList}" var="title">
+									<table class = "memberRecord" border="2">
+										<tr class="titleline">
+											<td colspan="3" height="40" width="500">세부목표명 : ${title.bGoalTitle}</td>
+										</tr>
+										<tr height="30" class="th_line" align="center">
+											<td align="left"><span style='font-weight:bold;'>아이디</span></td>
+											<td align="center"><span style='font-weight:bold;'>기록(시,분단위)</span></td>
+											<td align="center"><span style='font-weight:bold;'>완료여부</span></td>
+										</tr>	
+											<c:forEach items="${requestScope.recordList}" var="record">
+											<c:if test="${title.bGoalTitle eq record.bGoalTitle}">
+												<tr>
+													<td align="left">${record.memberId}</td>
+													<td align="center">${record.takeTime}</td>
+													<td align="center">${record.isEnd}</td>
+												</tr>
+											</c:if>	
+											</c:forEach>
+									</table>
+									<hr>
+								</c:forEach>		
+				                
+				                </div>
+				                <div class="modal-footer">
+				                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+				                </div>
+				            </div><!-- /.modal-content -->
+				        </div><!-- /.modal-dialog -->
+				    </div><!-- /.modal -->
+				</div>
 				
      </body> 
  </html> 

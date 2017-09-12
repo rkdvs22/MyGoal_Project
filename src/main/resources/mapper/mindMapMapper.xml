@@ -46,7 +46,7 @@
 	
 	<!-- BTMRecord를 insert하는 쿼리문 -->
 	<insert id = "insertBTMRecord" parameterType="BTMRecordVO">
-		INSERT INTO BTMRECORD values(#{bRecordNum},sysdate,sysdate+#{period},#{memberId},#{btmSectionNum},#{bGoalNum},#{calendarNum})
+		INSERT INTO BTMRECORD values(#{bRecordNum},sysdate,sysdate+#{period}-1,#{memberId},#{btmSectionNum},#{bGoalNum},#{calendarNum})
 	</insert>
 	
 	<!-- 해당 맴버의 켈린더를 반환 -->

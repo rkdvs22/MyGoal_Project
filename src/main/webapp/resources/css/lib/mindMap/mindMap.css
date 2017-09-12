@@ -1,45 +1,15 @@
 			#viewport{
         		position: absolute;
         		top:100px;
-        		left:250px;
+        		left:150px;
         		border-style: solid;
         		border-width: 5px;
         		border-color: pink;
         	}
-					 
-        	#modal {
-			    color: black;
-			    padding:9px 15px;
-			    border-bottom:1px solid #eee;
-			    background-color: white;
-			    -webkit-border-top-left-radius: 5px;
-			    -webkit-border-top-right-radius: 5px;
-			    -moz-border-radius-topleft: 5px;
-			    -moz-border-radius-topright: 5px;
-			     border-top-left-radius: 5px;
-			     border-top-right-radius: 5px;
-			}
-			
-			#recordButtonDiv{
-				position: absolute;
-				left: 1100px;
-				top: 350px;
-				color: black;
-				border:2px solid #eee;
-				background-color: red;
-				border-color: black;
-			    border-radius: 5px;
-			}
-			
-			#recordButton {
-				width: 50px;
-				height: 30px;
-			}
-			
 						
 			#playingGoal{
 				position: absolute;
-				left:250px;
+				left:150px;
 				top:80px;
 				font-size: 15px;
 			}
@@ -55,6 +25,38 @@
 			    padding:9px 15px;
 			    border-bottom:1px solid #eee;
 			    background-color: white;
+			    -webkit-border-top-left-radius: 5px;
+			    -webkit-border-top-right-radius: 5px;
+			    -moz-border-radius-topleft: 5px;
+			    -moz-border-radius-topright: 5px;
+			     border-top-left-radius: 5px;
+			     border-top-right-radius: 5px;
+			}
+			
+			#recordModal{
+				position: absolute;
+				left: 1300px;
+				top: 380px;
+			}
+			
+			.modal-header-warning {
+				color:#fff;
+			    padding:9px 15px;
+			    border-bottom:1px solid #eee;
+			    background-color: #f0ad4e;
+			    -webkit-border-top-left-radius: 5px;
+			    -webkit-border-top-right-radius: 5px;
+			    -moz-border-radius-topleft: 5px;
+			    -moz-border-radius-topright: 5px;
+			     border-top-left-radius: 5px;
+			     border-top-right-radius: 5px;
+			}
+			
+			.modal-header-danger {
+				color:#fff;
+			    padding:9px 15px;
+			    border-bottom:1px solid #eee;
+			    background-color: #d9534f;
 			    -webkit-border-top-left-radius: 5px;
 			    -webkit-border-top-right-radius: 5px;
 			    -moz-border-radius-topleft: 5px;

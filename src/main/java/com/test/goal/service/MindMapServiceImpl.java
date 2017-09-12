@@ -74,21 +74,8 @@ public class MindMapServiceImpl implements MindMapService{
 		   
 		    // member의 color를 찾기위한 VO변수
 		    FindMemberColor key = new FindMemberColor();
-		    m = findMidGoal(mGoalNum);
-		    midStartDate = Long.parseLong(m.getmStartDate());
-		    midEndDate = Long.parseLong(m.getmEndDate());
 		    sysdate = Long.parseLong(dao.findSysdate());
-		    
-		    // 중간목표(mainProgress로부터 선택되거나 시작되어 자동으로 넘어온)가 현재 진행중인 것인지를 판단.
-		    if(sysdate >= midStartDate && sysdate <= midEndDate){
-		    	progressing = 1;
-		    }else{
-		    	progressing = 2;
-		    }
-		    
-		    //만약 중간 목표가 진행중이라면 유저들을 배치해라. (1로 바꿔야됨- 현재 2는 테스트임)
-		    if(progressing == 1){
-		    	sendBTMGoalList = findBTMGoal(mGoalNum);
+		    sendBTMGoalList = findBTMGoal(mGoalNum);
 		    	
 		    	//세부목표의 리스트를 하나씩 꺼내 세부목표별 기록이 있는지 검사
 		    	for(int i = 0; i < sendBTMGoalList.size(); i++){
@@ -163,7 +150,7 @@ public class MindMapServiceImpl implements MindMapService{
 	    			}
 		    	}
 		    	
-		    }//end if
+		   // }//end if
 		}//end for
 		resultMapping.put("memberId", memberIdList);
 		resultMapping.put("bGoalTitleList", bGoalTitleList);
@@ -185,7 +172,6 @@ public class MindMapServiceImpl implements MindMapService{
 				    
 				    sendBTMGoalList = findBTMGoal(mGoalNum);
 				    if(sendBTMGoalList != null){
-				    	
 					    for(int i = 0; i < sendBTMGoalList.size(); i++){
 					    	int bGoalNum = 0;
 					    	bGoalNum = sendBTMGoalList.get(i).getbGoalNum();
