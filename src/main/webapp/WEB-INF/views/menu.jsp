@@ -28,12 +28,11 @@
 	<link rel="stylesheet" href="/goal/resources/css/lib/font-awesome/font-awesome.min.css">
 	<link rel="stylesheet" href="/goal/resources/css/lib/bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" href="/goal/resources/css/main.css?version=6">
-	
-	<script src="/goal/resources/js/lib/jquery/jquery.min.js"></script>
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<script src="/goal/resources/js/lib/tether/tether.min.js"></script>
 	<script src="/goal/resources/js/lib/bootstrap/bootstrap.min.js"></script>
 	<script src="/goal/resources/js/plugins.js"></script>
-	<script type="text/javascript" src="/goal/resources/js/lib/jqueryui/jquery-ui.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 	<script type="text/javascript" src="/goal/resources/js/lib/lobipanel/lobipanel.min.js"></script>
 	<script type="text/javascript" src="/goal/resources/js/lib/match-height/jquery.matchHeight.min.js"></script>
 	<script src="/goal/resources/js/app.js"></script>
@@ -42,12 +41,6 @@
 </head>
 <body class="with-side-menu-compact dark-theme dark-theme-green">
 <script>
-	$(function(){
-		$(".brown").on("click",function(){
-			calendarForm();
-		});	
-	});
-	
 	// 로그인 화면으로 이동
 	function loginForm() {
 		location.href = "/goal/member/loginForm";
@@ -56,10 +49,6 @@
 	// 회원가입 화면으로 이동
 	function joinForm() {
 		location.href = "/goal/member/joinForm";
-	}
-	
-	function calendarForm(){
-		location.href = "/goal/calendar/calendar";
 	}
 </script>
 
@@ -197,8 +186,8 @@
 					<span class="lbl">Board</span>
 				</a>
 			</li>
-			<li class="brown">
-				<a href="/goal/calendar/calendar">
+			<li class="calendar">
+				<a href="/goal/mind/mindMap">
 					<i class="font-icon font-icon-event"></i>
 					<span class="lbl">Calendar</span>
 				</a>

@@ -1,20 +1,17 @@
-<%@ page language="java" contentType="text/html; charset= utf-8"
-    pageEncoding="utf-8"%>
-<%@taglib uri = "http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html> 
      <head> 
-        <link rel="stylesheet" href="/goal/resources/css/lib/bootstrap/bootstrap.min.css">
-        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="/goal/resources/css/lib/mindMap/mindMap.css">
-        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-        <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-        <script language="javascript" type="text/javascript" src="/mind/resources/js/arbor.js?version=1"></script> 
-        <script language="javascript" type="text/javascript" src="/mind/resources/js/graphics.js?version=1"></script> 
-        <script language="javascript" type="text/javascript" src="/mind/resources/js/renderer.js?version=2"></script> 
      </head> 
      <body> 
+     	<%@ include file="../menu.jsp" %>
+     	
+        <script language="javascript" type="text/javascript" src="/goal/resources/js/lib/mindMap/arbor.js"></script> 
+        <script language="javascript" type="text/javascript" src="/goal/resources/js/lib/mindMap/graphics.js"></script> 
+        <script language="javascript" type="text/javascript" src="/goal/resources/js/lib/mindMap/renderer.js"></script> 
+        <script src = "/goal/resources/js/lib/jScrollPane/jquery.jscrollpane.min.js"></script>
        	<div id = "playingGoal">
 				${sessionScope.userid}님은
 			</div>	
@@ -34,7 +31,7 @@
     		// modal창 설정
     			$("#modal").dialog({
     				autoOpen: false,
-    				position: [380, 50],
+    				position: [680, 150],
     				modal: true,
     				width: 500,
     				height: 500,
@@ -52,7 +49,7 @@
     				position: [440, 150],
     				modal: true,
     				width: 400,
-    				height: 200,
+    				height: 1000,
     				resizable: false,
     				buttons:{
     						"확인":function() {
@@ -119,6 +116,7 @@
 					type:"get",
 					dataType:"json",
 					success:function(resultMapping){
+					
 			       	   for(var i =0; i < resultMapping.memberId.length; i++){
 			       		  sys.addNode(resultMapping.memberId[i],{'color':resultMapping.memberColor[i],'label':resultMapping.memberId[i],
 				     	  'shape':'dot'});   
@@ -155,7 +153,7 @@
 					type:"get",
 					dataType:"json",
 					success:function(resultMapping){
-					   console.log(resultMapping.bGoalTitleList[0]);
+					   console.log(resultMapping);
 			       	   for(var i =0; i < resultMapping.memberId.length; i++){
 			       		  $("#playingGoal").empty();
 			       		  str = '${sessionScope.userid}'+'님은';
@@ -170,12 +168,12 @@
 					      }
 					      title = resultMapping.bGoalTitleList[i];
 				       } // end for
+				       
 					    if(str != ""){
 						    $("#playingGoal").append(" "+str+"을 새롭게 실행합니다..");
 				        }else if(resultMapping.memberId[i].length == 0){
 				       	    $("#playingGoal").append(" 현재 진행중인 목표가 없습니다 설정해 주세요..");  
 				        }
-				       console.log(resultMapping.bGoalTitleList[i]);
 					    $("#startTitle").empty();
 			       	    $("#startTitle").append(title + '을 시작합니다.');
 			       		$("#newStart").dialog("open");
@@ -188,8 +186,8 @@
  		   }//end startGoal  
  	
        </script>
-        
- 	   		<!-- 모달영역 -->   
+       
+ 	   			<!-- 모달영역 -->   
  	   		<div id = "recordButtonDiv"><button type="button" id="recordButton"><span id = "modalButtonText">check</span></div>
 	       		<div id="modal" title="세부목표별 맴버기록">
 					<div class="midgoal">

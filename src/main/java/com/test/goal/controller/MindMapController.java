@@ -38,6 +38,7 @@ public class MindMapController {
 		model.addAttribute("midGoalVO", midGoalVO);
 		model.addAttribute("btmGoalList", service.getBtmGoalList(midGoalVO));
 		HashMap<String, Integer> MemberGoalNum = new HashMap<>();
+		
 		MemberGoalNum.put("슈퍼맨", 81);
 		MemberGoalNum.put("아이언맨", 82);
 		MemberGoalNum.put("엔트맨", 83);
@@ -71,7 +72,6 @@ public class MindMapController {
 		MemberGoalNum.put("아이언맨", 82);
 		MemberGoalNum.put("엔트맨", 83);
 		MemberGoalNum.put("승무쌤", 84);
-		
 		return service.randomAllocate(MemberGoalNum,progressNum,isClick,request,clickedNodeTitle,clickedNodeNum,BTMSectionNum);
 	}
 	

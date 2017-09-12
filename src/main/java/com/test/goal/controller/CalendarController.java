@@ -32,8 +32,7 @@ public class CalendarController {
 	private CalendarService service;
 	
 	@RequestMapping(value = "calendar", method = RequestMethod.GET)
-	public String openCalendar() {
-		
+	public String openCalendar(Model model) {
 		return "/calendar/calendar";
 	}
 	

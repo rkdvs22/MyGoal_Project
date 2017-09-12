@@ -26,5 +26,6 @@
 		<mapper resource="mapper/friendMapper.xml"/>
 		<mapper resource="mapper/calendarMapper.xml"/>
 		<mapper resource="mapper/boardMapper.xml"/>
+		<mapper resource="mapper/mindMapMapper.xml"/>
 	</mappers>
 </configuration>

@@ -56,7 +56,6 @@ public class MindMapServiceImpl implements MindMapService{
 		long btmStartDate = 0;
 		long btmendDate = 0;
 		ArrayList<BTMGoalVO> sendBTMGoalList = new ArrayList<>();
-		
 		int bGoalNum = 0;
 		int progressing = 0;
 		// 현재 진행중인 세부 목표에 페이지 마인드맵 페이지 이동과 동시에 유저를 위치 시키기 위해서 필요한 mapping (MemberId/bGoalTitle 맵핑)
@@ -120,7 +119,6 @@ public class MindMapServiceImpl implements MindMapService{
 		    		}
 		    		
 		    	}//end for
-		    	
 		    	/**
 		    	 * 세부 목표에 대한 기록이 없을 때,
 		    	 * view 페이지에서 클릭했을 경우 현재 로그인한 유저의 아이디와 일치하는지 확인한 다음 넘어온 bGoalNum(key값)과 넘어온 title을 토대로 일치하는 데이터를 생성하고 목표시작.
@@ -151,7 +149,6 @@ public class MindMapServiceImpl implements MindMapService{
 		        					recordKey.setMemberColor(dao.sendMemberColor(key));
 		        					recordKey.setCalendarNum(calendar.getCalendarNum());
 		        					recordKey.setBtmRecordNum(btmRecordSEQ);
-		        					System.out.println(recordKey.toString());
 		        					dao.insertDayRecord(recordKey);
 		        					
 		        					resultMapping.put("memberId", memberIdList);

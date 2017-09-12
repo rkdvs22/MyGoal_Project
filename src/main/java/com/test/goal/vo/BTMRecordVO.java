@@ -19,6 +19,7 @@ public class BTMRecordVO {
 	private int isComplete;
 	private String mGoalTitle;
 	private String color;
+	private int achievePercent;
 	
 	public BTMRecordVO() {
 	}
@@ -126,13 +127,22 @@ public class BTMRecordVO {
 	public void setColor(String color) {
 		this.color = color;
 	}
+	
+	public int getAchievePercent() {
+		return achievePercent;
+	}
+
+	public void setAchievePercent(int achievePercent) {
+		this.achievePercent = achievePercent;
+	}
 
 	@Override
 	public String toString() {
 		return "BTMRecordVO [bRecordNum=" + bRecordNum + ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", memberId=" + memberId + ", btmSectionNum=" + btmSectionNum + ", bGoalNum=" + bGoalNum
 				+ ", calendarNum=" + calendarNum + ", period=" + period + ", clear=" + clear + ", BGoalTitle="
-				+ BGoalTitle + ", isComplete=" + isComplete + ", mGoalTitle=" + mGoalTitle + ", color=" + color + "]";
+				+ BGoalTitle + ", isComplete=" + isComplete + ", mGoalTitle=" + mGoalTitle + ", color=" + color
+				+ ", achievePercent=" + achievePercent + "]";
 	}
 
 }
