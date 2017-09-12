@@ -33,11 +33,12 @@ public class CalendarServiceImpl implements CalendarService{
 			long startDate = 0;
 			long endDate = 0;
 			
-				
+		
+			
 			String[] parsing1 = BTMRecordList.get(i).getStartDate().split(" ");
 			String[] parsing2 = parsing1[0].split("-");
 			String[] parsing3 = BTMRecordList.get(i).getEndDate().split(" ");
-			String[] parsing4 = parsing1[0].split("-");
+			String[] parsing4 = parsing3[0].split("-");
 			String a = "";
 			String b = "";
 			for(int k = 0; k < parsing2.length; k++){
@@ -46,25 +47,25 @@ public class CalendarServiceImpl implements CalendarService{
 			
 			for(int j = 0; j < parsing4.length; j++){
 				b += parsing4[j];
-			}
-					
+			
 			startDate = Long.parseLong(a);
 			endDate = Long.parseLong(b);
-					
-			if(startDate <= toDay && toDay >= endDate && BTMRecordList.get(i).getIsComplete() != 1){
-				color = "#fd9697"; // 현재 진행중 - 노랑계열
+			
+			if(toDay >= startDate && toDay <= endDate && BTMRecordList.get(i).getIsComplete() != 1){
+				color = "#B8F3B8"; // 현재 진행중 - 노랑계열
 				BTMRecordList.get(i).setColor(color);
 			}else if(BTMRecordList.get(i).getIsComplete() == 1){
-				color = "#b9e8fd"; //푸른 계열 완료 색상
+				color = "#A8C8F9"; //푸른 계열 완료 색상
 				BTMRecordList.get(i).setColor(color);
-			}
-			else{
-				color = "#fee0d2"; // 레드 달성실패
+			}else{
+				color = "#FFBDBD"; // 레드 달성실패
 				BTMRecordList.get(i).setColor(color);
 			}
 		}// end for
+		}
 		
 		return BTMRecordList;
 	}
 
-}
+	}
+
