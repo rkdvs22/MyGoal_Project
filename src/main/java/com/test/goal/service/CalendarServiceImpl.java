@@ -52,10 +52,10 @@ public class CalendarServiceImpl implements CalendarService{
 			endDate = Long.parseLong(b);
 			
 			if(toDay >= startDate && toDay <= endDate && BTMRecordList.get(i).getIsComplete() != 1){
-				color = "#B8F3B8"; // 현재 진행중 - 노랑계열
+				color = "#C2E0BA"; // 현재 진행중 - 녹색계열
 				BTMRecordList.get(i).setColor(color);
 			}else if(BTMRecordList.get(i).getIsComplete() == 1){
-				color = "#A8C8F9"; //푸른 계열 완료 색상
+				color = "#oac9FF"; //푸른 계열 완료 색상
 				BTMRecordList.get(i).setColor(color);
 			}else{
 				color = "#FFBDBD"; // 레드 달성실패
