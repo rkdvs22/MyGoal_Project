@@ -59,4 +59,12 @@ public class BoardVO {
 	public void setTgoalnum(int tgoalnum) {
 		this.tgoalnum = tgoalnum;
 	}
+
+	@Override
+	public String toString() {
+		return "BoardVO [boardnum=" + boardnum + ", userid=" + userid + ", hit=" + hit + ", favorite=" + favorite
+				+ ", tgoalnum=" + tgoalnum + "]";
+	}
+	
+	
 }

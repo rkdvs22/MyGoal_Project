@@ -28,7 +28,6 @@
 <script>
 
 	function addFriend(listUserid) {
-		//location.href = "/goal/friend/addFriend";
 		var result = confirm("친구등록 하시겠습니까?");
 		
 		if(result) {

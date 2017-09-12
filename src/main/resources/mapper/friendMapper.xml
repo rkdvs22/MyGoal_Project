@@ -26,11 +26,10 @@
 		select * from Member where not userid = #{userid} and userid like '%'||#{searchKeyid}||'%'	
 	</select>
 	
-	<!-- 친구여부 : null이 아닐 때 친구 추가 버튼 활성화 -->
+	<!-- 친구여부 : null이 아닐 때 친구 추가 버튼 비활성화 -->
 	<select id="isFriend" parameterType="string" resultType="MyFriendVO">
-		select * from Myfriend mf, Member me
-		where me.userid = #{searchKeyid}
-		and not mf.frdid = #{searchKeyid}
+		select * from Myfriend
+		where userid = #{userid} and frdid = #{id}
 	</select>
 	
 	<!-- 친구등록 -->

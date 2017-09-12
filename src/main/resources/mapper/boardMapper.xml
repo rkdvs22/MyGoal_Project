@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.test.goal.dao.BoardMapper">
+	
+	<!-- 게시글 목록 -->
+	<select id="boardList" parameterType="BoardVO" resultType="BoardVO">
+		<!-- select b.userid, b.favorite, t.tgoaltitle, t.tstartdate, t.tenddate from board b, topgoal t where b.tgoalnum = t.tgoalnum
+		 order by boardnum desc -->
+	</select>
+</mapper>

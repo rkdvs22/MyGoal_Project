@@ -192,7 +192,7 @@
 				</a>
 			</li>
 			<li class="blue-dirty">
-				<a href="#">
+				<a href="/goal/board/boardList">
 					<i class="font-icon font-icon-notebook"></i>
 					<span class="lbl">Board</span>
 				</a>

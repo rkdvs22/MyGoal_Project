@@ -1,12 +1,16 @@
 package com.test.goal.dao;
 
-interface BoardDAO {
-	public void boardList();	//°Ô½ÃÆÇ ¸ñ·Ï
-	public void boardRead();	//°Ô½Ã±Û ÀĞ±â
-	public void replyList();	//´ñ±Û ¸ñ·Ï
-	public void writeReply();	//´ñ±Û ¾²±â
-	public void deleteReply();	//´ñ±Û »èÁ¦
-	public void addGoal();	//¸ñÇ¥ ´ã±â
-	public void addHit();	//Á¶È¸¼ö Áõ°¡
-	public void addFavorite();	//ÁÁ¾Æ¿ä ¼ö Áõ°¡
+import java.util.ArrayList;
+
+import com.test.goal.vo.BoardVO;
+
+public interface BoardDAO {
+	public ArrayList<BoardVO> boardList();	// ê²Œì‹œê¸€ ëª©ë¡
+	public void boardRead();	//ï¿½Ô½Ã±ï¿½ ï¿½Ğ±ï¿½
+	public void replyList();	//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	public void writeReply();	//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	public void deleteReply();	//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	public void addGoal();	//ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½
+	public void addHit();	//ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	public void addFavorite();	//ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 }

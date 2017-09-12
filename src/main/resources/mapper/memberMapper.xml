@@ -19,7 +19,7 @@
 	
 	<!-- 회원정보수정 -->
 	<update id="updateMember" parameterType="MemberVO">
-		update Member set password = #{password}, email = #{email}, tel1 = #{tel1}, tel2 = #{tel2}, tel3 = #{tel3}
+		update Member set userid = #{userid}, password = #{password}, email = #{email}, tel1 = #{tel1}, tel2 = #{tel2}, tel3 = #{tel3}
 		<if test="image != null">, image = #{image}</if>
 			where userid = #{userid} 	
 	</update>
