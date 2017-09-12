@@ -28,7 +28,10 @@
 		<mapper resource="mapper/friendMapper.xml"/>
 		<mapper resource="mapper/calendarMapper.xml"/>
 		<mapper resource="mapper/boardMapper.xml"/>
+<<<<<<< HEAD
 		<mapper resource="mapper/mindMapMapper.xml"/>
+=======
+>>>>>>> 94460492cbdac2057d2b0a60bb6e7af7144f808d
 		<mapper resource="mapper/createGoalMapper.xml"/>
 	</mappers>
 </configuration>
