@@ -1,7 +1,27 @@
+.msgList {
+	overflow-y: auto;
+	margin: 0 auto;
+	/* border: solid black 1px; */
+	width: 1000px;
+	height: 600px;
+}
+	
+#tab1_left, #tab2_left {
+	width: 10%;
+	/* height: 100%; */
+	float: left;
+}
+	
+#tab1_right, #tab2_right {
+	width: 90%;
+	/* height: 100%; */
+	float: right;
+}
+
 /*----- Tabs -----*/
 .tabs {
     width:100%;
-    display:inline-block;
+    /* display:inline-block; */
 }
 /*----- Tab Links -----*/
 /* Clearfix */
