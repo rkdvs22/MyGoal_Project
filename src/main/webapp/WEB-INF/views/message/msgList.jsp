@@ -10,31 +10,48 @@
 <title>Insert title here</title>
 <script src="/goal/resources/js/jquery-3.2.1.min.js"></script>
 <script>
-jQuery(document).ready(function() {
-    jQuery('.tabs .tab-links a').on('click', function(e)  {
-        var currentAttrValue = jQuery(this).attr('href');
-        // default Show/Hide Tabs
-        jQuery('.tabs ' + currentAttrValue).show().siblings().hide();
-        //fade
-        //jQuery('.tabs ' + currentAttrValue).fadeIn(400).siblings().hide();
-        // slide1 Show/Hide Tabs
-        //jQuery('.tabs ' + currentAttrValue).siblings().slideUp(400);
-        //jQuery('.tabs ' + currentAttrValue).delay(400).slideDown(400);
-        // slide2 Show/Hide Tabs 
-        //jQuery('.tabs ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
-        // Change/remove current tab to active
-        jQuery(this).parent('li').addClass('active').siblings().removeClass('active');
-        e.preventDefault();
-    });
-});
+	jQuery(document).ready(function() {
+	    jQuery('.tabs .tab-links a').on('click', function(e)  {
+	        var currentAttrValue = jQuery(this).attr('href');
+	        // default Show/Hide Tabs
+	        jQuery('.tabs ' + currentAttrValue).show().siblings().hide();
+	        //fade
+	        //jQuery('.tabs ' + currentAttrValue).fadeIn(400).siblings().hide();
+	        // slide1 Show/Hide Tabs
+	        //jQuery('.tabs ' + currentAttrValue).siblings().slideUp(400);
+	        //jQuery('.tabs ' + currentAttrValue).delay(400).slideDown(400);
+	        // slide2 Show/Hide Tabs 
+	        //jQuery('.tabs ' + currentAttrValue).slideDown(400).siblings().slideUp(400);
+	        // Change/remove current tab to active
+	        jQuery(this).parent('li').addClass('active').siblings().removeClass('active');
+	        e.preventDefault();
+	    });
+	});
 
 	function msgList(id) {
 		$.ajax({
-			url: "/message/msgList",
+			url: "/goal/message/msgList",
 			type: "post",
 			data: {"id": id},
-			success: function() {alert("성공");},
-			error: function() {alert("실패");}
+			dataType: "json",
+			success: function(msgList) {
+				$(".receivedMsgList").empty();
+				$(msgList).each(function(index, item) {
+					var str = "";
+					str += "<tr><td class='msgTitle'>";
+					str += item.msgTitle;
+					str += "</td></tr>";
+					str += "<tr><td class='msgContent'>";
+					str += item.msgContent;
+					str += "</td></tr>";
+					
+					$(".receivedMsgList").append(str);
+				});
+			},
+			error: function(e) {
+				console.log(e);
+				alert(e);
+				}
 		});
 	}
 </script>
@@ -47,15 +64,15 @@ jQuery(document).ready(function() {
 		height: 600px;
 	}
 	
-	#tab1_left {
+	#tab1_left, #tab2_left {
 		width: 20%;
-		height: 100%;
+		/* height: 100%; */
 		float: left;
 	}
 	
-	#tab1_right {
+	#tab1_right, #tab2_right {
 		width: 80%;
-		height: 100%;
+		/* height: 100%; */
 		float: right;
 	}
 </style>
@@ -87,21 +104,28 @@ jQuery(document).ready(function() {
 			</div>
 			<!-- Received Messages -->
 			<div id="tab1_right">
-				받은 쪽지함이고 싶은 곳....
+				<!-- 받은 쪽지 채팅 형식으로 출력 -->
+				<table class="receivedMsgList"></table>
 			</div>
         </div>
         <!-- 받은 쪽지함 끝 -->
 		<!-- 보낸 쪽지함 -->
 		<div id="tab2" class="tab">
-        <table id="receiverList">
-			<c:forEach items="${rlist}" var="rlist">
-				<tr>
-					<td>
-						<a href="#" onclick="msgList('${rlist.userid}')">${rlist.userid}</a>
-					</td>
-				</tr>
-			</c:forEach>
-		</table>
+			<div id="tab2_left">
+	        	<table id="receiverList">
+	        		<c:forEach items='${rlist}' var='rlist'>
+	        			<tr>
+							<td>
+								<a href="#" onclick="msgList('${rlist.userid}')">${rlist.userid}</a>
+							</td>
+						</tr>
+					</c:forEach>
+	        	</table>
+        	</div>
+        	<div id="tab2_right">
+        		<!-- 보낸 쪽지 채팅 형식으로 출력 -->
+        		<table class="sentMsgList"></table>
+        	</div>
         </div>
         <!-- 보낸 쪽지함 끝 -->
     </div>
