@@ -40,7 +40,7 @@
 <!-- 	<script src="https://www.gstatic.com/charts/loader.js"></script> -->
 
 </head>
-<body>
+<body class="with-side-menu-compact dark-theme dark-theme-green">
 <script>
 	$(function(){
 		$(".brown").on("click",function(){

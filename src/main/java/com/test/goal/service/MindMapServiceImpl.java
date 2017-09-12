@@ -180,7 +180,6 @@ public class MindMapServiceImpl implements MindMapService{
 		ArrayList<MemberRecord> getRecordList = new ArrayList<>();
 		ArrayList<BTMGoalVO> sendBTMGoalList = new ArrayList<>();
 		ArrayList<DayRecordVO> successDayRecordList = new ArrayList<>();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-hh-mm");
 	      
 		// 넘어온 Hash맵에서 member와 해당 mGoalNum을 하나씩 꺼내 검사
 				for(Map.Entry<String, Integer> entry : memberGoalNum.entrySet()) {

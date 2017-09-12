@@ -4,26 +4,9 @@ $(document).ready(function(){
     Fullcalendar
     ========================================================================== */
     
-    /*$(function getRecordList(){
-	  $.ajax({
-   	    type: "POST",
-   	    contentType: "application/json; charset=utf-8",
-   	    url: "/goal/calendar/getCalendarInfo",
-   	    dataType: "json",
-   	    success: function (data) {
-   	        $.each(data, function (i, li) {
-   	        	 var source = 
-   	                    {
-   	                        title:li.bgoalTitle,start:li.startDate,end:li.endDate
-   	                    }
-   	             eventlist.push(source);
-   	            }); // end for
-   	        }
-   	    });// end ajax
-  });*/
-    
- 
+	$('.fc-event').css('font-size', '.6em');
     $('#calendar').fullCalendar({
+    	height: 750,
         header: {
             left: '',
             center: 'prev, title, next',
@@ -36,6 +19,10 @@ $(document).ready(function(){
             nextYear: 'font-icon font-icon-arrow-right'
         },
         lang:"ko",
+        defaultDate: '2017-09-12',
+        editable: true,
+        selectable: true,
+        eventLimit: true, // allow "more" link when too many events
         events:
         	function(start, end, timezone, callback) {
             	$.ajax({
@@ -46,21 +33,18 @@ $(document).ready(function(){
                 		console.log(result);
                     	var events = [];
                     	$(result).each(function() {
+                    		console.log(result);
                         	events.push({
                             	title: $(this).attr('bgoalTitle'),
                             	start: $(this).attr('startDate'), // will be parsed
                             	end : $(this).attr('endDate'),
-                            	color : "blue"
+                            	color :  $(this).attr('color')
                         	});
                     	});
                     	callback(events);
                 	}
             	});
         	},
-        defaultDate: '2016-01-12',
-        editable: true,
-        selectable: true,
-        eventLimit: true, // allow "more" link when too many events
         viewRender: function(view, element) {
             if (!("ontouchstart" in document.documentElement)) {
                 $('.fc-scroller').jScrollPane({
@@ -328,6 +312,13 @@ $(document).ready(function(){
 
     });
     
+    if(calendar) {
+    	  $(window).resize(function() {
+    	    var calHeight = $(window).height()*0.83;
+    	    $('#calendar').fullCalendar('option', 'height', calHeight);
+    	  });
+    	};
+
 
 /* ==========================================================================
     Side datepicker

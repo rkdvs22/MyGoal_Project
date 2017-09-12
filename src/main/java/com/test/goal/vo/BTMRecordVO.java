@@ -16,6 +16,9 @@ public class BTMRecordVO {
 	private int period;
 	private String clear;
 	private String BGoalTitle;
+	private int isComplete;
+	private String mGoalTitle;
+	private String color;
 	
 	public BTMRecordVO() {
 	}
@@ -79,11 +82,11 @@ public class BTMRecordVO {
 	public int getPeriod() {
 		return period;
 	}
-	
+
 	public void setPeriod(int period) {
 		this.period = period;
 	}
-	
+
 	public String getClear() {
 		return clear;
 	}
@@ -100,11 +103,36 @@ public class BTMRecordVO {
 		BGoalTitle = bGoalTitle;
 	}
 
+	public int getIsComplete() {
+		return isComplete;
+	}
+
+	public void setIsComplete(int isComplete) {
+		this.isComplete = isComplete;
+	}
+
+	public String getmGoalTitle() {
+		return mGoalTitle;
+	}
+
+	public void setmGoalTitle(String mGoalTitle) {
+		this.mGoalTitle = mGoalTitle;
+	}
+	
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
 	@Override
 	public String toString() {
 		return "BTMRecordVO [bRecordNum=" + bRecordNum + ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", memberId=" + memberId + ", btmSectionNum=" + btmSectionNum + ", bGoalNum=" + bGoalNum
 				+ ", calendarNum=" + calendarNum + ", period=" + period + ", clear=" + clear + ", BGoalTitle="
-				+ BGoalTitle + "]";
+				+ BGoalTitle + ", isComplete=" + isComplete + ", mGoalTitle=" + mGoalTitle + ", color=" + color + "]";
 	}
+
 }

@@ -6,11 +6,15 @@
 <mapper namespace="com.test.goal.dao.CalendarMapper">
 
 	<select id = "getCalendar" parameterType="string" resultType="BTMRecordVO">
-		select BTMGoal.BGoalTitle as "bGoalTitle",to_char(BTMRecord.startDate,'yyyy-mm-dd') as "startDate", to_char(BTMRecord.endDate,'yyyy-mm-dd') as "endDate" 
-		from BTMGoal inner join BTMRecord 
-		on BTMGoal.bGoalNum = BTMRecord.bGoalNum 
-		where BTMRecord.memberId = #{userid}
-		order by BTMRecord.startDate desc
+		select b.BGoalTitle as "bGoalTitle",to_char(r.startDate,'yyyy-mm-dd') as "startDate", 
+		to_char(r.endDate+1,'yyyy-mm-dd') as "endDate", d.completeTime as "isComplete",m.mGoalTitle as mGoalTitle
+		from BTMGoal b inner join BTMRecord r 
+		on b.bGoalNum = r.bGoalNum 
+		full join (select btmRecordNum,count(completeTime) as completeTime from dayRecord group by btmRecordNum) d
+		on r.BRecordNum = d.BTMRecordNum
+		inner join MidGoal m on b.mGoalNum = m.mGoalNum
+		where r.memberId = #{userid}
+		order by r.startDate desc
 	</select>
 
 </mapper>

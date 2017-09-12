@@ -17,16 +17,15 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     
 	<link rel="stylesheet" href="/goal/resources/css/separate/vendor/bootstrap-datetimepicker.min.css?version=4">
-	<link rel="stylesheet" href="/goal/resources/css/lib/fullcalendar/fullcalendar.min.css?version=5">
-	<link rel="stylesheet" href="/goal/resources/css/separate/pages/calendar.min.css?version=4">
+	<link rel="stylesheet" href="/goal/resources/css/lib/fullcalendar/fullcalendar.min.css?version=12">
+	<link rel="stylesheet" href="/goal/resources/css/separate/pages/calendar.min.css?version=5">
     <link rel="stylesheet" href="/goal/resources/css/lib/font-awesome/font-awesome.min.css?version=4">
     <link rel="stylesheet" href="/goal/resources/css/lib/bootstrap/bootstrap.min.css?version=4">
     <link rel="stylesheet" href="/goal/resources/css/main.css?version=4">
     
 </head>
-<body class="with-side-menu">
-
-	<%@ include file="../menu.jsp" %>
+<body>
+   <%@ include file="../menu.jsp" %>
 	<script>
 		//클릭한 날짜가 오늘 날짜인지 확인하는 변수 0이면 아님. 1이면 오늘날짜의 것. (1이면 클릭시 모달에서 수정이나 삭제가 가능하도록 (버튼이 보이도록))
 		var isToday = 0;
@@ -37,7 +36,7 @@
 			<div class="box-typical">
 				<div class="calendar-page">
 					<div class="calendar-page-content">
-						<div class="calendar-page-title">Calendar</div>
+						<div class="calendar-page-title">${sessionScope.userid}님의 Calendar</div>
 						<div class="calendar-page-content-in">
 							<div id='calendar'></div>
 						</div><!--.calendar-page-content-in-->
@@ -98,11 +97,10 @@
 	<script type="text/javascript" src="/goal/resources/js/lib/match-height/jquery.matchHeight.min.js?version=4"></script>
 	<script type="text/javascript" src="/goal/resources/js/lib/moment/moment-with-locales.min.js?version=4"></script>
 	<script type="text/javascript" src="/goal/resources/js/lib/eonasdan-bootstrap-datetimepicker/bootstrap-datetimepicker.min.js?version=4"></script>
-	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar.js?version=6"></script>
-	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=18"></script>
+	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar.min.js?version=6"></script>
+	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=30"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/ko.js"></script>
     <script src="/goal/resources/js/app.js?version=4"></script>
-    
     
 </body>
 </html>

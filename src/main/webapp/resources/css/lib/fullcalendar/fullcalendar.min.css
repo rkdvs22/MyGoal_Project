@@ -13,7 +13,7 @@
 }
 
 body .fc {
-	font-size: 1em
+	font-size: 0.85em
 }
 
 .fc-unthemed .fc-divider, .fc-unthemed .fc-popover, .fc-unthemed .fc-row,
@@ -403,7 +403,7 @@ hr.fc-divider {
 .fc-event {
 	position: relative;
 	display: block;
-	font-size: .85em;
+	font-size: .4em;
 	line-height: 1.3;
 	border-radius: 3px;
 	border: 1px solid #3a87ad;
@@ -526,7 +526,8 @@ a.fc-more:hover {
 }
 
 .fc-more-popover .fc-event-container {
-	padding: 10px
+	padding: 5px;
+	height: 20;
 }
 
 .fc-now-indicator {
@@ -535,6 +536,7 @@ a.fc-more:hover {
 }
 
 .fc-toolbar {
+	font-size:0.9em;
 	text-align: center;
 	margin-bottom: 1em
 }
@@ -548,6 +550,7 @@ a.fc-more:hover {
 }
 
 .fc-toolbar .fc-center {
+	
 	display: inline-block
 }
 
@@ -766,12 +769,14 @@ a.fc-more:hover {
 }
 
 .fc-ltr .fc-time-grid .fc-event-container {
-	margin: 0 2.5% 0 2px
+	margin: 0 1.5% 0 1px
 }
 
 .fc-rtl .fc-time-grid .fc-event-container {
-	margin: 0 2px 0 2.5%
+	margin: 0 1px 0 1.5%
 }
+
+.fc-event { height: 0.75em; }
 
 .fc-time-grid .fc-bgevent, .fc-time-grid .fc-event {
 	position: absolute;
@@ -833,7 +838,7 @@ a.fc-more:hover {
 }
 
 .fc-time-grid-event.fc-short .fc-title {
-	font-size: .85em;
+	font-size: .7em;
 	padding: 0
 }
 
