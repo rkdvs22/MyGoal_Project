@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="/goal/resources/css/main.css">
     
 </head>
-<body class="with-side-menu">
+<body>
 
 <%@ include file="../menu.jsp" %>
 

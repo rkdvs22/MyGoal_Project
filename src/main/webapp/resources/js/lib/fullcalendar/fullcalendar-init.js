@@ -3,7 +3,7 @@ $(document).ready(function(){
 /* ==========================================================================
     Fullcalendar
     ========================================================================== */
-    
+	$('#calendar').fullCalendar('today');
 	$('.fc-event').css('font-size', '.6em');
     $('#calendar').fullCalendar({
     	height: 750,
@@ -19,7 +19,6 @@ $(document).ready(function(){
             nextYear: 'font-icon font-icon-arrow-right'
         },
         lang:"ko",
-        defaultDate: '2017-09-12',
         editable: true,
         selectable: true,
         eventLimit: true, // allow "more" link when too many events
@@ -33,7 +32,6 @@ $(document).ready(function(){
                 		console.log(result);
                     	var events = [];
                     	$(result).each(function() {
-                    		console.log(result);
                         	events.push({
                             	title: $(this).attr('bgoalTitle'),
                             	start: $(this).attr('startDate'), // will be parsed
@@ -60,10 +58,8 @@ $(document).ready(function(){
             // Add and remove event border class
             if (!$(this).hasClass('event-clicked')) {
                 $('.fc-event').removeClass('event-clicked');
-                
                 $(this).addClass('event-clicked');
             }
-            
             
 	          var time = new Date() 
 	  	      
@@ -76,7 +72,9 @@ $(document).ready(function(){
 	  	      if((day+"").length <2){
 	  	    	  day = "0"+day;
 	  	      }
-	  	      
+	  	      console.log(calEvent);
+	  	      console.log(jsEvent);
+	  	      console.log(view);
 	  	      var today = year+""+month+""+day
 	  	      
 	  	      //calEvaent.start._i 는  DayPlan 이벤트의 해당 날짜 입니다.
