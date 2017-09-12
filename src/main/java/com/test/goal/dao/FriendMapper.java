@@ -2,8 +2,6 @@ package com.test.goal.dao;
 
 import java.util.ArrayList;
 import java.util.Map;
-
-
 import com.test.goal.vo.MemberVO;
 import com.test.goal.vo.MyFriendVO;
 
@@ -19,7 +17,7 @@ public interface FriendMapper {
 
 	public void addFriend(String userid, String frdid); // 친구등록
 
-	public String isFriend(MyFriendVO fvo); // 친구여부 : null이 아닐 때 친구 추가 버튼 활성화
+	public ArrayList<MyFriendVO> isFriend(String userid, String id); // 친구여부 : null이 아닐 때 친구 추가 버튼 비활성화
 
 
 	

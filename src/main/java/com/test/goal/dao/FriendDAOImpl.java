@@ -51,11 +51,11 @@ public class FriendDAOImpl implements FriendDAO {
 		mapper.addFriend(userid, frdid);
 	}
 
-	// 친구여부 : null이 아닐 때 친구 추가 버튼 활성화
+	// 친구여부 : null이 아닐 때 친구 추가 버튼 비활성화
 	@Override
-	public String isFriend(MyFriendVO fvo) {
+	public ArrayList<MyFriendVO> isFriend(String userid, String id) {
 		FriendMapper mapper = sqlsession.getMapper(FriendMapper.class);
-		return mapper.isFriend(fvo);
+		return mapper.isFriend(userid, id);
 	}
 
 	

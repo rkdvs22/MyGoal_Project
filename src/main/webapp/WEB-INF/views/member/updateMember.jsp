@@ -58,7 +58,7 @@
                     	<!-- <input type="image" id="showImg" onclick="document.getElementById('imgUpload').click()" > -->
                     </div>
                     <button type="submit" class="btn btn-rounded btn-success sign-up">Update</button>
-                    <button type="button" class="btn btn-rounded btn-success" onclick="/goal/home">Cancel</button>
+                    <button type="button" class="btn btn-rounded btn-success" onclick="/goal">Cancel</button>
                     <input type="hidden" name="userid" value="${userid}">
                 </form>
             </div>

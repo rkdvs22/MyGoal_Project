@@ -47,12 +47,13 @@ public class MessageController {
 	}
 	
 	//메시지 채팅 형식으로 출력(9/7 생성, 9/11 수정)
+	@RequestMapping(value = "msgList", method = RequestMethod.POST)
 	@ResponseBody
-	@RequestMapping(value = "msgList", method = RequestMethod.GET)
-	public void msgList(HttpSession session, String id, Model model) {
+	public ArrayList<MessageVO> msgList(HttpSession session, String id, Model model) {
 		String userid = (String) session.getAttribute("userid");
-		ArrayList<MessageVO> msgList = dao.msgList(userid, id);
-		model.addAttribute("msgList", msgList);
+		/*ArrayList<MessageVO> msgList = dao.msgList(userid, id);
+		model.addAttribute("msgList", msgList);*/
+		return dao.msgList(userid, id);
 	}
 	
 	//메시지 내용 읽기

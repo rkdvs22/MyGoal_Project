@@ -1,6 +1,7 @@
 package com.test.goal.controller;
 
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -67,12 +68,23 @@ public class FriendController {
 		String userid = (String)session.getAttribute("userid");
 		map.put("searchKeyid", searchKeyid);
 		map.put("userid", userid);
+		
 		model.addAttribute("searchKeyid", searchKeyid);
-		model.addAttribute("searchList", dao.searchFriend(map));
+		ArrayList<MemberVO> searchList = dao.searchFriend(map);
+		model.addAttribute("searchList", searchList);
+		
+		
+		// 친구여부 : null이 아닐 때 친구 추가 버튼 비활성화
+		ArrayList<MyFriendVO> result = new ArrayList<>();
+		for (MemberVO m : searchList) {
+			result = dao.isFriend(userid, m.getUserid());
+		}
+		
+		model.addAttribute("result", result);
+		
 		return "/friend/searchFriend";
 	}
 	
-	// 친구여부 : null이 아닐 때 친구 추가 버튼 활성화
 	// 친구등록
 	@RequestMapping(value = "addFriend", method = RequestMethod.POST)
 	@ResponseBody

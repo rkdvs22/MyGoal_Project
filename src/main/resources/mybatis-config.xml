@@ -17,6 +17,7 @@
 		<typeAlias type="com.test.goal.vo.BTMGoalVO" alias="BTMGoalVO"/>
 		<typeAlias type="com.test.goal.vo.GoalTreeVO" alias="GoalTreeVO"/>
 		<typeAlias type="com.test.goal.vo.MessageVO" alias="MessageVO" />
+		<typeAlias type="com.test.goal.vo.BoardVO" alias="BoardVO"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/memberMapper.xml" />
@@ -24,5 +25,6 @@
 		<mapper resource="mapper/messageMapper.xml" />
 		<mapper resource="mapper/friendMapper.xml"/>
 		<mapper resource="mapper/calendarMapper.xml"/>
+		<mapper resource="mapper/boardMapper.xml"/>
 	</mappers>
 </configuration>

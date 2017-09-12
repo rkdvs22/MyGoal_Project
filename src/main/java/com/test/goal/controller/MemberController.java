@@ -91,7 +91,7 @@ public class MemberController {
 	
 	// 회원정보수정 기능
 	@RequestMapping(value = "updateMember", method = RequestMethod.POST)
-	public String updateMember(MemberVO vo, Model model, MultipartFile uploadFile) {
+	public boolean updateMember(MemberVO vo, Model model, MultipartFile uploadFile) {
 		String oldImage = memberList(vo.getImage());
 		if(!uploadFile.isEmpty()) {
 			String originalFileName = uploadFile.getOriginalFilename();
@@ -100,12 +100,14 @@ public class MemberController {
 			vo.setImage(image);
 		} if(dao.updateMember(vo) != 1) {
 			FileService.deleteFile(vo.getImage());
+			return false;
 		} if(!uploadFile.isEmpty()) FileService.deleteFile(oldImage);
-		
+			
 		model.addAttribute("result", dao.updateMember(vo));
 		model.addAttribute("userid", vo.getUserid());
 		
-		return "forward:/member/updateMember";
+		return true;
+		//return "forward:/member/updateMember";
 	}
 	
 	// 회원목록
