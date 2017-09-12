@@ -210,17 +210,17 @@
 				</a>
 			</li>
 			<li class="red">
-				<a href="/goal/createGoal/MGoalSquareForm">
+				<a href="#">
 					<i class="font-icon font-icon-case-2"></i>
 					<span class="lbl">Create Goal</span>
 				</a>
 			</li>
-			<!-- <li class="green">
-				<a href="#">
+			<li class="green">
+				<a href="/goal/createGoal/MGoalSquareForm">
 					<i class="font-icon font-icon-cart"></i>
 					<span class="lbl">My Goal List</span>
 				</a>
-			</li> -->
+			</li>
 			
 			<li class="blue">
 				<a href="/goal/friend/openFriend">
