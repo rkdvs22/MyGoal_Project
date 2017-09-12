@@ -138,12 +138,7 @@
 					<!-- 헤더 개인정보부분 -->
 					<div class="dropdown user-menu">
 						<button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<c:if test="${empty image eq true}">
 								<img src="/goal/resources/img/avatar-2-64.png" alt="" >
-							</c:if>
-							<c:if test="${empty image eq false}">
-								<img src="${image}" alt="">
-							</c:if>
 						</button>
 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
 							<a class="dropdown-item" href="/goal/member/updateMemberForm"><span class="font-icon glyphicon glyphicon-user"></span>My Page</a>
@@ -210,7 +205,7 @@
 				</a>
 			</li>
 			<li class="red">
-				<a href="#">
+				<a href="/goal/createGoal/createForm">
 					<i class="font-icon font-icon-case-2"></i>
 					<span class="lbl">Create Goal</span>
 				</a>
