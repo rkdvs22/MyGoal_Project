@@ -311,7 +311,7 @@
 	    });
 	}
 </script>
-<link rel="stylesheet" href="/goal/resources/css/main.css?version=1">
+<link rel="stylesheet" href="/goal/resources/css/main.css">
 <link rel="stylesheet" href="/goal/resources/css/goaltree/goaltree.css">
 </head>
 <body>
@@ -357,14 +357,14 @@
 <c:if test="${goalNum > 10 && goalNum <= 11}">
 <div class="bigNSmalltree">
 	<img src="/goal/resources/img/goaltree/tree3.png" width="480px">
-	<img src="/goal/resources/img/goaltree/tree1.png" width="180px">
+	<img class="smallTreeImg" src="/goal/resources/img/goaltree/tree1.png" width="180px">
 </div>
 </c:if>
 
 <c:if test="${goalNum > 11}">
 <div class="bigNMidtree">
 	<img src="/goal/resources/img/goaltree/tree3.png" width="480px">
-	<img src="/goal/resources/img/goaltree/tree2.png" width="300px">
+	<img class="midTreeImg" src="/goal/resources/img/goaltree/tree2.png" width="300px">
 </div>
 </c:if>
 

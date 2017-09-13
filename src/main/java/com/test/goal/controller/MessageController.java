@@ -51,8 +51,6 @@ public class MessageController {
 	@ResponseBody
 	public ArrayList<MessageVO> msgList(HttpSession session, String id, Model model) {
 		String userid = (String) session.getAttribute("userid");
-		/*ArrayList<MessageVO> msgList = dao.msgList(userid, id);
-		model.addAttribute("msgList", msgList);*/
 		return dao.msgList(userid, id);
 	}
 	
