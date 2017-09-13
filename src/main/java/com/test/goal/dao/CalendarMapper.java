@@ -8,4 +8,6 @@ public interface CalendarMapper {
 
 	public ArrayList<BTMRecordVO> getCalendar(String userid);
 
+	public ArrayList<BTMRecordVO> getIsProcessingRecord(String memberId);
+
 }

@@ -67,5 +67,10 @@ public class CalendarServiceImpl implements CalendarService{
 		return BTMRecordList;
 	}
 
+	@Override
+	public ArrayList<BTMRecordVO> getIsProcessingRecord(String memberId) {
+		return dao.getIsProcessingRecord(memberId);
 	}
+
+}
 

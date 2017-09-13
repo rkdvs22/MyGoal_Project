@@ -11,12 +11,13 @@
         <script language="javascript" type="text/javascript" src="/goal/resources/js/lib/mindMap/arbor.js"></script> 
         <script language="javascript" type="text/javascript" src="/goal/resources/js/lib/mindMap/graphics.js"></script> 
         <script language="javascript" type="text/javascript" src="/goal/resources/js/lib/mindMap/renderer.js"></script> 
-       	<div id = "playingGoal">
-				${sessionScope.userid}님은
-			</div>	
-       <canvas id="viewport" width="1100" height="600"></canvas> 
-       <script language="javascript" type="text/javascript">
-       
+       	<canvas id="viewport" width="1100" height="600"></canvas> 
+       	
+     	<div id = "playingGoal">
+			${sessionScope.userid}님은
+		</div>	
+		
+      	<script language="javascript" type="text/javascript">
        //공통적으로 사용할 sys변수를 바깥에 정의한 후 sendBTMSectionList 함수 실행
 	   var sys;
        //현재 유저의 상태를 나타내는 문구를 append 하기 위해 선언한 변수
@@ -26,20 +27,6 @@
        //최초 페이지 이동이 되자마자 시작.
        $(function(){
     		  sendBTMSectionList(); 
-    		
-    			$("#alert_modal").dialog({
-    				autoOpen: false,
-    				position: [440, 150],
-    				modal: true,
-    				width: 300,
-    				height: 200,
-    				resizable: false,
-    				buttons:{
-    						"확인":function() {
-    						$(this).dialog("close");
-    						}
-    				}
-    			});
     			
     			$("#newStart").dialog({
     				autoOpen: false,
@@ -57,6 +44,7 @@
     		    
          });
        
+       
 		   // 페이지가 시작하면서 가장 먼저 실행되는 함수로 sys변수를 정의하고 랜더링할 캔버스를 연결, 필요한 데이터를 페이지 이동없이 a.jax로 가져옴
 	       function sendBTMSectionList(){
 	    	   sys = arbor.ParticleSystem(200,400,1);
@@ -73,6 +61,7 @@
 					}
 				});
 	       }//end sendBTMSection 
+	       
 	       
 	        //마인드맵을 시작하는 함수(랜더링 시작) 
        		function startMindMap(sendInfo){
@@ -157,7 +146,8 @@
 			       		
 					},
 					error: function(){
-						$("#alert_modal").dialog("open");
+						$('#danger').modal("show");
+						closeSnoAlertBox();
 					}
 				});
  			 
@@ -167,16 +157,17 @@
  	
 			<!-- alert모달영역 -->   
 				 <!-- Modal -->
-				    <button class="btn btn-danger" data-toggle="modal" hidden="true"></button>
+				    <a class="btn btn-danger" href = "#danger" data-toggle="modal" id = "alert_button"></a>
 				    <!-- Modal -->
 				    <div class="modal fade" id="danger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				        <div class="modal-dialog">
 				            <div class="modal-content">
 				                <div class="modal-header modal-header-danger">
 				                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				                    <h1> Danger Modal</h1>
+				                    <h1>- 중복 -</h1>
 				                </div>
 				                <div class="modal-body">
+				                	- 이미 진행중이거나 완료된 목표입니다. -
 				                </div>
 				                <div class="modal-footer">
 				                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
@@ -186,7 +177,7 @@
 				    </div><!-- /.modal -->
   				  <!-- Modal -->
 			<!-- alert모달영역 -->  
-			
+
 			 <!-- 목표 시작시 뜨는 팝업모달-->
 	       		<div id="newStart" title="새로운 목표를 시작해요!">
 	       			<div id = "startTitle" align="center">

@@ -21,4 +21,10 @@ public class CalendarDAOImpl implements CalendarDAO{
 		return mapper.getCalendar(userid);
 	}
 
+	@Override
+	public ArrayList<BTMRecordVO> getIsProcessingRecord(String memberId) {
+		CalendarMapper mapper = sqlsession.getMapper(CalendarMapper.class);
+		return mapper.getIsProcessingRecord(memberId);
+	}
+
 }

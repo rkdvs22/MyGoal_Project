@@ -200,12 +200,12 @@ public class MindMapServiceImpl implements MindMapService{
 				    				int isSuccess=0; //달성여부를 체크하는 변수
 	
 				    				isProgressing = dao.isProgressing(dayRecordList.get(j).getBtmRecordNum());
-				    				
 				    				//진행중인것.
 				    				if(isProgressing == 1){
 				    					isEnd = "진행중";
 				    					//첫번째 DayRecord라면
 				    					if(j==0){
+				    						//System.out.println(dayRecordList.get(j).getDayRecordNum());
 				    						btmStartDate = dao.getStartDate(dayRecordList.get(j).getDayRecordNum());
 				    						//status가 Y인것 - 즉 데이터가 오늘 날짜
 				    						if(dao.isStatusY() != 0){

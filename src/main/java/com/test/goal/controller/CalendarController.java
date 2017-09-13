@@ -1,11 +1,8 @@
 package com.test.goal.controller;
 
 
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,12 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.test.goal.service.CalendarService;
-import com.test.goal.service.MindMapService;
-import com.test.goal.vo.BTMGoalVO;
 import com.test.goal.vo.BTMRecordVO;
-import com.test.goal.vo.BTMSectionVO;
-import com.test.goal.vo.MemberRecord;
-import com.test.goal.vo.MidGoalVO;
 
 @Controller
 @RequestMapping("/calendar")
@@ -32,7 +24,10 @@ public class CalendarController {
 	private CalendarService service;
 	
 	@RequestMapping(value = "calendar", method = RequestMethod.GET)
-	public String openCalendar(Model model) {
+	public String openCalendar(Model model,HttpServletRequest request) {
+		String memberId = (String) request.getSession().getAttribute("userid");
+		ArrayList<BTMRecordVO> isProcessingRecordList = service.getIsProcessingRecord(memberId);  
+		model.addAttribute("isProcessingRecordList", isProcessingRecordList);
 		return "/calendar/calendar";
 	}
 	

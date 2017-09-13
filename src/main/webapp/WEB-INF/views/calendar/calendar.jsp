@@ -17,8 +17,8 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     
 	<link rel="stylesheet" href="/goal/resources/css/separate/vendor/bootstrap-datetimepicker.min.css?version=4">
-	<link rel="stylesheet" href="/goal/resources/css/lib/fullcalendar/fullcalendar.min.css?version=12">
-	<link rel="stylesheet" href="/goal/resources/css/separate/pages/calendar.min.css?version=5">
+	<link rel="stylesheet" href="/goal/resources/css/lib/fullcalendar/fullcalendar.min.css?version=13">
+	<link rel="stylesheet" href="/goal/resources/css/separate/pages/calendar.min.css?version=6">
     <link rel="stylesheet" href="/goal/resources/css/lib/font-awesome/font-awesome.min.css?version=4">
     <link rel="stylesheet" href="/goal/resources/css/lib/bootstrap/bootstrap.min.css?version=4">
     <link rel="stylesheet" href="/goal/resources/css/main.css?version=4">
@@ -49,21 +49,26 @@
 							<header class="box-typical-header-sm">진행중인 세부목표</header>
 							<div class="calendar-page-side-section-in">
 								<ul class="exp-timeline">
-									<li class="exp-timeline-item">
-										<div class="dot"></div>
-										<div>10:00</div>
-										<div class="color-blue-grey">Name Surname Patient Surgey ACL left knee</div>
-									</li>
-									<li class="exp-timeline-item">
-										<div class="dot"></div>
-										<div>10:00</div>
-										<div class="color-blue-grey">Name Surname Patient Surgey ACL left knee</div>
-									</li>
+									<!-- 반복문을 사용해서 꺼냄 -->
+									<c:if test="${requestScope.isProcessingRecordList != null}">
+										<c:forEach items="${requestScope.isProcessingRecordList}" var = "isProcessingRecord">
+											<li class="exp-timeline-item">
+												<div>해당 중간목표 : ${isProcessingRecord.mGoalTitle}</div>
+												<div class="dot">예상 진행기간</div>
+												<div>${isProcessingRecord.startDate} ~ ${isProcessingRecord.endDate}</div> 
+												<div class="color-blue-grey">현재진행률: ${isProcessingRecord.achievePercent}%</div>
+												<br>
+													 <div class="progress">
+													  	 <div class="progress-bar progress-bar-success" style="width: ${isProcessingRecord.achievePercent}%;">${isProcessingRecord.achievePercent}%</div>
+											        </div>
+											</li>
+										</c:forEach>
+									</c:if>
 								</ul>
 							</div>
 						</section>
 
-						<section class="calendar-page-side-section">
+						<section class="calendar-page-side-section" >
 							<header class="box-typical-header-sm">색 범례</header>
 							<div class="calendar-page-side-section-in">
 								<ul class="colors-guide-list">
@@ -93,7 +98,7 @@
 	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 	<script src="/goal/resources/js/lib/tether/tether.min.js?version=4"></script>
 	<script src="/goal/resources/js/lib/bootstrap/bootstrap.min.js?version=4"></script>
-	<script src="/goal/resources/js/plugins.js?version=4"></script>
+	<script src="/goal/resources/js/plugins.js?version=2"></script>
 
 	<script type="text/javascript" src="/goal/resources/js/lib/match-height/jquery.matchHeight.min.js?version=4"></script>
 	<script type="text/javascript" src="/goal/resources/js/lib/moment/moment-with-locales.min.js?version=4"></script>
@@ -102,6 +107,5 @@
 	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=34"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/ko.js"></script>
     <script src="/goal/resources/js/app.js?version=4"></script>
-    
 </body>
 </html>

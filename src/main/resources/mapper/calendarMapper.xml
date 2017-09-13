@@ -16,5 +16,16 @@
 		where r.memberId = #{userid}
 		order by r.startDate desc
 	</select>
+	
+	<select id ="getIsProcessingRecord" parameterType="string" resultType="BTMRecordVO">
+		select b.BGoalTitle as "bGoalTitle",to_char(r.startDate,'yyyy-mm-dd') as "startDate", to_char(r.endDate+1,'yyyy-mm-dd') as "endDate", d.achieve as "achievePercent",m.mGoalTitle as mGoalTitle
+		from BTMGoal b inner join (select startDate,endDate,bGoalNum,BRecordNum,memberId from BTMRecord where sysdate &gt;= startDate and sysdate &lt;= endDate) r 
+		on b.bGoalNum = r.bGoalNum 
+		full join (select btmRecordNum,sum(achieve) as achieve from dayRecord group by btmRecordNum) d
+		on r.BRecordNum = d.BTMRecordNum
+		inner join MidGoal m on b.mGoalNum = m.mGoalNum
+		where r.memberId = #{memberId} 
+		order by r.startDate desc
+	</select>
 
 </mapper>

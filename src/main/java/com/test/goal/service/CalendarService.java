@@ -8,4 +8,6 @@ public interface CalendarService {
 
 	ArrayList<BTMRecordVO> getRecordList(String userid);
 
+	ArrayList<BTMRecordVO> getIsProcessingRecord(String memberId);
+
 }
