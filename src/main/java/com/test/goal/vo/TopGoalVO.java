@@ -2,17 +2,21 @@ package com.test.goal.vo;
 
 import java.util.Date;
 
+/*작성자 윤선영
+목표생성할때 사용하기 위함 2017-09-12 (수)
+*/
+
 public class TopGoalVO {
-	private int tgoalnum;
-	private String tgoaltitle;
-	private Date tstartdate;
-	private Date tenddate;
-	private String tclear;
-	private String tstartstatus;
-	private String openstatus;
+	private int tGoalNum;
+	private String tGoalTitle;
+	private Date tStartDate;
+	private Date tEndDate;
+	private String tClear;
+	private String tStartStatus;
+	private String openStatus;
 	private String userid;
-	private int progressnum;
-	private int calendarnum;
+	private int progressNum;
+	private int calendarNum;
 	
 	
 	public TopGoalVO() {
@@ -20,89 +24,89 @@ public class TopGoalVO {
 	}
 
 
-	public TopGoalVO(int tgoalnum, String tgoaltitle, Date tstartdate, Date tenddate, String tclear,
-			String tstartstatus, String openstatus, String userid, int progressnum, int calendarnum) {
+	public TopGoalVO(int tGoalNum, String tGoalTitle, Date tStartDate, Date tEndDate, String tClear,
+			String tStartStatus, String openStatus, String userid, int progressNum, int calendarNum) {
 		super();
-		this.tgoalnum = tgoalnum;
-		this.tgoaltitle = tgoaltitle;
-		this.tstartdate = tstartdate;
-		this.tenddate = tenddate;
-		this.tclear = tclear;
-		this.tstartstatus = tstartstatus;
-		this.openstatus = openstatus;
+		this.tGoalNum = tGoalNum;
+		this.tGoalTitle = tGoalTitle;
+		this.tStartDate = tStartDate;
+		this.tEndDate = tEndDate;
+		this.tClear = tClear;
+		this.tStartStatus = tStartStatus;
+		this.openStatus = openStatus;
 		this.userid = userid;
-		this.progressnum = progressnum;
-		this.calendarnum = calendarnum;
+		this.progressNum = progressNum;
+		this.calendarNum = calendarNum;
 	}
 
 
-	public int getTgoalnum() {
-		return tgoalnum;
+	public int gettGoalNum() {
+		return tGoalNum;
 	}
 
 
-	public void setTgoalnum(int tgoalnum) {
-		this.tgoalnum = tgoalnum;
+	public void settGoalNum(int tGoalNum) {
+		this.tGoalNum = tGoalNum;
 	}
 
 
-	public String getTgoaltitle() {
-		return tgoaltitle;
+	public String gettGoalTitle() {
+		return tGoalTitle;
 	}
 
 
-	public void setTgoaltitle(String tgoaltitle) {
-		this.tgoaltitle = tgoaltitle;
+	public void settGoalTitle(String tGoalTitle) {
+		this.tGoalTitle = tGoalTitle;
 	}
 
 
-	public Date getTstartdate() {
-		return tstartdate;
+	public Date gettStartDate() {
+		return tStartDate;
 	}
 
 
-	public void setTstartdate(Date tstartdate) {
-		this.tstartdate = tstartdate;
+	public void settStartDate(Date tStartDate) {
+		this.tStartDate = tStartDate;
 	}
 
 
-	public Date getTenddate() {
-		return tenddate;
+	public Date gettEndDate() {
+		return tEndDate;
 	}
 
 
-	public void setTenddate(Date tenddate) {
-		this.tenddate = tenddate;
+	public void settEndDate(Date tEndDate) {
+		this.tEndDate = tEndDate;
 	}
 
 
-	public String getTclear() {
-		return tclear;
+	public String gettClear() {
+		return tClear;
 	}
 
 
-	public void setTclear(String tclear) {
-		this.tclear = tclear;
+	public void settClear(String tClear) {
+		this.tClear = tClear;
 	}
 
 
-	public String getTstartstatus() {
-		return tstartstatus;
+	public String gettStartStatus() {
+		return tStartStatus;
 	}
 
 
-	public void setTstartstatus(String tstartstatus) {
-		this.tstartstatus = tstartstatus;
+	public void settStartStatus(String tStartStatus) {
+		this.tStartStatus = tStartStatus;
 	}
 
 
-	public String getOpenstatus() {
-		return openstatus;
+	public String getopenStatus() {
+		return openStatus;
 	}
 
 
-	public void setOpenstatus(String openstatus) {
-		this.openstatus = openstatus;
+	public void setopenStatus(String openStatus) {
+		this.openStatus = openStatus;
 	}
 
 
@@ -116,31 +120,31 @@ public class TopGoalVO {
 	}
 
 
-	public int getProgressnum() {
-		return progressnum;
+	public int getprogressNum() {
+		return progressNum;
 	}
 
 
-	public void setProgressnum(int progressnum) {
-		this.progressnum = progressnum;
+	public void setprogressNum(int progressNum) {
+		this.progressNum = progressNum;
 	}
 
 
-	public int getCalendarnum() {
-		return calendarnum;
+	public int getcalendarNum() {
+		return calendarNum;
 	}
 
 
-	public void setCalendarnum(int calendarnum) {
-		this.calendarnum = calendarnum;
+	public void setcalendarNum(int calendarNum) {
+		this.calendarNum = calendarNum;
 	}
 
 
 	@Override
 	public String toString() {
-		return "TopGoalVO [tgoalnum=" + tgoalnum + ", tgoaltitle=" + tgoaltitle + ", tstartdate=" + tstartdate
-				+ ", tenddate=" + tenddate + ", tclear=" + tclear + ", tstartstatus=" + tstartstatus + ", openstatus="
-				+ openstatus + ", userid=" + userid + ", progressnum=" + progressnum + ", calendarnum=" + calendarnum
+		return "TopGoalVO [tGoalNum=" + tGoalNum + ", tGoalTitle=" + tGoalTitle + ", tStartDate=" + tStartDate
+				+ ", tEndDate=" + tEndDate + ", tClear=" + tClear + ", tStartStatus=" + tStartStatus + ", openStatus="
+				+ openStatus + ", userid=" + userid + ", progressNum=" + progressNum + ", calendarNum=" + calendarNum
 				+ "]";
 	}
 	

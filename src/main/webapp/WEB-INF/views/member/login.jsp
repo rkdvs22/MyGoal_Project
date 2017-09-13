@@ -26,7 +26,7 @@
 <script>
 
 	function home() {
-		location.href = "/goal"
+		location.href = "history.go(-1)";
 	}
 </script>
 
@@ -44,9 +44,10 @@
                     <div class="form-group">
                         <input type="password" class="form-control" name="password" placeholder="Password"/>
                     </div>
-                   
+                   <div class="form-group row">
                     <button type="submit" class="btn btn-rounded btn-success">LOGIN</button>
                     <button class="btn btn-rounded btn-success" onclick="home()">Cancel</button>
+                    </div>
                     <p class="sign-note"><a href="/goal/member/findForm">ID/Password 찾기</a></p>
                     <c:if test="${sessionScope.userid == false}">ID나 PASSWORD가 일치하지 않습니다.</c:if>
                 </form>

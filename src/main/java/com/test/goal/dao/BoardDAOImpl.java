@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.test.goal.vo.BoardVO;
+import com.test.goal.vo.TopGoalVO;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
@@ -16,9 +17,9 @@ public class BoardDAOImpl implements BoardDAO {
 	
 	// 게시글 목록
 	@Override
-	public ArrayList<BoardVO> boardList() {
+	public ArrayList<TopGoalVO> boardList(int tGoalNum) {
 		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
-		return mapper.boardList();
+		return mapper.boardList(tGoalNum);
 	}
 
 	@Override

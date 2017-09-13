@@ -21,8 +21,8 @@ public class BoardController {
 	
 	// 게시글 목록
 	@RequestMapping(value = "boardList", method = RequestMethod.GET)
-	public String boardList() {
-		//model.addAttribute("boardList", dao.boardList(boardnum));
+	public String boardList(Model model, int tGoalNum) {
+		model.addAttribute("goalList", dao.boardList(tGoalNum));
 		return "/board/boardList";
 	}
 

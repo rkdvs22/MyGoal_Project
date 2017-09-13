@@ -26,442 +26,451 @@
 <%@ include file="../menu.jsp" %>
 
 <div class="page-content">
-		<div class="container-fluid">
-			<div class="cards-grid" data-columns>
-				<div class="card-grid-col">
-					<article class="card-typical">
-						<div class="card-typical-section">
-							<div class="user-card-row">
-							<%-- <c:forEach items="${boardList}" var="list"> --%>
-								<div class="tbl-row">
-									<div class="tbl-cell tbl-cell-photo">
-										<a href="#">
-											<img src="img/photo-64-2.jpg" alt="">
-										</a>
-									</div>
-									<div class="tbl-cell">
-										<p class="user-card-row-name"><a href="#">작성자(userid)</a></p>
-										<p class="color-blue-grey-lighter">3 days ago - 23 min read(게시시간??)</p>
-									</div>
-									<div class="tbl-cell tbl-cell-status">
-										<a href="#" class="font-icon font-icon-star active"></a>
-									</div>
+	<div class="container-fluid">
+		<header class="section-header">
+			<div class="tbl">
+				<div class="tbl-row">
+					<div class="tbl-cell">
+						<h3>Board</h3>
+					</div>
+				</div>
+			</div>
+		</header>
+		
+		<div class="cards-grid" data-columns>
+		<form action="boardList" method="get">
+			<div class="card-grid-col">
+				<article class="card-typical">
+					<c:forEach items="${goalList}" var="list">
+					<div class="card-typical-section">
+						<div class="user-card-row">
+							<div class="tbl-row">
+								<div class="tbl-cell tbl-cell-photo">
+									<a href="#">
+										<img src="/goal/resources/img/photo-64-2.jpg" alt="">
+									</a>
 								</div>
-							<%-- </c:forEach> --%>
-							</div>
-						</div>
-						<div class="card-typical-section card-typical-content">
-							<!-- <div class="photo">
-								<img src="img/gall-img-1.jpg" alt="">
-							</div> -->
-							<header class="title"><h5><a href="#">T Goal Title</a></h5></header>
-							<p>기간(시작 ~ 끝)<br>
-								단추 추가 -> 마방진? 골트리?
-							</p>
-							<%-- <p>
-								기간		 ~ ${list.tenddate}
-							</p> --%>
-						</div>
-						<div class="card-typical-section">
-							<div class="card-typical-linked">인원(현인원/총인원)</div>
-							<a href="#" class="card-typical-likes">
-								<i class="font-icon font-icon-heart"></i>
-								좋아요
-							</a>
-						</div>
-					</article><!--.card-typical-->
-				</div><!--.card-grid-col-->
-
-				<!-- <div class="card-grid-col">
-					<article class="card-typical">
-						<div class="card-typical-section">
-							<div class="user-card-row">
-								<div class="tbl-row">
-									<div class="tbl-cell tbl-cell-photo">
-										<a href="#">
-											<img src="img/avatar-1-64.png" alt="">
-										</a>
-									</div>
-									<div class="tbl-cell">
-										<p class="user-card-row-name"><a href="#">Tim Colins</a></p>
-										<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
-									</div>
-									<div class="tbl-cell tbl-cell-status">
-										<a href="#" class="font-icon font-icon-star"></a>
-									</div>
+								<div class="tbl-cell">
+									<p class="user-card-row-name"><a href="#">${list.userid}</a></p>
+									<!-- <p class="color-blue-grey-lighter">3 days ago - 23 min read(게시시간??)</p> -->
+								</div>
+								<div class="tbl-cell tbl-cell-status">
+									<!-- <a href="#" class="font-icon font-icon-star active"></a> -->
+									<a href="#" class="card-typical-likes">
+										<i class="font-icon font-icon-heart"></i>
+										num
+									</a>
 								</div>
 							</div>
 						</div>
-						<div class="card-typical-section card-typical-content">
-							<header class="title"><a href="#">The Jacobs Ladder of coding</a></header>
-							<p>That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! </p>
-						</div>
-						<div class="card-typical-section">
-							<div class="card-typical-linked">in <a href="#">Coders Life</a></div>
-							<a href="#" class="card-typical-likes">
-								<i class="font-icon font-icon-heart"></i>
-								123
-							</a>
-						</div>
-					</article>.card-typical
-				</div>.card-grid-col
+					</div>
+					<div class="card-typical-section card-typical-content">
+						<header class="title"><h5><a href="#">${list.tGoalTitle}</a></h5></header>
+						<p>
+							<!-- 기간(시작 ~ 끝) -->
+							${list.tStartDate} - ${list.tEndDate}
+						</p>
+					</div>
+					<div class="card-typical-section">
+						<div class="card-typical-linked">현인원/총인원</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button type="button" class="btn btn-rounded btn-inline btn-success btn-sm" name="checkId" onclick="">Start</button>
+					</div>
+						<input type="hidden" name="tGoalNum" value="${tGoalNum}">
+						<input type="hidden" name="boardNum" value="${boardNum}">
+					</c:forEach>
+				</article><!--.card-typical-->
+			</div><!--.card-grid-col-->
+			</form>
 
-				<div class="card-grid-col">
-					<article class="card-typical">
-						<div class="card-typical-section">
-							<div class="user-card-row">
-								<div class="tbl-row">
-									<div class="tbl-cell tbl-cell-photo">
-										<a href="#">
-											<img src="img/avatar-2-64.png" alt="">
-										</a>
-									</div>
-									<div class="tbl-cell">
-										<p class="user-card-row-name"><a href="#">Tim Colins</a></p>
-										<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
-									</div>
-									<div class="tbl-cell tbl-cell-status">
-										<a href="#" class="font-icon font-icon-star active"></a>
-									</div>
+			<!-- <div class="card-grid-col">
+				<article class="card-typical">
+					<div class="card-typical-section">
+						<div class="user-card-row">
+							<div class="tbl-row">
+								<div class="tbl-cell tbl-cell-photo">
+									<a href="#">
+										<img src="img/avatar-1-64.png" alt="">
+									</a>
+								</div>
+								<div class="tbl-cell">
+									<p class="user-card-row-name"><a href="#">Tim Colins</a></p>
+									<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
+								</div>
+								<div class="tbl-cell tbl-cell-status">
+									<a href="#" class="font-icon font-icon-star"></a>
 								</div>
 							</div>
 						</div>
-						<div class="card-typical-section card-typical-content">
-							<div class="photo">
-								<img src="img/gall-img-4.jpg" alt="">
-							</div>
-							<header class="title"><a href="#">The Jacobs Ladder of coding</a></header>
-							<p>That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow!</p>
-						</div>
-						<div class="card-typical-section">
-							<div class="card-typical-linked">in <a href="#">Coders Life</a></div>
-							<a href="#" class="card-typical-likes">
-								<i class="font-icon font-icon-heart"></i>
-								123
-							</a>
-						</div>
-					</article>.card-typical
-				</div>.card-grid-col
+					</div>
+					<div class="card-typical-section card-typical-content">
+						<header class="title"><a href="#">The Jacobs Ladder of coding</a></header>
+						<p>That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! </p>
+					</div>
+					<div class="card-typical-section">
+						<div class="card-typical-linked">in <a href="#">Coders Life</a></div>
+						<a href="#" class="card-typical-likes">
+							<i class="font-icon font-icon-heart"></i>
+							123
+						</a>
+					</div>
+				</article>.card-typical
+			</div>.card-grid-col
 
-				<div class="card-grid-col">
-					<article class="card-typical">
-						<div class="card-typical-section">
-							<div class="user-card-row">
-								<div class="tbl-row">
-									<div class="tbl-cell tbl-cell-photo">
-										<a href="#">
-											<img src="img/photo-64-3.jpg" alt="">
-										</a>
-									</div>
-									<div class="tbl-cell">
-										<p class="user-card-row-name"><a href="#">Tim Colins</a></p>
-										<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
-									</div>
-									<div class="tbl-cell tbl-cell-status">
-										<a href="#" class="font-icon font-icon-star"></a>
-									</div>
+			<div class="card-grid-col">
+				<article class="card-typical">
+					<div class="card-typical-section">
+						<div class="user-card-row">
+							<div class="tbl-row">
+								<div class="tbl-cell tbl-cell-photo">
+									<a href="#">
+										<img src="img/avatar-2-64.png" alt="">
+									</a>
+								</div>
+								<div class="tbl-cell">
+									<p class="user-card-row-name"><a href="#">Tim Colins</a></p>
+									<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
+								</div>
+								<div class="tbl-cell tbl-cell-status">
+									<a href="#" class="font-icon font-icon-star active"></a>
 								</div>
 							</div>
 						</div>
-						<div class="card-typical-section card-typical-content">
-							<header class="title"><a href="#">The Jacobs Ladder of coding</a></header>
-							<p>That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! </p>
+					</div>
+					<div class="card-typical-section card-typical-content">
+						<div class="photo">
+							<img src="img/gall-img-4.jpg" alt="">
 						</div>
-						<div class="card-typical-section">
-							<div class="card-typical-linked">in <a href="#">Coders Life</a></div>
-							<a href="#" class="card-typical-likes">
-								<i class="font-icon font-icon-heart"></i>
-								123
-							</a>
-						</div>
-					</article>.card-typical
-				</div>.card-grid-col
+						<header class="title"><a href="#">The Jacobs Ladder of coding</a></header>
+						<p>That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow!</p>
+					</div>
+					<div class="card-typical-section">
+						<div class="card-typical-linked">in <a href="#">Coders Life</a></div>
+						<a href="#" class="card-typical-likes">
+							<i class="font-icon font-icon-heart"></i>
+							123
+						</a>
+					</div>
+				</article>.card-typical
+			</div>.card-grid-col
 
-				<div class="card-grid-col">
-					<article class="card-typical">
-						<div class="card-typical-section">
-							<div class="user-card-row">
-								<div class="tbl-row">
-									<div class="tbl-cell tbl-cell-photo">
-										<a href="#">
-											<img src="img/photo-64-4.jpg" alt="">
-										</a>
-									</div>
-									<div class="tbl-cell">
-										<p class="user-card-row-name"><a href="#">Tim Colins</a></p>
-										<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
-									</div>
-									<div class="tbl-cell tbl-cell-status">
-										<a href="#" class="font-icon font-icon-star active"></a>
-									</div>
+			<div class="card-grid-col">
+				<article class="card-typical">
+					<div class="card-typical-section">
+						<div class="user-card-row">
+							<div class="tbl-row">
+								<div class="tbl-cell tbl-cell-photo">
+									<a href="#">
+										<img src="img/photo-64-3.jpg" alt="">
+									</a>
+								</div>
+								<div class="tbl-cell">
+									<p class="user-card-row-name"><a href="#">Tim Colins</a></p>
+									<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
+								</div>
+								<div class="tbl-cell tbl-cell-status">
+									<a href="#" class="font-icon font-icon-star"></a>
 								</div>
 							</div>
 						</div>
-						<div class="card-typical-section card-typical-content">
-							<header class="title"><a href="#">The Jacobs Ladder of coding</a></header>
-							<p>That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! </p>
-						</div>
-						<div class="card-typical-section">
-							<div class="card-typical-linked">in <a href="#">Coders Life</a></div>
-							<a href="#" class="card-typical-likes">
-								<i class="font-icon font-icon-heart"></i>
-								123
-							</a>
-						</div>
-					</article>.card-typical
-				</div>.card-grid-col
+					</div>
+					<div class="card-typical-section card-typical-content">
+						<header class="title"><a href="#">The Jacobs Ladder of coding</a></header>
+						<p>That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! </p>
+					</div>
+					<div class="card-typical-section">
+						<div class="card-typical-linked">in <a href="#">Coders Life</a></div>
+						<a href="#" class="card-typical-likes">
+							<i class="font-icon font-icon-heart"></i>
+							123
+						</a>
+					</div>
+				</article>.card-typical
+			</div>.card-grid-col
 
-				<div class="card-grid-col">
-					<article class="card-typical">
-						<div class="card-typical-section">
-							<div class="user-card-row">
-								<div class="tbl-row">
-									<div class="tbl-cell tbl-cell-photo">
-										<a href="#">
-											<img src="img/avatar-3-64.png" alt="">
-										</a>
-									</div>
-									<div class="tbl-cell">
-										<p class="user-card-row-name"><a href="#">Tim Colins</a></p>
-										<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
-									</div>
-									<div class="tbl-cell tbl-cell-status">
-										<a href="#" class="font-icon font-icon-star"></a>
-									</div>
+			<div class="card-grid-col">
+				<article class="card-typical">
+					<div class="card-typical-section">
+						<div class="user-card-row">
+							<div class="tbl-row">
+								<div class="tbl-cell tbl-cell-photo">
+									<a href="#">
+										<img src="img/photo-64-4.jpg" alt="">
+									</a>
+								</div>
+								<div class="tbl-cell">
+									<p class="user-card-row-name"><a href="#">Tim Colins</a></p>
+									<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
+								</div>
+								<div class="tbl-cell tbl-cell-status">
+									<a href="#" class="font-icon font-icon-star active"></a>
 								</div>
 							</div>
 						</div>
-						<div class="card-typical-section card-typical-content">
-							<div class="photo">
-								<img src="img/gall-img-5.jpg" alt="">
-							</div>
-							<header class="title"><a href="#">The Jacobs Ladder of coding</a></header>
-							<p>That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow!</p>
-						</div>
-						<div class="card-typical-section">
-							<div class="card-typical-linked">in <a href="#">Coders Life</a></div>
-							<a href="#" class="card-typical-likes">
-								<i class="font-icon font-icon-heart"></i>
-								123
-							</a>
-						</div>
-					</article>.card-typical
-				</div>.card-grid-col
+					</div>
+					<div class="card-typical-section card-typical-content">
+						<header class="title"><a href="#">The Jacobs Ladder of coding</a></header>
+						<p>That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! </p>
+					</div>
+					<div class="card-typical-section">
+						<div class="card-typical-linked">in <a href="#">Coders Life</a></div>
+						<a href="#" class="card-typical-likes">
+							<i class="font-icon font-icon-heart"></i>
+							123
+						</a>
+					</div>
+				</article>.card-typical
+			</div>.card-grid-col
 
-				<div class="card-grid-col">
-					<article class="card-typical">
-						<div class="card-typical-section">
-							<div class="user-card-row">
-								<div class="tbl-row">
-									<div class="tbl-cell tbl-cell-photo">
-										<a href="#">
-											<img src="img/photo-64-2.jpg" alt="">
-										</a>
-									</div>
-									<div class="tbl-cell">
-										<p class="user-card-row-name"><a href="#">Tim Colins</a></p>
-										<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
-									</div>
-									<div class="tbl-cell tbl-cell-status">
-										<a href="#" class="font-icon font-icon-star active"></a>
-									</div>
+			<div class="card-grid-col">
+				<article class="card-typical">
+					<div class="card-typical-section">
+						<div class="user-card-row">
+							<div class="tbl-row">
+								<div class="tbl-cell tbl-cell-photo">
+									<a href="#">
+										<img src="img/avatar-3-64.png" alt="">
+									</a>
+								</div>
+								<div class="tbl-cell">
+									<p class="user-card-row-name"><a href="#">Tim Colins</a></p>
+									<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
+								</div>
+								<div class="tbl-cell tbl-cell-status">
+									<a href="#" class="font-icon font-icon-star"></a>
 								</div>
 							</div>
 						</div>
-						<div class="card-typical-section card-typical-content">
-							<header class="title"><a href="#">The Jacobs Ladder of coding</a></header>
-							<p>That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! </p>
+					</div>
+					<div class="card-typical-section card-typical-content">
+						<div class="photo">
+							<img src="img/gall-img-5.jpg" alt="">
 						</div>
-						<div class="card-typical-section">
-							<div class="card-typical-linked">in <a href="#">Coders Life</a></div>
-							<a href="#" class="card-typical-likes">
-								<i class="font-icon font-icon-heart"></i>
-								123
-							</a>
-						</div>
-					</article>.card-typical
-				</div>.card-grid-col
+						<header class="title"><a href="#">The Jacobs Ladder of coding</a></header>
+						<p>That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow!</p>
+					</div>
+					<div class="card-typical-section">
+						<div class="card-typical-linked">in <a href="#">Coders Life</a></div>
+						<a href="#" class="card-typical-likes">
+							<i class="font-icon font-icon-heart"></i>
+							123
+						</a>
+					</div>
+				</article>.card-typical
+			</div>.card-grid-col
 
-				<div class="card-grid-col">
-					<article class="card-typical">
-						<div class="card-typical-section">
-							<div class="user-card-row">
-								<div class="tbl-row">
-									<div class="tbl-cell tbl-cell-photo">
-										<a href="#">
-											<img src="img/avatar-1-64.png" alt="">
-										</a>
-									</div>
-									<div class="tbl-cell">
-										<p class="user-card-row-name"><a href="#">Tim Colins</a></p>
-										<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
-									</div>
-									<div class="tbl-cell tbl-cell-status">
-										<a href="#" class="font-icon font-icon-star"></a>
-									</div>
+			<div class="card-grid-col">
+				<article class="card-typical">
+					<div class="card-typical-section">
+						<div class="user-card-row">
+							<div class="tbl-row">
+								<div class="tbl-cell tbl-cell-photo">
+									<a href="#">
+										<img src="img/photo-64-2.jpg" alt="">
+									</a>
+								</div>
+								<div class="tbl-cell">
+									<p class="user-card-row-name"><a href="#">Tim Colins</a></p>
+									<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
+								</div>
+								<div class="tbl-cell tbl-cell-status">
+									<a href="#" class="font-icon font-icon-star active"></a>
 								</div>
 							</div>
 						</div>
-						<div class="card-typical-section card-typical-content">
-							<header class="title"><a href="#">The Jacobs Ladder of coding</a></header>
-							<p>That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! </p>
-						</div>
-						<div class="card-typical-section">
-							<div class="card-typical-linked">in <a href="#">Coders Life</a></div>
-							<a href="#" class="card-typical-likes">
-								<i class="font-icon font-icon-heart"></i>
-								123
-							</a>
-						</div>
-					</article>.card-typical
-				</div>.card-grid-col
+					</div>
+					<div class="card-typical-section card-typical-content">
+						<header class="title"><a href="#">The Jacobs Ladder of coding</a></header>
+						<p>That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! </p>
+					</div>
+					<div class="card-typical-section">
+						<div class="card-typical-linked">in <a href="#">Coders Life</a></div>
+						<a href="#" class="card-typical-likes">
+							<i class="font-icon font-icon-heart"></i>
+							123
+						</a>
+					</div>
+				</article>.card-typical
+			</div>.card-grid-col
 
-				<div class="card-grid-col">
-					<article class="card-typical">
-						<div class="card-typical-section">
-							<div class="user-card-row">
-								<div class="tbl-row">
-									<div class="tbl-cell tbl-cell-photo">
-										<a href="#">
-											<img src="img/photo-64-2.jpg" alt="">
-										</a>
-									</div>
-									<div class="tbl-cell">
-										<p class="user-card-row-name"><a href="#">Tim Colins</a></p>
-										<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
-									</div>
-									<div class="tbl-cell tbl-cell-status">
-										<a href="#" class="font-icon font-icon-star active"></a>
-									</div>
+			<div class="card-grid-col">
+				<article class="card-typical">
+					<div class="card-typical-section">
+						<div class="user-card-row">
+							<div class="tbl-row">
+								<div class="tbl-cell tbl-cell-photo">
+									<a href="#">
+										<img src="img/avatar-1-64.png" alt="">
+									</a>
+								</div>
+								<div class="tbl-cell">
+									<p class="user-card-row-name"><a href="#">Tim Colins</a></p>
+									<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
+								</div>
+								<div class="tbl-cell tbl-cell-status">
+									<a href="#" class="font-icon font-icon-star"></a>
 								</div>
 							</div>
 						</div>
-						<div class="card-typical-section card-typical-content">
-							<div class="photo">
-								<img src="img/gall-img-6.jpg" alt="">
-							</div>
-							<header class="title"><a href="#">The Jacobs Ladder of coding</a></header>
-							<p>That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow!</p>
-						</div>
-						<div class="card-typical-section">
-							<div class="card-typical-linked">in <a href="#">Coders Life</a></div>
-							<a href="#" class="card-typical-likes">
-								<i class="font-icon font-icon-heart"></i>
-								123
-							</a>
-						</div>
-					</article>.card-typical
-				</div>.card-grid-col
+					</div>
+					<div class="card-typical-section card-typical-content">
+						<header class="title"><a href="#">The Jacobs Ladder of coding</a></header>
+						<p>That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! </p>
+					</div>
+					<div class="card-typical-section">
+						<div class="card-typical-linked">in <a href="#">Coders Life</a></div>
+						<a href="#" class="card-typical-likes">
+							<i class="font-icon font-icon-heart"></i>
+							123
+						</a>
+					</div>
+				</article>.card-typical
+			</div>.card-grid-col
 
-				<div class="card-grid-col">
-					<article class="card-typical">
-						<div class="card-typical-section">
-							<div class="user-card-row">
-								<div class="tbl-row">
-									<div class="tbl-cell tbl-cell-photo">
-										<a href="#">
-											<img src="img/avatar-2-64.png" alt="">
-										</a>
-									</div>
-									<div class="tbl-cell">
-										<p class="user-card-row-name"><a href="#">Tim Colins</a></p>
-										<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
-									</div>
-									<div class="tbl-cell tbl-cell-status">
-										<a href="#" class="font-icon font-icon-star"></a>
-									</div>
+			<div class="card-grid-col">
+				<article class="card-typical">
+					<div class="card-typical-section">
+						<div class="user-card-row">
+							<div class="tbl-row">
+								<div class="tbl-cell tbl-cell-photo">
+									<a href="#">
+										<img src="img/photo-64-2.jpg" alt="">
+									</a>
+								</div>
+								<div class="tbl-cell">
+									<p class="user-card-row-name"><a href="#">Tim Colins</a></p>
+									<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
+								</div>
+								<div class="tbl-cell tbl-cell-status">
+									<a href="#" class="font-icon font-icon-star active"></a>
 								</div>
 							</div>
 						</div>
-						<div class="card-typical-section card-typical-content">
-							<header class="title"><a href="#">The Jacobs Ladder of coding</a></header>
-							<p>That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! </p>
+					</div>
+					<div class="card-typical-section card-typical-content">
+						<div class="photo">
+							<img src="img/gall-img-6.jpg" alt="">
 						</div>
-						<div class="card-typical-section">
-							<div class="card-typical-linked">in <a href="#">Coders Life</a></div>
-							<a href="#" class="card-typical-likes">
-								<i class="font-icon font-icon-heart"></i>
-								123
-							</a>
-						</div>
-					</article>.card-typical
-				</div>.card-grid-col
+						<header class="title"><a href="#">The Jacobs Ladder of coding</a></header>
+						<p>That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow!</p>
+					</div>
+					<div class="card-typical-section">
+						<div class="card-typical-linked">in <a href="#">Coders Life</a></div>
+						<a href="#" class="card-typical-likes">
+							<i class="font-icon font-icon-heart"></i>
+							123
+						</a>
+					</div>
+				</article>.card-typical
+			</div>.card-grid-col
 
-				<div class="card-grid-col">
-					<article class="card-typical">
-						<div class="card-typical-section">
-							<div class="user-card-row">
-								<div class="tbl-row">
-									<div class="tbl-cell tbl-cell-photo">
-										<a href="#">
-											<img src="img/photo-64-3.jpg" alt="">
-										</a>
-									</div>
-									<div class="tbl-cell">
-										<p class="user-card-row-name"><a href="#">Tim Colins</a></p>
-										<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
-									</div>
-									<div class="tbl-cell tbl-cell-status">
-										<a href="#" class="font-icon font-icon-star active"></a>
-									</div>
+			<div class="card-grid-col">
+				<article class="card-typical">
+					<div class="card-typical-section">
+						<div class="user-card-row">
+							<div class="tbl-row">
+								<div class="tbl-cell tbl-cell-photo">
+									<a href="#">
+										<img src="img/avatar-2-64.png" alt="">
+									</a>
+								</div>
+								<div class="tbl-cell">
+									<p class="user-card-row-name"><a href="#">Tim Colins</a></p>
+									<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
+								</div>
+								<div class="tbl-cell tbl-cell-status">
+									<a href="#" class="font-icon font-icon-star"></a>
 								</div>
 							</div>
 						</div>
-						<div class="card-typical-section card-typical-content">
-							<header class="title"><a href="#">The Jacobs Ladder of coding</a></header>
-							<p>That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! </p>
-						</div>
-						<div class="card-typical-section">
-							<div class="card-typical-linked">in <a href="#">Coders Life</a></div>
-							<a href="#" class="card-typical-likes">
-								<i class="font-icon font-icon-heart"></i>
-								123
-							</a>
-						</div>
-					</article>.card-typical
-				</div>.card-grid-col
+					</div>
+					<div class="card-typical-section card-typical-content">
+						<header class="title"><a href="#">The Jacobs Ladder of coding</a></header>
+						<p>That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! </p>
+					</div>
+					<div class="card-typical-section">
+						<div class="card-typical-linked">in <a href="#">Coders Life</a></div>
+						<a href="#" class="card-typical-likes">
+							<i class="font-icon font-icon-heart"></i>
+							123
+						</a>
+					</div>
+				</article>.card-typical
+			</div>.card-grid-col
 
-				<div class="card-grid-col">
-					<article class="card-typical">
-						<div class="card-typical-section">
-							<div class="user-card-row">
-								<div class="tbl-row">
-									<div class="tbl-cell tbl-cell-photo">
-										<a href="#">
-											<img src="img/avatar-3-64.png" alt="">
-										</a>
-									</div>
-									<div class="tbl-cell">
-										<p class="user-card-row-name"><a href="#">Tim Colins</a></p>
-										<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
-									</div>
-									<div class="tbl-cell tbl-cell-status">
-										<a href="#" class="font-icon font-icon-star"></a>
-									</div>
+			<div class="card-grid-col">
+				<article class="card-typical">
+					<div class="card-typical-section">
+						<div class="user-card-row">
+							<div class="tbl-row">
+								<div class="tbl-cell tbl-cell-photo">
+									<a href="#">
+										<img src="img/photo-64-3.jpg" alt="">
+									</a>
+								</div>
+								<div class="tbl-cell">
+									<p class="user-card-row-name"><a href="#">Tim Colins</a></p>
+									<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
+								</div>
+								<div class="tbl-cell tbl-cell-status">
+									<a href="#" class="font-icon font-icon-star active"></a>
 								</div>
 							</div>
 						</div>
-						<div class="card-typical-section card-typical-content">
-							<div class="photo">
-								<img src="img/gall-img-7.jpg" alt="">
-							</div>
-							<header class="title"><a href="#">The Jacobs Ladder of coding</a></header>
-							<p>That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow!</p>
-						</div>
-						<div class="card-typical-section">
-							<div class="card-typical-linked">in <a href="#">Coders Life</a></div>
-							<a href="#" class="card-typical-likes">
-								<i class="font-icon font-icon-heart"></i>
-								123
-							</a>
-						</div>
-					</article>.card-typical
-				</div>.card-grid-col-->
-			</div><!--.card-grid-->
-			<div class="clear"></div>
+					</div>
+					<div class="card-typical-section card-typical-content">
+						<header class="title"><a href="#">The Jacobs Ladder of coding</a></header>
+						<p>That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow! </p>
+					</div>
+					<div class="card-typical-section">
+						<div class="card-typical-linked">in <a href="#">Coders Life</a></div>
+						<a href="#" class="card-typical-likes">
+							<i class="font-icon font-icon-heart"></i>
+							123
+						</a>
+					</div>
+				</article>.card-typical
+			</div>.card-grid-col
 
-		</div><!--.container-fluid-->
-	</div><!--.page-content-->
+			<div class="card-grid-col">
+				<article class="card-typical">
+					<div class="card-typical-section">
+						<div class="user-card-row">
+							<div class="tbl-row">
+								<div class="tbl-cell tbl-cell-photo">
+									<a href="#">
+										<img src="img/avatar-3-64.png" alt="">
+									</a>
+								</div>
+								<div class="tbl-cell">
+									<p class="user-card-row-name"><a href="#">Tim Colins</a></p>
+									<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
+								</div>
+								<div class="tbl-cell tbl-cell-status">
+									<a href="#" class="font-icon font-icon-star"></a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card-typical-section card-typical-content">
+						<div class="photo">
+							<img src="img/gall-img-7.jpg" alt="">
+						</div>
+						<header class="title"><a href="#">The Jacobs Ladder of coding</a></header>
+						<p>That’s a great idea! I’m sure we could start this project as soon as possible. Let’s meet tomorow!</p>
+					</div>
+					<div class="card-typical-section">
+						<div class="card-typical-linked">in <a href="#">Coders Life</a></div>
+						<a href="#" class="card-typical-likes">
+							<i class="font-icon font-icon-heart"></i>
+							123
+						</a>
+					</div>
+				</article>.card-typical
+			</div>.card-grid-col-->
+		</div><!--.card-grid-->
+		<div class="clear"></div>
+	</div><!--.container-fluid-->
+</div><!--.page-content-->
 
 	<script src="/goal/resources/js/lib/jquery/jquery.min.js"></script>
 	<script src="/goal/resources/js/lib/tether/tether.min.js"></script>

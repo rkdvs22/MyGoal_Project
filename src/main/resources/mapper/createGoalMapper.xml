@@ -7,8 +7,10 @@
 <mapper namespace="com.test.goal.dao.CreateGoalMapper">
 	
 	<!-- 목표大 작성 -->
-	<insert id="create" parameterType="TopGoalVO">
-		insert into TopGoal values (TOPGOAL_SEQ.NEXTVAL, #{tgoaltitle}, #{tstartdate}, #{tenddate}, #{openstatus}, #{userid}, MAINPROGRESS_SEQ.NEXTVAL)	
+	<insert id="create1" parameterType="TopGoalVO">
+		insert into TopGoal values (TOPGOAL_SEQ.NEXTVAL, #{tGoalTitle}, #{tStartDate}, #{tEndDate}, 'N', 'N', #{openStatus}, #{userid}, #{progressNum}, #{calendarNum})	
 	</insert>
-	
+	<insert id="create2" parameterType="MainProgressVO">
+		insert into MainProgress values (MAINPROGRESS_SEQ.NEXTVAL, #{type}, 'N', #{maxMember})
+	</insert>
 </mapper>

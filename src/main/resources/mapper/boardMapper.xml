@@ -7,8 +7,10 @@
 <mapper namespace="com.test.goal.dao.BoardMapper">
 	
 	<!-- 게시글 목록 -->
-	<select id="boardList" parameterType="BoardVO" resultType="BoardVO">
-		<!-- select b.userid, b.favorite, t.tgoaltitle, t.tstartdate, t.tenddate from board b, topgoal t where b.tgoalnum = t.tgoalnum
-		 order by boardnum desc -->
+	<select id="boardList" parameterType="TopGoalVO" resultType="TopGoalVO">
+		select t.tGoalTitle, t.tStartDate, t.tEndDate, t.openStatus, t.userid, m.maxMember
+		from TopGoal t, MainProgress m, board b
+		where t.progressNum = m.progressNum and board b
+		order by t.tGoalTitle;
 	</select>
 </mapper>

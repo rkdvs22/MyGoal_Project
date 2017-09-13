@@ -19,6 +19,7 @@
 		<typeAlias type="com.test.goal.vo.MessageVO" alias="MessageVO" />
 		<typeAlias type="com.test.goal.vo.BoardVO" alias="BoardVO"/>
 		<typeAlias type="com.test.goal.vo.TopGoalVO" alias="TopGoalVO"/>
+		<typeAlias type="com.test.goal.vo.MainProgressVO" alias="MainProgressVO"/>
 		
 	</typeAliases>
 	<mappers>

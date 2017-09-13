@@ -43,21 +43,21 @@
 		<div class="box-typical box-typical-padding">
 			<form action="create" method="post">
 				<div class="form-group row">
-					<label class="col-sm-2 form-control-label">T Goal Title</label>
+					<label class="col-sm-2 form-control-label">Goal Title</label>
 					<div class="col-sm-10">
-						<p class="form-control-static"><input type="text" class="form-control" name="title" placeholder="Goal Title" required="required"></p>
+						<p class="form-control-static"><input type="text" class="form-control" name="tGoalTitle" placeholder="Goal Title" required="required"></p>
 					</div>
 				</div>
 				<div class="form-group row">
 					<label class="col-sm-2 form-control-label">작성자</label>
 					<div class="col-sm-10">
-						<p class="form-control-static"><input type="text" readonly="readonly" class="form-control" id="inputPassword" placeholder="${sessionScope.userid}"></p>
+						<p class="form-control-static"><input type="text" readonly="readonly" class="form-control" name="userid" placeholder="${sessionScope.userid}"></p>
 					</div>
 				</div>
 				<div class="form-group row">
 					<label class="col-sm-2 form-control-label">인원</label>
 					<div class="col-md-3">
-						<select class="select2-arrow manual select2-no-search-arrow" name="peopleNum">
+						<select class="select2-arrow manual select2-no-search-arrow" name="maxMember">
 							<option value="1" selected="selected">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
@@ -70,12 +70,12 @@
 					<div class="col-md-4">
 						<div class="form-group">
 							<div class='input-group date'>
-								<input id="daterange3" type="text" value="10/24/1984" class="form-control">
+								<input id="daterange3" name="tStartDate" type="text" class="form-control">
 								<span class="input-group-addon">
 									<i class="font-icon font-icon-calend"></i>
 								</span>
-								&nbsp;&nbsp;
-								<input id="daterange4" type="text" value="10/24/1984" class="form-control">
+								&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;
+								<input id="daterange4" name="tEndDate" type="text" class="form-control">
 								<span class="input-group-addon">
 									<i class="font-icon font-icon-calend"></i>
 								</span>
@@ -85,14 +85,21 @@
 				</div>
  				<div class="form-group row">
 					<label class="col-sm-2 form-control-label">공개여부</label>
-					<div class="btn-group">
-						<button type="button" class="btn btn-default-outline" id="open" name="open">공개</button>
-						<button type="button" class="btn btn-default-outline" id="close" name="close">비공개</button>
-					</div>			
+					<div class="btn-group" data-toggle="buttons">
+						<label class="btn active btn-success btn-sm">
+							<input type="radio" name="openStatus" id="open" value="Y" checked> 공개
+						</label>
+						<label class="btn btn-success btn-sm">
+							<input type="radio" name="openStatus" id="close" value="N"> 비공개
+						</label>
+					</div>
 				</div>
 				<div>
 					<button type="submit" class="btn btn-rounded btn-success">등록</button>
 		       	</div>
+		       	<input type="hidden" name="tGoalNum" value="${tGoalNum}">
+		       	<input type="hidden" name="progressNum" value="${progressNum}">
+		       	<%-- <input type="hidden" name="calendarNum" value="${calendarNum}"> --%>
 			</form>
 		</div>
 	</div><!--.container-fluid-->
