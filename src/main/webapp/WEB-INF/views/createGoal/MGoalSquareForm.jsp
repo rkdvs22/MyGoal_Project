@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!-- JScrollPane 문제!!!! 모르겠다!!!! 09.10 세이브 -->
 <%@ include file="../menu.jsp" %>
 <html>
 <head>
@@ -89,42 +88,73 @@
 		overflow-y: visible;
 	}
 	
-	/* 색상을 원 모양에서 선택할 수 있는 창 */
-	.minicolors-panel.minicolors-slider-wheel {
-		display: none;
+	/* 각 색상이 부여된 div */
+	.color-row1 > div, .color-row2 > div {
+		display: inline-block;
+		width: 50px;
+		height: 20px;
 	}
-	/* 도장 */
-	/* .stamp-div {
-	font-family: 'Vollkorn', serif;
-	font-size: 25px;
-	line-height: 45px;
-	text-transform: uppercase;
-	font-weight: bold;
-	color: red;
-	border: 7px solid red;
-	float: left;
-	padding: 10px 7px;
-	border-radius: 10px;
 	
-	opacity: 0.8;
-	-webkit-transform: rotate(-10deg);
-	-o-transform: rotate(-10deg);
-	-moz-transform: rotate(-10deg);
-	-ms-transform: rotate(-10deg);
-	position:absolute;
-	top:32%;
-}
-	.stamp-div::after {
-	position: absolute;
-	content: "test";
-	width: 100%;
-	height: auto;
-	min-height: 100%;
-	top: 150px;
-	left: 300px;
-	padding: 10px;
-	background: url(https://raw.github.com/domenicosolazzo/css3/master/img/noise.png) repeat;
-} */
+	/* 색상 선택창의 각 색상 지정 */
+	#color_lightgray {
+		background-color: #D3D3D3;
+	}
+	
+	#color_red {
+		background-color: #FF0000;
+	}
+	
+	#color_orange {
+		background-color: #FFA500;
+	}
+	
+	#color_green {
+		background-color: #00FF00;
+	}
+	
+	#color_purple {
+		background-color: #A020F0;
+	}
+	
+	#color_pink {
+		background-color: #FFC0CB;
+	}
+	
+	#color_gold {
+		background-color: #FFD700;
+	}
+	
+	#color_aquamarine {
+		background-color: #7FFFD4;
+	}
+	
+	#color_blue {
+		background-color: #0000FF;
+	}
+	
+	#color_skyblue {
+		background-color: #87CEEB;
+	}
+	
+	/* 사용자가 선택한 색상을 확인시켜주는 div */
+	.color-result {
+		display: inline-block;
+		position: absolute;
+		width: 200px;
+		height: 200px;
+		left: 50px;
+	}
+	
+	/* 사용자가 지정한 색을 ID 옆에 표시 */
+	.pickcolor {
+		width: 50px;
+		height: 50px;
+	}
+	
+	/* 친구목록 table 내에 선 긋기 */
+	tr.bordered {
+		border-bottom: 1pt solid #000;
+	}
 </style>
 
 </head>
@@ -440,7 +470,7 @@ $(function() {
 			bBtn_num = 2;
 			catchbBtnNum(bBtn_num);
 			callModal();
-			if(clickCount_btn2 > 1) {
+			if(btnsClickCount[1] > 1) {
 				click_flag = false;
 				updateGoals(bBtn_num);
 			}
@@ -454,7 +484,7 @@ $(function() {
 			bBtn_num = 3;
 			catchbBtnNum(bBtn_num);
 			callModal();
-			if(clickCount_btn3 > 1) {
+			if(btnsClickCount[2] > 1) {
 				click_flag = false;
 				updateGoals(bBtn_num);
 			}
@@ -467,7 +497,7 @@ $(function() {
 			bBtn_num = 8;
 			catchbBtnNum(bBtn_num);
 			callModal();
-			if(clickCount_btn8 > 1) {
+			if(btnsClickCount[7] > 1) {
 				click_flag = false;
 				updateGoals(bBtn_num);
 			}
@@ -479,7 +509,7 @@ $(function() {
 			bBtn_num = 4;
 			catchbBtnNum(bBtn_num);
 			callModal();
-			if(clickCount_btn4 > 1) {
+			if(btnsClickCount[3] > 1) {
 				click_flag = false;
 				updateGoals(bBtn_num);
 			}
@@ -493,7 +523,7 @@ $(function() {
 			bBtn_num = 7;
 			catchbBtnNum(bBtn_num);
 			callModal();
-			if(clickCount_btn7 > 1) {
+			if(btnsClickCount[6] > 1) {
 				click_flag = false;
 				updateGoals(bBtn_num);
 			}
@@ -507,7 +537,7 @@ $(function() {
 			bBtn_num = 6;
 			catchbBtnNum(bBtn_num);
 			callModal();
-			if(clickCount_btn6 > 1) {
+			if(btnsClickCount[5] > 1) {
 				click_flag = false;
 				updateGoals(bBtn_num);
 			}
@@ -521,7 +551,7 @@ $(function() {
 			bBtn_num = 5;
 			catchbBtnNum(bBtn_num);
 			callModal();
-			if(clickCount_btn5 > 1) {
+			if(btnsClickCount[4] > 1) {
 				click_flag = false;
 				updateGoals(bBtn_num);
 			}
@@ -571,27 +601,82 @@ $(function() {
 		}
 	}
 	
+	var hex = "";
+	
+	// 색상 선택을 위한 modal창 설정
 	$("#color_modal").dialog({
 		autoOpen: false,
 		width: 320,
-		height: 620,
-		maxHeight: 620,
+		height: 500,
+		maxHeight: 500,
+		position: [500, 200],
+		modal: true,
+		resizable: false,
+		buttons:{
+			"확인":function () {
+				$(".host > .player-color").text("");
+				$(".host > .player-color").html('<div class="pickcolor" style="background-color: '+hex+';"></div>');
+				$(".pickcolor").css("border-radius", "50%");
+				$(this).dialog("close");
+			},
+			
+			"취소":function() {
+			
+				$(this).dialog("close");
+			}
+		}
+	});
+	
+	// 색상 선택 버튼을 클릭 시 modal창이 열린다.
+	$("#selectcolor").click(function() {
+		$("#color_modal").dialog("open");
+	});
+	
+	// 색 목록 중 특정 색을 클릭 시 밑의 div에 그 색상을 표시하도록 한다.
+	$(".color-value").click(function() {
+		var id = $(this).attr("id");
+		var rgb = $("#" + id).css("backgroundColor");
+		hex = rgbToHex(rgb);
+		$(".color-result").css("background-color", hex);
+	});
+	
+	// 선택된 색상의 rgb값을 hex값으로 변환시킨다.
+	function rgbToHex(rgb) {
+		if(rgb.search("rgb") == -1) {
+			return rgb;
+		} else {
+			rgb = rgb.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+))?\)$/);
+			function hex(x) {
+				return ("0" + parseInt(x).toString(16)).slice(-2);
+			}
+			return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+		}
+	}
+	
+	// 친구초대를 위한 modal창 설정
+	$(".invite-modal").dialog({
+		autoOpen: false,
+		width: 320,
+		height: 500,
+		maxHeight: 500,
 		position: [500, 200],
 		modal: true,
 		resizable: false,
 		buttons:{
 			"확인":function () {
 				
+				$(this).dialog("close");
 			},
 			
 			"취소":function() {
+			
+				$(this).dialog("close");
 			}
 		}
 	});
 	
-	$("#selectcolor").click(function() {
-		
-		$("#color_modal").dialog("open");
+	$("#invitation").click(function() {
+		$(".invite-modal").dialog("open");
 	});
 });
 	
@@ -624,45 +709,46 @@ $(function() {
 	</section>
 </article>
 
+<!-- 플레이 할 유저 목록, 초대, 색상지정, 진행상황을 표시한다. -->
 <aside>
 	<table>
 		<tr>
 			<th></th>
 			<th></th>
 			<th><pre>   </pre></th>
-			<th>색상</th>
+			<th><pre> 색상</pre></th>
 			<th><pre>   </pre></th>
-			<th>아이디</th>
+			<th><pre> 아이디</pre></th>
 		</tr>
-		<tr>
+		<tr class="host">
 			<td></td>
 			<td><img src="/goal/resources/img/avatar-2-64.png"></td>
 			<td><pre>   </pre></td>
-			<td>Not yet</td>
+			<td class="player-color">Not yet</td>
 			<td><pre>   </pre></td>
-			<td>${sessionScope.hostId}</td>
+			<td class="player-id">${sessionScope.hostId}</td>
 		</tr>
-		<tr>
+		<tr class="player2">
 			<td></td>
 			<td><img src="/goal/resources/img/avatar-2-64.png"></td>
 			<td></td>
-			<td>Not yet</td>
+			<td class="player-color">Not yet</td>
 			<td></td>
 			<td>Empty</td>
 		</tr>
-		<tr>
+		<tr class="player3">
 			<td></td>
 			<td><img src="/goal/resources/img/avatar-2-64.png"></td>
 			<td></td>
-			<td>Not yet</td>
+			<td class="player-color">Not yet</td>
 			<td></td>
 			<td>Empty</td>
 		</tr>
-		<tr>
+		<tr class="player4">
 			<td></td>
 			<td><img src="/goal/resources/img/avatar-2-64.png"></td>
 			<td></td>
-			<td>Not yet</td>
+			<td class="player-color">Not yet</td>
 			<td></td>
 			<td>ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</td>
 		</tr>
@@ -750,8 +836,23 @@ $(function() {
 </div>
 
 <!-- 색상 지정을 하기 위한 Modal 창 -->
-<div id="color_modal" title="색상선택">
-	<div class="modal_id"><b>${sessionScope.userid}</b>님의 색상선택</div>
+<div id="color_modal" title="${sessionScope.userid}님의 색상선택">
+	<div class="color-row1">
+		<div id="color_lightgray" class="color-value"></div>
+		<div id="color_red" class="color-value"></div>
+		<div id="color_orange" class="color-value"></div>
+		<div id="color_green" class="color-value"></div>
+		<div id="color_purple" class="color-value"></div>
+	</div>
+	<div class="color-row2">
+		<div id="color_pink" class="color-value"></div>
+		<div id="color_gold" class="color-value"></div>
+		<div id="color_aquamarine" class="color-value"></div>
+		<div id="color_blue" class="color-value"></div>
+		<div id="color_skyblue" class="color-value"></div>
+	</div>
+	<hr>
+	<div class="color-result"></div>
 </div>
 
 <!-- alert창을 띄우기 위한 div -->
@@ -764,6 +865,32 @@ $(function() {
 			<button id="msg_ok" class="btn btn-primary swal-btn-basic">확인</button>
 		</p>
 	</div>
+</div>
+
+<!-- 초대 기능을 위한 modal창 -->
+<div class="invite-modal" title="초대하기">
+	<div>
+		<input type="text">
+		<input type="button" value="친구검색">
+	</div>
+	<table>
+		<thead>
+			<tr>
+				<th>아이디</th>
+				<th><pre>       </pre></th>
+				<th>상태</th>
+			</tr>
+		</thead>
+		<tr class="bordered"></tr>
+		<tbody>
+			<tr>
+			<!-- 여기에 동적 추가 -->
+				<td>아니</td>
+				<td></td>
+				<td>왜안돼</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 </body>
 </html>
