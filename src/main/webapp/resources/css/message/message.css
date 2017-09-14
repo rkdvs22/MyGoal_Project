@@ -52,6 +52,9 @@
 	float: right;
 }
 
+.bubble {
+	margin: 5px;	
+}
 
 #tab1_left, #tab2_left {
 	overflow-y: auto;
@@ -133,8 +136,4 @@ li.active a, li.active a:hover {
 /* 활성화 중인 탭 div */
 .tab.active {
 	display:block;
-}
-
-.bubble {
-	margin: 5px;	
 }

@@ -7,7 +7,10 @@
 	
 	<!-- 최상위 목표 불러오기 -->
 	<select id="goalList" parameterType="GoalTreeVO" resultType="GoalTreeVO">
-		select USERID, TGOALNUM, TSTARTDATE, TGOALTITLE from TOPGOAL T
-		where USERID = #{USERID}
+		select USERID, TGOALNUM, TGOALTITLE, to_char(TSTARTDATE, 'yyyy') as TSTARTYEAR from TOPGOAL
+		where USERID = #{0}
+		<if test="tStartDate != null">
+		and to_char(TSTARTDATE, 'yyyy') = #{1}
+		</if>
 	</select>
 </mapper>

@@ -316,13 +316,11 @@
 </head>
 <body>
 <div class="page-content">
-<header class="page-content-header">
-	<div class="container-fluid">
-		<div class="tbl">
-			<div class="tbl-row">
-				<div class="tbl-cell">
-					<h3>Goal Tree <small class="text-muted">${sessionScope.userid}</small></h3>
-				</div>
+<header class="section-header">
+	<div class="tbl">
+		<div class="tbl-row">
+			<div class="tbl-cell">
+				<h3>Goal Tree <small class="text-muted">${sessionScope.userid}</small></h3>
 			</div>
 		</div>
 	</div>

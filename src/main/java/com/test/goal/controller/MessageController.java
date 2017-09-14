@@ -27,8 +27,6 @@ public class MessageController {
 	// 메시지 보내기
 	@RequestMapping(value = "writeMsg", method = RequestMethod.POST)
 	public String writeMsg(MessageVO vo, HttpSession session, RedirectAttributes attr) {
-		//임시로그인
-		session.setAttribute("userid", "SCITMASTER");
 		String userid = (String) session.getAttribute("userid");
 		vo.setSender(userid);
 		

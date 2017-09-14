@@ -156,17 +156,17 @@
 	        	<table id="receiverList">
 	        		<c:forEach items='${rlist}' var='rlist'>
 	        			<tr>
-	        				<!-- 프로필 사진 -->
-							<td class="profileImg">
-							<c:if test="${rlist.image != null}">
-							<img src="/goal/resources/img/profileImg/${rlist.image}">
-							</c:if>
-							<c:if test="${rlist.image == null}">
-							<img src="/goal/resources/img/avatar-2-48.png">
-							</c:if>
-							</td>
-							<!-- 수신자 이름 -->
-							<td class="receiverName"><a href="#" onclick="sentMsgList('${rlist.userid}')">${rlist.userid}</a></td>
+        				<!-- 프로필 사진 -->
+						<td class="profileImg">
+						<c:if test="${rlist.image != null}">
+						<img src="/goal/resources/img/profileImg/${rlist.image}">
+						</c:if>
+						<c:if test="${rlist.image == null}">
+						<img src="/goal/resources/img/avatar-2-48.png">
+						</c:if>
+						</td>
+						<!-- 수신자 이름 -->
+						<td class="receiverName"><a href="#" onclick="sentMsgList('${rlist.userid}')">${rlist.userid}</a></td>
 						</tr>
 					</c:forEach>
 	        	</table>

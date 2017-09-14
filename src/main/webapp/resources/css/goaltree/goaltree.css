@@ -1,12 +1,16 @@
 /* 배경 */
 body {
-	background-image: url("/goal/resources/img/goaltree/background.png");
-	background-position: center top;
-	background-size: 1000px auto;
-	background-repeat: no-repeat;
+	background-image: url("/goal/resources/img/goaltree/background.png") !important;
+	background-position: right top !important;
+	background-size: 1450px auto !important;
+	background-repeat: no-repeat !important;
 }
 
-.smallTreeImg, .midTreeImg {
+header {
+	position: absolute !important;
+}
+
+img {
 	vertical-align: bottom;
 }
 

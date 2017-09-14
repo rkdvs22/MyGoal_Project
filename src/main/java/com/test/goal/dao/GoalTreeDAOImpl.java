@@ -15,8 +15,8 @@ public class GoalTreeDAOImpl implements GoalTreeDAO {
 	private SqlSession sqlsession;
 
 	@Override
-	public ArrayList<GoalTreeVO> goalList(String userid) {
+	public ArrayList<GoalTreeVO> goalList(String userid, int tStartYear) {
 		GoalTreeMapper mapper = sqlsession.getMapper(GoalTreeMapper.class);
-		return mapper.goalList(userid);
+		return mapper.goalList(userid, tStartYear);
 	}
 }

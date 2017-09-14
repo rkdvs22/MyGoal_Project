@@ -22,7 +22,7 @@ public class GoalTreeController {
 	public String goalList(HttpSession session, Model model) {
 		
 		String userid = (String) session.getAttribute("userid");
-		ArrayList<GoalTreeVO> goalList = dao.goalList(userid);
+		ArrayList<GoalTreeVO> goalList = dao.goalList(userid, 2017);
 		
 		model.addAttribute("goalList", goalList);
 		model.addAttribute("goalNum", goalList.size());
