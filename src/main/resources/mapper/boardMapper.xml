@@ -8,9 +8,29 @@
 	
 	<!-- 게시글 목록 -->
 	<select id="boardList" parameterType="TopGoalVO" resultType="TopGoalVO">
-		select t.tGoalTitle, t.tStartDate, t.tEndDate, t.openStatus, t.userid, m.maxMember
-		from TopGoal t, MainProgress m, board b
-		where t.progressNum = m.progressNum and board b
-		order by t.tGoalTitle;
+		select t.tGoalTitle, t.tStartDate, t.tEndDate, t.openStatus, t.userid, p.maxMember
+			from (select userid, progressNum from memberList where playerType = 'HOST') m
+			left outer join (select tGoalTitle,tStartDate, tEndDate, openStatus, userid, progressNum from TopGoal) t
+			on m.userid = t.userid and m.progressNum = t.progressNum
+			inner join (select maxMember,progressNum from mainProgress) p
+			on t.progressNum = p.progressNum
 	</select>
+	
+	<!-- 게시글 좋아요 -->
+	<update id="favorite" parameterType="int">
+		update board set favorite = favorite + 1 where boardnum = #{boardnum}	
+	</update>
+	
+	<!-- 게시글 검색 -->
+	<select id="searchBoard" parameterType="map" resultType="BoardVO">
+		select * from Board b, TopGoal t
+			<if test="searchSelect == 'id'">
+				where t.userid like '%'||#{searchKey}||'%'
+			</if>
+			<if test="searchSelect == 'title'">
+				where t.tGoalTitle like '%'||#{searchKey}||'%'
+			</if>
+			group by b.tGoalNum = t.tGoalNum order by b.favorite
+	</select>
+	
 </mapper>
