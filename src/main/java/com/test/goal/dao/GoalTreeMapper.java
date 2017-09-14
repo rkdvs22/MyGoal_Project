@@ -5,5 +5,5 @@ import java.util.ArrayList;
 import com.test.goal.vo.GoalTreeVO;
 
 public interface GoalTreeMapper {
-	public ArrayList<GoalTreeVO> goalList(String userid, int tStartYear);
+	public ArrayList<GoalTreeVO> goalList(String userid, String tStartYear);
 }

@@ -4,5 +4,5 @@ import java.util.ArrayList;
 import com.test.goal.vo.GoalTreeVO;
 
 public interface GoalTreeDAO {
-	public ArrayList<GoalTreeVO> goalList(String userid, int tStartYear);
+	public ArrayList<GoalTreeVO> goalList(String userid, String tStartYear);
 }

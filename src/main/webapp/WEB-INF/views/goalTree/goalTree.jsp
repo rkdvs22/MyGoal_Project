@@ -330,7 +330,6 @@
 
 <!-- 작은 나무(목표 0~1개) -->
 <c:if test="${goalNum <= 1}">
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <div class="smalltree">
 	<img src="/goal/resources/img/goaltree/tree1.png" width="180px">
 </div>
@@ -338,7 +337,6 @@
 
 <!-- 중간 나무(목표 2~4개) -->
 <c:if test="${goalNum > 1 && goalNum < 5}">
-<br><br><br><br><br><br><br><br><br><br>
 <div class="midtree">
 	<img src="/goal/resources/img/goaltree/tree2.png" width="300px">
 </div>

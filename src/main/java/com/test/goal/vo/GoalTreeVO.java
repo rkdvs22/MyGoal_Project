@@ -4,13 +4,13 @@ public class GoalTreeVO {
 	private String userid;
 	private String tGoalNum;
 	private String tGoalTitle;
-	private int tStartYear;
+	private String tStartYear;
 	
 	public GoalTreeVO() {
 		
 	}
 
-	public GoalTreeVO(String userid, String tGoalNum, String tGoalTitle, int tStartYear) {
+	public GoalTreeVO(String userid, String tGoalNum, String tGoalTitle, String tStartYear) {
 		super();
 		this.userid = userid;
 		this.tGoalNum = tGoalNum;
@@ -42,11 +42,11 @@ public class GoalTreeVO {
 		this.tGoalTitle = tGoalTitle;
 	}
 
-	public int gettStartYear() {
+	public String gettStartYear() {
 		return tStartYear;
 	}
 
-	public void settStartYear(int tStartYear) {
+	public void settStartYear(String tStartYear) {
 		this.tStartYear = tStartYear;
 	}
 

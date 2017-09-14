@@ -1,6 +1,9 @@
 package com.test.goal.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,9 +23,13 @@ public class GoalTreeController {
 	//최상위 목표 불러오기
 	@RequestMapping(value = "goalList", method = RequestMethod.GET)
 	public String goalList(HttpSession session, Model model) {
-		
 		String userid = (String) session.getAttribute("userid");
-		ArrayList<GoalTreeVO> goalList = dao.goalList(userid, 2017);
+		
+		Date sysdate = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+		String tStartYear = sdf.format(sysdate);
+		System.out.println("tStartYear = " + tStartYear);
+		ArrayList<GoalTreeVO> goalList = dao.goalList(userid, tStartYear);
 		
 		model.addAttribute("goalList", goalList);
 		model.addAttribute("goalNum", goalList.size());
