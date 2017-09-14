@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -33,6 +34,20 @@ public class CreateGoalController {
 		return "/createGoal/MGoalSquareForm";
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// 목표大작성화면 이동
 	@RequestMapping(value = "createForm", method = RequestMethod.GET)
 	public String createForm() {
@@ -41,13 +56,16 @@ public class CreateGoalController {
 	
 	// 목표大작성 기능
 	@RequestMapping(value = "create", method = RequestMethod.POST)
-	public String create(TopGoalVO tvo, MainProgressVO mvo, Map<String, String> map, RedirectAttributes rttr) {
-		map.put("create1", dao.create1(tvo));
+	public String create(TopGoalVO tvo, MainProgressVO mvo, Model model) {
+		/*map.put("create1", dao.create1(tvo));
 		map.put("create2", dao.create2(mvo));
-		System.out.println(map);
-		rttr.addFlashAttribute("createGoal", map);
+		rttr.addFlashAttribute("createGoal", map);*/
+		
 		/*rttr.addFlashAttribute("topGoal", dao.create1(tvo));
 		rttr.addFlashAttribute("mainProgress", dao.create2(mvo));*/
+		
+		model.addAttribute("topGoal", dao.create1(tvo));
+		model.addAttribute("mainProgress", dao.create2(mvo));
 		return "redirect:/";
 	}
 }
