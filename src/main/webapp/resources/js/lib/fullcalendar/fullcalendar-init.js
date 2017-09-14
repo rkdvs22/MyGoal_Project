@@ -6,7 +6,8 @@ $(document).ready(function(){
 	$('#calendar').fullCalendar('today');
 	$('.fc-event').css('font-size', '.6em');
     $('#calendar').fullCalendar({
-    	height: 750,
+    	aspectRatio: .7,
+    	height: 850,
         header: {
             left: '',
             center: 'prev, title, next',
@@ -29,14 +30,14 @@ $(document).ready(function(){
                 	type: "POST",
                 	dataType: "json",
                 	success: function(result) {
-                		console.log(result);
                     	var events = [];
                     	$(result).each(function() {
                         	events.push({
                             	title: $(this).attr('bgoalTitle'),
                             	start: $(this).attr('startDate'), // will be parsed
                             	end : $(this).attr('endDate'),
-                            	color :  $(this).attr('color')
+                            	color :  $(this).attr('color'),
+                            	mGoalTitle: $(this).attr('mGoalTitle')
                         	});
                     	});
                     	callback(events);
@@ -53,14 +54,14 @@ $(document).ready(function(){
 
             $('.fc-popover.click').remove();
         },
-        eventClick: function(calEvent, jsEvent, view) {
+        eventClick: function(calEvent,jsEvent,view) {
             var eventEl = $(this);
             // Add and remove event border class
             if (!$(this).hasClass('event-clicked')) {
                 $('.fc-event').removeClass('event-clicked');
                 $(this).addClass('event-clicked');
             }
-            
+            	
 	          var time = new Date() 
 	  	      
 	  	      var year = time.getYear()+1900 
@@ -72,9 +73,9 @@ $(document).ready(function(){
 	  	      if((day+"").length <2){
 	  	    	  day = "0"+day;
 	  	      }
-	  	      console.log(calEvent);
-	  	      console.log(jsEvent);
-	  	      console.log(view);
+	  	      console.log(calEvent); // 이벤트 객체임
+	  	    /*  console.log(jsEvent); 
+	  	      console.log(view);*/
 	  	      var today = year+""+month+""+day
 	  	      
 	  	      //calEvaent.start._i 는  DayPlan 이벤트의 해당 날짜 입니다.
@@ -89,13 +90,13 @@ $(document).ready(function(){
 	            $('body').append(
 	                '<div class="fc-popover click">' +
 	                    '<div class="fc-header">' +
-	                        moment(calEvent.start).format('dddd • D') +
+	                        '<p>'+calEvent.title+'</p>' +
 	                        '<button type="button" class="cl"><i class="font-icon-close-2"></i></button>' +
 	                    '</div>' +
 	
 	                    '<div class="fc-body main-screen">' +
 	                        '<p>' +
-	                            moment(calEvent.start).format('dddd, D YYYY, hh:mma') +
+	                            moment(calEvent.start._i).format('yyyy mm dd') +
 	                        '</p>' +
 	                        '<p class="color-blue-grey">Name Surname Patient<br/>Surgey ACL left knee</p>' +
 	                        '<ul class="actions">' +
@@ -141,17 +142,18 @@ $(document).ready(function(){
 	            $('body').append(
 	                '<div class="fc-popover click">' +
 	                    '<div class="fc-header">' +
-	                        moment(calEvent.start).format('dddd • D') +
+	                      '<p id = "fc-header-title">'+calEvent.title +'</p>' +
 	                        '<button type="button" class="cl"><i class="font-icon-close-2"></i></button>' +
 	                    '</div>' +
 	
 	                    '<div class="fc-body main-screen">' +
+			                '<p>' +
+		                        "중간목표명 : " + calEvent.mGoalTitle + "" +
+		                    '</p>' + 
 	                        '<p>' +
-	                            moment(calEvent.start).format('YYYY-MM-DD, hh:mma') +
-	                        '</p>' +
-	                        '<p class="color-blue-grey">Name Surname Patient<br/>Surgey ACL left knee</p>' +
-	                    '</div>' +
-	
+	                           "진행기간 : " + moment(calEvent.start).format('YYYY-MM-DD') + " ~ " + moment(calEvent.end).format('YYYY-MM-DD') +
+	                        '</p>' + '<br>' +'<p id = "dayChartTitle">' +  "<일별 달성률 차트>" + "</p>" +
+			                  '<div id="chart_div" style="width: 375px; height: 350px;">'+'</div>'+	
 	                    '<div class="fc-body remove-confirm">' +
 	                        '<p>Are you sure to remove event?</p>' +
 	                        '<div class="text-center">' +
@@ -184,7 +186,46 @@ $(document).ready(function(){
 	                    '</div>' +
 	                '</div>'
 	            );
-            }
+	            
+	            google.charts.load('current', {'packages':['corechart']});
+	            google.charts.setOnLoadCallback(drawVisualization);
+
+	            function drawVisualization() {
+	              // Some raw data (not necessarily accurate)
+	              var data = google.visualization.arrayToDataTable([
+	               ['일별', '승무쌤'],
+	               ['2017-09-13',  30],
+	               ['2017-09-14',  10],
+	               ['2017-09-15',  20],
+	               ['2017-09-16',  40],
+	            ]);
+
+	          var options = {
+	            vAxis: {title: '달성률',viewWindow:{
+	                max:100,
+	                min:0
+	              }},
+	            hAxis: {title: '일별'},
+	            seriesType: 'bars',
+	            series: {5: {type: 'line'}},
+	            colors : ['#960018'],
+	            axes: {
+	                y: {
+	                    all: {
+	                        range: {
+	                            max: 100,
+	                            min: 0
+	                        }
+	                    }
+	                }
+	            }
+	          };
+
+	          var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+	          chart.draw(data, options);
+	        }
+	            
+          }
 
             // Datepicker init
             $('.fc-popover.click .datetimepicker').datetimepicker({

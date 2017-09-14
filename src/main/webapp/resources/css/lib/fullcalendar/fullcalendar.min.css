@@ -3,6 +3,25 @@
  * Docs & License: http://fullcalendar.io/
  * (c) 2015 Adam Shaw
  */
+ 
+ #dayChartTitle{
+ 	color: red;
+ }
+ 
+.fc-header {
+	background-color: #FDD378 !important;
+	height: 30px !important;
+}
+
+.fc-header:before{
+	color: #FDD378 !important;
+}
+
+.fc-popover {
+	width: 400px !important;
+	height: 500px !important;
+}
+ 
 .fc {
 	direction: ltr;
 	text-align: left
@@ -234,7 +253,8 @@ body .fc {
 }
 
 .fc-popover .fc-header {
-	padding: 2px 4px
+	padding: 2px 4px;
+	text-align: center;
 }
 
 .fc-popover .fc-header .fc-title {
@@ -755,7 +775,7 @@ a.fc-more:hover {
 }
 
 .fc-time-grid .fc-slats .ui-widget-content {
-	background: 0 0
+	background: 0 0;
 }
 
 .fc-time-grid .fc-highlight-container {
@@ -910,4 +930,12 @@ a.fc-more:hover {
 .label-percent {
     float: right;
     margin-left: 5px;   
+}
+
+.fc-header-title{
+	height: 47;
+	margin-bottom: 0px !important;
+	margin-top: 0px !important;
+	margin-left: 0px !important;
+	margin-right: 0px !important;
 }
