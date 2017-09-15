@@ -1,7 +1,6 @@
 package com.test.goal.controller;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,17 +9,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.test.goal.dao.CreateGoalDAO;
 import com.test.goal.dao.FriendDAO;
 import com.test.goal.dao.MessageDAO;
 import com.test.goal.vo.MainProgressVO;
+import com.test.goal.vo.MemberVO;
 import com.test.goal.vo.MessageVO;
 import com.test.goal.vo.MyFriendVO;
 import com.test.goal.vo.TopGoalVO;
@@ -336,7 +333,7 @@ public class CreateGoalController {
 			String friendId = nameList[i];
 			msgVO.setSender(myId);
 			msgVO.setReceiver(friendId);
-			msgVO.setMsgTitle("[SYSTEM] : " + myId + "님께서" + friendId + "님을 초대하셨습니다");
+			msgVO.setMsgTitle("[SYSTEM] " + myId + "님께서 " + friendId + "님을 초대 하셨습니다 ");
 			msgVO.setMsgContent("다음의 목표에 참가하시겠습니까?");
 			// 목표에 대한 정보를 view단에서 보여줄 예정. 중간 세이브
 			boolean result = msg_dao.writeMsg(msgVO);
@@ -345,5 +342,13 @@ public class CreateGoalController {
 		
 		if(nameList.length == result_count) return true;
 		else return false;
+	}
+	
+	// 초대 화면에서 초대하고 싶은 사용자의 ID를 검색한다.
+	@RequestMapping(value = "findIdinModal", method = RequestMethod.POST)
+	@ResponseBody
+	public ArrayList<MemberVO> findIdinModal(String keyWord) {
+		ArrayList<MemberVO> list = dao.findIdinModal(keyWord);
+		return list;
 	}
 }

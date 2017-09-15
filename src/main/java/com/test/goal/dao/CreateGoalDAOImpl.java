@@ -1,10 +1,13 @@
 package com.test.goal.dao;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.test.goal.vo.MainProgressVO;
+import com.test.goal.vo.MemberVO;
 import com.test.goal.vo.TopGoalVO;
 
 @Repository
@@ -27,4 +30,29 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 		return mapper.create2(mvo);
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public ArrayList<MemberVO> findIdinModal(String keyWord) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		return mapper.findIdinModal(keyWord);
+	}
 }

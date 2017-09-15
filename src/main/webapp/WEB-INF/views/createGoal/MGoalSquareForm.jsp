@@ -155,6 +155,11 @@
 	tr.bordered {
 		border-bottom: 1pt solid #000;
 	}
+	
+	/* 초대할 사람의 체크박스 */
+	.checkList {
+		text-align: center;
+	}
 </style>
 
 </head>
@@ -560,7 +565,7 @@ $(function() {
 		});
 		
 		$("#p2_ready").hide();
-		// 레디 버튼 클릭
+		// 레디 버튼 클릭 ================================== 변경할것
 		$("#readyBtn").click(function() {
 			$("#player2").toggle();
 			$("#p2_ready").toggle();
@@ -664,7 +669,7 @@ $(function() {
 					if('${sessionScope.userid}' == item.userid) {
 						var friend_row = '<tr class="friend"><td>' + item.frdid + '</td>'
 						friend_row += '<td></td><td>연동예정</td><td></td>';
-						friend_row += '<td><input type="checkbox" name="checkList" class="checkList" value="'+ item.frdid +'"></td></tr>';
+						friend_row += '<th><input style="margin: 0px 3px 1px 30px; width: 13px; HEIGHT: 13px" type="checkbox" name="checkList" class="checkList" value="'+ item.frdid +'"></th></tr>';
 						$(".friendList").append(friend_row);
 					}
 				});
@@ -677,7 +682,7 @@ $(function() {
 	// 친구초대를 위한 modal창 설정
 	$(".invite-modal").dialog({
 		autoOpen: false,
-		width: 330,
+		width: 350,
 		height: 500,
 		maxHeight: 500,
 		position: [500, 200],
@@ -694,15 +699,16 @@ $(function() {
 				
 				jQuery.ajaxSettings.traditional = true;
 				
-				// 사용자가 체크박에서 선택한 사람에게 초대 메시지를 보낸다.
+				// 사용자가 체크박스에서 선택한 사람에게 초대 메시지를 보낸다.
 				$.ajax ({
 					url: "writeInviteMsg",
 					type: "post",
 					data: {"nameList":nameList},
-					success: function(result) { alert("초대쪽지 날리기 : 미구현 (699 row)"); },
+					success: function(result) {
+						alert("초대 메시지를 전송하였습니다");
+					},
 					error: function(result) {
-						console.log(result);
-						console.log(nameList);
+						alert("초대 메시지 전송 실패! 다시 시도해주세요");
 					}
 				});
 				
@@ -716,6 +722,35 @@ $(function() {
 				$(this).dialog("close");
 			}
 		}
+	});
+	
+	// 나가기 버튼을 눌렀을 시 메인화면으로 이동한다.
+	$("#exitBtn").click(function() {
+		var result = confirm("정말 나가시겠습니까? 작성중인 정보는 모두 삭제됩니다");
+		if(result) window.location.replace("/goal");
+	});
+	
+	// 초대 modal창 안에서 유저 아이디를 찾고 싶을 때
+	$("#searchBtn").click(function() {
+		var keyWord = $("#search-id").val();
+		if(keyWord == "") {
+			alert("찾을 아이디를 입력 해 주세요");
+			return false;
+		}
+		
+		$.ajax ({
+			url: "findIdinModal",
+			type: "post",
+			data: {"keyWord" : keyWord},
+			success: function(list) {
+				$(".friendList").html("");
+				$("#switch-th").text("아이디");
+				// 09.15 중간세이브 ====================================
+				var friend_row = '<tr class="id"><td>' + item.userid + '</td>'
+				$(".friendList").append(friend_row);
+			},
+			error: function() { alert("아이디 찾기 아예 실패 ㅋㅋㅋㅋ"); }
+		});
 	});
 });
 	
@@ -761,7 +796,7 @@ $(function() {
 		</tr>
 		<tr class="host">
 			<td></td>
-			<td><img src="/goal/resources/img/avatar-2-64.png"></td>
+			<td id="host_img"><img src="/goal/resources/img/avatar-2-64.png"></td>
 			<td><pre>   </pre></td>
 			<td class="player-color">Not yet</td>
 			<td><pre>   </pre></td>
@@ -769,7 +804,7 @@ $(function() {
 		</tr>
 		<tr class="player2">
 			<td></td>
-			<td><img src="/goal/resources/img/avatar-2-64.png"></td>
+			<td id="p2_img"><img src="/goal/resources/img/avatar-2-64.png"></td>
 			<td></td>
 			<td class="player-color">Not yet</td>
 			<td></td>
@@ -777,7 +812,7 @@ $(function() {
 		</tr>
 		<tr class="player3">
 			<td></td>
-			<td><img src="/goal/resources/img/avatar-2-64.png"></td>
+			<td id="p3_img"><img src="/goal/resources/img/avatar-2-64.png"></td>
 			<td></td>
 			<td class="player-color">Not yet</td>
 			<td></td>
@@ -785,7 +820,7 @@ $(function() {
 		</tr>
 		<tr class="player4">
 			<td></td>
-			<td><img src="/goal/resources/img/avatar-2-64.png"></td>
+			<td id="p4_img"><img src="/goal/resources/img/avatar-2-64.png"></td>
 			<td></td>
 			<td class="player-color">Not yet</td>
 			<td></td>
@@ -911,7 +946,14 @@ $(function() {
 	<table>
 		<thead>
 			<tr>
-				<th>아이디</th>
+				<td colspan="5" class="search-form">
+					<input type="text" id="search-id">
+					<input type="button" value="ID검색" id="searchBtn"><br>
+					<hr>
+				</td>
+			</tr>
+			<tr>
+				<th id="switch-th">친구</th>
 				<th><pre>     </pre></th>
 				<th>상태</th>
 				<th><pre>     </pre></th>
