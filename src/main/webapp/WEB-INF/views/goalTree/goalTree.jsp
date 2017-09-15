@@ -314,7 +314,7 @@
 	}
 </script>
 <link rel="stylesheet" href="/goal/resources/css/main.css">
-<link rel="stylesheet" href="/goal/resources/css/goaltree/goaltree.css?version=2">
+<link rel="stylesheet" href="/goal/resources/css/goaltree/goaltree.css?version=6">
 </head>
 <body>
 <div class="page-content">

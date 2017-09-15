@@ -18,14 +18,16 @@ img {
 .smalltree {
 	width: 180px;
 	position: relative;
-	margin: 0 auto;
+	margin: auto;
+	margin-top: 320px;
 }
 
 /* 중간 나무 */
 .midtree {
 	width: 300px;
 	position: relative;
-	margin: 0 auto;
+	margin: auto;
+	margin-top: 220px;
 }
 
 /* 큰 나무 */
@@ -35,7 +37,7 @@ img {
 	margin: 0 auto;
 }
 
-/* 중간&작은 나무*/
+/* 큰&작은 나무*/
 .bigNSmalltree {
 	width: 680px;
 	position: relative;

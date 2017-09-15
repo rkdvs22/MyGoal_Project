@@ -6,11 +6,12 @@
 <mapper namespace="com.test.goal.dao.GoalTreeMapper">
 	
 	<!-- 최상위 목표 불러오기 -->
-	<select id="goalList" parameterType="string" resultType="TopGoalVO">
+	<select id="goalList" parameterType="map" resultType="TopGoalVO">
 		select 
 		tGoalNum, tGoalTitle,
-		to_char(tStartDate, 'yyyy-mm-dd hh24:mi:ss') as "tStartDate", to_char(tEndDate, 'yyyy-mm-dd hh24:mi:ss') as "tEndDate",
+		to_char(tStartDate, 'yyyy-mm-dd') as "tStartDate", to_char(tEndDate, 'yyyy-mm-dd') as "tEndDate",
 		tClear, tStartStatus, openStatus, userid, progressNum, calendarNum
-		from TOPGOAL where USERID = #{userid}
+		from TOPGOAL where USERID = #{userid} 
+		AND TO_CHAR(tStartDate, 'yyyy') = #{year}
 	</select>
 </mapper>
