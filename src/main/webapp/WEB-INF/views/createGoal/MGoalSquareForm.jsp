@@ -653,10 +653,31 @@ $(function() {
 		}
 	}
 	
+	// 초대 버튼 클릭 시 사용자가 등록중인 친구 목록을 불러온다.
+	$("#invitation").click(function() {
+		$.ajax ({
+			url: "/goal/createGoal/getFriendList",
+			type: "get",
+			data: {},
+			success: function(friendList) {
+				$(friendList).each(function(index, item) {
+					if('${sessionScope.userid}' == item.userid) {
+						var friend_row = '<tr class="friend"><td>' + item.frdid + '</td>'
+						friend_row += '<td></td><td>연동예정</td><td></td>';
+						friend_row += '<td><input type="checkbox" name="checkList" class="checkList" value="'+ item.frdid +'"></td></tr>';
+						$(".friendList").append(friend_row);
+					}
+				});
+			}
+		});
+		
+		$(".invite-modal").dialog("open");
+	});
+	
 	// 친구초대를 위한 modal창 설정
 	$(".invite-modal").dialog({
 		autoOpen: false,
-		width: 320,
+		width: 330,
 		height: 500,
 		maxHeight: 500,
 		position: [500, 200],
@@ -664,19 +685,37 @@ $(function() {
 		resizable: false,
 		buttons:{
 			"확인":function () {
+				var nameList = new Array();
+				var count = 0;
+				$("input[name=checkList]:checked").each(function() {
+					nameList[count] = $(this).val();
+					count += 1;
+				});
 				
+				jQuery.ajaxSettings.traditional = true;
+				
+				// 사용자가 체크박에서 선택한 사람에게 초대 메시지를 보낸다.
+				$.ajax ({
+					url: "writeInviteMsg",
+					type: "post",
+					data: {"nameList":nameList},
+					success: function(result) { alert("초대쪽지 날리기 : 미구현 (699 row)"); },
+					error: function(result) {
+						console.log(result);
+						console.log(nameList);
+					}
+				});
+				
+				$(".friendList").html("");
 				$(this).dialog("close");
 			},
 			
 			"취소":function() {
-			
+				
+				$(".friendList").html("");
 				$(this).dialog("close");
 			}
 		}
-	});
-	
-	$("#invitation").click(function() {
-		$(".invite-modal").dialog("open");
 	});
 });
 	
@@ -869,26 +908,19 @@ $(function() {
 
 <!-- 초대 기능을 위한 modal창 -->
 <div class="invite-modal" title="초대하기">
-	<div>
-		<input type="text">
-		<input type="button" value="친구검색">
-	</div>
 	<table>
 		<thead>
 			<tr>
 				<th>아이디</th>
-				<th><pre>       </pre></th>
+				<th><pre>     </pre></th>
 				<th>상태</th>
+				<th><pre>     </pre></th>
+				<th>초대여부</th>
 			</tr>
 		</thead>
 		<tr class="bordered"></tr>
-		<tbody>
-			<tr>
+		<tbody class="friendList">
 			<!-- 여기에 동적 추가 -->
-				<td>아니</td>
-				<td></td>
-				<td>왜안돼</td>
-			</tr>
 		</tbody>
 	</table>
 </div>
