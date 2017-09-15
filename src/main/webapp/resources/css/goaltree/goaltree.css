@@ -11,7 +11,7 @@ header {
 }
 
 img {
-	vertical-align: bottom;
+	vertical-align: bottom !important;
 }
 
 /* 작은 나무 */

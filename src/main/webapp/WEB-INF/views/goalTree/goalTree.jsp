@@ -11,6 +11,8 @@
 		$(".pop").hide();	//레이어 팝업창 숨김
 		locateGoal();
 		getTitle();
+		
+		console.log('${requestScope.goalList}');
 	});
 	
 	//목표 개수만큼 열매 달기
@@ -312,7 +314,7 @@
 	}
 </script>
 <link rel="stylesheet" href="/goal/resources/css/main.css">
-<link rel="stylesheet" href="/goal/resources/css/goaltree/goaltree.css">
+<link rel="stylesheet" href="/goal/resources/css/goaltree/goaltree.css?version=2">
 </head>
 <body>
 <div class="page-content">
@@ -368,7 +370,8 @@
 <c:forEach var="goalList" items="${goalList}" varStatus="status">
 	<div class="pop" id="pop${status.index + 1}">
 		<div class="poptail"></div>
-   	${goalList.tGoalTitle}
+   	${goalList.tGoalTitle}<br>
+   	달성 기간 : ${goalList.tStartDate} ~ ${goalList.tEndDate}
 	</div>
 </c:forEach>
 

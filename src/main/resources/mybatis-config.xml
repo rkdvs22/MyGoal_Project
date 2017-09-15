@@ -15,7 +15,6 @@
 		<typeAlias type="com.test.goal.vo.BTMSectionVO" alias="BTMSectionVO"/>
 		<typeAlias type="com.test.goal.vo.BTMRecordVO" alias="BTMRecordVO"/>
 		<typeAlias type="com.test.goal.vo.BTMGoalVO" alias="BTMGoalVO"/>
-		<typeAlias type="com.test.goal.vo.GoalTreeVO" alias="GoalTreeVO"/>
 		<typeAlias type="com.test.goal.vo.MessageVO" alias="MessageVO" />
 		<typeAlias type="com.test.goal.vo.BoardVO" alias="BoardVO"/>
 		<typeAlias type="com.test.goal.vo.TopGoalVO" alias="TopGoalVO"/>

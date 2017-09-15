@@ -6,14 +6,11 @@
 <mapper namespace="com.test.goal.dao.GoalTreeMapper">
 	
 	<!-- 최상위 목표 불러오기 -->
-	<select id="goalList" parameterType="string" resultType="GoalTreeVO">
-		select USERID, TGOALNUM, TGOALTITLE, to_char(TSTARTDATE, 'yyyy') as TSTARTYEAR from TOPGOAL
-		where USERID = #{0}
-		<if test="tStartYear != null">
-		and to_char(TSTARTDATE, 'yyyy') = #{1}
-		</if>
-		<if test="tStartYear == null">
-		and to_char(TSTARTDATE, 'yyyy') = to_char(TSTARTDATE, sysdate)
-		</if>
+	<select id="goalList" parameterType="string" resultType="TopGoalVO">
+		select 
+		tGoalNum, tGoalTitle,
+		to_char(tStartDate, 'yyyy-mm-dd hh24:mi:ss') as "tStartDate", to_char(tEndDate, 'yyyy-mm-dd hh24:mi:ss') as "tEndDate",
+		tClear, tStartStatus, openStatus, userid, progressNum, calendarNum
+		from TOPGOAL where USERID = #{userid}
 	</select>
 </mapper>
