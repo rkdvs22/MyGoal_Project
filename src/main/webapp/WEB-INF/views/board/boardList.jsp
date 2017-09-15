@@ -53,9 +53,9 @@
 			</div>
 		</header>
 		
-					<c:forEach items="${goalList}" var="list">
+		<c:forEach items="${goalList}" var="list">
 		<div class="cards-grid c" data-columns>
-		<form action="boardList" method="get">
+		<!-- <form action="boardList" method="get"> -->
 			<div class="card-grid-col">
 				<article class="card-typical">
 					<div class="card-typical-section">
@@ -84,7 +84,7 @@
 						<p>종료날짜</p><p>${list.tEndDate}</p>
 					</div>
 					<div class="card-typical-section">
-						<div class="card-typical-linked">현인원/${maxMember}</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<div class="card-typical-linked">현인원/전체인원</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<a href="#" class="card-typical-likes" onclick="member()">
 							<i class="font-icon font-icon-heart"></i>
 						</a>
@@ -93,11 +93,36 @@
 						<input type="hidden" name="boardNum" value="${boardNum}">
 				</article><!--.card-typical-->
 			</div><!--.card-grid-col-->
-			</form>
+			<!-- </form> -->
 		</div><!--.card-grid-->
-					</c:forEach>
-		
+		</c:forEach>
 		<div class="clear"></div>
+		
+	<!-- 페이징 -->
+		<nav>
+			<ul class="pagination" id="navigator">
+				<li class="page-item disabled">
+					<a class="page-link" href="#" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+						<span class="sr-only">Previous</span>
+					</a>
+				</li>
+				<li class="page-item active">
+					<a class="page-link" href="#">1 <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="page-item"><a class="page-link" href="#">2</a></li>
+				<li class="page-item"><a class="page-link" href="#">3</a></li>
+				<li class="page-item"><a class="page-link" href="#">4</a></li>
+				<li class="page-item"><a class="page-link" href="#">5</a></li>
+				<li class="page-item">
+					<a class="page-link" href="#" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+						<span class="sr-only">Next</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
+		
 	</div><!--.container-fluid-->
 </div><!--.page-content-->
 

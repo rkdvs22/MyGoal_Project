@@ -23,14 +23,16 @@
 	
 	<!-- 게시글 검색 -->
 	<select id="searchBoard" parameterType="map" resultType="BoardVO">
-		select * from Board b, TopGoal t
-			<if test="searchSelect == 'id'">
-				where t.userid like '%'||#{searchKey}||'%'
-			</if>
-			<if test="searchSelect == 'title'">
-				where t.tGoalTitle like '%'||#{searchKey}||'%'
-			</if>
-			group by b.tGoalNum = t.tGoalNum order by b.favorite
+		select t.tGoalnum, t.tGoalTitle, t.tStartDate, t.tEndDate, t.openStatus, t.userid, t.progressNum, b.boardNum, b.tGoalNum, b.favorite
+			from Board b, TopGoal t
+				<if test="searchSelect == 'id'">
+					where t.userid like '%'||#{searchKey}||'%'
+				</if>
+				<if test="searchSelect == 'title'">
+					where t.tGoalTitle like '%'||#{searchKey}||'%'
+				</if>
+					
+			order by b.favorite desc;
 	</select>
 	
 </mapper>
