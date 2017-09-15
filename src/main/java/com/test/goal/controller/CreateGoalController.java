@@ -311,7 +311,7 @@ public class CreateGoalController {
 	
 	
 	
-	// 친구초대를 위한 친구목록 불러오기 (이웅희 09.14)
+	// 친구초대를 위한 친구목록 불러오기
 	@RequestMapping(value = "getFriendList", method = RequestMethod.GET)
 	@ResponseBody
 	public ArrayList<MyFriendVO> getFriendList(HttpSession session, MyFriendVO fvo) {
@@ -321,7 +321,7 @@ public class CreateGoalController {
 		return friendList;
 	}
 	
-	// 선택한 친구들에게 초대장 보내기 (이웅희 09.14)
+	// 선택한 친구들에게 초대장 보내기
 	@RequestMapping(value = "writeInviteMsg", method = RequestMethod.POST)
 	@ResponseBody
 	public boolean writeInviteMsg(HttpSession session
@@ -338,7 +338,7 @@ public class CreateGoalController {
 			msgVO.setReceiver(friendId);
 			msgVO.setMsgTitle("[SYSTEM] : " + myId + "님께서" + friendId + "님을 초대하셨습니다");
 			msgVO.setMsgContent("다음의 목표에 참가하시겠습니까?");
-			// 목표에 대한 정보를 view단에서 보여줄 예정. 중간 세이브 (09.14)
+			// 목표에 대한 정보를 view단에서 보여줄 예정. 중간 세이브
 			boolean result = msg_dao.writeMsg(msgVO);
 			if(result) result_count++;
 		}
