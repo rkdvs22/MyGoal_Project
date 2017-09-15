@@ -8,7 +8,7 @@ import com.test.goal.vo.TopGoalVO;
 
 public interface BoardMapper {
 
-	public ArrayList<TopGoalVO> boardList(); // 게시글 목록
+	public ArrayList<BoardVO> boardList(); // 게시글 목록
 
 	public ArrayList<BoardVO> searchBoard(Map<String, String> map); // 게시글 검색
 

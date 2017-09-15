@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.test.goal.dao.BoardDAO;
+import com.test.goal.vo.BoardVO;
 import com.test.goal.vo.MainProgressVO;
 
 @Controller
@@ -27,17 +28,20 @@ public class BoardController {
 	@RequestMapping(value = "boardList", method = RequestMethod.GET)
 	public String boardList(Model model) {
 		model.addAttribute("goalList", dao.boardList());
+		
 		return "/board/boardList";
 	}
 
 	// 게시글 검색
 	@RequestMapping(value = "searchBoard", method = RequestMethod.GET)
 	public String searchBoard(Map<String, String> map, Model model,
-			@RequestParam(value = "searchKey", defaultValue = "1") String searchKey, String searchSelect) {
-		map.put("searchKey", searchKey);
+			@RequestParam(value = "searchKeyid", defaultValue = "1") String searchKeyid, String searchSelect) {
+		map.put("searchKeyid", searchKeyid);
 		map.put("searchSelect", searchSelect);
 		
 		model.addAttribute("search", dao.searchBoard(map));
+		model.addAttribute("searchKeyid", searchKeyid);
+		model.addAttribute("searchSelect", searchSelect);
 		
 		return "/board/boardList";
 	}

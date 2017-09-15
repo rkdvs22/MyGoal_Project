@@ -18,11 +18,19 @@ public class BoardDAOImpl implements BoardDAO {
 	
 	// 게시글 목록
 	@Override
-	public ArrayList<TopGoalVO> boardList() {
+	public ArrayList<BoardVO> boardList() {
 		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
 		return mapper.boardList();
 	}
 
+	// 게시글 검색
+	@Override
+	public ArrayList<BoardVO> searchBoard(Map<String, String> map) {
+		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
+		return mapper.searchBoard(map);
+	}
+
+	
 	@Override
 	public void boardRead() {
 		// TODO Auto-generated method stub
@@ -65,11 +73,5 @@ public class BoardDAOImpl implements BoardDAO {
 		
 	}
 
-	// 게시글 검색
-	@Override
-	public ArrayList<BoardVO> searchBoard(Map<String, String> map) {
-		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
-		return mapper.searchBoard(map);
-	}
-
+	
 }

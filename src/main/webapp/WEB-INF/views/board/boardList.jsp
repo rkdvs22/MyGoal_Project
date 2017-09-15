@@ -33,7 +33,7 @@
 					<div class="tbl-cell">
 						<h3>Board</h3>
 					</div>
-				<!-- 검색 텍스트박스 -->
+				<!-- 검색 -->
 					<form action="searchBoard" method="get">
 					<div class="form-group row">
 						<div class="col-md-2">
@@ -43,16 +43,18 @@
 							</select>
 						</div>
 						<div class="col-md-7">
-							<input class="form-control" id="searchKey" name="searchKey" value="" type="text" placeholder="Search">
+							<input class="form-control" name="searchKeyid" value="" type="text" placeholder="Search">
 							<!-- <a href="#" onclick="search()"><i class="font-icon-search"></i></a> -->
 							<button type="submit" class="font-icon-search"></button>
 						</div>`
 					</div>
 					</form>
+					
 				</div>
 			</div>
 		</header>
 		
+		<!-- 게시글 목록 -->
 		<c:forEach items="${goalList}" var="list">
 		<div class="cards-grid c" data-columns>
 		<!-- <form action="boardList" method="get"> -->
@@ -80,17 +82,17 @@
 					<div class="card-typical-section card-typical-content">
 						<header class="title"><h5><!-- <a href="#"> -->${list.tGoalTitle}</a></h5></header>
 						<!-- <label class="col-sm-2 form-control-label">시작날짜</label> -->
-						<p>시작날짜</p><p>${list.tStartDate}</p><br>
-						<p>종료날짜</p><p>${list.tEndDate}</p>
+						<p>시작날짜</p><p>${list.startDate}</p><br>
+						<p>종료날짜</p><p>${list.endDate}</p>
 					</div>
 					<div class="card-typical-section">
-						<div class="card-typical-linked">현인원/전체인원</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<div class="card-typical-linked">${list.currentMemberNumber}/4</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<a href="#" class="card-typical-likes" onclick="member()">
-							<i class="font-icon font-icon-heart"></i>
+							<i class="font-icon font-icon-heart">${list.favorite}</i>
 						</a>
 					</div>
-						<input type="hidden" name="tGoalNum" value="${tGoalNum}">
-						<input type="hidden" name="boardNum" value="${boardNum}">
+						<%-- <input type="hidden" name="tGoalNum" value="${tGoalNum}">
+						<input type="hidden" name="boardNum" value="${boardNum}"> --%>
 				</article><!--.card-typical-->
 			</div><!--.card-grid-col-->
 			<!-- </form> -->

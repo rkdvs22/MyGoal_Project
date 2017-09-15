@@ -7,13 +7,13 @@
 <mapper namespace="com.test.goal.dao.BoardMapper">
 	
 	<!-- 게시글 목록 -->
-	<select id="boardList" parameterType="TopGoalVO" resultType="TopGoalVO">
-		select t.tGoalTitle, t.tStartDate, t.tEndDate, t.openStatus, t.userid, p.maxMember
-			from (select userid, progressNum from memberList where playerType = 'HOST') m
-			left outer join (select tGoalTitle,tStartDate, tEndDate, openStatus, userid, progressNum from TopGoal) t
-			on m.userid = t.userid and m.progressNum = t.progressNum
-			inner join (select maxMember,progressNum from mainProgress) p
-			on t.progressNum = p.progressNum
+	<select id="boardList" resultType="BoardVO">
+		select b.userid as "userid",b.favorite as "favorite", t.tstartDate as "startDate", t.tendDate as "endDate", t.openStatus as "openStatus", l.currentMemberNumber as "currentMemberNumber", t.tGoalTitle as "tGoalTitle"
+		from board b inner join topGoal t
+		on b.tGoalNum = t.tGoalnum inner join mainProgress m
+		on t.progressNum = m.progressNum inner join (select progressNum, count(listNum) as currentMemberNumber from memberList group by progressNum) l
+		on m.progressNum = l.progressNum
+		
 	</select>
 	
 	<!-- 게시글 좋아요 -->
@@ -23,16 +23,14 @@
 	
 	<!-- 게시글 검색 -->
 	<select id="searchBoard" parameterType="map" resultType="BoardVO">
-		select t.tGoalnum, t.tGoalTitle, t.tStartDate, t.tEndDate, t.openStatus, t.userid, t.progressNum, b.boardNum, b.tGoalNum, b.favorite
-			from Board b, TopGoal t
-				<if test="searchSelect == 'id'">
-					where t.userid like '%'||#{searchKey}||'%'
-				</if>
-				<if test="searchSelect == 'title'">
-					where t.tGoalTitle like '%'||#{searchKey}||'%'
-				</if>
-					
-			order by b.favorite desc;
+		select * from Board
+			<if test="searchSelect == 'id'">
+				where userid like '%'||#{searchKeyid}||'%'
+			</if>
+			<if test="searchSelect == 'title'">
+				where tGoalTitle like '%'||#{searchKeyid}||'%'
+			</if>
+		order by favorite desc;
 	</select>
 	
 </mapper>
