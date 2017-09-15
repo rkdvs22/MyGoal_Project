@@ -23,15 +23,14 @@
     <link rel="stylesheet" href="/goal/resources/css/lib/bootstrap/bootstrap.min.css?version=4">
     <link rel="stylesheet" href="/goal/resources/css/main.css?version=4">
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
 	
 <body>
    <%@ include file="../menu.jsp" %>
 	<script>
 		//클릭한 날짜가 오늘 날짜인지 확인하는 변수 0이면 아님. 1이면 오늘날짜의 것. (1이면 클릭시 모달에서 수정이나 삭제가 가능하도록 (버튼이 보이도록))
 		var isToday = 0;
-		
 	</script>
+	
 <div class="page-content">
 		<div class="container-fluid">
 
@@ -106,7 +105,7 @@
 	<script type="text/javascript" src="/goal/resources/js/lib/moment/moment-with-locales.min.js?version=4"></script>
 	<script type="text/javascript" src="/goal/resources/js/lib/eonasdan-bootstrap-datetimepicker/bootstrap-datetimepicker.min.js?version=4"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar.min.js?version=7"></script>
-	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=63"></script>
+	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=9"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/ko.js"></script>
     <script src="/goal/resources/js/app.js?version=4"></script
     >

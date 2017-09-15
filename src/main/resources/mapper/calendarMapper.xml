@@ -5,9 +5,9 @@
   
 <mapper namespace="com.test.goal.dao.CalendarMapper">
 
-	<select id = "getCalendar" parameterType="string" resultType="BTMRecordVO">
+	<select id = "getRecordList" parameterType="string" resultType="BTMRecordVO">
 		select b.BGoalTitle as "BGoalTitle",to_char(r.startDate,'yyyy-mm-dd') as "startDate", 
-		to_char(r.endDate+1,'yyyy-mm-dd') as "endDate", d.completeTime as "isComplete",m.mGoalTitle as mGoalTitle
+		to_char(r.endDate+1,'yyyy-mm-dd') as "endDate", d.completeTime as "isComplete",m.mGoalTitle as mGoalTitle, r.bRecordNum as "bRecordNum" 
 		from BTMGoal b inner join BTMRecord r 
 		on b.bGoalNum = r.bGoalNum 
 		full join (select btmRecordNum,count(completeTime) as completeTime from dayRecord group by btmRecordNum) d
@@ -26,6 +26,12 @@
 		inner join MidGoal m on b.mGoalNum = m.mGoalNum
 		where r.memberId = #{memberId} 
 		order by r.startDate desc
+	</select>
+	
+	<select id = "getChartRecord" parameterType="int" resultType="DayRecordVO">
+		
+		select to_char(startDate,'yyyy-mm-dd') as "startDate", achieve from DayRecord where BTMRecordNum = #{BTMRecordNum}
+		
 	</select>
 
 </mapper>

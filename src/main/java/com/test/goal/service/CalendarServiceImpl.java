@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.test.goal.dao.CalendarDAO;
 import com.test.goal.dao.MindMapDAO;
 import com.test.goal.vo.BTMRecordVO;
+import com.test.goal.vo.DayRecordVO;
 
 @Service
 public class CalendarServiceImpl implements CalendarService{
@@ -70,6 +71,15 @@ public class CalendarServiceImpl implements CalendarService{
 	@Override
 	public ArrayList<BTMRecordVO> getIsProcessingRecord(String memberId) {
 		return dao.getIsProcessingRecord(memberId);
+	}
+
+	@Override
+	public ArrayList<DayRecordVO> getChartRecord(int bTMRecordNum,String memberId) {
+		ArrayList<DayRecordVO> DayRecordList = dao.getChartRecord(bTMRecordNum);
+		for (DayRecordVO dayRecordVO : DayRecordList) {
+			dayRecordVO.setMemberId(memberId);
+		}		
+		return DayRecordList;
 	}
 
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.test.goal.service.CalendarService;
 import com.test.goal.vo.BTMRecordVO;
+import com.test.goal.vo.DayRecordVO;
 
 @Controller
 @RequestMapping("/calendar")
@@ -42,4 +43,14 @@ public class CalendarController {
 		return BTMRecordlist;
 	}
 	
+	@RequestMapping(value = "getChartRecord", method = RequestMethod.GET)
+	@ResponseBody
+	public ArrayList<DayRecordVO> getChartRecord(HttpServletRequest request, int BTMRecordNum) {
+		
+		String memberId = (String) request.getSession().getAttribute("userid");
+		ArrayList<DayRecordVO> DayRecordList = new ArrayList<>();
+		DayRecordList = service.getChartRecord(BTMRecordNum,memberId);
+		
+		return DayRecordList;
+	}
 }

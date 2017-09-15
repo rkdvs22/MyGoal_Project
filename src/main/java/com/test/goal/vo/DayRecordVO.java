@@ -13,6 +13,7 @@ public class DayRecordVO {
 	private String status;
 	private int calendarNum;
 	private int btmRecordNum;
+	private String memberId;
 	
 	
 	public DayRecordVO() {
@@ -98,13 +99,23 @@ public class DayRecordVO {
 		this.btmRecordNum = btmRecordNum;
 	}
 
+		
+
+	public String getMemberId() {
+		return memberId;
+	}
+
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+
 
 	@Override
 	public String toString() {
 		return "DayRecordVO [dayRecordNum=" + dayRecordNum + ", achieve=" + achieve + ", color=" + color
 				+ ", startDate=" + startDate + ", completeTime=" + completeTime + ", status=" + status
-				+ ", calendarNum=" + calendarNum + ", btmRecordNum=" + btmRecordNum + "]";
+				+ ", calendarNum=" + calendarNum + ", btmRecordNum=" + btmRecordNum + ", memberId=" + memberId + "]";
 	}
-
 
 }

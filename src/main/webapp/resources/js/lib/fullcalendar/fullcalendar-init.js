@@ -6,8 +6,8 @@ $(document).ready(function(){
 	$('#calendar').fullCalendar('today');
 	$('.fc-event').css('font-size', '.6em');
     $('#calendar').fullCalendar({
-    	aspectRatio: .7,
-    	height: 850,
+    	aspectRatio: .1,
+    	height: 1000,
         header: {
             left: '',
             center: 'prev, title, next',
@@ -37,7 +37,8 @@ $(document).ready(function(){
                             	start: $(this).attr('startDate'), // will be parsed
                             	end : $(this).attr('endDate'),
                             	color :  $(this).attr('color'),
-                            	mGoalTitle: $(this).attr('mGoalTitle')
+                            	mGoalTitle: $(this).attr('mGoalTitle'),
+                            	BTMRecordNum: $(this).attr('bRecordNum')
                         	});
                     	});
                     	callback(events);
@@ -73,7 +74,6 @@ $(document).ready(function(){
 	  	      if((day+"").length <2){
 	  	    	  day = "0"+day;
 	  	      }
-	  	      console.log(calEvent); // 이벤트 객체임
 	  	    /*  console.log(jsEvent); 
 	  	      console.log(view);*/
 	  	      var today = year+""+month+""+day
@@ -84,60 +84,7 @@ $(document).ready(function(){
 	  	      date_month = dateSplit[1]; 
 	  	      date_day = dateSplit[2]; 
 	  	      var dateSplited = date_year + "" + date_month + "" + date_day
-	  	  
-            if(parseInt(today) == parseInt(dateSplited) && view.name == "agendaWeek"){
-	            // Add popover
-	            $('body').append(
-	                '<div class="fc-popover click">' +
-	                    '<div class="fc-header">' +
-	                        '<p>'+calEvent.title+'</p>' +
-	                        '<button type="button" class="cl"><i class="font-icon-close-2"></i></button>' +
-	                    '</div>' +
-	
-	                    '<div class="fc-body main-screen">' +
-	                        '<p>' +
-	                            moment(calEvent.start._i).format('yyyy mm dd') +
-	                        '</p>' +
-	                        '<p class="color-blue-grey">Name Surname Patient<br/>Surgey ACL left knee</p>' +
-	                        '<ul class="actions">' +
-	                            '<li><a href="#" class="fc-event-action-edit">Edit event</a></li>' +
-	                            '<li><a href="#" class="fc-event-action-remove">Remove</a></li>' +
-	                        '</ul>' +
-	                    '</div>' +
-	
-	                    '<div class="fc-body remove-confirm">' +
-	                        '<p>Are you sure to remove event?</p>' +
-	                        '<div class="text-center">' +
-	                            '<button type="button" class="btn btn-rounded btn-sm">Yes</button>' +
-	                            '<button type="button" class="btn btn-rounded btn-sm btn-default remove-popover">No</button>' +
-	                        '</div>' +
-	                    '</div>' +
-	
-	                    '<div class="fc-body edit-event">' +
-	                        '<p>Edit event</p>' +
-	                        '<div class="form-group">' +
-	                            '<div class="input-group date datetimepicker">' +
-	                                '<input type="text" class="form-control" />' +
-	                                '<span class="input-group-addon"><i class="font-icon font-icon-calend"></i></span>' +
-	                            '</div>' +
-	                        '</div>' +
-	                        '<div class="form-group">' +
-	                            '<div class="input-group date datetimepicker-2">' +
-	                                '<input type="text" class="form-control" />' +
-	                                '<span class="input-group-addon"><i class="font-icon font-icon-clock"></i></span>' +
-	                            '</div>' +
-	                        '</div>' +
-	                        '<div class="form-group">' +
-	                            '<textarea class="form-control" rows="2">Name Surname Patient Surgey ACL left knee</textarea>' +
-	                        '</div>' +
-	                        '<div class="text-center">' +
-	                            '<button type="button" class="btn btn-rounded btn-sm">Save</button>' +
-	                            '<button type="button" class="btn btn-rounded btn-sm btn-default remove-popover">Cancel</button>' +
-	                        '</div>' +
-	                    '</div>' +
-	                '</div>'
-	            );
-            }else{
+	  	      
             	  // Add popover
 	            $('body').append(
 	                '<div class="fc-popover click">' +
@@ -186,46 +133,69 @@ $(document).ready(function(){
 	                    '</div>' +
 	                '</div>'
 	            );
-	            
-	            google.charts.load('current', {'packages':['corechart']});
-	            google.charts.setOnLoadCallback(drawVisualization);
-
-	            function drawVisualization() {
-	              // Some raw data (not necessarily accurate)
-	              var data = google.visualization.arrayToDataTable([
-	               ['일별', '승무쌤'],
-	               ['2017-09-13',  30],
-	               ['2017-09-14',  10],
-	               ['2017-09-15',  20],
-	               ['2017-09-16',  40],
-	            ]);
-
-	          var options = {
-	            vAxis: {title: '달성률',viewWindow:{
-	                max:100,
-	                min:0
-	              }},
-	            hAxis: {title: '일별'},
-	            seriesType: 'bars',
-	            series: {5: {type: 'line'}},
-	            colors : ['#960018'],
-	            axes: {
-	                y: {
-	                    all: {
-	                        range: {
-	                            max: 100,
-	                            min: 0
-	                        }
-	                    }
-	                }
-	            }
-	          };
-
-	          var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
-	          chart.draw(data, options);
-	        }
-	            
-          }
+	  	    $.ajax({
+	  	    	url: '/goal/calendar/getChartRecord?BTMRecordNum='+calEvent.BTMRecordNum,
+                type: "get",
+                dataType: "json",
+                success: function(result) {
+	                	google.charts.load('current', {'packages':['corechart']});
+	    	            google.charts.setOnLoadCallback(drawVisualization);
+	    	            
+	    	            var DayRecord = [];
+	    	            var achieve = [];
+                    	$(result).each(function(index, item) {
+                    		
+                    		DayRecord.push(
+                    			 $(this).attr('startDate')
+                        	);
+                    		
+                    		achieve.push(
+                   			 	 $(this).attr('achieve')
+                   		    );
+                    	});
+                    	
+                    	console.log(DayRecord);
+	    	            function drawVisualization() {
+	    	              // Some raw data (not necessarily accurate)
+	    	            var data = new google.visualization.DataTable();
+	    	            data.addColumn('string', '일별');
+	    	            data.addColumn('number', '달성률');
+	    	             
+	    	             for(i = 0; i < DayRecord.length; i++){
+	    	            	 data.addRow([DayRecord[i], achieve[i]]);
+	    	             }
+	    	              
+	    	              
+	    	          var options = {
+	    	            vAxis: {title: '달성률',viewWindow:{
+	    	                max:100,
+	    	                min:0
+	    	              }},
+	    	            hAxis: {title: '일별'},
+	    	            seriesType: 'bars',
+	    	            series: {5: {type: 'line'}},
+	    	            colors : ['#960018'],
+	    	            axes: {
+	    	                y: {
+	    	                    all: {
+	    	                        range: {
+	    	                            max: 100,
+	    	                            min: 0
+	    	                        }
+	    	                    }
+	    	                }
+	    	            }
+	    	          };
+	
+	    	          var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+	    	          chart.draw(data, options);
+	    	        }	
+                	
+               	},
+	  	    	error: function(){
+	  	    	  alert("실패");
+	  	    	}
+	  	      });
 
             // Datepicker init
             $('.fc-popover.click .datetimepicker').datetimepicker({
@@ -301,26 +271,27 @@ $(document).ready(function(){
         	      alert('Clicked on: ' + date.format());
         	      */
         	
-        		if(view.name == "agendaWeek"){
-	        	      var time = new Date() 
-	        	      
-	        	      var year = time.getYear()+1900 
-	        	      var month = time.getMonth() +1 
-	        	      if((month+"").length <2){
-	        	    	  month = "0"+month;
-	        	      }
-	        	      var day = time.getDate() 
-	        	      if((day+"").length <2){
-	        	    	  day = "0"+day;
-	        	      }
-	        	      
-	        	      var today = year+""+month+""+day
-	        	      
-	        	      var dateSplit = date.format().split("-");
-	        	      date_year = dateSplit[0]; 
-	        	      date_month = dateSplit[1]; 
-	        	      date_day = dateSplit[2]; 
-	        	      var dateSplited = date_year + "" + date_month + "" + date_day
+        	var time = new Date() 
+        	
+        	var year = time.getYear()+1900 
+        	var month = time.getMonth() +1 
+        	if((month+"").length <2){
+        		month = "0"+month;
+        	}
+        	var day = time.getDate() 
+        	if((day+"").length <2){
+        		day = "0"+day;
+        	}
+        	
+        	var today = year+""+month+""+day
+        	
+        	var dateSplit = date.format().split("-");
+        	date_year = dateSplit[0]; 
+        	date_month = dateSplit[1]; 
+        	date_day = dateSplit[2]; 
+        	var dateSplited = date_year + "" + date_month + "" + date_day
+        	
+        	if(parseInt(today) == parseInt(dateSplited) && view.name == "agendaWeek"){
 	        	      
 	        	      var date_time = date.format().split("T");
 	        	      var clickedTime = date_time[1].split(":");
@@ -328,15 +299,11 @@ $(document).ready(function(){
 	        	      var hour = clickedTime[0];
 	        	      var minute = clickedTime[1];
 	        	      
-	        	      if(parseInt(today) == parseInt(dateSplited)){
-	        	    	  isToday = 1;
-	        	    	  alert(date_time[0]);
-	        	    	  alert(hour);
-	              	      alert(minute);
-	        	    	  
-	        	      }//end if
+	        	  alert('여긴 한 주의 현재 날짜');    
+        	}else if(parseInt(today) == parseInt(dateSplited) && view.name == "month"){
+        		  alert('여긴 월의 현재 날짜');
+        	}//end if     
         	      
-        		}//end if        	      
        },
        
        eventDrop: function(event, delta, revertFunc) {
