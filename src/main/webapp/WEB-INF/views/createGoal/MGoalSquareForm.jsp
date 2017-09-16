@@ -743,11 +743,18 @@ $(function() {
 			type: "post",
 			data: {"keyWord" : keyWord},
 			success: function(list) {
-				$(".friendList").html("");
-				$("#switch-th").text("아이디");
-				// 09.15 중간세이브 ====================================
-				var friend_row = '<tr class="id"><td>' + item.userid + '</td>'
-				$(".friendList").append(friend_row);
+				if(list.length == 0) {
+					alert("찾으시는 ID가 없습니다");
+					return false;
+				}
+				$(list).each(function(index, item) {
+					$(".friendList").html("");
+					$("#switch-th").text("아이디");
+					var id_row = '<tr class="id"><td>' + item.userid + '</td>'
+					id_row += '<td></td><td>연동예정</td><td></td>';
+					id_row += '<th><input style="margin: 0px 3px 1px 30px; width: 13px; height: 13px" type="checkbox" name="checkList" class="checkList" value="'+ item.userid +'"></th></tr>';
+					$(".friendList").append(id_row);
+				});
 			},
 			error: function() { alert("아이디 찾기 아예 실패 ㅋㅋㅋㅋ"); }
 		});
