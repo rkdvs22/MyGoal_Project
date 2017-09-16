@@ -11,8 +11,6 @@
 		$(".pop").hide();	//레이어 팝업창 숨김
 		locateGoal();
 		getTitle();
-		
-		console.log('${requestScope.goalList}');
 	});
 	
 	//목표 개수만큼 열매 달기
@@ -312,6 +310,12 @@
 	        $(".pop").hide();
 	    });
 	}
+	
+	function changeYear() {
+		var year = document.getElementById("year").value;
+		
+		//document.changeYear.submit();
+	}
 </script>
 <link rel="stylesheet" href="/goal/resources/css/main.css">
 <link rel="stylesheet" href="/goal/resources/css/goaltree/goaltree.css?version=6">
@@ -323,6 +327,13 @@
 		<div class="tbl-row">
 			<div class="tbl-cell">
 				<h3>Goal Tree <small class="text-muted">${sessionScope.userid}</small></h3>
+				<form name="changeYear" action="/goal/goalTree/goalList" method="get">
+				<select id="year" name="year" onchange="changeYear()">
+					<option value="2015">2015</option>
+					<option value="2016">2016</option>
+					<option value="2017" selected="selected">2017</option>
+				</select>
+				</form>
 			</div>
 		</div>
 	</div>

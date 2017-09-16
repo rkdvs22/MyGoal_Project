@@ -17,6 +17,8 @@
 	        jQuery(this).parent('li').addClass('active').siblings().removeClass('active');
 	        e.preventDefault();
 	    });
+	    
+	    $("#tab1_right_bottom").hide();
 	});
 
 	//받은 메시지 출력
@@ -27,7 +29,8 @@
 			data: {"id": id},
 			dataType: "json",
 			success: function(msgList) {
-				$("#tab1_right").empty();
+				$("#tab1_right_bottom").show();
+				$("#tab1_right_top").empty();
 				$(msgList).each(function(index, item) {
 					var str = "";
 					var receivedMsg = item.sender;
@@ -41,15 +44,15 @@
 					str += "<tr><td class='msgTitle'> 제목 : " + item.msgTitle + "</td>";
 					str += "<td> 날짜 : " + item.msgDate;
 					str += "</td></tr>";
-					//str += "<tr><td colspan='2'><hr></td></tr>";
 					str += "<tr><td colspan='2' class='msgContent'>";
 					str += item.msgContent;
 					str += "</td></tr>";
 					str += "</table>";
 					str += "</div><br>";
 					
-					$("#tab1_right").append(str);
+					$("#tab1_right_top").append(str);
 				});
+				$("#hiddenrcv").attr("value", id);
 			},
 			error: function(e) {
 				console.log(e);
@@ -95,9 +98,11 @@
 			}
 		});
 	}
+	
+	
 </script>
 <link rel="stylesheet" href="/goal/resources/css/main.css?version=1">
-<link rel="stylesheet" href="/goal/resources/css/message/message.css">
+<link rel="stylesheet" href="/goal/resources/css/message/message.css?version=1">
 </head>
 <body>
 <%@ include file="../menu.jsp" %>
@@ -146,7 +151,16 @@
 			</div>
 			<!-- Received Messages -->
 			<div id="tab1_right">
-				<!-- 받은 쪽지 채팅 형식으로 출력 -->
+				<div id="tab1_right_top">
+					<!-- 받은 쪽지 채팅 형식으로 출력 -->
+				</div>
+				<div id="tab1_right_bottom">
+					<form action="/goal/message/writeMsg" method="post">
+					<textarea id="newMsg" name="newMsg" class="form-control"></textarea>
+					<input class="btn btn-rounded btn-success" type="button" value="전송">
+					<input type="hidden" id="hiddenrcv" name="receiver">
+					</form>
+				</div>
 			</div>
         </div>
         <!-- 받은 쪽지함 끝 -->

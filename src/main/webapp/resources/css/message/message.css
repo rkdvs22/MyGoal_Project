@@ -1,8 +1,19 @@
+.form-control {
+	width: 92% !important;
+	height: 38px !important;
+	overflow-y: hidden;
+	margin-right: 10px;
+	float: left;
+}
+
+.btn {
+	float: right;
+}
+
 .receivedBubble {
 	position: relative;
 	left: 20px;
 	width: 80%;
-	/* height: 120px; */
 	padding: 10px;
 	background: #c5d6de;
 	-webkit-border-radius: 10px;
@@ -29,7 +40,6 @@
 	position: relative;
 	right: 15px;
 	width: 80%;
-	/* height: 120px; */
 	padding: 10px;
 	background: #dee8ed;
 	-webkit-border-radius: 10px;
@@ -57,17 +67,27 @@
 }
 
 #tab1_left, #tab2_left {
-	overflow-y: auto;
 	width: 20%;
 	/* height: 100%; */
 	float: left;
 }
 	
 #tab1_right, #tab2_right {
-	overflow-y: auto;
 	width: 80%;
-	/* height: 100%; */
+	height: 520px;
 	float: right;
+}
+
+#tab1_right_top {
+	overflow-y: auto;
+	width: 100%;
+	height: 80%;
+}
+
+#tab1_right_bottom {
+	width: 100%;
+	height: 20%;
+	float: bottom;
 }
 
 .profileImg img {
