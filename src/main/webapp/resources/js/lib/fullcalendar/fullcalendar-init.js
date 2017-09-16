@@ -3,6 +3,8 @@ $(document).ready(function(){
 /* ==========================================================================
     Fullcalendar
     ========================================================================== */
+	
+	
 	$('#calendar').fullCalendar('today');
 	$('.fc-event').css('font-size', '.6em');
     $('#calendar').fullCalendar({
@@ -154,7 +156,6 @@ $(document).ready(function(){
                    		    );
                     	});
                     	
-                    	console.log(DayRecord);
 	    	            function drawVisualization() {
 	    	              // Some raw data (not necessarily accurate)
 	    	            var data = new google.visualization.DataTable();
@@ -299,9 +300,11 @@ $(document).ready(function(){
 	        	      var hour = clickedTime[0];
 	        	      var minute = clickedTime[1];
 	        	      
-	        	  alert('여긴 한 주의 현재 날짜');    
+	        	  alert('여긴 한 주의 현재 날짜'); 
         	}else if(parseInt(today) == parseInt(dateSplited) && view.name == "month"){
         		  alert('여긴 월의 현재 날짜');
+        		  $("#warning").modal("show");
+        		
         	}//end if     
         	      
        },

@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html> 
      <head> 
-        <link rel="stylesheet" href="/goal/resources/css/lib/mindMap/mindMap.css?version=6">
+        <link rel="stylesheet" href="/goal/resources/css/lib/mindMap/mindMap.css?version=7">
      </head> 
      <body> 
      	
@@ -120,7 +120,6 @@
 					type:"get",
 					dataType:"json",
 					success:function(resultMapping){
-					   console.log(resultMapping);
 			       	   for(var i =0; i < resultMapping.memberId.length; i++){
 			       		  $("#playingGoal").empty();
 			       		  str = '${sessionScope.userid}'+'님은';
