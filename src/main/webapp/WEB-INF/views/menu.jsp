@@ -126,9 +126,16 @@
 					
 					<!-- 헤더 개인정보부분 -->
 					<div class="dropdown user-menu">
+					<c:if test="${image == null}">
 						<button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<img src="/goal/resources/img/avatar-2-64.png" alt="" >
 						</button>
+					</c:if>
+					<c:if test="${image != null}">
+						<button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<img src="/goal/resources/img/profileImg/${image}" alt="" >
+						</button>
+					</c:if>
 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
 							<a class="dropdown-item" href="/goal/member/updateMemberForm"><span class="font-icon glyphicon glyphicon-user"></span>My Page</a>
 							<div class="dropdown-divider"></div>

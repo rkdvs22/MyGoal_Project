@@ -16,11 +16,6 @@
 		
 	</select>
 	
-	<!-- 게시글 좋아요 -->
-	<update id="favorite" parameterType="int">
-		update board set favorite = favorite + 1 where boardnum = #{boardnum}	
-	</update>
-	
 	<!-- 게시글 검색 -->
 	<select id="searchBoard" parameterType="map" resultType="BoardVO">
 		select * from Board
@@ -31,6 +26,22 @@
 				where tGoalTitle like '%'||#{searchKeyid}||'%'
 			</if>
 		order by favorite desc;
+	</select>
+	
+	<!-- 게시글 좋아요 -->
+	<update id="favorite" parameterType="int">
+		update board set favorite = favorite + 1 where boardnum = #{boardnum}	
+	</update>
+	
+	<!-- 페이징 : 전체 게시글 수 가져오기 -->
+	<select id="getTotal" parameterType="map" resultType="int">
+		select count(*) from board
+			<if test="searchSelect == 'id">
+				where userid like '%'||#{searchKeyid}||'%'
+			</if>
+			<if test="searchSelect == 'title">
+				where tGoalTitle like '%'||#{searchKeyid}||'%'
+			</if>
 	</select>
 	
 </mapper>

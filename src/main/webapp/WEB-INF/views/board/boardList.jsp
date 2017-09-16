@@ -87,7 +87,7 @@
 					</div>
 					<div class="card-typical-section">
 						<div class="card-typical-linked">${list.currentMemberNumber}/4</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<a href="#" class="card-typical-likes" onclick="member()">
+						<a href="#" class="card-typical-likes" onclick="member('${list.boardnum}')">
 							<i class="font-icon font-icon-heart">${list.favorite}</i>
 						</a>
 					</div>
@@ -102,27 +102,31 @@
 		
 	<!-- 페이징 -->
 		<nav>
-			<ul class="pagination" id="navigator">
-				<li class="page-item disabled">
-					<a class="page-link" href="#" aria-label="Previous">
-						<span aria-hidden="true">&laquo;</span>
-						<span class="sr-only">Previous</span>
-					</a>
-				</li>
-				<li class="page-item active">
-					<a class="page-link" href="#">1 <span class="sr-only">(current)</span></a>
-				</li>
-				<li class="page-item"><a class="page-link" href="#">2</a></li>
-				<li class="page-item"><a class="page-link" href="#">3</a></li>
-				<li class="page-item"><a class="page-link" href="#">4</a></li>
-				<li class="page-item"><a class="page-link" href="#">5</a></li>
-				<li class="page-item">
-					<a class="page-link" href="#" aria-label="Next">
-						<span aria-hidden="true">&raquo;</span>
-						<span class="sr-only">Next</span>
-					</a>
-				</li>
-			</ul>
+			<div style="text-align: center;">
+				<ul class="pagination" id="navigator">
+					<li class="page-item disabled">
+						<a class="page-link" href="javascript:pageProc(${navi.currentPage - 1}, '${searchCondition}', '${searchKeyword}')" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+							<span class="sr-only">Previous</span>
+						</a>
+					</li>
+					<c:forEach begin="${navi.startPageGroup}" end="${navi.endPageGroup}" var="counter">
+						<c:if test="${counter == navi.currentPage}"><b></c:if>
+							<!-- <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li> -->
+							<li class="page-item"><a class="page-link" href="javascript:pageProc(${counter}, '${searchCondition}', '${searchKeyword}')">${counter}</a></li>
+							<!-- <li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item"><a class="page-link" href="#">4</a></li>
+							<li class="page-item"><a class="page-link" href="#">5</a></li> -->
+						<c:if test="${counter == navi.currentPage}"></b></c:if>
+					</c:forEach>
+					<li class="page-item">
+						<a class="page-link" href="javascript:pageProc(${navi.currentPage + 1}, '${searchCondition}', '${searchKeyword}')" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+							<span class="sr-only">Next</span>
+						</a>
+					</li>
+				</ul>
+			</div>
 		</nav>
 		
 	</div><!--.container-fluid-->
@@ -140,7 +144,19 @@
 			$('.card-user').matchHeight();
 		});
 		
+		// 좋아요		
+		function member(boardnum) {
+			var favorite = confirm("들어가냐구");	
 		
+			if(favorite) {
+				$.ajax({
+					url: "/goal/board/addFavorite",
+					type: "post",
+					data: {"boardnum":boardnum}
+					 
+				});
+			}
+		}
 	
 	</script>
 

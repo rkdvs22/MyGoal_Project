@@ -38,39 +38,23 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public void replyList() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void writeReply() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteReply() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void addGoal() {
 		// TODO Auto-generated method stub
 		
 	}
 
+	// 좋아요
 	@Override
-	public void addHit() {
-		// TODO Auto-generated method stub
-		
+	public void addFavorite(int boardnum) {
+		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
+		mapper.addFavorite(boardnum);
 	}
 
+	// 페이징
 	@Override
-	public void addFavorite() {
-		// TODO Auto-generated method stub
-		
+	public int getTotal(Map<String, String> map) {
+		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
+		return mapper.getTotal(map);
 	}
 
 	

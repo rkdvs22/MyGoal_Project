@@ -12,4 +12,8 @@ public interface BoardMapper {
 
 	public ArrayList<BoardVO> searchBoard(Map<String, String> map); // 게시글 검색
 
+	public void addFavorite(int boardnum); // 좋아요
+
+	public int getTotal(Map<String, String> map); // 페이징
+
 }
