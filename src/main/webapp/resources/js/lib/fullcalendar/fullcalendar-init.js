@@ -291,7 +291,7 @@ $(document).ready(function(){
         	date_month = dateSplit[1]; 
         	date_day = dateSplit[2]; 
         	var dateSplited = date_year + "" + date_month + "" + date_day
-        	
+        	 $("#warning").modal("show");
         	if(parseInt(today) == parseInt(dateSplited) && view.name == "agendaWeek"){
 	        	      
 	        	      var date_time = date.format().split("T");
@@ -303,7 +303,6 @@ $(document).ready(function(){
 	        	  alert('여긴 한 주의 현재 날짜'); 
         	}else if(parseInt(today) == parseInt(dateSplited) && view.name == "month"){
         		  alert('여긴 월의 현재 날짜');
-        		  $("#warning").modal("show");
         		
         	}//end if     
         	      

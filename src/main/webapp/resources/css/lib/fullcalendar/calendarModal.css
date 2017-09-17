@@ -34,9 +34,19 @@
 			}
 			
 			
+			table{
+			    font-family:'Calibri';
+			    font-size:15px;
+			    background-color:#fff;
+			    color:#333;
+			}
+			.modal-header{
+			    background-color:#333;
+			    color:#fff;
+			}
 			
 			
-			.modal-header-warning {
+			 .modal-header-warning {
 				color:#fff;
 			    padding:9px 15px;
 			    border-bottom:1px solid #eee;
@@ -69,11 +79,35 @@
 				height: 500px;
 			}
 			
+			.modal-editContent{
+				position:absolute !important;
+				left:300;
+				width: 500px;
+				height: 400px;
+			}
+			
+			.modal-deleteContent{
+				position:absolute !important;
+				background-color: #d9534f;
+				left:300;
+				width: 500px;
+				height: 200px;
+			}
+			
 			#edit{
+				position: absolute;
+				top: 150;
+				left:200;
+			} 
+			
+			#delete{
 				position: absolute;
 				top: 150;
 				left:200;
 			}
 			
-						
+			#del{
+				background-color: black;
+			}
+			
 			

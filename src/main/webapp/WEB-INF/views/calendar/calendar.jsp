@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
- <link rel="stylesheet" href="/goal/resources/css/lib/fullcalendar/calendarModal.css?version=18">
+ <link rel="stylesheet" href="/goal/resources/css/lib/fullcalendar/calendarModal.css?version=21">
 </head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -38,6 +38,32 @@
 		$(function(){
 			$(".update_time input").timepicki();
 		});
+		
+		function updateModalHide(){
+			$('#edit').on('click', function(e) { e.stopPropagation(); });
+			$('#edit').modal('hide');
+		}
+		
+		function updateModal(){
+			$('#delete').on('click', '[data-dismiss="modal"]', function(e) { e.stopPropagation(); });
+			$('#edit').modal('hide');
+		}
+		
+		function deleteModal(){
+			$('#delete').on('click', '[data-dismiss="modal"]', function(e) { e.stopPropagation(); });
+			$('#delete').modal('hide');
+		}
+		
+		function openDeleteModal(){
+			$('#delete').on('click', function(e) { e.stopPropagation(); });
+			$("#delete").modal("show");
+		}
+		
+		function openEditModal(){
+			$('#edit').on('click', function(e) { e.stopPropagation(); });
+			$("#edit").modal("show");
+		}
+		
 	</script>
 	
 	
@@ -105,98 +131,113 @@
 	</div><!--.page-content-->
 	
 	
-			<!-- Modal -->
-				    <!-- Modal -->
-				    <div id = "DayRecord">
+					<!-- Modal -->
 				    <div class="modal fade" id="warning" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				        <div class="modal-dialog">
 				            <div class="modal-content">
 				                <div class="modal-header modal-header-warning">
-				                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				                    <button type="button" class="close" aria-hidden="true" data-dismiss = "modal">×</button>
 				                    <h1>ToDay - DayPlan</h1>
 				                </div>
 				                <div class="modal-body">
-											<table class="table table-hover table-responsive">
-											    <thead id = "table_thead">
-											        <tr>
-											            <th class="col-xs-2">번호</th>
-											            <th class="col-xs-3">계획명</th>
-											            <th class="col-xs-3">startTime</th>
-											            <th class="col-xs-5">endTime</th>
-											            <th class="col-xs-2">Edit</th>
-											            <th class="col-xs-2">Delete</th>
-											        </tr>
-											    </thead>
-											    <tbody>
-											        <tr id="d1">
-											            <td>1</td>
-											            <td id="f1">John</td>
-											            <td id="l1">10:56</td>
-											            <td id="m1">11:30</td>
-											            
-															
-											            <td><button type="button" data-toggle="modal" data-target="#edit" data-uid="1" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
-											            <td><button type="button" data-toggle="modal" data-target="#delete" data-uid="1" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>
-											        </tr>
-											        <tr id="d2">
-											            <td>2</td>
-											            <td id="f2">Jane</td>
-											            <td id="l2">Wick</td>
-											            <td id="m2">Doe</td>
-											            <td><button type="button" data-toggle="modal" data-target="#edit" data-uid="2" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
-											            <td><button type="button" data-toggle="modal" data-target="#delete" data-uid="2" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>
-											        </tr>
-											    </tbody>
-											</table>
-									
-									<div id="edit" class="modal" role="dialog">
-									  <div class="modal-dialog">
-									    <div class="modal-updatePopup" >
-									      <div class="modal-header modal-header-danger">
-									        <button type="button" class="close" data-dismiss="modal">×</button>
-									        <h4 class="modal-title">Update Data</h4>
-									      </div>
-									      <div class="modal-body" style="background-color: white;">
-									           일정명: <input id="fn" type="text" class="form-control" name="fname" placeholder="First Name">
-									        시작시간: <div class ="update_time"><input id="ln" type="text" class="form-control" name="time" placeholder="Last Name"></div>
-									        종료시간: <div class ="update_time"><input id="mn" type="text" class="form-control" name="time" placeholder="Middle Name"></div>
-									      </div>
-									      <div class="modal-footer">
-									        <button type="button" id="up" class="btn btn-warning" data-dismiss="modal">Update</button>
-									        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-									      </div>
-									    </div>
-									  </div>
-									</div>
-									
-									
-									<div id="delete" class="modal fade" role="dialog">
-									  <div class="modal-dialog">
-									    <div class="modal-content">
+				                
+				                <div class="container">
+								<div class="row">
+									<table class="table table-hover table-responsive">
+									    <thead>
+									    	<tr>
+									    		<td class="col-xs-3">오늘의 달성률 </td>
+									    		<td><input type= "text" placeholder="100이내의 숫자" size="27px"></td>
+									    		<td><button id = "dayAchieve" class = "success btn btn-success btn-sm" onclick = "updateAchieve()"><span class="glyphicon glyphicon-ok"></span></button></td>
+									    	</tr>
+									        <tr>
+									           <th class="col-xs-2">번호</th>
+											   <th class="col-xs-3">계획명</th>
+											   <th class="col-xs-3">startTime</th>
+											   <th class="col-xs-5">endTime</th>
+											   <th class="col-xs-2">Edit</th>
+											   <th class="col-xs-2">Delete</th>
+									        </tr>
+									    </thead>
+									    <tbody>
+									        <tr id="d1">
+									            <td>1</td>
+									            <td id="f1">John</td>
+									            <td id="l1">10:30AM</td>
+									            <td id="m1">11:30AM</td>
+									            <td><button type="button" data-toggle="modal" onclick = "openEditModal()" data-uid="1" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
+									            <td><button type="button" data-toggle="modal" onclick="openDeleteModal()" data-uid="1" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>
+									        </tr>
+									        <tr id="d2">
+									            <td>2</td>
+									            <td id="f2">Jane</td>
+									            <td id="l2">01:00PM</td>
+									            <td id="m2">02:00PM</td>
+									            <td><button type="button" data-toggle="modal" onclick = "openEditModal()" data-uid="2" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
+									            <td><button type="button" data-toggle="modal" onclick="openDeleteModal()" data-uid="2" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>
+									        </tr>
+									        
+									        <tr id="d3">
+									            <td>3</td>
+									            <td id="f3">kane</td>
+									            <td id="l3">05:00PM</td>
+									            <td id="m3">06:00PM</td>
+									            <td><button type="button" data-toggle="modal" onclick = "openEditModal()" data-uid="3" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
+									            <td><button type="button" data-toggle="modal" onclick="openDeleteModal()" data-uid="3" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>
+									        </tr>
+									    </tbody>
+									</table>
+								</div>
+							</div>
+							 
+				                
+							     <div id="edit" class="modal fade" role="dialog" aria-hidden="true">
+								  <div class="modal-dialog">
+									  <div class="modal-editContent">
 									      <div class="modal-header">
 									        <button type="button" class="close" data-dismiss="modal">×</button>
-									        <h4 class="modal-title">Delete Data</h4>
-     								 	</div>
-     								 	
+									        <h4 class="modal-title">일정 수정</h4>
+									      </div>
+									      <div class="modal-body" style="background-color: white;">
+									                  일정명: <input id="fn" type="text" class="form-control" name="fname" placeholder="First Name">
+										        시작시간: <div class ="update_time"><input id="ln" type="text" class="form-control" name="time" placeholder="Last Name"></div>
+										        종료시간: <div class ="update_time"><input id="mn" type="text" class="form-control" name="time" placeholder="Middle Name"></div>
+									      </div>
+									      <div class="modal-footer">
+									        <button type="button" id="up" class="btn btn-warning" onclick="updateModal()">Update</button>
+									        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									      </div>
+									  </div>
+								  </div>
+								</div>
+								
+								<div id="delete" class="modal fade" role="dialog" aria-hidden="true">
+								  <div class="modal-dialog">
+								    <div class="modal-deleteContent">
+								      <div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal">×</button>
+								        <h4 class="modal-title">일정 삭제</h4>
+								      </div>
 								      <div class="modal-body">
-								        <strong>Are you sure you want to delete this data?</strong>
+								        <strong>정말로 해당일정을 삭제하겠습니까?</strong>
 								      </div>
 								      <div class="modal-footer">
-								        <button type="button" id="del" class="btn btn-danger" data-dismiss="modal">Delete</button>
+								        <button type="button" id="del" class="btn btn-danger" onclick="deleteModal()">Delete</button>
 								        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 								      </div>
 								    </div>
-								  	</div>
+								  </div>
 								</div>
 								
-				                </div> <!-- end body -->
+								</div> <!-- end body -->
 				                <div class="modal-footer">
 				                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
 				                </div>
 				            </div><!-- /.modal-content -->
 				        </div><!-- /.modal-dialog -->
 				    </div><!-- /.modal -->
-					</div>
+								
+	
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/timepicki.js"></script>
@@ -208,7 +249,7 @@
 	<script type="text/javascript" src="/goal/resources/js/lib/moment/moment-with-locales.min.js?version=4"></script>
 	<script type="text/javascript" src="/goal/resources/js/lib/eonasdan-bootstrap-datetimepicker/bootstrap-datetimepicker.min.js?version=4"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar.min.js?version=7"></script>
-	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=10"></script>
+	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=11"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/ko.js"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/tableModal.js"></script>
     <script src="/goal/resources/js/app.js?version=4"></script>
