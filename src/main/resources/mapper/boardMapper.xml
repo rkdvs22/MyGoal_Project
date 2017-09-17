@@ -17,15 +17,15 @@
 	</select>
 	
 	<!-- 게시글 검색 -->
-	<select id="searchBoard" parameterType="map" resultType="BoardVO">
-		select * from Board
+	<select id="searchBoard" parameterType="string" resultType="BoardVO">
+		select b.userid, t.tGoalTitle from Board b, TopGoal t
 			<if test="searchSelect == 'id'">
-				where userid like '%'||#{searchKeyid}||'%'
+				where b.userid like '%'||#{searchKeyid}||'%'
 			</if>
 			<if test="searchSelect == 'title'">
-				where tGoalTitle like '%'||#{searchKeyid}||'%'
+				where t.tGoalTitle like '%'||#{searchKeyid}||'%'
 			</if>
-		order by favorite desc;
+		order by b.favorite desc;
 	</select>
 	
 	<!-- 게시글 좋아요 -->

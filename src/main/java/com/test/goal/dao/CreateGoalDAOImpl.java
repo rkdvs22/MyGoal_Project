@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.test.goal.vo.BoardVO;
 import com.test.goal.vo.MainProgressVO;
 import com.test.goal.vo.MemberVO;
 import com.test.goal.vo.TopGoalVO;
@@ -55,4 +56,5 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
 		return mapper.findIdinModal(keyWord);
 	}
+
 }

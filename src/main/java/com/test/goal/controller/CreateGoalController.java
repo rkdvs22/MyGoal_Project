@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.test.goal.dao.CreateGoalDAO;
 import com.test.goal.dao.FriendDAO;
@@ -109,13 +110,8 @@ public class CreateGoalController {
 	// 목표大작성 기능
 	@RequestMapping(value = "create", method = RequestMethod.POST)
 	public String create(TopGoalVO tvo, MainProgressVO mvo, Model model) {
-		/*map.put("create1", dao.create1(tvo));
-		map.put("create2", dao.create2(mvo));
-		rttr.addFlashAttribute("createGoal", map);*/
-		
 		/*rttr.addFlashAttribute("topGoal", dao.create1(tvo));
 		rttr.addFlashAttribute("mainProgress", dao.create2(mvo));*/
-		
 		model.addAttribute("topGoal", dao.create1(tvo));
 		model.addAttribute("mainProgress", dao.create2(mvo));
 		return "redirect:/";

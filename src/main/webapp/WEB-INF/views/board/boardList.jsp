@@ -43,8 +43,8 @@
 							</select>
 						</div>
 						<div class="col-md-7">
-							<input class="form-control" name="searchKeyid" value="" type="text" placeholder="Search">
-							<!-- <a href="#" onclick="search()"><i class="font-icon-search"></i></a> -->
+							<input class="form-control" id="searchKeyid" name="searchKeyid" type="text" placeholder="Search">
+							<%-- <a href="#" onclick="search('${searchKeyid}')"><i class="font-icon-search"></i></a> --%>
 							<button type="submit" class="font-icon-search"></button>
 						</div>`
 					</div>
@@ -158,6 +158,20 @@
 			}
 		}
 	
+		/* function search(searchKeyid) {
+			var searchKeyid = $("#searchKeyid").val();
+			
+			if(searchKeyid) {
+				$.ajax ({
+					url: "/goal/board/searchBoard",
+					type: "post",
+					data: {"searchSelect" : searchSelect, "searchKeyid" : searchKeyid},
+					error: function() {
+						alert("찾는 글이 없습니다.");
+					} 
+				});
+			}
+		} */
 	</script>
 
 <script src="/goal/resources/js/app.js"></script>
