@@ -45,15 +45,11 @@ public class CalendarController {
 		
 		BTMRecordlist = service.getRecordList((String)request.getSession().getAttribute("userid"));
 		
-		System.out.println((String)request.getSession().getAttribute("userid"));
 		DayRecordlist= service.getDayRecordList((String)request.getSession().getAttribute("userid"));
 		
 		getRecordMap.put("BTMRecordlist", BTMRecordlist);
 		getRecordMap.put("DayRecordlist", DayRecordlist);
 		
-		for (DayPlanVO dayRecordVO : DayRecordlist) {
-			System.out.println(dayRecordVO.toString());
-		}
 		return getRecordMap;
 	}
 	

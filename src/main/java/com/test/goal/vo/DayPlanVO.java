@@ -8,6 +8,9 @@ public class DayPlanVO {
 	private String dContents;
 	private String dComplete;
 	private int dayRecordNum;
+	private String startDate;
+	private String endDate;
+	
 	public int getDayPlanNum() {
 		return dayPlanNum;
 	}
@@ -44,10 +47,25 @@ public class DayPlanVO {
 	public void setDayRecordNum(int dayRecordNum) {
 		this.dayRecordNum = dayRecordNum;
 	}
+	
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+	public String getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+	
 	@Override
 	public String toString() {
 		return "DayPlanVO [dayPlanNum=" + dayPlanNum + ", startTime=" + startTime + ", endTime=" + endTime
-				+ ", dContents=" + dContents + ", dComplete=" + dComplete + ", dayRecordNum=" + dayRecordNum + "]";
+				+ ", dContents=" + dContents + ", dComplete=" + dComplete + ", dayRecordNum=" + dayRecordNum
+				+ ", startDate=" + startDate + ", endDate=" + endDate + "]";
 	}
 	
 }

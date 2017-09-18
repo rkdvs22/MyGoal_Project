@@ -3,8 +3,8 @@ $(document).ready(function(){
 /* ==========================================================================
     Fullcalendar
     ========================================================================== */
-	
-	
+		
+	var dayRecordlist = "";
 	$('#calendar').fullCalendar('today');
 	$('.fc-event').css('font-size', '.6em');
     $('#calendar').fullCalendar({
@@ -32,11 +32,12 @@ $(document).ready(function(){
                 	type: "POST",
                 	dataType: "json",
                 	success: function(result) {
-                		console.log(result);
-                    	var BTMevents = [];
-                    	var DayEvents = [];
-                    	$(result).each(function() {
-                    		BTMevents.push({
+                		
+                		dayRecordlist = result.DayRecordlist;
+                    	var totalEvents = [];
+                    	
+                    	$(result.BTMRecordlist).each(function(item,index) {
+                    		totalEvents.push({
                             	title: $(this).attr('bgoalTitle'),
                             	start: $(this).attr('startDate'), // will be parsed
                             	end : $(this).attr('endDate'),
@@ -45,7 +46,17 @@ $(document).ready(function(){
                             	BTMRecordNum: $(this).attr('bRecordNum')
                         	});
                     	});
-                    	callback(BTMevents);
+                    	
+                    	$(result.DayRecordlist).each(function(item,index) {
+                    		totalEvents.push({
+                            	title: $(this).attr('dContents'),
+                            	start: $(this).attr('startDate'), // will be parsed
+                            	end : $(this).attr('endDate'),
+                            	color : "#F3B600"
+                        	});
+                    	});
+                    	
+                    	callback(totalEvents);
                 	}
             	});
         	},
@@ -60,146 +71,153 @@ $(document).ready(function(){
             $('.fc-popover.click').remove();
         },
         eventClick: function(calEvent,jsEvent,view) {
-            var eventEl = $(this);
-            // Add and remove event border class
-            if (!$(this).hasClass('event-clicked')) {
-                $('.fc-event').removeClass('event-clicked');
-                $(this).addClass('event-clicked');
-            }
-            	
-	          var time = new Date() 
-	  	      
-	  	      var year = time.getYear()+1900 
-	  	      var month = time.getMonth() +1 
-	  	      if((month+"").length <2){
-	  	    	  month = "0"+month;
-	  	      }
-	  	      var day = time.getDate() 
-	  	      if((day+"").length <2){
-	  	    	  day = "0"+day;
-	  	      }
-	  	    /*  console.log(jsEvent); 
-	  	      console.log(view);*/
-	  	      var today = year+""+month+""+day
-	  	      
-	  	      //calEvaent.start._i 는  DayPlan 이벤트의 해당 날짜 입니다.
-	  	      var dateSplit = calEvent.start._i.split("-");
-	  	      date_year = dateSplit[0]; 
-	  	      date_month = dateSplit[1]; 
-	  	      date_day = dateSplit[2]; 
-	  	      var dateSplited = date_year + "" + date_month + "" + date_day
-	  	      
-            	  // Add popover
-	            $('body').append(
-	                '<div class="fc-popover click">' +
-	                    '<div class="fc-header">' +
-	                      '<p id = "fc-header-title">'+calEvent.title +'</p>' +
-	                        '<button type="button" class="cl"><i class="font-icon-close-2"></i></button>' +
-	                    '</div>' +
-	
-	                    '<div class="fc-body main-screen">' +
-			                '<p>' +
-		                        "중간목표명 : " + calEvent.mGoalTitle + "" +
-		                    '</p>' + 
-	                        '<p>' +
-	                           "진행기간 : " + moment(calEvent.start).format('YYYY-MM-DD') + " ~ " + moment(calEvent.end).format('YYYY-MM-DD') +
-	                        '</p>' + '<br>' +'<p id = "dayChartTitle">' +  "<일별 달성률 차트>" + "</p>" +
-			                  '<div id="chart_div" style="width: 375px; height: 350px;">'+'</div>'+	
-	                    '<div class="fc-body remove-confirm">' +
-	                        '<p>Are you sure to remove event?</p>' +
-	                        '<div class="text-center">' +
-	                            '<button type="button" class="btn btn-rounded btn-sm">Yes</button>' +
-	                            '<button type="button" class="btn btn-rounded btn-sm btn-default remove-popover">No</button>' +
-	                        '</div>' +
-	                    '</div>' +
-	
-	                    '<div class="fc-body edit-event">' +
-	                        '<p>Edit event</p>' +
-	                        '<div class="form-group">' +
-	                            '<div class="input-group date datetimepicker">' +
-	                                '<input type="text" class="form-control" />' +
-	                                '<span class="input-group-addon"><i class="font-icon font-icon-calend"></i></span>' +
-	                            '</div>' +
-	                        '</div>' +
-	                        '<div class="form-group">' +
-	                            '<div class="input-group date datetimepicker-2">' +
-	                                '<input type="text" class="form-control" />' +
-	                                '<span class="input-group-addon"><i class="font-icon font-icon-clock"></i></span>' +
-	                            '</div>' +
-	                        '</div>' +
-	                        '<div class="form-group">' +
-	                            '<textarea class="form-control" rows="2">Name Surname Patient Surgey ACL left knee</textarea>' +
-	                        '</div>' +
-	                        '<div class="text-center">' +
-	                            '<button type="button" class="btn btn-rounded btn-sm">Save</button>' +
-	                            '<button type="button" class="btn btn-rounded btn-sm btn-default remove-popover">Cancel</button>' +
-	                        '</div>' +
-	                    '</div>' +
-	                '</div>'
-	            );
-	  	    $.ajax({
-	  	    	url: '/goal/calendar/getChartRecord?BTMRecordNum='+calEvent.BTMRecordNum,
-                type: "get",
-                dataType: "json",
-                success: function(result) {
-	                	google.charts.load('current', {'packages':['corechart']});
-	    	            google.charts.setOnLoadCallback(drawVisualization);
-	    	            
-	    	            var DayRecord = [];
-	    	            var achieve = [];
-                    	$(result).each(function(index, item) {
-                    		
-                    		DayRecord.push(
-                    			 $(this).attr('startDate')
-                        	);
-                    		
-                    		achieve.push(
-                   			 	 $(this).attr('achieve')
-                   		    );
-                    	});
-                    	
-	    	            function drawVisualization() {
-	    	              // Some raw data (not necessarily accurate)
-	    	            var data = new google.visualization.DataTable();
-	    	            data.addColumn('string', '일별');
-	    	            data.addColumn('number', '달성률');
-	    	             
-	    	             for(i = 0; i < DayRecord.length; i++){
-	    	            	 data.addRow([DayRecord[i], achieve[i]]);
-	    	             }
-	    	              
-	    	              
-	    	          var options = {
-	    	            vAxis: {title: '달성률',viewWindow:{
-	    	                max:100,
-	    	                min:0
-	    	              }},
-	    	            hAxis: {title: '일별'},
-	    	            seriesType: 'bars',
-	    	            series: {5: {type: 'line'}},
-	    	            colors : ['#960018'],
-	    	            axes: {
-	    	                y: {
-	    	                    all: {
-	    	                        range: {
-	    	                            max: 100,
-	    	                            min: 0
-	    	                        }
-	    	                    }
-	    	                }
-	    	            }
-	    	          };
-	
-	    	          var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
-	    	          chart.draw(data, options);
-	    	        }	
-                	
-               	},
-	  	    	error: function(){
-	  	    	  alert("실패");
-	  	    	}
-	  	      });
-
+        	
+        	if(calEvent.mGoalTitle != null){
+		            var eventEl = $(this);
+		            // Add and remove event border class
+		            if (!$(this).hasClass('event-clicked')) {
+		                $('.fc-event').removeClass('event-clicked');
+		                $(this).addClass('event-clicked');
+		            }
+		            	
+			          var time = new Date() 
+			  	      
+			  	      var year = time.getYear()+1900 
+			  	      var month = time.getMonth() +1 
+			  	      if((month+"").length <2){
+			  	    	  month = "0"+month;
+			  	      }
+			  	      var day = time.getDate() 
+			  	      if((day+"").length <2){
+			  	    	  day = "0"+day;
+			  	      }
+			  	    /*  console.log(jsEvent); 
+			  	      console.log(view);*/
+			  	      var today = year+""+month+""+day
+			  	      
+			  	      //calEvaent.start._i 는  DayPlan 이벤트의 해당 날짜 입니다.
+			  	      var dateSplit = calEvent.start._i.split("-");
+			  	      date_year = dateSplit[0]; 
+			  	      date_month = dateSplit[1]; 
+			  	      date_day = dateSplit[2]; 
+			  	      var dateSplited = date_year + "" + date_month + "" + date_day
+			  	      
+		            	  // Add popover
+			            $('body').append(
+			                '<div class="fc-popover click">' +
+			                    '<div class="fc-header">' +
+			                      '<p id = "fc-header-title">'+calEvent.title +'</p>' +
+			                        '<button type="button" class="cl"><i class="font-icon-close-2"></i></button>' +
+			                    '</div>' +
+			
+			                    '<div class="fc-body main-screen">' +
+					                '<p>' +
+				                        "중간목표명 : " + calEvent.mGoalTitle + "" +
+				                    '</p>' + 
+			                        '<p>' +
+			                           "진행기간 : " + moment(calEvent.start).format('YYYY-MM-DD') + " ~ " + moment(calEvent.end).format('YYYY-MM-DD') +
+			                        '</p>' + '<br>' +'<p id = "dayChartTitle">' +  "<일별 달성률 차트>" + "</p>" +
+					                  '<div id="chart_div" style="width: 375px; height: 350px;">'+'</div>'+	
+			                    '<div class="fc-body remove-confirm">' +
+			                        '<p>Are you sure to remove event?</p>' +
+			                        '<div class="text-center">' +
+			                            '<button type="button" class="btn btn-rounded btn-sm">Yes</button>' +
+			                            '<button type="button" class="btn btn-rounded btn-sm btn-default remove-popover">No</button>' +
+			                        '</div>' +
+			                    '</div>' +
+			
+			                    '<div class="fc-body edit-event">' +
+			                        '<p>Edit event</p>' +
+			                        '<div class="form-group">' +
+			                            '<div class="input-group date datetimepicker">' +
+			                                '<input type="text" class="form-control" />' +
+			                                '<span class="input-group-addon"><i class="font-icon font-icon-calend"></i></span>' +
+			                            '</div>' +
+			                        '</div>' +
+			                        '<div class="form-group">' +
+			                            '<div class="input-group date datetimepicker-2">' +
+			                                '<input type="text" class="form-control" />' +
+			                                '<span class="input-group-addon"><i class="font-icon font-icon-clock"></i></span>' +
+			                            '</div>' +
+			                        '</div>' +
+			                        '<div class="form-group">' +
+			                            '<textarea class="form-control" rows="2">Name Surname Patient Surgey ACL left knee</textarea>' +
+			                        '</div>' +
+			                        '<div class="text-center">' +
+			                            '<button type="button" class="btn btn-rounded btn-sm">Save</button>' +
+			                            '<button type="button" class="btn btn-rounded btn-sm btn-default remove-popover">Cancel</button>' +
+			                        '</div>' +
+			                    '</div>' +
+			                '</div>'
+			            );
+			  	    $.ajax({
+			  	    	url: '/goal/calendar/getChartRecord?BTMRecordNum='+calEvent.BTMRecordNum,
+		                type: "get",
+		                dataType: "json",
+		                success: function(result) {
+			                	google.charts.load('current', {'packages':['corechart']});
+			    	            google.charts.setOnLoadCallback(drawVisualization);
+			    	            
+			    	            var DayRecord = [];
+			    	            var achieve = [];
+		                    	$(result).each(function(index, item) {
+		                    		
+		                    		DayRecord.push(
+		                    			 $(this).attr('startDate')
+		                        	);
+		                    		
+		                    		achieve.push(
+		                   			 	 $(this).attr('achieve')
+		                   		    );
+		                    	});
+		                    	
+			    	            function drawVisualization() {
+			    	              // Some raw data (not necessarily accurate)
+			    	            var data = new google.visualization.DataTable();
+			    	            data.addColumn('string', '일별');
+			    	            data.addColumn('number', '달성률');
+			    	             
+			    	             for(i = 0; i < DayRecord.length; i++){
+			    	            	 data.addRow([DayRecord[i], achieve[i]]);
+			    	             }
+			    	              
+			    	              
+			    	          var options = {
+			    	            vAxis: {title: '달성률',viewWindow:{
+			    	                max:100,
+			    	                min:0
+			    	              }},
+			    	            hAxis: {title: '일별'},
+			    	            seriesType: 'bars',
+			    	            series: {5: {type: 'line'}},
+			    	            colors : ['#960018'],
+			    	            axes: {
+			    	                y: {
+			    	                    all: {
+			    	                        range: {
+			    	                            max: 100,
+			    	                            min: 0
+			    	                        }
+			    	                    }
+			    	                }
+			    	            }
+			    	          };
+			
+			    	          var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+			    	          chart.draw(data, options);
+			    	        }	
+		                	
+		               	},
+			  	    	error: function(){
+			  	    	  alert("실패");
+			  	    	}
+			  	      });
+			  	    
+        	}else{
+        		 $("#warning").modal("show");
+        	}
+        	
+        	
             // Datepicker init
             $('.fc-popover.click .datetimepicker').datetimepicker({
                 widgetPositioning: {
@@ -293,6 +311,50 @@ $(document).ready(function(){
         	date_month = dateSplit[1]; 
         	date_day = dateSplit[2]; 
         	var dateSplited = date_year + "" + date_month + "" + date_day
+        	
+        	
+
+        	var PlanTitle = [];
+        	var PlanStartTime = [];
+        	var PlanEndTime = [];
+        	
+        	$(dayRecordlist).each(function(index,item) {
+        		console.log(item.dContents);
+        		var splited = "";
+        		var splitedStartTime = "";
+        		var splitedEndTime = "";
+        		
+        		var dateSplitPlan = item.startTime.split("-");
+            	date_syear = dateSplitPlan[0]; 
+            	date_smonth = dateSplitPlan[1]; 
+            	date_sday = dateSplitPlan[2];
+            	date_shour = dateSplitPlan[3];
+            	date_sminute = dateSplitPlan[4];
+            	
+            	var dateSplitPlan = item.endTime.split("-");
+            	date_eyear = dateSplitPlan[0]; 
+            	date_emonth = dateSplitPlan[1]; 
+            	date_eday = dateSplitPlan[2];
+            	date_ehour = dateSplitPlan[3];
+            	date_eminute = dateSplitPlan[4];
+            	
+            	splited = date_syear + "" + date_smonth + "" + date_sday
+            	splitedStartTime = date_shour +":"+ date_sminute; 
+            	splitedEndTime = date_ehour+":"+date_eminute;
+            	
+            	if(splited == dateSplited){
+            		alert(item.dContents);
+            		alert(splitedStartTime);
+            		alert(splitedEndTime);
+            		
+            		PlanTitle.push(item.dContents);
+            		PlanStartTime.push(splitedStartTime);
+            		PlanEndTime.push(splitedEndTime); 
+            	}
+        	});
+        	
+        	//어팬드 해야됨 배열3개를 가지고 (먼저 리무브 하고)
+        	
         	 $("#warning").modal("show");
         	if(parseInt(today) == parseInt(dateSplited) && view.name == "agendaWeek"){
 	        	      
