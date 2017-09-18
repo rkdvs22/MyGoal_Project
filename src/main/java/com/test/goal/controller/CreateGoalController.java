@@ -12,11 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.test.goal.dao.CreateGoalDAO;
 import com.test.goal.dao.FriendDAO;
 import com.test.goal.dao.MessageDAO;
+import com.test.goal.vo.BoardVO;
 import com.test.goal.vo.MainProgressVO;
 import com.test.goal.vo.MemberVO;
 import com.test.goal.vo.MessageVO;
@@ -67,61 +67,36 @@ public class CreateGoalController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	// 목표大작성 기능
 	@RequestMapping(value = "create", method = RequestMethod.POST)
-	public String create(TopGoalVO tvo, MainProgressVO mvo, Model model) {
-		/*rttr.addFlashAttribute("topGoal", dao.create1(tvo));
-		rttr.addFlashAttribute("mainProgress", dao.create2(mvo));*/
+	public String create(TopGoalVO tvo, MainProgressVO mvo, Model model, int progressNum) {
+		mvo.setProgressNum(progressNum);
 		model.addAttribute("topGoal", dao.create1(tvo));
-		model.addAttribute("mainProgress", dao.create2(mvo));
-		return "redirect:/";
+		int topGoalNum = dao.getTgoalNum().gettGoalNum();
+		tvo.settGoalNum(topGoalNum);
+		writeBoard(tvo);
+		return "/createGoal/MGoalSquareForm";
 	}
 	
+	// 목표大작성 전 MainProgress 테이블에 사용자가 작성한 값을 입력한다.
+	@RequestMapping(value = "create2", method = RequestMethod.POST)
+	@ResponseBody
+	public MainProgressVO create2(MainProgressVO mvo, Model model) {
+		MainProgressVO result_vo = dao.create2(mvo);
+		return result_vo;
+	}
 	
-	
-	
-	
-	
+	// 목표大작성 기능에서 작성했던 내용들을 이용하여 Board 테이블에 값을 입력한다.
+	public void writeBoard(TopGoalVO tvo) {
+		
+		BoardVO vo = new BoardVO();
+		vo.setTgoalnum(tvo.gettGoalNum());
+		vo.setUserid(tvo.getUserid());
+		dao.writeBoard(vo);
+	}
 	
 	
 	

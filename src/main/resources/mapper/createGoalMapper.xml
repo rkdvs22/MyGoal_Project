@@ -8,13 +8,30 @@
 	
 	<!-- 목표大 작성 -->
 	<insert id="create1" parameterType="TopGoalVO">
-		insert into TopGoal values (TOPGOAL_SEQ.NEXTVAL, #{tGoalTitle}, #{tStartDate}, #{tEndDate}, 'N', 'N', #{openStatus}, #{userid}, #{progressNum}, #{calendarNum})	
+		insert into TopGoal values (TOPGOAL_SEQ.NEXTVAL, #{tGoalTitle}, #{tStartDate}, #{tEndDate}, #{tClear}, #{tStartStatus}, #{openStatus}, #{userid}, #{progressNum})	
 	</insert>
+	
+	<!-- 가장 최신의 목표大 번호를 가져온다 -->
+	<select id="getTgoalNum" resultType="TopGoalVO">
+		SELECT * FROM TOPGOAL WHERE TGOALNUM = 
+			(SELECT MAX(TGOALNUM) FROM TOPGOAL)
+	</select>
+	
+	<!-- 목표大작성 전 MainProgress 테이블에 사용자가 작성한 값을 입력한다. -->
 	<insert id="create2" parameterType="MainProgressVO">
-		insert into MainProgress values (MAINPROGRESS_SEQ.NEXTVAL, #{type}, 'N', #{maxMember})
+		insert into MainProgress (PROGRESSNUM, TYPE, MAXMEMBER) values (MAINPROGRESS_SEQ.NEXTVAL, #{type}, #{maxMember})
 	</insert>
 	
+	<!-- 현재 progressNum의 데이터를 알기 위한 메서드 -->
+	<select id="findProgressNum" resultType="MainProgressVO">
+		SELECT * FROM MAINPROGRESS WHERE PROGRESSNUM =
+			(SELECT MAX(PROGRESSNUM) FROM MAINPROGRESS)
+	</select>
 	
+	<!-- 목표大작성 기능에서 작성했던 내용들을 이용하여 Board 테이블에 값을 입력한다. -->
+	<insert id="writeBoard" parameterType="BoardVO">
+		INSERT INTO BOARD(BOARDNUM, USERID, TGOALNUM) VALUES(BOARD_SEQ.NEXTVAL, #{userid}, #{tgoalnum})
+	</insert>
 	
 	
 	

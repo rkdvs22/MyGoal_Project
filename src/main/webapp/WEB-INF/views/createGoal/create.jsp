@@ -30,7 +30,7 @@
 	
 	table.create01 th {
 		width: 250px !important;
-		padding: 20px;
+		padding: 30px;
 		font-size: 110%;
 	}
 		
@@ -54,24 +54,24 @@
 		</header>
 		
 		<div class="box-typical box-typical-padding">
-			<form action="create" method="post">
+			<form action="create" method="post" id="fm">
 			<table class="create01">
 				<tr>
 					<th>Goal Title</th>
 					<td colspan="3">
-						<input type="text" class="form-control" name="tGoalTitle" placeholder="Goal Title" required="required">
+						<input type="text" id="title" class="form-control" name="tGoalTitle" placeholder="Goal Title" required="required">
 					</td>
 				</tr>
 				<tr>
 					<th>작성자</th>
 					<td  colspan="3">
-						<input type="text" class="form-control" name="userid" placeholder="${sessionScope.userid}" readonly="readonly">
+						<input type="text" id="userid" class="form-control" name="userid" value="${sessionScope.userid}" placeholder="${sessionScope.userid}" readonly="readonly">
 					</td>
 				</tr>
 				<tr>
 					<th>인원</th>
 					<td colspan="3">
-						<select name="maxMember">
+						<select name="maxMember" id="maxMember">
 							<option value = "1" selected="selected">1</option>
 							<option value = "2">2</option>
 							<option value = "3">3</option>
@@ -110,16 +110,22 @@
 						</label>
 					</td>
 				</tr>
-				<tr>
-					<td class="createBtn" colspan="4">
-						<button type="submit" class="btn btn-rounded btn-success">CREATE</button>
+				<tr class="text-hidden">
+					<td>
+						<input type="text" name="tClear" value="N">
+						<input type="text" name="tStartStatus" value="N">
+						<input type="text" name="type" id="type">
+				       	<input type="text" id="progressNum" name="progressNum">
 					</td>
-				</tr>	
+				</tr>
+				<tr class="btnTr">
+					<td class="createBtn" colspan="4">
+						<button type="button" class="btn btn-rounded btn-success" id="createBtn">CREATE</button>
+					</td>
+				</tr>
 			</table>
 			</form>
 				<input type="hidden" name="tGoalNum" value="${tGoalNum}">
-		       	<input type="hidden" name="progressNum" value="${progressNum}">
-		       		<%-- <input type="hidden" name="calendarNum" value="${calendarNum}"> --%>
 		</div>
 		
 	</div><!--.container-fluid-->
@@ -164,11 +170,17 @@
 			$('#daterange2').daterangepicker();
 
 			$('#daterange3').daterangepicker({
+				locale: {
+				      format: 'YYYY/MM/DD'
+				},
 				singleDatePicker: true,
 				showDropdowns: true
 			});
 
 			$('#daterange4').daterangepicker({
+				locale: {
+				      format: 'YYYY/MM/DD'
+				},
 				singleDatePicker: true,
 				showDropdowns: true
 			});
@@ -199,7 +211,27 @@
 			}); */
 		});
 		
+		$(".text-hidden > td").hide();
 		
+		// 생성하기 버튼 클릭 시 체크 및 전송
+		$(".btnTr > td").click(function() {
+			var maxMember = $("#maxMember").val();
+			if(maxMember.value == "1") {
+				$("#type").val("S");
+			} else $("#type").val("M");
+			
+			$.ajax({
+				url: "create2",
+				type: "post",
+				data: {"progressNum":0 , "type":$("#type").val(), "mStart":"N", "maxMember":maxMember},
+				success: function(result_vo) {
+					$("#progressNum").val(result_vo.progressNum);
+// 					location.href = '/goal/createGoal/create?progressNum=' + result_vo.progressNum + '&type=' + result_vo.type + '&maxMember=' + result_vo.maxMember;
+					$("#fm").submit();
+				}
+			});
+			
+		});
 	</script>
 
 <script src="/goal/resources/js/app.js"></script>
