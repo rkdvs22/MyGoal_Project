@@ -3,6 +3,7 @@ package com.test.goal.controller;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.test.goal.service.CalendarService;
 import com.test.goal.vo.BTMRecordVO;
+import com.test.goal.vo.DayPlanVO;
 import com.test.goal.vo.DayRecordVO;
 
 @Controller
@@ -35,12 +37,24 @@ public class CalendarController {
 	
 	@RequestMapping(value = "getCalendarInfo", method = RequestMethod.POST)
 	@ResponseBody
-	public ArrayList<BTMRecordVO> getCalendarInfo(HttpServletRequest request) {
+	public HashMap<String, ArrayList> getCalendarInfo(HttpServletRequest request) {
 		
 		ArrayList<BTMRecordVO> BTMRecordlist = new ArrayList<>();
+		ArrayList<DayPlanVO> DayRecordlist = new ArrayList<>();
+		HashMap<String, ArrayList> getRecordMap = new HashMap<>();
+		
 		BTMRecordlist = service.getRecordList((String)request.getSession().getAttribute("userid"));
 		
-		return BTMRecordlist;
+		System.out.println((String)request.getSession().getAttribute("userid"));
+		DayRecordlist= service.getDayRecordList((String)request.getSession().getAttribute("userid"));
+		
+		getRecordMap.put("BTMRecordlist", BTMRecordlist);
+		getRecordMap.put("DayRecordlist", DayRecordlist);
+		
+		for (DayPlanVO dayRecordVO : DayRecordlist) {
+			System.out.println(dayRecordVO.toString());
+		}
+		return getRecordMap;
 	}
 	
 	@RequestMapping(value = "getChartRecord", method = RequestMethod.GET)

@@ -76,7 +76,7 @@
 				position:absolute !important;
 				left:300;
 				width: 750px;
-				height: 500px;
+				height: 680px;
 			}
 			
 			.modal-editContent{
@@ -94,6 +94,13 @@
 				height: 200px;
 			}
 			
+			.modal-createContent{
+				position:absolute !important;
+				left:300;
+				width: 500px;
+				height: 200px;
+			}
+			
 			#edit{
 				position: absolute;
 				top: 150;
@@ -101,6 +108,12 @@
 			} 
 			
 			#delete{
+				position: absolute;
+				top: 150;
+				left:200;
+			}
+			
+			#create{
 				position: absolute;
 				top: 150;
 				left:200;

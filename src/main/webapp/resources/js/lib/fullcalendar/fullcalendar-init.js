@@ -32,9 +32,11 @@ $(document).ready(function(){
                 	type: "POST",
                 	dataType: "json",
                 	success: function(result) {
-                    	var events = [];
+                		console.log(result);
+                    	var BTMevents = [];
+                    	var DayEvents = [];
                     	$(result).each(function() {
-                        	events.push({
+                    		BTMevents.push({
                             	title: $(this).attr('bgoalTitle'),
                             	start: $(this).attr('startDate'), // will be parsed
                             	end : $(this).attr('endDate'),
@@ -43,7 +45,7 @@ $(document).ready(function(){
                             	BTMRecordNum: $(this).attr('bRecordNum')
                         	});
                     	});
-                    	callback(events);
+                    	callback(BTMevents);
                 	}
             	});
         	},

@@ -33,5 +33,14 @@
 		select to_char(startDate,'yyyy-mm-dd') as "startDate", achieve from DayRecord where BTMRecordNum = #{BTMRecordNum}
 		
 	</select>
+	
+	<select id = "getDayRecordList" parameterType="string" resultType="DayPlanVO">
+		
+		select p.dcontents as "dContent",to_char(p.startTime,'yyyy-mm-dd-hh24-mi') as "startTime",to_char(p.endTime,'yyyy-mm-dd-hh24-mi') as "endTime" from DayPlan p inner join DayRecord d 
+		on d.DayRecordNum = p.DayRecordNum
+		inner join (select memberId from BTMRecord Group by memberId) b 
+		on b.memberId = #{userid}
+		
+	</select>
 
 </mapper>

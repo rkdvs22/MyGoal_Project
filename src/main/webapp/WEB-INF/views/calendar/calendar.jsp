@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
- <link rel="stylesheet" href="/goal/resources/css/lib/fullcalendar/calendarModal.css?version=21">
+ <link rel="stylesheet" href="/goal/resources/css/lib/fullcalendar/calendarModal.css?version=22">
 </head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -39,11 +39,6 @@
 			$(".update_time input").timepicki();
 		});
 		
-		function updateModalHide(){
-			$('#edit').on('click', function(e) { e.stopPropagation(); });
-			$('#edit').modal('hide');
-		}
-		
 		function updateModal(){
 			$('#delete').on('click', '[data-dismiss="modal"]', function(e) { e.stopPropagation(); });
 			$('#edit').modal('hide');
@@ -54,6 +49,11 @@
 			$('#delete').modal('hide');
 		}
 		
+		function createModal(){
+			$('#create').on('click', '[data-dismiss="modal"]', function(e) { e.stopPropagation(); });
+			$('#create').modal('hide');
+		}
+		
 		function openDeleteModal(){
 			$('#delete').on('click', function(e) { e.stopPropagation(); });
 			$("#delete").modal("show");
@@ -62,6 +62,12 @@
 		function openEditModal(){
 			$('#edit').on('click', function(e) { e.stopPropagation(); });
 			$("#edit").modal("show");
+		}
+		
+		function openCreateModal(){
+			alert('aaaaa');
+			$('#create').on('click', function(e) { e.stopPropagation(); });
+			$("#create").modal("show");
 		}
 		
 	</script>
@@ -149,6 +155,9 @@
 									    		<td class="col-xs-3">오늘의 달성률 </td>
 									    		<td><input type= "text" placeholder="100이내의 숫자" size="27px"></td>
 									    		<td><button id = "dayAchieve" class = "success btn btn-success btn-sm" onclick = "updateAchieve()"><span class="glyphicon glyphicon-ok"></span></button></td>
+									    		<td></td>
+									    		<td></td>
+									    		<td><button type="button" id = "create_Button" data-toggle="modal" class="btn btn-default pull-left" onclick = "openCreateModal()">Create</button></td>
 									    	</tr>
 									        <tr>
 									           <th class="col-xs-2">번호</th>
@@ -159,9 +168,9 @@
 											   <th class="col-xs-2">Delete</th>
 									        </tr>
 									    </thead>
-									    <tbody>
+									    <tbody id = "DayRecordTable">
 									        <tr id="d1">
-									            <td>1</td>
+									            <td id="n1">1</td>
 									            <td id="f1">John</td>
 									            <td id="l1">10:30AM</td>
 									            <td id="m1">11:30AM</td>
@@ -169,7 +178,7 @@
 									            <td><button type="button" data-toggle="modal" onclick="openDeleteModal()" data-uid="1" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>
 									        </tr>
 									        <tr id="d2">
-									            <td>2</td>
+									            <td id="n2">2</td>
 									            <td id="f2">Jane</td>
 									            <td id="l2">01:00PM</td>
 									            <td id="m2">02:00PM</td>
@@ -178,7 +187,7 @@
 									        </tr>
 									        
 									        <tr id="d3">
-									            <td>3</td>
+									            <td id="n3">3</td>
 									            <td id="f3">kane</td>
 									            <td id="l3">05:00PM</td>
 									            <td id="m3">06:00PM</td>
@@ -199,9 +208,9 @@
 									        <h4 class="modal-title">일정 수정</h4>
 									      </div>
 									      <div class="modal-body" style="background-color: white;">
-									                  일정명: <input id="fn" type="text" class="form-control" name="fname" placeholder="First Name">
-										        시작시간: <div class ="update_time"><input id="ln" type="text" class="form-control" name="time" placeholder="Last Name"></div>
-										        종료시간: <div class ="update_time"><input id="mn" type="text" class="form-control" name="time" placeholder="Middle Name"></div>
+									                  일정명: <input id="fn" type="text" class="form-control" name="fname" placeholder="일정 제목">
+										        시작시간: <div class ="update_time"><input id="ln" type="text" class="form-control" name="time" placeholder="시작시간"></div>
+										        종료시간: <div class ="update_time"><input id="mn" type="text" class="form-control" name="time" placeholder="종료시간"></div>
 									      </div>
 									      <div class="modal-footer">
 									        <button type="button" id="up" class="btn btn-warning" onclick="updateModal()">Update</button>
@@ -229,6 +238,27 @@
 								  </div>
 								</div>
 								
+							     <div id="create" class="modal fade" role="dialog" aria-hidden="true">
+								  <div class="modal-dialog">
+									  <div class="modal-createContent">
+									      <div class="modal-header">
+									        <button type="button" class="close" data-dismiss="modal">×</button>
+									        <h4 class="modal-title">일정 생성</h4>
+									      </div>
+									      <div class="modal-body" style="background-color: white;">
+									                  일정명:  <input id="fn" type="text" class="form-control" name="fname" placeholder="일정 제목">
+										        시작시간: <div class ="create_time"><input id="ln" type="text" class="form-control" name="time" placeholder="시작시간"></div>
+										        종료시간: <div class ="create_time"><input id="mn" type="text" class="form-control" name="time" placeholder="종료시간"></div>
+									      </div>
+									      <div class="modal-footer">
+									        <button type="button" id="createRecord" onclick = "createModal()" class="btn btn-warning" >create</button>
+									        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									      </div>
+									  </div>
+								  </div>
+								</div>
+								
+								
 								</div> <!-- end body -->
 				                <div class="modal-footer">
 				                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
@@ -251,7 +281,7 @@
 	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar.min.js?version=7"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=11"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/ko.js"></script>
-	<script src="/goal/resources/js/lib/fullcalendar/tableModal.js"></script>
+	<script src="/goal/resources/js/lib/fullcalendar/tableModal.js?version=3"></script>
     <script src="/goal/resources/js/app.js?version=4"></script>
     
 </body>

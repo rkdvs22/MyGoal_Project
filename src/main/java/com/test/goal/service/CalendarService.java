@@ -3,6 +3,7 @@ package com.test.goal.service;
 import java.util.ArrayList;
 
 import com.test.goal.vo.BTMRecordVO;
+import com.test.goal.vo.DayPlanVO;
 import com.test.goal.vo.DayRecordVO;
 
 public interface CalendarService {
@@ -12,5 +13,7 @@ public interface CalendarService {
 	ArrayList<BTMRecordVO> getIsProcessingRecord(String memberId);
 
 	ArrayList<DayRecordVO> getChartRecord(int bTMRecordNum,String memberId);
+
+	ArrayList<DayPlanVO> getDayRecordList(String userid);
 
 }

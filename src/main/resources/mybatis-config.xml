@@ -19,7 +19,7 @@
 		<typeAlias type="com.test.goal.vo.BoardVO" alias="BoardVO"/>
 		<typeAlias type="com.test.goal.vo.TopGoalVO" alias="TopGoalVO"/>
 		<typeAlias type="com.test.goal.vo.MainProgressVO" alias="MainProgressVO"/>
-		
+		<typeAlias type="com.test.goal.vo.DayPlanVO" alias="DayPlanVO"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/memberMapper.xml" />

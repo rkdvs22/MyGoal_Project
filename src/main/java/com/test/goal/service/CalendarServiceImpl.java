@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.test.goal.dao.CalendarDAO;
 import com.test.goal.dao.MindMapDAO;
 import com.test.goal.vo.BTMRecordVO;
+import com.test.goal.vo.DayPlanVO;
 import com.test.goal.vo.DayRecordVO;
 
 @Service
@@ -79,6 +80,12 @@ public class CalendarServiceImpl implements CalendarService{
 		for (DayRecordVO dayRecordVO : DayRecordList) {
 			dayRecordVO.setMemberId(memberId);
 		}		
+		return DayRecordList;
+	}
+
+	@Override
+	public ArrayList<DayPlanVO> getDayRecordList(String userid) {
+		ArrayList<DayPlanVO> DayRecordList = dao.getDayRecordList(userid);
 		return DayRecordList;
 	}
 

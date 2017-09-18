@@ -3,6 +3,7 @@ package com.test.goal.dao;
 import java.util.ArrayList;
 
 import com.test.goal.vo.BTMRecordVO;
+import com.test.goal.vo.DayPlanVO;
 import com.test.goal.vo.DayRecordVO;
 
 public interface CalendarDAO {
@@ -12,5 +13,7 @@ public interface CalendarDAO {
 	ArrayList<BTMRecordVO> getIsProcessingRecord(String memberId);
 
 	ArrayList<DayRecordVO> getChartRecord(int bTMRecordNum);
+
+	ArrayList<DayPlanVO> getDayRecordList(String userid);
 
 }
