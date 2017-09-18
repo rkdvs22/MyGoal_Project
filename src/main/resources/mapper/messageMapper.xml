@@ -10,20 +10,6 @@
 		insert into message values (message_seq.nextVal, #{sender}, #{receiver}, #{msgTitle}, #{msgContent}, sysdate)
 	</insert>
 	
-	<!-- 받은 메시지 목록 -->
-	<!--
-	<select id="receivedMsgList" parameterType="MemberVO" resultType="MessageVO">
-		select * from message where receiver=#{userid} order by msgdate desc
-	</select>
-	 -->
-	 
-	<!-- 보낸 메시지 목록  -->
-	<!-- 
-	<select id="sentMsgList" parameterType="MemberVO" resultType="MessageVO">
-		select * from message where sender=#{userid} order by msgdate desc
-	</select>
-	 -->
-	
 	<!-- 
 	쪽지 주고 받은 사람 목록 불러오기
 	이유정 : 9/8 생성, 친구 아닌 사람이 보낸 쪽지도 불러오게 함
@@ -36,22 +22,15 @@
 	</select>
 	 -->
 	 
-	<!-- 나에게 쪽지 보낸 사람 목록 불러오기(가나다순) -->
-	<!-- 유정 : 9/11 임시 생성 -->
+	<!-- 쪽지 한 번이라도 주고 받은 사람 목록 불러오기(가나다순) -->
+	<!-- 유정 : 9/11 임시 생성, 9/18 최종 수정 -->
 	<select id="senderList" parameterType="MemberVO" resultType="MemberVO">
 		select userid, image from member
 		where userid in (select sender from message where receiver = #{userid})
+		or userid in (select receiver from message where sender = #{userid})
 		order by userid
 	</select>
-	
-	<!-- 내가 쪽지 보낸 사람 목록 불러오기(가나다순) -->
-	<select id="receiverList" parameterType="MemberVO" resultType="MemberVO">
-		select userid, image from member
-		where userid in (select receiver from message where sender = #{userid})
-		order by userid
-	</select>
-	
-	
+
 	<!-- 채팅 형식 메시지 출력 -->
 	<!-- 이유정 : 9/7 생성, 최신 메시지가 아래로 오도록 -->
 	<select id="msgList" parameterType="string" resultType="MessageVO">
@@ -60,7 +39,7 @@
 		and (receiver=#{1} or sender=#{1})
 		order by msgdate
 	</select>
-	
+
 	<!-- 메시지 읽기 -->
 	<select id="readMsg" parameterType="int" resultType="MessageVO">
 		select * from message where msgnum=#{msgNum}
