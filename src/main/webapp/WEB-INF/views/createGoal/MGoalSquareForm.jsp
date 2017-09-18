@@ -48,7 +48,7 @@
 	
 	/* 최종목표 버튼색 지정 */
 	#topGoalBtn {
-		background-color: #46AA46;
+		background-color: #FFC81E;
 		color: black;
 	}
 	
@@ -756,6 +756,7 @@ $(function() {
 					$(".friendList").append(id_row);
 				});
 			},
+			error: function() { alert("아이디 찾기 아예 실패 ㅋㅋㅋㅋ"); }
 		});
 	});
 });
