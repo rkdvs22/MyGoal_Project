@@ -1,4 +1,4 @@
-.form-control {
+#newMsg {
 	width: 92% !important;
 	height: 38px !important;
 	overflow-y: hidden;
@@ -66,13 +66,13 @@
 	margin: 5px;	
 }
 
-#tab1_left, #tab2_left {
+#tab1_left {
 	width: 20%;
-	/* height: 100%; */
 	float: left;
+	overflow-y: auto;
 }
 	
-#tab1_right, #tab2_right {
+#tab1_right {
 	width: 80%;
 	height: 520px;
 	float: right;
@@ -87,7 +87,15 @@
 #tab1_right_bottom {
 	width: 100%;
 	height: 20%;
-	float: bottom;
+	margin-top: 5px;
+}
+
+.writeForm {
+	width: 700px;
+}
+
+.writeForm td {
+	padding: 2px;
 }
 
 .profileImg img {

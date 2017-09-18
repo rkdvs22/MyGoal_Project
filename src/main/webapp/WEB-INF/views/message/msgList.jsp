@@ -20,9 +20,14 @@
 	    
 	    $("#tab1_right_bottom").hide();
 	});
+	
+	function scrollBottom() {
+		var scroll = document.getElementById("tab1_right_top");
+		scroll.scrollTop = scroll.scrollHeight;
+	}
 
 	//받은 메시지 출력
-	function receivedMsgList(id) {
+	function memberMsgList(id) {
 		$.ajax({
 			url: "/goal/message/msgList",
 			type: "post",
@@ -32,8 +37,8 @@
 				$("#tab1_right_bottom").show();
 				$("#tab1_right_top").empty();
 				$(msgList).each(function(index, item) {
-					var str = "";
 					var receivedMsg = item.sender;
+					var str = "";
 					
 					if (receivedMsg == id) {
 						str += "<div class='receivedBubble bubble'>"
@@ -53,6 +58,7 @@
 					$("#tab1_right_top").append(str);
 				});
 				$("#hiddenrcv").attr("value", id);
+				scrollBottom();	//feat.조준석
 			},
 			error: function(e) {
 				console.log(e);
@@ -61,42 +67,68 @@
 		});
 	}
 	
-	//보낸 메시지 출력
-	function sentMsgList(id) {
-		$.ajax({
-			url: "/goal/message/msgList",
-			type: "post",
-			data: {"id": id},
-			dataType: "json",
-			success: function(msgList) {
-				$("#tab2_right").empty();
-				$(msgList).each(function(index, item) {
-					var str = "";
-					var sentMsg = item.receiver;
-					
-					if (sentMsg == id) {
-						str += "<div class='sentBubble bubble'>"
+	//즉석 메시지 작성(9/18 작성 feat.우성민)
+	function writeMsg() {
+		var msgContent = document.getElementById("newMsg");
+		var hiddenrcv = document.getElementById("hiddenrcv");
+		
+		if (msgContent.value == "") {
+			alert("내용을 입력해주세요.");
+			msgContent.focus();
+		} else {
+			$.ajax({
+				url: "/goal/message/writeMsg",
+				type: "post",
+				data: {"msgContent":msgContent.value, "receiver":hiddenrcv.value},
+				success: function(result) {
+					memberMsgList(hiddenrcv.value);
+					msgContent.value = '';	//feat.조준석
+					msgContent.focus();
+				},
+				error: function(e) {
+					console.log(e);
+					alert(e);
+				}
+			});
+		}
+	}
+	
+	//제목 있는 메시지 작성
+	function writeMsg2() {
+		var receiver = document.getElementById("receiver2");
+		var msgTitle = document.getElementById("msgTitle2");
+		var msgContent = document.getElementById("msgContent2");
+		
+		if (receiver.value == "") {
+			alert("수신자를 선택해주세요.");
+			receiver.focus();
+		} else if (msgTitle.value == "") {
+			alert("제목을 입력해주세요.");
+			msgTitle.focus();
+		} else if (msgContent.value == "") {
+			alert("내용을 입력해주세요.")
+			msgContent.focus();
+		} else {
+			$.ajax({
+				url: "/goal/message/writeMsg",
+				type: "post",
+				data: {"receiver":receiver.value, "msgTitle":msgTitle.value, "msgContent":msgContent.value},
+				success: function(result) {
+					if (result == true) {
+						alert("쪽지 보내기에 성공했습니다.");
+						receiver.value = "";
+						msgTitle.value = "";
+						msgContent.value = "";
 					} else {
-						str += "<div class='receivedBubble bubble'>"
+						alert("쪽지 보내기에 실패하였습니다");
 					}
-					str += "<table class='msg'>";
-					str += "<tr><td class='msgTitle'> 제목 : " + item.msgTitle + "</td>";
-					str += "<td> 날짜 : " + item.msgDate;
-					str += "</td></tr>";
-					str += "<tr><td colspan='2' class='msgContent'>";
-					str += item.msgContent;
-					str += "</td></tr>";
-					str += "</table>";
-					str += "</div>";
-					
-					$("#tab2_right").append(str);
-				});
-			},
-			error: function(e) {
-				console.log(e);
-				alert(e);
-			}
-		});
+				},
+				error: function(e) {
+					console.log(e);
+					alert(e);
+				}
+			});
+		}
 	}
 	
 	
@@ -123,13 +155,13 @@
 	<!-- 탭 메뉴 생성 -->
 	<div class="tabs">
 	<ul class="tab-links">
-        <li class="active"><a href="#tab1">받은 쪽지함</a></li>
-        <li><a href="#tab2">보낸 쪽지함</a></li>
+        <li class="active"><a href="#tab1">쪽지 읽기</a></li>
+        <li><a href="#tab2">쪽지 쓰기</a></li>
 	</ul>
     <div class="tab-content">
         <div id="tab1" class="tab active">
-        <!-- 받은 쪽지함 -->
-			<!-- Sender List -->
+        <!-- 멤버별 정렬 -->
+			<!-- Sender & Receiver List -->
 			<div id="tab1_left">
 				<table id="senderList">
 					<c:forEach items="${slist}" var="slist">
@@ -144,7 +176,7 @@
 						</c:if>
 						</td>
 						<!-- 발신자 이름 -->
-						<td class="senderName"><a href="#" onclick="receivedMsgList('${slist.userid}')">${slist.userid}</a></td>
+						<td class="senderName"><a href="#" onclick="memberMsgList('${slist.userid}')">${slist.userid}</a></td>
 						</tr>
 					</c:forEach>
 				</table>
@@ -155,42 +187,40 @@
 					<!-- 받은 쪽지 채팅 형식으로 출력 -->
 				</div>
 				<div id="tab1_right_bottom">
-					<form action="/goal/message/writeMsg" method="post">
-					<textarea id="newMsg" name="newMsg" class="form-control"></textarea>
-					<input class="btn btn-rounded btn-success" type="button" value="전송">
+					<!-- 쪽지 답장 폼 -->
+					<textarea id="newMsg" name="msgContent" class="form-control"></textarea>
 					<input type="hidden" id="hiddenrcv" name="receiver">
-					</form>
+					<input class="btn btn-rounded btn-success" type="button" value="전송" onclick="writeMsg()">
 				</div>
 			</div>
         </div>
-        <!-- 받은 쪽지함 끝 -->
-		<!-- 보낸 쪽지함 -->
-		<div id="tab2" class="tab">
-			<div id="tab2_left">
-	        	<table id="receiverList">
-	        		<c:forEach items='${rlist}' var='rlist'>
-	        			<tr>
-        				<!-- 프로필 사진 -->
-						<td class="profileImg">
-						<c:if test="${rlist.image != null}">
-						<img src="/goal/resources/img/profileImg/${rlist.image}">
-						</c:if>
-						<c:if test="${rlist.image == null}">
-						<img src="/goal/resources/img/avatar-2-48.png">
-						</c:if>
-						</td>
-						<!-- 수신자 이름 -->
-						<td class="receiverName"><a href="#" onclick="sentMsgList('${rlist.userid}')">${rlist.userid}</a></td>
-						</tr>
-					</c:forEach>
-	        	</table>
-        	</div>
-        	<div id="tab2_right">
-        		<!-- 보낸 쪽지 채팅 형식으로 출력 -->
-        		<table class="sentMsgList"></table>
-        	</div>
+        <!-- 쪽지 읽기 끝 -->
+
+        <!-- 쪽지 쓰기 -->
+        <div id="tab2" class="tab">
+			<table class="writeForm">
+				<tr>
+					<th>발신자</th>
+					<td><input type="text" class="form-control" disabled="disabled" value="${sessionScope.userid}"></td>
+				</tr>
+				<tr>
+					<th>수신자</th>
+					<td><input type="text" class="form-control" name="receiver" id="receiver2"></td>
+				</tr>
+				<tr>
+					<th>제목</th>
+					<td><input type="text" class="form-control" name="msgTitle" id="msgTitle2"></td>
+				</tr>
+				<tr>
+					<th>내용</th>
+					<td><textarea style="width:100%; height:300px" class="form-control" name="msgContent" id="msgContent2"></textarea></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input class="btn btn-rounded btn-success" type="button" value="전송" onclick="writeMsg2()"></td>
+				</tr>
+			</table>
         </div>
-        <!-- 보낸 쪽지함 끝 -->
+        <!-- 쪽지 쓰기 끝 -->
     </div>
     <!-- tab-content 끝 -->
 	</div>
