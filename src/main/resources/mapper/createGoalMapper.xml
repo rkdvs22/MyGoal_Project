@@ -33,12 +33,15 @@
 		INSERT INTO BOARD(BOARDNUM, USERID, TGOALNUM) VALUES(BOARD_SEQ.NEXTVAL, #{userid}, #{tgoalnum})
 	</insert>
 	
-	
-	
-	
-	
-	
+	<!-- modal 창 안에서 사용자가 검색한 키워드를 이용해 ID를 찾는다 -->
 	<select id="findIdinModal" parameterType="string" resultType="MemberVO">
 		SELECT userid FROM member WHERE userid LIKE '%'||#{keyWord}||'%'
+	</select>
+	
+	<!-- 현재 게시글의 정보를 받아온다 ============ 중간세이브 -->
+	<select id="getBoardInfo" resultType="BoardVO">
+		SELECT boardNum, b.userid, b.tgoalNum, t.startDate, t.endDate, t.tGoalTitle 
+		FROM board b, topgoal t 
+		WHERE t.userid = b.userid
 	</select>
 </mapper>

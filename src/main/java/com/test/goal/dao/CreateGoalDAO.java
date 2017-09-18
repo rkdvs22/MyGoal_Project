@@ -22,6 +22,8 @@ public interface CreateGoalDAO {
 	public MainProgressVO findProgressNum(); // 현재 progressNum의 데이터를 알기 위한 메서드
 
 	public TopGoalVO getTgoalNum();
+
+	public BoardVO getBoardInfo();
 	
 	
 	

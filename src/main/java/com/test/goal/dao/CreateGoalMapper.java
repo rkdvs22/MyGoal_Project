@@ -19,19 +19,11 @@ public interface CreateGoalMapper {
 	
 	public TopGoalVO getTgoalNum(); // 현재 TopGoalNum칼럼값을 알기 위한 메서드
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public ArrayList<MemberVO> findIdinModal(String keyWord);
 
-
 	public MainProgressVO inputMainProgress(MainProgressVO mvo);
+
+	public BoardVO getBoardInfo();
 
 
 }
