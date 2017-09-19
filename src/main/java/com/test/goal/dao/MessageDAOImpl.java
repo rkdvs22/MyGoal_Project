@@ -21,20 +21,6 @@ public class MessageDAOImpl implements MessageDAO {
 		return false;
 	}
 
-	//메시지 내용 읽기
-	@Override
-	public MessageVO readMsg(int msgNum) {
-		MessageMapper mapper = sqlsession.getMapper(MessageMapper.class);
-		return mapper.readMsg(msgNum);
-	}
-
-	//메시지 삭제
-	@Override
-	public void deleteMsg(int msgNum) {
-		MessageMapper mapper = sqlsession.getMapper(MessageMapper.class);
-		mapper.deleteMsg(msgNum);
-	}
-
 	//나에게 메시지를 보낸 사람 목록 불러오기
 	@Override
 	public ArrayList<MemberVO> senderList(String userid) {
@@ -42,20 +28,10 @@ public class MessageDAOImpl implements MessageDAO {
 		return mapper.senderList(userid);
 	}
 	
-	//내가 메시지를 보낸 사람 목록 불러오기
-	@Override
-	public ArrayList<MemberVO> receiverList(String userid) {
-		MessageMapper mapper = sqlsession.getMapper(MessageMapper.class);
-		return mapper.receiverList(userid);
-	}
-
-	
 	//채팅 형식으로 메시지 출력
 	@Override
 	public ArrayList<MessageVO> msgList(String userid, String id) {
 		MessageMapper mapper = sqlsession.getMapper(MessageMapper.class);
 		return mapper.msgList(userid, id);
-	}
-
-	
+	}	
 }

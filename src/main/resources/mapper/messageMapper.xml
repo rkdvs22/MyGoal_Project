@@ -40,13 +40,4 @@
 		order by msgdate
 	</select>
 
-	<!-- 메시지 읽기 -->
-	<select id="readMsg" parameterType="int" resultType="MessageVO">
-		select * from message where msgnum=#{msgNum}
-	</select>
-	
-	<!-- 메시지 삭제 -->
-	<delete id="deleteMsg" parameterType="int">
-		delete from message where msgnum=#{msgNum}
-	</delete>
 </mapper>

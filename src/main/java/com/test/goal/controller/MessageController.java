@@ -19,7 +19,7 @@ public class MessageController {
 	@Autowired
 	private MessageDAO dao;
 
-	// 즉석에서 메시지 보내기
+	// 메시지 보내기
 	@RequestMapping(value = {"writeMsg", "writeMsg2"}, method = RequestMethod.POST)
 	@ResponseBody
 	public boolean writeMsg(MessageVO vo, HttpSession session, RedirectAttributes attr) {
@@ -31,7 +31,7 @@ public class MessageController {
 		//title
 		String msgTitle = vo.getMsgTitle();
 		if (msgTitle == null) {
-			vo.setMsgTitle("제목 없음");
+			vo.setMsgTitle("제목 없음");	//즉석 메시지 보낼 때 제목 자동 입력
 		}
 		
 		//content
@@ -39,15 +39,22 @@ public class MessageController {
 		String msgWithBr = msgContent.replace("\n", "<br>");	//엔터키 입력시 줄바꿈 처리
 		vo.setMsgContent(msgWithBr);
 		
-		return dao.writeMsg(vo);
+		//receiver : 콤마(,)를 기준으로 복수의 수신자 구분
+		String msgReceiver = vo.getReceiver();
+		String msgReceivers[] = msgReceiver.split(",");
+		for (int i = 0; i < msgReceivers.length; i++) {
+			vo.setReceiver(msgReceivers[i]);
+			dao.writeMsg(vo);
+		}
+		
+		return true;
 	}
 	
-	//나에게 메시지 보낸 사람 목록 불러오기(9/11 수정)
+	//메시지 주고 받은 사람 목록 불러오기(9/11 수정, 9/18 최종 수정)
 	@RequestMapping(value = "sendNReceiveList", method=RequestMethod.GET)
 	public String sendNReceiveList(HttpSession session, Model model) {
 		String userid = (String) session.getAttribute("userid");
 		model.addAttribute("slist", dao.senderList(userid));
-		//model.addAttribute("rlist", dao.receiverList(userid));
 		return "/message/msgList";
 	}
 	
@@ -57,12 +64,5 @@ public class MessageController {
 	public ArrayList<MessageVO> msgList(HttpSession session, String id, Model model) {
 		String userid = (String) session.getAttribute("userid");
 		return dao.msgList(userid, id);
-	}
-	
-	//메시지 내용 읽기
-	@RequestMapping(value = "readMsg", method = RequestMethod.GET)
-	public String readMsg(int msgNum, Model model) {
-		model.addAttribute("vo", dao.readMsg(msgNum));
-		return "/message/readMsg";
 	}
 }

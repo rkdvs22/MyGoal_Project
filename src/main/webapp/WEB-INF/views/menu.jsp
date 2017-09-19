@@ -195,7 +195,7 @@
 				</a>
 			</li>
 			<li class="pink">
-				<a href="/goal/goalTree/goalList">
+				<a href="/goal/goalTree/goalList?key=0">
 					<i class="glyphicon glyphicon-tree-conifer"></i>
 					<span class="lbl">Goal Tree</span>
 				</a>

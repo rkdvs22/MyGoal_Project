@@ -123,14 +123,20 @@
 						alert("쪽지 보내기에 실패하였습니다");
 					}
 				},
-				error: function(e) {
-					console.log(e);
-					alert(e);
+				error: function() {
+					alert("존재하지 않는 사용자입니다.");
 				}
 			});
 		}
 	}
 	
+	//목록에서 아이디 클릭 시 수신자에 추가
+	function addReceiver(id) {
+		var receiverList = document.getElementById("receiver2");
+		var str = ""
+		str += id + ",";
+		receiverList.value += str;
+	}
 	
 </script>
 <link rel="stylesheet" href="/goal/resources/css/main.css?version=1">
@@ -188,7 +194,7 @@
 				</div>
 				<div id="tab1_right_bottom">
 					<!-- 쪽지 답장 폼 -->
-					<textarea id="newMsg" name="msgContent" class="form-control"></textarea>
+					<textarea id="newMsg" name="msgContent" class="form-control" placeholder="Instant Message"></textarea>
 					<input type="hidden" id="hiddenrcv" name="receiver">
 					<input class="btn btn-rounded btn-success" type="button" value="전송" onclick="writeMsg()">
 				</div>
@@ -198,27 +204,52 @@
 
         <!-- 쪽지 쓰기 -->
         <div id="tab2" class="tab">
-			<table class="writeForm">
-				<tr>
-					<th>발신자</th>
-					<td><input type="text" class="form-control" disabled="disabled" value="${sessionScope.userid}"></td>
-				</tr>
-				<tr>
-					<th>수신자</th>
-					<td><input type="text" class="form-control" name="receiver" id="receiver2"></td>
-				</tr>
-				<tr>
-					<th>제목</th>
-					<td><input type="text" class="form-control" name="msgTitle" id="msgTitle2"></td>
-				</tr>
-				<tr>
-					<th>내용</th>
-					<td><textarea style="width:100%; height:300px" class="form-control" name="msgContent" id="msgContent2"></textarea></td>
-				</tr>
-				<tr>
-					<td colspan="2"><input class="btn btn-rounded btn-success" type="button" value="전송" onclick="writeMsg2()"></td>
-				</tr>
-			</table>
+        	<!-- 쪽지 작성 폼 -->
+			<div id="tab2_left">
+				<table class="writeForm">
+					<tr>
+						<th>발신자</th>
+						<td><input type="text" class="form-control" disabled="disabled" value="${sessionScope.userid}"></td>
+					</tr>
+					<tr>
+						<th>수신자</th>
+						<td><input type="text" class="form-control" name="receiver" id="receiver2" placeholder="2명 이상에게 쪽지를 보낼 시 콤마(,)를 사용하여 구분하세요"></td>
+					</tr>
+					<tr>
+						<th>제목</th>
+						<td><input type="text" class="form-control" name="msgTitle" id="msgTitle2"></td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td><textarea style="width:100%; height:300px" class="form-control" name="msgContent" id="msgContent2"></textarea></td>
+					</tr>
+					<tr>
+						<td colspan="2"><input class="btn btn-rounded btn-success" type="button" value="전송" onclick="writeMsg2()"></td>
+					</tr>
+				</table>
+			</div>
+			<!-- 쪽지 작성 폼 끝 -->
+			<!-- 메시지 주고 받은 사람 목록 -->
+			<div id="tab2_right">
+				<table id="senderList">
+					<tr><th colspan="2">최근에 메시지를 주고 받은 사람</th></tr>
+					<c:forEach items="${slist}" var="slist">
+						<tr>
+						<!-- 프로필 사진 -->
+						<td class="profileImg">
+						<c:if test="${slist.image != null}">
+						<img src="/goal/resources/img/profileImg/${slist.image}">
+						</c:if>
+						<c:if test="${slist.image == null}">
+						<img src="/goal/resources/img/avatar-2-48.png">
+						</c:if>
+						</td>
+						<!-- 발신자 이름 -->
+						<td class="senderName"><a href="#" onclick="addReceiver('${slist.userid}')">${slist.userid}</a></td>
+						</tr>
+					</c:forEach>
+				</table>
+			</div>
         </div>
         <!-- 쪽지 쓰기 끝 -->
     </div>
