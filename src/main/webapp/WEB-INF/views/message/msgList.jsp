@@ -134,7 +134,13 @@
 	function addReceiver(id) {
 		var receiverList = document.getElementById("receiver2");
 		var str = ""
-		str += id + ",";
+		
+		if (receiverList.value == "") {
+			str += id;
+		} else {
+			str += "," + id;
+		}
+		
 		receiverList.value += str;
 	}
 	
