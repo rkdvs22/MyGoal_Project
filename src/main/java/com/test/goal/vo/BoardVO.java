@@ -3,7 +3,6 @@ package com.test.goal.vo;
 public class BoardVO {
 	private int boardnum;
 	private String userid;
-	private int hit;
 	private int favorite;
 	private int tgoalnum;
 	private String startDate;
@@ -13,8 +12,21 @@ public class BoardVO {
 	private String tGoalTitle;
 	private String openStatus;
 	
-	public BoardVO() {
-		
+	public BoardVO() {	}
+
+	public BoardVO(int boardnum, String userid, int favorite, int tgoalnum, String startDate, String endDate,
+			int currentMemberNumber, int maxMemberNumber, String tGoalTitle, String openStatus) {
+		super();
+		this.boardnum = boardnum;
+		this.userid = userid;
+		this.favorite = favorite;
+		this.tgoalnum = tgoalnum;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.currentMemberNumber = currentMemberNumber;
+		this.maxMemberNumber = maxMemberNumber;
+		this.tGoalTitle = tGoalTitle;
+		this.openStatus = openStatus;
 	}
 
 	public int getBoardnum() {
@@ -31,14 +43,6 @@ public class BoardVO {
 
 	public void setUserid(String userid) {
 		this.userid = userid;
-	}
-
-	public int getHit() {
-		return hit;
-	}
-
-	public void setHit(int hit) {
-		this.hit = hit;
 	}
 
 	public int getFavorite() {
@@ -107,10 +111,10 @@ public class BoardVO {
 
 	@Override
 	public String toString() {
-		return "BoardVO [boardnum=" + boardnum + ", userid=" + userid + ", hit=" + hit + ", favorite=" + favorite
-				+ ", tgoalnum=" + tgoalnum + ", startDate=" + startDate + ", endDate=" + endDate
-				+ ", currentMemberNumber=" + currentMemberNumber + ", maxMemberNumber=" + maxMemberNumber
-				+ ", tGoalTitle=" + tGoalTitle + ", openStatus=" + openStatus + "]";
+		return "BoardVO [boardnum=" + boardnum + ", userid=" + userid + ", favorite=" + favorite + ", tgoalnum="
+				+ tgoalnum + ", startDate=" + startDate + ", endDate=" + endDate + ", currentMemberNumber="
+				+ currentMemberNumber + ", maxMemberNumber=" + maxMemberNumber + ", tGoalTitle=" + tGoalTitle
+				+ ", openStatus=" + openStatus + "]";
 	}
-
+	
 }

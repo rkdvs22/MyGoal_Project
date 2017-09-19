@@ -3,17 +3,16 @@ package com.test.goal.dao;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
+
 import com.test.goal.vo.BoardVO;
-import com.test.goal.vo.TopGoalVO;
 
 public interface BoardMapper {
 
-	public ArrayList<BoardVO> boardList(); // 게시글 목록
+	public ArrayList<BoardVO> boardList(Map<String, String> map, RowBounds rb); // 게시글 목록, 검색, 페이징
 
-	public ArrayList<BoardVO> searchBoard(Map<String, String> map); // 게시글 검색
+	public int getTotal(Map<String, String> map); // 페이징 : 전체 게시글 수 가져오기
 
 	public void addFavorite(int boardnum); // 좋아요
-
-	public int getTotal(Map<String, String> map); // 페이징
 
 }

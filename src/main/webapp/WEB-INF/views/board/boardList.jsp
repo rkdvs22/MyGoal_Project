@@ -34,19 +34,27 @@
 						<h3>Board</h3>
 					</div>
 				<!-- 검색 -->
-					<form action="searchBoard" method="get">
+					<form action="boardList" method="get">
 					<div class="form-group row">
-						<div class="col-md-2">
+						<select name="searchSelect">
+							<option value="ID">ID</option>
+							<option value="TITLE">Goal Title</option>
+						</select>
+						<input type="text" class="col-md-5" name="searchKeyid">
+						<input type="submit" class="font-icon-search">
+						<!-- <input type="image" class="glyphicon glyphicon-search" src="" onclikc=""> -->
+						
+						<!-- <div class="col-md-2">
 							<select class="select2-arrow manual select2-no-search-arrow" name="searchSelect">
 								<option value="id" selected="selected">ID</option>
 								<option value="title">Title</option>
 							</select>
+							<input class="form-control" type="text" name="searchKeyid"placeholder="Search">
+							<input type="submit" class="font-icon-search">
 						</div>
-						<div class="col-md-7">
-							<input class="form-control" id="searchKeyid" name="searchKeyid" type="text" placeholder="Search">
-							<%-- <a href="#" onclick="search('${searchKeyid}')"><i class="font-icon-search"></i></a> --%>
-							<button type="submit" class="font-icon-search"></button>
-						</div>`
+ 						<div class="col-md-7">
+							<a href="#" onclick="search('${searchKeyid}')"><i class="font-icon-search"></i></a>
+						</div> -->
 					</div>
 					</form>
 					
@@ -54,7 +62,7 @@
 			</div>
 		</header>
 		
-		<!-- 게시글 목록 -->
+	<!-- 게시글 목록 -->
 		<c:forEach items="${goalList}" var="list">
 		<div class="cards-grid c" data-columns>
 		<!-- <form action="boardList" method="get"> -->
@@ -64,31 +72,26 @@
 						<div class="user-card-row">
 							<div class="tbl-row">
 								<div class="tbl-cell tbl-cell-photo">
-									<a href="#">
-										<img src="/goal/resources/img/photo-64-2.jpg" alt="">
-									</a>
+									<a href="#"><img src="/goal/resources/img/photo-64-2.jpg" alt=""></a>
 								</div>
 								<div class="tbl-cell">
-									<p class="user-card-row-name"><a href="#">${list.userid}</a></p>
-									<!-- <p class="color-blue-grey-lighter">3 days ago - 23 min read(게시시간??)</p> -->
+									<p class="user-card-row-name">${list.userid}</a></p>
 								</div>
 								<div class="tbl-cell tbl-cell-status">
-									<!-- <a href="#" class="font-icon font-icon-star active"></a> -->
 									<button type="button" class="btn btn-rounded btn-inline btn-success btn-sm" name="checkId" onclick="">Start</button>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="card-typical-section card-typical-content">
-						<header class="title"><h5><!-- <a href="#"> -->${list.tGoalTitle}</a></h5></header>
-						<!-- <label class="col-sm-2 form-control-label">시작날짜</label> -->
+						<header class="title"><h5>${list.tGoalTitle}</a></h5></header>
 						<p>시작날짜</p><p>${list.startDate}</p><br>
 						<p>종료날짜</p><p>${list.endDate}</p>
 					</div>
 					<div class="card-typical-section">
 						<div class="card-typical-linked">${list.currentMemberNumber}/4</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<a href="#" class="card-typical-likes" onclick="member('${list.boardnum}')">
-							<i class="font-icon font-icon-heart">${list.favorite}</i>
+						<a href="#" class="card-typical-likes" id="addFovorite" name="addFovorite" onclick="addFovorite('${list.boardnum}')">
+							<i class="font-icon font-icon-heart" id="favoriteNum">${list.favorite}</i>
 						</a>
 					</div>
 						<%-- <input type="hidden" name="tGoalNum" value="${tGoalNum}">
@@ -105,22 +108,21 @@
 			<div style="text-align: center;">
 				<ul class="pagination" id="navigator">
 					<li class="page-item disabled">
-						<a class="page-link" href="javascript:pageProc(${navi.currentPage - 1}, '${searchCondition}', '${searchKeyword}')" aria-label="Previous">
+						<a class="page-link" href="javascript:pageProc(${navi.currentPage - navi.pagePerGroup}, '${searchSelect}', '${searchKeyid}')" aria-label="Previous">
 							<span aria-hidden="true">&laquo;</span>
 							<span class="sr-only">Previous</span>
 						</a>
 					</li>
+					
 					<c:forEach begin="${navi.startPageGroup}" end="${navi.endPageGroup}" var="counter">
 						<c:if test="${counter == navi.currentPage}"><b></c:if>
-							<!-- <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li> -->
-							<li class="page-item"><a class="page-link" href="javascript:pageProc(${counter}, '${searchCondition}', '${searchKeyword}')">${counter}</a></li>
-							<!-- <li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item"><a class="page-link" href="#">4</a></li>
-							<li class="page-item"><a class="page-link" href="#">5</a></li> -->
+							<li class="page-item">
+								<a class="page-link" href="javascript:pageProc(${counter}, '${searchSelect}', '${searchKeyid}')">${counter}</a>
+							</li>
 						<c:if test="${counter == navi.currentPage}"></b></c:if>
 					</c:forEach>
 					<li class="page-item">
-						<a class="page-link" href="javascript:pageProc(${navi.currentPage + 1}, '${searchCondition}', '${searchKeyword}')" aria-label="Next">
+						<a class="page-link" href="javascript:pageProc(${navi.currentPage + navi.pagePerGroup}, '${searchSelect}', '${searchKeyid}')" aria-label="Next">
 							<span aria-hidden="true">&raquo;</span>
 							<span class="sr-only">Next</span>
 						</a>
@@ -143,35 +145,11 @@
 		$(function() {
 			$('.card-user').matchHeight();
 		});
-		
-		// 좋아요		
-		function member(boardnum) {
-			var favorite = confirm("들어가냐구");	
-		
-			if(favorite) {
-				$.ajax({
-					url: "/goal/board/addFavorite",
-					type: "post",
-					data: {"boardnum":boardnum}
-					 
-				});
-			}
+
+		function pageProc(currentPage, searchCondition, searchKeyword) {
+			location.href= "/goal/board/boardList?currentPage=" + currentPage + "&searchCondition=" + searchCondition + "&searchKeyword=" + searchKeyword;
 		}
-	
-		/* function search(searchKeyid) {
-			var searchKeyid = $("#searchKeyid").val();
-			
-			if(searchKeyid) {
-				$.ajax ({
-					url: "/goal/board/searchBoard",
-					type: "post",
-					data: {"searchSelect" : searchSelect, "searchKeyid" : searchKeyid},
-					error: function() {
-						alert("찾는 글이 없습니다.");
-					} 
-				});
-			}
-		} */
+		
 	</script>
 
 <script src="/goal/resources/js/app.js"></script>

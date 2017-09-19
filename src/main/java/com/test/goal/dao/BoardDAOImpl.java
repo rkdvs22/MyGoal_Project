@@ -3,6 +3,7 @@ package com.test.goal.dao;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -16,33 +17,21 @@ public class BoardDAOImpl implements BoardDAO {
 	@Autowired
 	private SqlSession sqlsession;
 	
-	// 게시글 목록
+	// 게시글 목록, 검색, 페이징
 	@Override
-	public ArrayList<BoardVO> boardList() {
+	public ArrayList<BoardVO> boardList(Map<String, String> map, int startRecord, int countPerPage) {
 		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
-		return mapper.boardList();
+		RowBounds rb = new RowBounds(startRecord, countPerPage);
+		return mapper.boardList(map, rb);
 	}
 
-	// 게시글 검색
+	// 페이징 : 전체 게시글 수 가져오기
 	@Override
-	public ArrayList<BoardVO> searchBoard(Map<String, String> map) {
+	public int getTotal(Map<String, String> map) {
 		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
-		return mapper.searchBoard(map);
+		return mapper.getTotal(map);
 	}
-
 	
-	@Override
-	public void boardRead() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void addGoal() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	// 좋아요
 	@Override
 	public void addFavorite(int boardnum) {
@@ -50,12 +39,6 @@ public class BoardDAOImpl implements BoardDAO {
 		mapper.addFavorite(boardnum);
 	}
 
-	// 페이징
-	@Override
-	public int getTotal(Map<String, String> map) {
-		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
-		return mapper.getTotal(map);
-	}
 
 	
 }

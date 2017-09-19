@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.test.goal.dao.BoardDAO;
+import com.test.goal.service.BoardService;
 import com.test.goal.util.PageNavigator;
 import com.test.goal.vo.BoardVO;
 import com.test.goal.vo.MainProgressVO;
@@ -23,40 +24,30 @@ public class BoardController {
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
 	@Autowired
-	private BoardDAO dao;
+	private BoardService service;
 	
-	// 게시글 목록
+	// 게시글 목록, 검색, 페이징
 	@RequestMapping(value = "boardList", method = RequestMethod.GET)
-	public String boardList(Model model) {
-		model.addAttribute("goalList", dao.boardList());
-		
-		return "/board/boardList";
-	}
-
-	// 게시글 검색
-	@RequestMapping(value = "searchBoard", method = RequestMethod.GET)
-	public String searchBoard(Map<String, String> map, Model model,
-			@RequestParam(value = "currentPage", defaultValue = "1") int currentPage,
+	public String boardList(Map<String, String> map, Model model,
 			@RequestParam(value = "searchKeyid", defaultValue = "1") String searchKeyid, String searchSelect,
-			int countPerPage, int pagePerGroup) {
-		map.put("searchKeyid", searchKeyid);
-		map.put("searchSelect", searchSelect);
-	
-		int totalRecordsCount = dao.getTotal(map);
-		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, currentPage, totalRecordsCount);
+			@RequestParam(value = "currentPage", defaultValue = "1") int currentPage) {
 		
-		model.addAttribute("search", dao.searchBoard(map));
+		map.put("searchKeyid", searchKeyid); // 검색 select 박스
+		map.put("searchSelect", searchSelect); // 검색어
+		
+		PageNavigator navi = service.getNavi(currentPage, map);
+		model.addAttribute("goalList", service.boardList(map, navi));
 		model.addAttribute("navi", navi);
 		model.addAttribute("searchKeyid", searchKeyid);
 		model.addAttribute("searchSelect", searchSelect);
-		
 		return "/board/boardList";
 	}
 	
 	// 좋아요 기능
-	@RequestMapping(value = "addFavorite", method = RequestMethod.POST)
+/*	@RequestMapping(value = "addFavorite", method = RequestMethod.POST)
 	public void addFavorite(int boardnum) {
-		dao.addFavorite(boardnum);
-	}
+		service.addFavorite(boardnum);
+	}*/
+	
 	
 }

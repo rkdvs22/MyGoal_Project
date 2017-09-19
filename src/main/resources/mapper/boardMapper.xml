@@ -6,42 +6,41 @@
   
 <mapper namespace="com.test.goal.dao.BoardMapper">
 	
-	<!-- 게시글 목록 -->
-	<select id="boardList" resultType="BoardVO">
+	<!-- 게시글 목록, 검색, 페이징 -->
+	<select id="boardList" parameterType="map" resultType="BoardVO">
 		select b.userid as "userid",b.favorite as "favorite", t.tstartDate as "startDate", t.tendDate as "endDate", t.openStatus as "openStatus", l.currentMemberNumber as "currentMemberNumber", t.tGoalTitle as "tGoalTitle"
 		from board b inner join topGoal t
 		on b.tGoalNum = t.tGoalnum inner join mainProgress m
 		on t.progressNum = m.progressNum inner join (select progressNum, count(listNum) as currentMemberNumber from memberList group by progressNum) l
 		on m.progressNum = l.progressNum
-		
+		<if test="searchSelect == 'ID'">
+			where b.userid like '%'||#{searchKeyid}||'%'
+		</if>
+		<if test="searchSelect == 'TITLE'">
+			where t.tGoalTitle like '%'||#{searchKeyid}||'%'
+		</if>
+		order by b.favorite
 	</select>
 	
-	<!-- 게시글 검색 -->
-	<select id="searchBoard" parameterType="string" resultType="BoardVO">
-		select b.userid, t.tGoalTitle from Board b, TopGoal t
-			<if test="searchSelect == 'id'">
-				where b.userid like '%'||#{searchKeyid}||'%'
-			</if>
-			<if test="searchSelect == 'title'">
-				where t.tGoalTitle like '%'||#{searchKeyid}||'%'
-			</if>
-		order by b.favorite desc;
+	<!-- 페이징 : 전체 게시글 수 가져오기 -->
+	<select id="getTotal" parameterType="map" resultType="int">
+		select count(*) from board b inner join topGoal t
+		on b.tGoalNum = t.tGoalnum inner join mainProgress m
+		on t.progressNum = m.progressNum inner join (select progressNum, count(listNum) as currentMemberNumber from memberList group by progressNum) l
+		on m.progressNum = l.progressNum
+		<if test="searchSelect == 'ID'">
+			where b.userid like '%'||#{searchKeyid}||'%'
+		</if>
+		<if test="searchSelect == 'TITLE'">
+			where t.tGoalTitle like '%'||#{searchKeyid}||'%'
+		</if>
+		order by b.favorite
 	</select>
-	
+
 	<!-- 게시글 좋아요 -->
 	<update id="favorite" parameterType="int">
 		update board set favorite = favorite + 1 where boardnum = #{boardnum}	
 	</update>
 	
-	<!-- 페이징 : 전체 게시글 수 가져오기 -->
-	<select id="getTotal" parameterType="map" resultType="int">
-		select count(*) from board
-			<if test="searchSelect == 'id">
-				where userid like '%'||#{searchKeyid}||'%'
-			</if>
-			<if test="searchSelect == 'title">
-				where tGoalTitle like '%'||#{searchKeyid}||'%'
-			</if>
-	</select>
 	
 </mapper>
