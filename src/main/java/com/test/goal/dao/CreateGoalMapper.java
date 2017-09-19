@@ -28,10 +28,13 @@ public interface CreateGoalMapper {
 	
 	
 	
-	public ArrayList<MemberVO> findIdinModal(String keyWord);
+	public ArrayList<MemberVO> findIdinModal(String keyWord); // modal 창 안에서 사용자의 ID를 검색한다
 
 
-	public MainProgressVO inputMainProgress(MainProgressVO mvo);
+
+	public BoardVO getBoardInfo(); // 현재 게시글의 정보를 불러온다.
+
+	public BoardVO findThatGoal(String senderId); // 초대 메시지에 승인할 시 해당하는 목표가 무엇인지 찾는다.
 
 
 }

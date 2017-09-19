@@ -74,11 +74,24 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 	
 	
 
-
+	// 현재 게시글의 정보를 불러온다.
+	@Override
+	public BoardVO getBoardInfo() {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		return mapper.getBoardInfo();
+	}
+	
+	// modal 창 안에서 사용자의 ID를 검색한다
 	@Override
 	public ArrayList<MemberVO> findIdinModal(String keyWord) {
 		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
 		return mapper.findIdinModal(keyWord);
 	}
 
+	// 초대 메시지에 승인할 시 해당하는 목표가 무엇인지 찾는다.
+	@Override
+	public BoardVO findThatGoal(String senderId) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		return mapper.findThatGoal(senderId);
+	}
 }

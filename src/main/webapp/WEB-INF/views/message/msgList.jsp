@@ -25,7 +25,7 @@
 		var scroll = document.getElementById("tab1_right_top");
 		scroll.scrollTop = scroll.scrollHeight;
 	}
-
+	var senders = new Array();
 	//받은 메시지 출력
 	function memberMsgList(id) {
 		$.ajax({
@@ -50,6 +50,11 @@
 					str += "<td> 날짜 : " + item.msgDate;
 					str += "</td></tr>";
 					str += "<tr><td colspan='2' class='msgContent'>";
+					if(item.msgContent == "다음의 목표에 참가하시겠습니까?") {
+						item.msgContent += '<br><input type="button" value="승인" id="join-btn' + index + '" class="join-btn">';
+						item.msgContent += ' <input type="button" value="거절" id="notJoin-btn'+ index +'" class="notJoin-btn">';
+						senders[index] = item.sender;
+					}
 					str += item.msgContent;
 					str += "</td></tr>";
 					str += "</table>";
@@ -144,6 +149,28 @@
 		receiverList.value += str;
 	}
 	
+	
+	// 초대 메시지에 승인을 누를 시 해당하는 목표의 방으로 입장.
+	$(".join-btn").click(function() {
+		var btnId = $(this).attr("id");
+		var index = /\d/.exec(btnId);
+		for(var i=0; i<=index; i++) {
+			if(senders[i] == senders[index]) {
+				$.ajax ({
+					url: "findThatGoal",
+					type: "post",
+					data: {"senderId":senders[i]},
+					success: function(vo) {
+						location.href='/goal/createGoal/joinThatGoal?boardNum=' + vo.boardNum
+								+ '&progressNum=' + vo.progressNum 
+								+ '&id=' + ${sessionScope.userid};
+					},
+					error: function() { alert("승인실패!!!!!!!!!!!!!!!!!!!!!!!!!"); }
+				});
+				break;
+			}
+		}
+	});
 </script>
 <link rel="stylesheet" href="/goal/resources/css/main.css?version=1">
 <link rel="stylesheet" href="/goal/resources/css/message/message.css?version=1">

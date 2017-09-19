@@ -72,12 +72,15 @@ public class CreateGoalController {
 	
 	// 목표大작성 기능
 	@RequestMapping(value = "create", method = RequestMethod.POST)
-	public String create(TopGoalVO tvo, MainProgressVO mvo, Model model, int progressNum) {
+	public String create(TopGoalVO tvo, MainProgressVO mvo, Model model, int progressNum, HttpSession session) {
 		mvo.setProgressNum(progressNum);
+		System.out.println(tvo);
 		model.addAttribute("topGoal", dao.create1(tvo));
 		int topGoalNum = dao.getTgoalNum().gettGoalNum();
 		tvo.settGoalNum(topGoalNum);
 		writeBoard(tvo);
+		model.addAttribute("b_info", dao.getBoardInfo());
+		System.out.println(dao.getBoardInfo().toString());
 		return "/createGoal/MGoalSquareForm";
 	}
 	
@@ -321,5 +324,21 @@ public class CreateGoalController {
 	public ArrayList<MemberVO> findIdinModal(String keyWord) {
 		ArrayList<MemberVO> list = dao.findIdinModal(keyWord);
 		return list;
+	}
+	
+	// 목표 초대에 승인했을 경우 초대한 게시글에 대한 정보를 찾는다.
+	@RequestMapping(value = "findThatGoal", method = RequestMethod.POST)
+	@ResponseBody
+	public BoardVO findThatGoal(String senderId) {
+		BoardVO vo = dao.findThatGoal(senderId);
+		return vo;
+	}
+	
+	// 초대한 목표로 이동한다.
+	@RequestMapping(value = "joinThatGoal", method = RequestMethod.GET)
+	public String joinThatGoal(int boardNum, int progressNum, String id) {
+		// mainprogress 테이블의 progressNum을 이용해 MEMBERLIST 테이블에 사용자의 ID를 추가한다.
+		// =================== 09.19 Save ====================
+		return "";
 	}
 }

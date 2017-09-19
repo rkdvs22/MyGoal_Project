@@ -36,7 +36,7 @@
 	/* 방제 표시 */
 	.subject {
 		position: absolute;
-		top: 150px;
+		top: 120px;
 		left: 300px;
 	}
 	
@@ -46,10 +46,11 @@
 		width: 180px;
 	}
 	
-	/* 최종목표 버튼색 지정 */
+	/* 최종목표 옵션 및 색상 지정 */
 	#topGoalBtn {
-		background-color: #FFC81E;
+		background-color: #46AA46;
 		color: black;
+		white-space: normal;
 	}
 	
 	/* modal창의 스크롤 지정 */
@@ -166,6 +167,19 @@
 
 <body>
 <script>
+// 새로고침 시 같은 목표 중복 생성 방지
+function noEvent() {
+	if (event.keyCode == 116) {
+		event.keyCode= 2;
+		return false;
+	}
+	else if(event.ctrlKey && (event.keyCode==78 || event.keyCode == 82))
+	{
+		return false;
+	}
+}
+document.onkeydown = noEvent;
+
 
 var ok_flag = true;
 var m_eDate = "";
@@ -564,11 +578,10 @@ $(function() {
 			$("#mBtn6").removeAttr("disabled");
 		});
 		
-		$("#p2_ready").hide();
 		// 레디 버튼 클릭 ================================== 변경할것
 		$("#readyBtn").click(function() {
-			$("#player2").toggle();
-			$("#p2_ready").toggle();
+// 			<td id="p3_ready"><img src="/goal/resources/img/user_ready.png"></td> 활용
+			
 		});
 		
 		// option 태그의 숫자가 달라질 때 마다 세부목표 개수를 조정한다.
@@ -744,7 +757,7 @@ $(function() {
 			data: {"keyWord" : keyWord},
 			success: function(list) {
 				if(list.length == 0) {
-					alert("찾으시는 ID가 없습니다");
+					alert("존재하는 ID가 없습니다");
 					return false;
 				}
 				$(list).each(function(index, item) {
@@ -755,10 +768,29 @@ $(function() {
 					id_row += '<th><input style="margin: 0px 3px 1px 30px; width: 13px; height: 13px" type="checkbox" name="checkList" class="checkList" value="'+ item.userid +'"></th></tr>';
 					$(".friendList").append(id_row);
 				});
-			},
-			error: function() { alert("아이디 찾기 아예 실패 ㅋㅋㅋㅋ"); }
+			}
 		});
 	});
+	
+	// 목표 및 진행기간을 표시한다.
+	var tStartDate = new Date('${b_info.startDate}');
+	var tEndDate = new Date('${b_info.endDate}');
+	var tGoal_s = (tEndDate - tStartDate) / 1000;
+	var tGoal_m = tGoal_s / 60;
+	var tGoal_h = tGoal_m / 60;
+	var tGoal_days = (tGoal_h / 24) + 1;
+	$(".subject > p > b").html("Title : " + '${b_info.tGoalTitle}' + " [Period : " + tGoal_days + "days]");
+	var sDate_sp = tStartDate.toString().split(' ');
+	var eDate_sp = tEndDate.toString().split(' ');
+	$("#tGoal_date").html(sDate_sp[3]+ "/" + sDate_sp[1] + "/" + sDate_sp[2] 
+	+ " ~ " + eDate_sp[3]+ "/" + eDate_sp[1] + "/" + eDate_sp[2]);
+	
+	// 목표를 만든 사람일 경우 시작버튼, 참가한 사람일 경우 준비 버튼이 보이도록 한다.
+	if($("#host-id").text() == '${sessionScope.userid}') {
+		$("#readyBtn").hide();
+	} else $("#startBtn").hide();
+	
+	
 });
 	
 </script>
@@ -768,7 +800,8 @@ $(function() {
 <article>
 	<section>
 		<div class="subject">
-			<p>방제 : ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</p>
+			<p><b></b></p>
+			<p id="tGoal_date"></p>
 		</div>
 		<div class="squares">
 			<div class="btn-group">
@@ -778,7 +811,7 @@ $(function() {
 			</div>
 			<div class="btn-group">
 				<input type="button" value="8" id="mBtn8" name="8" class="btn btn-default-outline">
-				<input type="button" value="大" id="topGoalBtn" name="top" class="btn btn-default-outline">
+				<input type="button" value="${b_info.tGoalTitle}" id="topGoalBtn" name="topGoal" class="btn btn-default-outline">
 				<input type="button" value="4" id="mBtn4" name="4" class="btn btn-default-outline">
 			</div>
 			<div class="btn-group">
@@ -807,7 +840,7 @@ $(function() {
 			<td><pre>   </pre></td>
 			<td class="player-color">Not yet</td>
 			<td><pre>   </pre></td>
-			<td class="player-id">${sessionScope.hostId}</td>
+			<td id="host-id" class="player-id">${sessionScope.userid}</td>
 		</tr>
 		<tr class="player2">
 			<td></td>
