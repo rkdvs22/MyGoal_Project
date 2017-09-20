@@ -72,3 +72,14 @@ img {
 	opacity: 0.9;
 	position: absolute;
 }
+
+/* 목표 0개 시 경고창 출력 */
+#noGoalAlert {
+	display: inline-block;
+	margin: 0px auto;
+	position: fixed;
+	z-index: 1031;
+	top: 250px;
+	right: 450px;
+	opacity: 0.8;
+}

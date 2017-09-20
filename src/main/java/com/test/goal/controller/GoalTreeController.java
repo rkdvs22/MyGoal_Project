@@ -2,6 +2,7 @@ package com.test.goal.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class GoalTreeController {
 		String userid = (String) session.getAttribute("userid");
 		map.put("userid", userid);
 		map.put("year", year);
-		ArrayList<TopGoalVO> goalList = dao.goalList(map);
+		List<TopGoalVO> goalList = dao.goalList(map);
 
 		model.addAttribute("goalYear", year);
 		model.addAttribute("goalList", goalList);

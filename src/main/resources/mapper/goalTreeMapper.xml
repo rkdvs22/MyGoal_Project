@@ -10,7 +10,7 @@
 		select 
 		tGoalNum, tGoalTitle,
 		to_char(tStartDate, 'yyyy-mm-dd') as "tStartDate", to_char(tEndDate, 'yyyy-mm-dd') as "tEndDate",
-		tClear, tStartStatus, openStatus, userid, progressNum, calendarNum
+		tClear, tStartStatus, openStatus, userid, progressNum
 		from TOPGOAL where USERID = #{userid} 
 		AND TO_CHAR(tStartDate, 'yyyy') = #{year}
 	</select>
