@@ -27,8 +27,7 @@
    
 <script>
    
-   
-   //$("#deleteFriend").click(function() {
+   // 친구삭제
    function test(frd) {
       var result = confirm("정말로 삭제하시겠습니까?");
       //var frd = $("#deleteFriend").attr("value");

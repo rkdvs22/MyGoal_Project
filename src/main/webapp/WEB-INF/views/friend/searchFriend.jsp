@@ -15,6 +15,9 @@
 	<link href="/goal/resources/img/favicon.png" rel="icon" type="image/png">
 	<link href="/goal/resources/img/favicon.ico" rel="shortcut icon">
 	
+	<link rel="stylesheet" href="/goal/resources/css/separate/vendor/select2.min.css">
+	<link rel="stylesheet" href="/goal/resources/css/separate/vendor/typeahead.min.css">
+	
 	<link rel="stylesheet" href="/goal/resources/css/separate/pages/user.min.css">
     <link rel="stylesheet" href="/goal/resources/css/lib/font-awesome/font-awesome.min.css">
     <link rel="stylesheet" href="/goal/resources/css/lib/bootstrap/bootstrap.min.css">
@@ -45,31 +48,36 @@
 <div class="page-content">
 	<header class="page-content-header">
 		<div class="container-fluid">
-			<div class="tbl-row">
-				<br>
-					<h3>My Friends <small class="text-muted">${userid}</small></h3>
-			</div>
+			<div class="tbl">
+				<div class="tbl-row">
+					<div class="tbl-cell">
+						<h3>Add Friends <small class="text-muted">${userid}</small></h3>
+					</div>
+					
 				<!-- 검색 텍스트박스 -->
-				<div class="col-lg-6">
-					<div class="row">
 					<form action="searchFriend" method="post">
+					<div class="form-group row">
 						<div class="col-md-10">
 						<br>
 							<div class="typeahead-container">
-								<span class="typeahead-query">
-									<input class="form-control" id="searchKeyid" name="searchKeyid" value="${searchKeyid}" type="text" placeholder="ID Search">
-								</span>
-								<span class="typeahead-button">
-									<!-- <a href="#" onclick="search()"><i class="font-icon-search"></i></a> -->
-									<button type="submit" class="font-icon-search"></button>
-								</span>
+								<div class="typeahead-field">
+									<span class="typeahead-query">
+										<input class="form-control" id="searchKeyid" name="searchKeyid" value="${searchKeyid}" type="text" placeholder="ID Search">
+									</span>
+									<span class="typeahead-button">
+										<!-- <a href="#" onclick="search()"><i class="font-icon-search"></i></a> -->
+										<button type="submit"><span class="font-icon-search"></span></button>
+									</span>
+								</div>
 							</div>
 						</div>
-						</form>
 					</div>
+					</form>
+					
 				</div>
 			</div>
-		</header><!--.page-content-header-->
+		</div><!-- container-fluid -->
+	</header><!--.page-content-header-->
 
 		<!-- 검색 목록 -->
 		<div class="container-fluid">

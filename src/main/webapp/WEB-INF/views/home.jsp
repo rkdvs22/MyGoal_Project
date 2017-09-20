@@ -436,16 +436,18 @@
 	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
 	                    <header class="box-typical-header panel-heading">
 	                        <h3 class="panel-title">Board</h3>
+	                        <a class="glyphicon glyphicon-plus" href="/goal/board/boardList"></a>
 	                    </header>
 	                    <div class="box-typical-body panel-body">
                        		<table id="table-edit" class="table table-bordered table-hover">
 								<thead>
 								<tr>
 									<!-- <th width="1">#</th> -->
-									<th>Name</th>
-									<th>title</th>
+									<th>ID</th>
+									<th>Title</th>
 									<th width="120">Start Date</th>
 									<th width="120">End Date</th>
+									<th width="70">인원</th>
 									<th class="table-icon-cell">
 										<i class="font-icon font-icon-heart"></i>
 									</th>
@@ -453,45 +455,14 @@
 								</thead>
 								<tbody>
 									<tr>
-										<td>Last quarter revene</td>
-										<td class="color-blue-grey-lighter">Revene for last quarter in state America for year 2013, whith...</td>
-										<td class="table-icon-cell">5</td>
-										<td class="table-date">6 minutes ago</td>
-										<td class="table-photo">
-											<img src="img/photo-64-1.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="Nicholas<br/>Barrett">
-										</td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td class="table-photo"></td>
 									</tr>
 							<%-- 		<tr>
-										<td>1</td>
-										<td>Last quarter revene</td>
-										<td class="color-blue-grey-lighter">Revene for last quarter in state America for year 2013, whith...</td>
-										<td class="table-icon-cell">5</td>
-										<td class="table-date">6 minutes ago</td>
-										<td class="table-photo">
-											<img src="img/photo-64-1.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="Nicholas<br/>Barrett">
-										</td>
-									</tr>
-									<tr>
-										<td>1</td>
-										<td>Last quarter revene</td>
-										<td class="color-blue-grey-lighter">Revene for last quarter in state America for year 2013, whith...</td>
-										<td class="table-icon-cell">5</td>
-										<td class="table-date">6 minutes ago</td>
-										<td class="table-photo">
-											<img src="img/photo-64-1.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="Nicholas<br/>Barrett">
-										</td>
-									</tr>
-									<tr>
-										<td>1</td>
-										<td>Last quarter revene</td>
-										<td class="color-blue-grey-lighter">Revene for last quarter in state America for year 2013, whith...</td>
-										<td class="table-icon-cell">5</td>
-										<td class="table-date">6 minutes ago</td>
-										<td class="table-photo">
-											<img src="img/photo-64-1.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="Nicholas<br/>Barrett">
-										</td>
-									</tr>
-									<tr>
 										<td>1</td>
 										<td>Last quarter revene</td>
 										<td class="color-blue-grey-lighter">Revene for last quarter in state America for year 2013, whith...</td>

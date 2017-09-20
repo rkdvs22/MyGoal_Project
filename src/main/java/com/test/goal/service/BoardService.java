@@ -12,6 +12,6 @@ public interface BoardService {
 
 	public PageNavigator getNavi(int currentPage, Map<String, String> map); // 페이징 : 전체 게시글 수 가져오기
 
-	//public void addFavorite(int boardnum); // 좋아요
+	public void addFavorite(int boardnum); // 좋아요
 
 }

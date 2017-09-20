@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.test.goal.dao.BoardDAO;
 import com.test.goal.service.BoardService;
@@ -44,10 +45,11 @@ public class BoardController {
 	}
 	
 	// 좋아요 기능
-/*	@RequestMapping(value = "addFavorite", method = RequestMethod.POST)
+	@RequestMapping(value = "addFavorite", method = RequestMethod.POST)
+	@ResponseBody
 	public void addFavorite(int boardnum) {
 		service.addFavorite(boardnum);
-	}*/
+	}
 	
 	
 }

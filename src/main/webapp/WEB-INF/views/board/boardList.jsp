@@ -57,7 +57,6 @@
 						</div> -->
 					</div>
 					</form>
-					
 				</div>
 			</div>
 		</header>
@@ -65,7 +64,6 @@
 	<!-- 게시글 목록 -->
 		<c:forEach items="${goalList}" var="list">
 		<div class="cards-grid c" data-columns>
-		<!-- <form action="boardList" method="get"> -->
 			<div class="card-grid-col">
 				<article class="card-typical">
 					<div class="card-typical-section">
@@ -84,13 +82,13 @@
 						</div>
 					</div>
 					<div class="card-typical-section card-typical-content">
-						<header class="title"><h5>${list.tGoalTitle}</a></h5></header>
+						<header class="title"><h5>${list.tGoalTitle} </h5></header>
 						<p>시작날짜</p><p>${list.startDate}</p><br>
 						<p>종료날짜</p><p>${list.endDate}</p>
 					</div>
 					<div class="card-typical-section">
-						<div class="card-typical-linked">${list.currentMemberNumber}/4</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<a href="#" class="card-typical-likes" id="addFovorite" name="addFovorite" onclick="addFovorite('${list.boardnum}')">
+						<div class="card-typical-linked">${list.currentMemberNumber}/${list.maxMemberNumber}</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="#" class="card-typical-likes" onclick="addFavorite('${boardnum}')">
 							<i class="font-icon font-icon-heart" id="favoriteNum">${list.favorite}</i>
 						</a>
 					</div>
@@ -98,7 +96,6 @@
 						<input type="hidden" name="boardNum" value="${boardNum}"> --%>
 				</article><!--.card-typical-->
 			</div><!--.card-grid-col-->
-			<!-- </form> -->
 		</div><!--.card-grid-->
 		</c:forEach>
 		<div class="clear"></div>
@@ -146,8 +143,25 @@
 			$('.card-user').matchHeight();
 		});
 
-		function pageProc(currentPage, searchCondition, searchKeyword) {
-			location.href= "/goal/board/boardList?currentPage=" + currentPage + "&searchCondition=" + searchCondition + "&searchKeyword=" + searchKeyword;
+		// 페이징
+		function pageProc(currentPage, searchSelect, searchKeyid) {
+			location.href= "/goal/board/boardList?currentPage=" + currentPage + "&searchSelect=" + searchSelect + "&searchKeyid=" + searchKeyid;
+		}
+		
+		// 좋아요 (이미지 클릭시 숫자 증가)
+		function addFavorite(boardnum) {
+			var result = confirm("좋아요 한다고");
+			
+			if(result) {
+				$.ajax({
+					url: "/goal/board/addFavorite?boardnum="+boardnum,
+					type: "post",
+					/* data: {"boardnum":boardnum}, */
+					success: function() {
+						alert("favorite");					
+					}
+				});
+			}
 		}
 		
 	</script>

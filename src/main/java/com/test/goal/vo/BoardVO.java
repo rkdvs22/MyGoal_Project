@@ -8,14 +8,14 @@ public class BoardVO {
 	private String startDate;
 	private String endDate;
 	private int currentMemberNumber; 
-	private int maxMemberNumber;
+	private int maxMember;
 	private String tGoalTitle;
 	private String openStatus;
 	
 	public BoardVO() {	}
 
 	public BoardVO(int boardnum, String userid, int favorite, int tgoalnum, String startDate, String endDate,
-			int currentMemberNumber, int maxMemberNumber, String tGoalTitle, String openStatus) {
+			int currentMemberNumber, int maxMember, String tGoalTitle, String openStatus) {
 		super();
 		this.boardnum = boardnum;
 		this.userid = userid;
@@ -24,7 +24,7 @@ public class BoardVO {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.currentMemberNumber = currentMemberNumber;
-		this.maxMemberNumber = maxMemberNumber;
+		this.maxMember = maxMember;
 		this.tGoalTitle = tGoalTitle;
 		this.openStatus = openStatus;
 	}
@@ -85,12 +85,12 @@ public class BoardVO {
 		this.currentMemberNumber = currentMemberNumber;
 	}
 
-	public int getMaxMemberNumber() {
-		return maxMemberNumber;
+	public int getmaxMember() {
+		return maxMember;
 	}
 
-	public void setMaxMemberNumber(int maxMemberNumber) {
-		this.maxMemberNumber = maxMemberNumber;
+	public void setmaxMember(int maxMember) {
+		this.maxMember = maxMember;
 	}
 
 	public String gettGoalTitle() {
@@ -113,7 +113,7 @@ public class BoardVO {
 	public String toString() {
 		return "BoardVO [boardnum=" + boardnum + ", userid=" + userid + ", favorite=" + favorite + ", tgoalnum="
 				+ tgoalnum + ", startDate=" + startDate + ", endDate=" + endDate + ", currentMemberNumber="
-				+ currentMemberNumber + ", maxMemberNumber=" + maxMemberNumber + ", tGoalTitle=" + tGoalTitle
+				+ currentMemberNumber + ", maxMember=" + maxMember + ", tGoalTitle=" + tGoalTitle
 				+ ", openStatus=" + openStatus + "]";
 	}
 	

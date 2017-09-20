@@ -34,10 +34,10 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	// 좋아요
-	/*@Override
+	@Override
 	public void addFavorite(int boardnum) {
-		
-	}*/
+		dao.addFavorite(boardnum);
+	}
 	
 	
 }

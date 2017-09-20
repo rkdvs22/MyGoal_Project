@@ -8,7 +8,7 @@
 	
 	<!-- 게시글 목록, 검색, 페이징 -->
 	<select id="boardList" parameterType="map" resultType="BoardVO">
-		select b.userid as "userid",b.favorite as "favorite", t.tstartDate as "startDate", t.tendDate as "endDate", t.openStatus as "openStatus", l.currentMemberNumber as "currentMemberNumber", t.tGoalTitle as "tGoalTitle"
+		select b.userid as "userid",b.favorite as "favorite", t.tstartDate as "startDate", t.tendDate as "endDate", t.openStatus as "openStatus", l.currentMemberNumber as "currentMemberNumber", t.tGoalTitle as "tGoalTitle", m.type as "type"
 		from board b inner join topGoal t
 		on b.tGoalNum = t.tGoalnum inner join mainProgress m
 		on t.progressNum = m.progressNum inner join (select progressNum, count(listNum) as currentMemberNumber from memberList group by progressNum) l
@@ -19,7 +19,7 @@
 		<if test="searchSelect == 'TITLE'">
 			where t.tGoalTitle like '%'||#{searchKeyid}||'%'
 		</if>
-		order by b.favorite
+		order by b.favorite desc
 	</select>
 	
 	<!-- 페이징 : 전체 게시글 수 가져오기 -->
@@ -34,7 +34,7 @@
 		<if test="searchSelect == 'TITLE'">
 			where t.tGoalTitle like '%'||#{searchKeyid}||'%'
 		</if>
-		order by b.favorite
+		order by b.favorite desc
 	</select>
 
 	<!-- 게시글 좋아요 -->
