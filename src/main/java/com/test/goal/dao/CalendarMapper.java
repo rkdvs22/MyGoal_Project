@@ -16,5 +16,9 @@ public interface CalendarMapper {
 
 	public ArrayList<DayPlanVO> getDayRecordList(String userid);
 
+	public ArrayList<DayPlanVO> getNomalPlanlist(String userid);
+
+	public int getAchieve(int btmRecordNum);
+
 
 }

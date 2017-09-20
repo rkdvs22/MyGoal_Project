@@ -36,12 +36,35 @@
 	
 	<select id = "getDayRecordList" parameterType="string" resultType="DayPlanVO">
 		
-		select p.dcontents as "dContents",to_char(p.startTime,'yyyy-mm-dd-hh24-mi') as "startTime",to_char(p.endTime,'yyyy-mm-dd-hh24-mi') as "endTime",
-		to_char(p.startTime,'yyyy-mm-dd') as "startDate",to_char(p.endTime,'yyyy-mm-dd') as "endDate"
-		from DayPlan p inner join DayRecord d 
+		select p.dcontents as "dContents",to_char(p.startTime,'yyyy-mm-dd-hh24-mi') as "startTime",
+		to_char(p.endTime,'yyyy-mm-dd-hh24-mi') as "endTime",p.dayPlanNum as "dayPlanNum", 
+		b.bRecordNum as "btmRecordNum", to_char(d.startDate,'yyyy-mm-dd') as "startDate",
+		b.startDate as "BTMstartDate", b.endDate as "BTMendDate" 
+		from DayPlan p inner join (select DayRecordNum,btmRecordNum, startDate from DayRecord) d 
 		on d.DayRecordNum = p.DayRecordNum
-		inner join (select memberId from BTMRecord Group by memberId) b 
-		on b.memberId = #{userid}
+		inner join (select bRecordNum,to_char(startDate,'yyyy-mm-dd') as startDate, to_char(endDate,'yyyy-mm-dd')
+		 as endDate from BTMRecord where memberId = #{userid}) b
+		on d.btmRecordNum = b.bRecordNum
+		
+	</select>
+	
+	<select id = "getNomalPlanlist" parameterType="string" resultType="DayPlanVO">
+	
+		select p.dcontents as "dContents", to_char(p.startTime,'yyyy-mm-dd-hh24-mi') as "startTime",
+		to_char(p.endTime,'yyyy-mm-dd-hh24-mi') as "endTime", p.dayPlanNum as "dayPlanNum",
+		to_char(p.startTime,'yyyy-mm-dd') as "startDate",
+		to_char(p.endTime,'yyyy-mm-dd') as "endDate"
+		from DayPlan p inner join DayRecord d 
+		on p.DayRecordNum = d.DayRecordNum inner join BTMRecord b
+		on b.bRecordNum = d.btmRecordNum inner join (select memberId from calendar where calendarNum = 7) c 
+		on c.memberId = #{userid}
+		where b.bRecordNum = 1
+		
+	</select>
+	
+	<select id = "getAchieve" parameterType="int" resultType="int">
+		
+		select sum(achieve) from DayRecord where BTMRecordNum = #{btmRecordNum} group by BTMRecordNum
 		
 	</select>
 

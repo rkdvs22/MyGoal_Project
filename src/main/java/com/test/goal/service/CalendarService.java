@@ -16,4 +16,6 @@ public interface CalendarService {
 
 	ArrayList<DayPlanVO> getDayRecordList(String userid);
 
+	ArrayList<DayPlanVO> getNomalPlanlist(String userid);
+
 }

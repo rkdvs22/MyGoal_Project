@@ -38,7 +38,22 @@ public class CalendarDAOImpl implements CalendarDAO{
 	@Override
 	public ArrayList<DayPlanVO> getDayRecordList(String userid) {
 		CalendarMapper mapper = sqlsession.getMapper(CalendarMapper.class);
-		return mapper.getDayRecordList(userid);
+		ArrayList<DayPlanVO> planList = mapper.getDayRecordList(userid);
+		if(planList != null){
+			for (int i = 0; i <planList.size(); i++) {
+				int achieve = 0;
+				achieve = mapper.getAchieve(planList.get(i).getBtmRecordNum());
+				planList.get(i).setAchieve(achieve);
+			}
+		}
+		
+		return planList;
+	}
+
+	@Override
+	public ArrayList<DayPlanVO> getNomalPlanlist(String userid) {
+		CalendarMapper mapper = sqlsession.getMapper(CalendarMapper.class);
+		return mapper.getNomalPlanlist(userid);
 	}
 
 }

@@ -89,5 +89,11 @@ public class CalendarServiceImpl implements CalendarService{
 		return DayRecordList;
 	}
 
+	@Override
+	public ArrayList<DayPlanVO> getNomalPlanlist(String userid) {
+		ArrayList<DayPlanVO> nomalPlanList = dao.getNomalPlanlist(userid);
+		return nomalPlanList;
+	}
+
 }
 

@@ -127,6 +127,10 @@
 										<div class="color-double red"><div></div></div>
 										미달성
 									</li>
+									<li>
+										<div class="color-double orange"><div></div></div>
+										일일목표
+									</li>
 								</ul>
 							</div>
 						</section>
@@ -152,20 +156,21 @@
 									<table class="table table-hover table-responsive">
 									    <thead>
 									    	<tr>
-									    		<td class="col-xs-3">오늘의 달성률 </td>
-									    		<td><input type= "text" placeholder="100이내의 숫자" size="27px"></td>
-									    		<td><button id = "dayAchieve" class = "success btn btn-success btn-sm" onclick = "updateAchieve()"><span class="glyphicon glyphicon-ok"></span></button></td>
-									    		<td></td>
+									    		<td class="col-xs-4">오늘의 달성률 </td>
+									    		<td class="col-xs-3"><input type= "text" id = "inputPercent" placeholder="100이내의 숫자" size="27px"></td>
+									    		<td class="col-xs-1">
+									    		<button id = "dayAchieve" class = "success btn btn-success btn-sm" onclick = "updateAchieve()"><span class="glyphicon glyphicon-ok"></span></button></td>
+									    		<td class="col-xs-6"><div id = "currentPercent"></div></td>
 									    		<td></td>
 									    		<td><button type="button" id = "create_Button" data-toggle="modal" class="btn btn-default pull-left" onclick = "openCreateModal()">Create</button></td>
 									    	</tr>
 									        <tr>
-									           <th class="col-xs-2">번호</th>
+									           <th class="col-xs-1">번호</th>
 											   <th class="col-xs-3">계획명</th>
-											   <th class="col-xs-3">startTime</th>
+											   <th class="col-xs-2">startTime</th>
 											   <th class="col-xs-5">endTime</th>
-											   <th class="col-xs-2">Edit</th>
-											   <th class="col-xs-2">Delete</th>
+											   <th class="col-xs-3">Edit</th>
+											   <th class="col-xs-3">Delete</th>
 									        </tr>
 									    </thead>
 									    <tbody id = "DayRecordTable">
@@ -278,8 +283,8 @@
 	<script type="text/javascript" src="/goal/resources/js/lib/match-height/jquery.matchHeight.min.js?version=4"></script>
 	<script type="text/javascript" src="/goal/resources/js/lib/moment/moment-with-locales.min.js?version=4"></script>
 	<script type="text/javascript" src="/goal/resources/js/lib/eonasdan-bootstrap-datetimepicker/bootstrap-datetimepicker.min.js?version=4"></script>
-	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar.min.js?version=7"></script>
-	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=24"></script>
+	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar.js?version=10"></script>
+	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=41"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/ko.js"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/tableModal.js?version=3"></script>
     <script src="/goal/resources/js/app.js?version=4"></script>

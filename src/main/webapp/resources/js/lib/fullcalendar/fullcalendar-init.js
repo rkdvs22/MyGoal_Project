@@ -5,6 +5,7 @@ $(document).ready(function(){
     ========================================================================== */
 		
 	var dayRecordlist = "";
+	var nomallist = "";
 	$('#calendar').fullCalendar('today');
 	$('.fc-event').css('font-size', '.6em');
     $('#calendar').fullCalendar({
@@ -34,32 +35,54 @@ $(document).ready(function(){
                 	success: function(result) {
                 		
                 		dayRecordlist = result.DayRecordlist;
+                		nomallist = result.nomallist;
                     	var totalEvents = [];
+                    	if(result.BTMRecordlist != null){
+	                    	$(result.BTMRecordlist).each(function(item,index) {
+	                    		totalEvents.push({
+	                            	title: $(this).attr('bgoalTitle'),
+	                            	start: $(this).attr('startDate'), // will be parsed
+	                            	end : $(this).attr('endDate'),
+	                            	color :  $(this).attr('color'),
+	                            	mGoalTitle: $(this).attr('mGoalTitle'),
+	                            	BTMRecordNum: $(this).attr('bRecordNum')
+	                        	});
+	                    	});
+                    	}//end if
                     	
-                    	$(result.BTMRecordlist).each(function(item,index) {
-                    		totalEvents.push({
-                            	title: $(this).attr('bgoalTitle'),
-                            	start: $(this).attr('startDate'), // will be parsed
-                            	end : $(this).attr('endDate'),
-                            	color :  $(this).attr('color'),
-                            	mGoalTitle: $(this).attr('mGoalTitle'),
-                            	BTMRecordNum: $(this).attr('bRecordNum')
-                        	});
-                    	});
+                    	if(result.DayRecordlist != null){
+	                    	//세부목표가 있는 DayPlan리스트
+	                    	$(result.DayRecordlist).each(function(item,index) {
+	                    		totalEvents.push({
+	                            	title: $(this).attr('dContents'),
+	                            	start: $(this).attr('startDate'), // will be parsed
+	                            	end : $(this).attr('endDate'),
+	                            	color : "#F3B600",
+	                            	dayPlanNum : $(this).attr('dayPlanNum'),
+	                            	btmRecordNum : $(this).attr('btmRecordNum'),
+	                            	achieve : $(this).attr('achieve')
+	                        	});
+	                    	});
+                    	}
                     	
-                    	$(result.DayRecordlist).each(function(item,index) {
-                    		totalEvents.push({
-                            	title: $(this).attr('dContents'),
-                            	start: $(this).attr('startDate'), // will be parsed
-                            	end : $(this).attr('endDate'),
-                            	color : "#F3B600"
-                        	});
-                    	});
-                    	
+                    	if(result.nomallist != null){
+	                    	// 세부목표가 없는 DayPlan리스트
+	                    	$(result.nomallist).each(function(item,index) {
+	                    		totalEvents.push({
+	                            	title: $(this).attr('dContents'),
+	                            	start: $(this).attr('startDate'), // will be parsed
+	                            	end : $(this).attr('endDate'),
+	                            	color : "#F3B600",
+	                            	//dayPlanNum은 무조건 1이됨.
+	                            	dayPlanNum : $(this).attr('dayPlanNum'),
+	                        	});
+	                    	});
+                    	}
                     	callback(totalEvents);
                 	}
             	});
         	},
+        	
         viewRender: function(view, element) {
             if (!("ontouchstart" in document.documentElement)) {
                 $('.fc-scroller').jScrollPane({
@@ -291,7 +314,12 @@ $(document).ready(function(){
         	      alert('Current view: ' + view.name);
         	      alert('Clicked on: ' + date.format());
         	      */
+        
+        var btmRecordNum = 0;	
         	
+        //월에 대한 페이지인가?	
+       if(view.name == "month"){
+    	   
         	var time = new Date() 
         	
         	var year = time.getYear()+1900 
@@ -311,65 +339,153 @@ $(document).ready(function(){
         	date_month = dateSplit[1]; 
         	date_day = dateSplit[2]; 
         	var dateSplited = date_year + "" + date_month + "" + date_day
+        		
         	
+        	// 세부 목표가 잇는 DayPlan을 가공한 후에 각각 배열에 담는 구간 
         	
-
         	var PlanTitle = [];
         	var PlanStartTime = [];
         	var PlanEndTime = [];
+        	var sumAchieve = 0;
+        	//리스트를 띄우기 전에 테이블 body를 모두 비운다. 
+        	$('#DayRecordTable').html('');
         	
-        	$(dayRecordlist).each(function(index,item) {
-        		console.log(item.dContents);
-        		var splited = "";
-        		var splitedStartTime = "";
-        		var splitedEndTime = "";
+        	if(dayRecordlist != null){
+	        	$(dayRecordlist).each(function(index,item) {
+	        		var splited = ""; // 클릭한 곳의 날짜를 스플릿해서 가공
+	        		var splitedStartTime = ""; //받아온 dayPlanVO의 start타임을 스플릿해서 가공
+	        		var splitedEndTime = ""; // dayPlanVO의 end타임을 스플릿해서 가공
+	        		var splitedStartDate = "";
+	        		var splitedEndDate = "";
+	        		
+	        		//startTime 가공
+	        		var dateSplitPlan1 = item.startTime.split("-");
+	            	date_syear = dateSplitPlan1[0]; 
+	            	date_smonth = dateSplitPlan1[1]; 
+	            	date_sday = dateSplitPlan1[2];
+	            	date_shour = dateSplitPlan1[3];
+	            	date_sminute = dateSplitPlan1[4];
+	            	
+	            	//endTime 가공
+	            	var dateSplitPlan2 = item.endTime.split("-");
+	            	date_eyear = dateSplitPlan2[0]; 
+	            	date_emonth = dateSplitPlan2[1]; 
+	            	date_eday = dateSplitPlan2[2];
+	            	date_ehour = dateSplitPlan2[3];
+	            	date_eminute = dateSplitPlan2[4];
+	            	
+	            	//startDate 가공
+	            	var dateSplitPlan3 = item.btmstartDate.split("-");
+	            	date_styear = dateSplitPlan3[0]; 
+	            	date_stmonth = dateSplitPlan3[1]; 
+	            	date_stday = dateSplitPlan3[2];
+	            	
+	            	//endDate 가공
+	            	var dateSplitPlan4 = item.btmendDate.split("-");
+	            	date_edyear = dateSplitPlan4[0]; 
+	            	date_edmonth = dateSplitPlan4[1]; 
+	            	date_edday = dateSplitPlan4[2];
+	            	
+	            	splited = date_syear + "" + date_smonth + "" + date_sday; // item의 DayPlan의 날짜
+	            	splitedStartTime = date_shour +":"+ date_sminute;  //item의 DayPlan의 시작시간
+	            	splitedEndTime = date_ehour+":"+date_eminute; //item의 DayPlan의 종료시간
+	            	splitedStartDate = date_styear+""+date_stmonth+""+date_stday; // item의 BTMRecord의 시작날짜
+	            	splitedEndDate = date_edyear+""+date_edmonth+""+date_edday;
+	            		
+	            	//해당 기간에 속한다면
+	            	if(parseInt(dateSplited) >= parseInt(splitedStartDate) && parseInt(dateSplited) <= parseInt(splitedEndDate)){
+            			sumAchieve = item.achieve;
+            			
+            			// 클릭한 날짜에 직접적으로 속한다면 
+            			if(splited == dateSplited){
+            				PlanTitle.push(item.dContents);
+    	            		PlanStartTime.push(splitedStartTime);
+    	            		PlanEndTime.push(splitedEndTime);
+            			}//end if
+	            	}
+	        	});//end each
+	        	
+        	
+        	$('#currentPercent').html('');
+ 	        $('#currentPercent').append('달성률:'+" "+ sumAchieve+"%");
+	        	
+	        	// 표기만 1부터 시작할 뿐 index 값은 사실 0부터 시작하니 데이터 보낼 때 0을 기준으로 시작해서 보내야 함.
+ 	        	$(PlanTitle).each(function(index,item) {
+ 	        		
+ 	        		//클릭한것이 오늘이라면 readOnly를 하지 않는다.
+ 	        		if(parseInt(dateSplited) == parseInt(today)){
+ 	        			
+ 	        		}else{
+ 	        		$('#inputPercent').attr('readonly','readonly');
+ 	       	        $('#DayRecordTable').append(
+ 	   		            	'<tr id="d'+index+'">'+
+ 	   				            '<td id="n'+index+'">'+(index+1)+'</td>'+
+ 	   				            '<td id="f'+index+'">'+PlanTitle[index]+'</td>'+
+ 	   				            '<td id="l'+index+'">'+PlanStartTime[index]+'</td>'+
+ 	   				            '<td id="m'+index+'">'+PlanEndTime[index]+'</td>'+
+ 	   				            '<td><button type="button" data-toggle="modal" onclick = "openEditModal()" data-uid="'+index+1+'" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
+ 	   				            '<td><button type="button" data-toggle="modal" onclick="openDeleteModal()" data-uid="'+index+1+'" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>'+
+ 	   				        '</tr>'
+ 	   		        );
+ 	        			
+ 	        		}
+ 	        	});
+	        	
+        	}//end if
+        	
+        	
+        	// 세부 목표가 없는 DayPlan을 가공한 후에 각각 배열에 담는 구간 
+       
+        	if(nomallist != null){
         		
-        		var dateSplitPlan = item.startTime.split("-");
-            	date_syear = dateSplitPlan[0]; 
-            	date_smonth = dateSplitPlan[1]; 
-            	date_sday = dateSplitPlan[2];
-            	date_shour = dateSplitPlan[3];
-            	date_sminute = dateSplitPlan[4];
-            	
-            	var dateSplitPlan = item.endTime.split("-");
-            	date_eyear = dateSplitPlan[0]; 
-            	date_emonth = dateSplitPlan[1]; 
-            	date_eday = dateSplitPlan[2];
-            	date_ehour = dateSplitPlan[3];
-            	date_eminute = dateSplitPlan[4];
-            	
-            	splited = date_syear + "" + date_smonth + "" + date_sday
-            	splitedStartTime = date_shour +":"+ date_sminute; 
-            	splitedEndTime = date_ehour+":"+date_eminute;
-            	
-            	if(splited == dateSplited){
-            		alert(item.dContents);
-            		alert(splitedStartTime);
-            		alert(splitedEndTime);
-            		
-            		PlanTitle.push(item.dContents);
-            		PlanStartTime.push(splitedStartTime);
-            		PlanEndTime.push(splitedEndTime); 
-            	}
-        	});
-        	
-        	//어팬드 해야됨 배열3개를 가지고 (먼저 리무브 하고)
-        	
-        	 $("#warning").modal("show");
-        	if(parseInt(today) == parseInt(dateSplited) && view.name == "agendaWeek"){
-	        	      
-	        	      var date_time = date.format().split("T");
-	        	      var clickedTime = date_time[1].split(":");
-	        	      
-	        	      var hour = clickedTime[0];
-	        	      var minute = clickedTime[1];
-	        	      
-	        	  alert('여긴 한 주의 현재 날짜'); 
-        	}else if(parseInt(today) == parseInt(dateSplited) && view.name == "month"){
-        		  alert('여긴 월의 현재 날짜');
-        		
+	        	$(nomallist).each(function(index,item) {
+	        		var splited = ""; // 클릭한 곳의 날짜를 스플릿해서 가공
+	        		var splitedStartTime = ""; //받아온 dayPlanVO의 start타임을 스플릿해서 가공
+	        		var splitedEndTime = ""; // dayPlanVO의 end타임을 스플릿해서 가공
+	        		
+	        		//startTime 가공
+	        		var dateSplitPlan = item.startTime.split("-");
+	            	date_syear = dateSplitPlan[0]; 
+	            	date_smonth = dateSplitPlan[1]; 
+	            	date_sday = dateSplitPlan[2];
+	            	date_shour = dateSplitPlan[3];
+	            	date_sminute = dateSplitPlan[4];
+	            	
+	            	//endTime 가공
+	            	var dateSplitPlan = item.endTime.split("-");
+	            	date_eyear = dateSplitPlan[0]; 
+	            	date_emonth = dateSplitPlan[1]; 
+	            	date_eday = dateSplitPlan[2];
+	            	date_ehour = dateSplitPlan[3];
+	            	date_eminute = dateSplitPlan[4];
+	            	
+	            	splited = date_syear + "" + date_smonth + "" + date_sday
+	            	splitedStartTime = date_shour +":"+ date_sminute; 
+	            	splitedEndTime = date_ehour+":"+date_eminute;
+	            	
+	            	if(splited == dateSplited){
+	            		//현재 클릭한 날짜와 받아온 planVO의 날짜가 일치한다면  plan명, 시작시간, 종료시간을 각각 배열에 담는다.
+	            	
+	            		PlanTitle.push(item.dContents);
+	            		PlanStartTime.push(splitedStartTime);
+	            		PlanEndTime.push(splitedEndTime);
+	            	}//end outer if
+	        	});//end each
+        	}//end if
+        
+        	//어팬드 해야됨 배열3개를 가지고(타이틀,스타트,엔드)
+           
+	        //오늘에 해당하는 것만 달성률을 입력할 수 있어요(여기에 달성률 입력시 100을 넘는지도 검사해야 함 안넘으면 쿼리로 넘기고 딱 100일시 목표달성 성공 모달 출력)	      
+        	if(parseInt(today) == parseInt(dateSplited)){
+        		alert('오늘이예요');
         	}//end if     
-        	      
+        	
+        	
+        	
+        	//마지막으로 모달띄워줘요!
+        	 $("#warning").modal("show");
+       }//end if
+       
        },
        
        eventDrop: function(event, delta, revertFunc) {

@@ -41,14 +41,16 @@ public class CalendarController {
 		
 		ArrayList<BTMRecordVO> BTMRecordlist = new ArrayList<>();
 		ArrayList<DayPlanVO> DayRecordlist = new ArrayList<>();
+		ArrayList<DayPlanVO> nomallist = new ArrayList<>();
 		HashMap<String, ArrayList> getRecordMap = new HashMap<>();
 		
 		BTMRecordlist = service.getRecordList((String)request.getSession().getAttribute("userid"));
-		
 		DayRecordlist= service.getDayRecordList((String)request.getSession().getAttribute("userid"));
+		nomallist = service.getNomalPlanlist((String)request.getSession().getAttribute("userid"));
 		
 		getRecordMap.put("BTMRecordlist", BTMRecordlist);
 		getRecordMap.put("DayRecordlist", DayRecordlist);
+		getRecordMap.put("nomallist", nomallist);
 		
 		return getRecordMap;
 	}

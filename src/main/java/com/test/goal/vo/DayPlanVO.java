@@ -10,6 +10,10 @@ public class DayPlanVO {
 	private int dayRecordNum;
 	private String startDate;
 	private String endDate;
+	private int btmRecordNum;
+	private int achieve;
+	private String BTMstartDate;
+	private String BTMendDate;
 	
 	public int getDayPlanNum() {
 		return dayPlanNum;
@@ -61,11 +65,37 @@ public class DayPlanVO {
 		this.endDate = endDate;
 	}
 	
+	public int getBtmRecordNum() {
+		return btmRecordNum;
+	}
+	public void setBtmRecordNum(int btmRecordNum) {
+		this.btmRecordNum = btmRecordNum;
+	}
+	public int getAchieve() {
+		return achieve;
+	}
+	public void setAchieve(int achieve) {
+		this.achieve = achieve;
+	}
+	
+	public String getBTMstartDate() {
+		return BTMstartDate;
+	}
+	public void setBTMstartDate(String bTMstartDate) {
+		BTMstartDate = bTMstartDate;
+	}
+	public String getBTMendDate() {
+		return BTMendDate;
+	}
+	public void setBTMendDate(String bTMendDate) {
+		BTMendDate = bTMendDate;
+	}
 	@Override
 	public String toString() {
 		return "DayPlanVO [dayPlanNum=" + dayPlanNum + ", startTime=" + startTime + ", endTime=" + endTime
 				+ ", dContents=" + dContents + ", dComplete=" + dComplete + ", dayRecordNum=" + dayRecordNum
-				+ ", startDate=" + startDate + ", endDate=" + endDate + "]";
+				+ ", startDate=" + startDate + ", endDate=" + endDate + ", btmRecordNum=" + btmRecordNum + ", achieve="
+				+ achieve + ", BTMstartDate=" + BTMstartDate + ", BTMendDate=" + BTMendDate + "]";
 	}
 	
 }
