@@ -33,15 +33,28 @@
 <body>
    <%@ include file="../menu.jsp" %>
 	<script>
+	
+		var tbtmRecordNum = 0;
+	    var tdayPlanNum = 0;
+		var tuid = 0;
+		var ttitle = "";
+		var tstartTime = "";
+		var tendTime = "";
+	    
 		//클릭한 날짜가 오늘 날짜인지 확인하는 변수 0이면 아님. 1이면 오늘날짜의 것. (1이면 클릭시 모달에서 수정이나 삭제가 가능하도록 (버튼이 보이도록))
 		var isToday = 0;
 		$(function(){
 			$(".update_time input").timepicki();
 		});
 		
-		function updateModal(){
-			$('#delete').on('click', '[data-dismiss="modal"]', function(e) { e.stopPropagation(); });
-			$('#edit').modal('hide');
+		function openDeleteModal(btmRecordNum,dayPlanNum){
+			$('#delete').on('click', function(e) { e.stopPropagation(); });
+			
+			tbtmRecordNum = btmRecordNum;
+			tdayPlanNum = dayPlanNum;
+			//삭제 내부 로직 작성  필요
+			
+			$("#delete").modal("show");
 		}
 		
 		function deleteModal(){
@@ -49,26 +62,57 @@
 			$('#delete').modal('hide');
 		}
 		
+		function openCreateModal(){
+			$('#create').on('click', function(e) { e.stopPropagation(); });
+			
+			//내부로직 작성 필
+			
+			$("#create").modal("show");
+		}
+		
 		function createModal(){
 			$('#create').on('click', '[data-dismiss="modal"]', function(e) { e.stopPropagation(); });
 			$('#create').modal('hide');
 		}
 		
-		function openDeleteModal(){
-			$('#delete').on('click', function(e) { e.stopPropagation(); });
-			$("#delete").modal("show");
-		}
-		
-		function openEditModal(){
-			$('#edit').on('click', function(e) { e.stopPropagation(); });
-			$("#edit").modal("show");
-		}
-		
-		function openCreateModal(){
-			alert('aaaaa');
-			$('#create').on('click', function(e) { e.stopPropagation(); });
-			$("#create").modal("show");
-		}
+		  function openEditModal(btmRecordNum,dayPlanNum,uid,title,startTime,endTime){
+			  	 tbtmRecordNum = btmRecordNum;
+			   	 tdayPlanNum = dayPlanNum;
+				 tuid = uid;
+			     ttitle = title;
+				 tstartTime = startTime;
+			     tendTime = endTime;
+		    	
+				$('#edit').on('click', function(e) { e.stopPropagation(); });
+				
+					
+				       var fn = $('#'+title).html();
+				       var ln = $('#'+startTime).html();
+				       var mn = $('#'+endTime).html();
+			           $("#fn").val(fn);
+				       $("#mn").val(mn);
+				       $("#ln").val(ln);
+				           
+				$("#edit").modal("show");
+			}
+		  
+		  
+		  //업데이트를 실행하는 모달
+		  function updateModal(){
+			  
+			  var fn = $('#fn').val();
+              var mn = $('#ln').val();
+              var ln = $('#mn').val();
+              
+              $('#'+ttitle).html(fn);
+              $('#'+tstartTime).html(mn);
+              $('#'+tendTime).html(ln);
+              
+              //쿼리만 날리면 됨.
+              
+              $("#edit").modal("hide");
+              
+		  }
 		
 	</script>
 	
@@ -174,31 +218,7 @@
 									        </tr>
 									    </thead>
 									    <tbody id = "DayRecordTable">
-									        <tr id="d1">
-									            <td id="n1">1</td>
-									            <td id="f1">John</td>
-									            <td id="l1">10:30AM</td>
-									            <td id="m1">11:30AM</td>
-									            <td><button type="button" data-toggle="modal" onclick = "openEditModal()" data-uid="1" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
-									            <td><button type="button" data-toggle="modal" onclick="openDeleteModal()" data-uid="1" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>
-									        </tr>
-									        <tr id="d2">
-									            <td id="n2">2</td>
-									            <td id="f2">Jane</td>
-									            <td id="l2">01:00PM</td>
-									            <td id="m2">02:00PM</td>
-									            <td><button type="button" data-toggle="modal" onclick = "openEditModal()" data-uid="2" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
-									            <td><button type="button" data-toggle="modal" onclick="openDeleteModal()" data-uid="2" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>
-									        </tr>
-									        
-									        <tr id="d3">
-									            <td id="n3">3</td>
-									            <td id="f3">kane</td>
-									            <td id="l3">05:00PM</td>
-									            <td id="m3">06:00PM</td>
-									            <td><button type="button" data-toggle="modal" onclick = "openEditModal()" data-uid="3" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
-									            <td><button type="button" data-toggle="modal" onclick="openDeleteModal()" data-uid="3" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>
-									        </tr>
+									    
 									    </tbody>
 									</table>
 								</div>
@@ -284,7 +304,7 @@
 	<script type="text/javascript" src="/goal/resources/js/lib/moment/moment-with-locales.min.js?version=4"></script>
 	<script type="text/javascript" src="/goal/resources/js/lib/eonasdan-bootstrap-datetimepicker/bootstrap-datetimepicker.min.js?version=4"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar.js?version=10"></script>
-	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=41"></script>
+	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=49"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/ko.js"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/tableModal.js?version=3"></script>
     <script src="/goal/resources/js/app.js?version=4"></script>

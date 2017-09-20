@@ -1,6 +1,9 @@
 $(document).ready(function(){
 	var n = "";
    $(".update").click(function(){
+	   alert($(this).data("uid"));
+	   alert($("#f1").html());
+	   
 	   n = $(this).data("uid");
        var id = $(this).data("uid");
        var f1 = $("#f1").html();

@@ -6,6 +6,8 @@ $(document).ready(function(){
 		
 	var dayRecordlist = "";
 	var nomallist = "";
+	var turnKey = "";
+	
 	$('#calendar').fullCalendar('today');
 	$('.fc-event').css('font-size', '.6em');
     $('#calendar').fullCalendar({
@@ -316,7 +318,9 @@ $(document).ready(function(){
         	      */
         
         var btmRecordNum = 0;	
-        	
+        var BTMKey = 1;
+        var notNomal = 0;
+        var notDateNomal = 0;
         //월에 대한 페이지인가?	
        if(view.name == "month"){
     	   
@@ -340,15 +344,26 @@ $(document).ready(function(){
         	date_day = dateSplit[2]; 
         	var dateSplited = date_year + "" + date_month + "" + date_day
         		
-        	
         	// 세부 목표가 잇는 DayPlan을 가공한 후에 각각 배열에 담는 구간 
         	
         	var PlanTitle = [];
         	var PlanStartTime = [];
         	var PlanEndTime = [];
+        	var PlanNum = [];
         	var sumAchieve = 0;
+        	
+        	var NomalTitle = [];
+        	var NomalStartTime = [];
+        	var NomalEndTime = [];
+        	var NomalNum = [];
+        	var btmRecordNum = 0;
+        	
         	//리스트를 띄우기 전에 테이블 body를 모두 비운다. 
         	$('#DayRecordTable').html('');
+        	
+        	console.log(dayRecordlist);
+        	console.log(nomallist);
+        	
         	
         	if(dayRecordlist != null){
 	        	$(dayRecordlist).each(function(index,item) {
@@ -393,85 +408,129 @@ $(document).ready(function(){
 	            	splitedEndDate = date_edyear+""+date_edmonth+""+date_edday;
 	            		
 	            	//해당 기간에 속한다면
-	            	if(parseInt(dateSplited) >= parseInt(splitedStartDate) && parseInt(dateSplited) <= parseInt(splitedEndDate)){
+	            	if(parseInt(dateSplited) >= parseInt(splitedStartDate) && parseInt(dateSplited) <= parseInt(splitedEndDate) && item.btmRecordNum != 0){
             			sumAchieve = item.achieve;
             			
             			// 클릭한 날짜에 직접적으로 속한다면 
             			if(splited == dateSplited){
+            				btmRecordNum = item.btmRecordNum;
             				PlanTitle.push(item.dContents);
     	            		PlanStartTime.push(splitedStartTime);
     	            		PlanEndTime.push(splitedEndTime);
-            			}//end if
+    	            		PlanNum.push(item.dayPlanNum);
+            			}
 	            	}
+	            		
 	        	});//end each
 	        	
-        	
-        	$('#currentPercent').html('');
- 	        $('#currentPercent').append('달성률:'+" "+ sumAchieve+"%");
+	        	if(PlanTitle.length == 0 && (parseInt(dateSplited) == parseInt(today))){
+	        		$('#inputPercent').attr('placeholder','100이내의 숫자');
+	        		$('#currentPercent').html('');
+	        	    $('#currentPercent').append('달성률:'+" "+ sumAchieve+"%");
+	        	}else if(PlanTitle.length == 0 && (parseInt(dateSplited) != parseInt(today))){
+	        		notNomal = 1;
+	        		$('#inputPercent').attr('placeholder','입력할 수 있는 기간이 아닙니다.');
+	        		$('#inputPercent').attr('readonly','readonly');
+	        		$('#currentPercent').html('');
+	        	    $('#currentPercent').append('달성률:'+" "+ sumAchieve+"%");
+	        	}
+        
 	        	
 	        	// 표기만 1부터 시작할 뿐 index 값은 사실 0부터 시작하니 데이터 보낼 때 0을 기준으로 시작해서 보내야 함.
  	        	$(PlanTitle).each(function(index,item) {
  	        		
  	        		//클릭한것이 오늘이라면 readOnly를 하지 않는다.
  	        		if(parseInt(dateSplited) == parseInt(today)){
- 	        			
+ 	        			$('#inputPercent').attr('placeholder','100이내의 숫자');
+ 	        			$('#currentPercent').html('');
+ 	        	        $('#currentPercent').append('달성률:'+" "+ sumAchieve+"%");
  	        		}else{
- 	        		$('#inputPercent').attr('readonly','readonly');
- 	       	        $('#DayRecordTable').append(
- 	   		            	'<tr id="d'+index+'">'+
- 	   				            '<td id="n'+index+'">'+(index+1)+'</td>'+
- 	   				            '<td id="f'+index+'">'+PlanTitle[index]+'</td>'+
- 	   				            '<td id="l'+index+'">'+PlanStartTime[index]+'</td>'+
- 	   				            '<td id="m'+index+'">'+PlanEndTime[index]+'</td>'+
- 	   				            '<td><button type="button" data-toggle="modal" onclick = "openEditModal()" data-uid="'+index+1+'" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
- 	   				            '<td><button type="button" data-toggle="modal" onclick="openDeleteModal()" data-uid="'+index+1+'" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>'+
- 	   				        '</tr>'
- 	   		        );
- 	        			
+ 	        			$('#inputPercent').attr('placeholder','입력할 수 있는 기간이 아닙니다.');
+ 	        			$('#inputPercent').attr('readonly','readonly');
+	 	        		$('#currentPercent').html('');
+	 	        	    $('#currentPercent').append('달성률:'+" "+ sumAchieve+"%");	
+	 	       	        $('#DayRecordTable').append(
+	 	   		            	'<tr id="d'+index+'">'+
+	 	   				            '<td id="n'+index+'">'+(index+1)+'</td>'+
+	 	   				            '<td id="f'+index+'">'+PlanTitle[index]+'</td>'+
+	 	   				            '<td id="l'+index+'">'+PlanStartTime[index]+'</td>'+
+	 	   				            '<td id="m'+index+'">'+PlanEndTime[index]+'</td>'+
+	 	   				            '<td><button type="button" data-toggle="modal" onclick = "openEditModal('+btmRecordNum+','+PlanNum[index]+','+index+1+','+'\'f'+index+'\''+','+'\'l'+index+'\''+','+'\'m'+index+'\')" data-uid="'+index+1+'" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
+	 	   				            '<td><button type="button" data-toggle="modal" onclick= "openDeleteModal('+btmRecordNum+','+PlanNum[index]+')" data-uid="'+index+1+'" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>'+
+	 	   				        '</tr>'
+	 	   		        );
  	        		}
  	        	});
-	        	
-        	}//end if
+        	}//end if (세부목표가 있는 DayPlan 모달 생성 구간 종료)
         	
         	
         	// 세부 목표가 없는 DayPlan을 가공한 후에 각각 배열에 담는 구간 
-       
-        	if(nomallist != null){
-        		
-	        	$(nomallist).each(function(index,item) {
-	        		var splited = ""; // 클릭한 곳의 날짜를 스플릿해서 가공
-	        		var splitedStartTime = ""; //받아온 dayPlanVO의 start타임을 스플릿해서 가공
-	        		var splitedEndTime = ""; // dayPlanVO의 end타임을 스플릿해서 가공
-	        		
-	        		//startTime 가공
-	        		var dateSplitPlan = item.startTime.split("-");
-	            	date_syear = dateSplitPlan[0]; 
-	            	date_smonth = dateSplitPlan[1]; 
-	            	date_sday = dateSplitPlan[2];
-	            	date_shour = dateSplitPlan[3];
-	            	date_sminute = dateSplitPlan[4];
-	            	
-	            	//endTime 가공
-	            	var dateSplitPlan = item.endTime.split("-");
-	            	date_eyear = dateSplitPlan[0]; 
-	            	date_emonth = dateSplitPlan[1]; 
-	            	date_eday = dateSplitPlan[2];
-	            	date_ehour = dateSplitPlan[3];
-	            	date_eminute = dateSplitPlan[4];
-	            	
-	            	splited = date_syear + "" + date_smonth + "" + date_sday
-	            	splitedStartTime = date_shour +":"+ date_sminute; 
-	            	splitedEndTime = date_ehour+":"+date_eminute;
-	            	
-	            	if(splited == dateSplited){
-	            		//현재 클릭한 날짜와 받아온 planVO의 날짜가 일치한다면  plan명, 시작시간, 종료시간을 각각 배열에 담는다.
-	            	
-	            		PlanTitle.push(item.dContents);
-	            		PlanStartTime.push(splitedStartTime);
-	            		PlanEndTime.push(splitedEndTime);
-	            	}//end outer if
-	        	});//end each
-        	}//end if
+        	
+        	if(btmRecordNum == 0){
+	        	if(nomallist != null){
+		        	$(nomallist).each(function(index,item) {
+		        		var splited = ""; // dayPlanVO의 날짜
+		        		var splitedStartTime = ""; //받아온 dayPlanVO의 start타임을 스플릿해서 가공
+		        		var splitedEndTime = ""; // dayPlanVO의 end타임을 스플릿해서 가공
+		        		
+		        		//startTime 가공
+		        		var dateSplitPlan1 = item.startTime.split("-");
+		            	date_syear = dateSplitPlan1[0]; 
+		            	date_smonth = dateSplitPlan1[1]; 
+		            	date_sday = dateSplitPlan1[2];
+		            	date_shour = dateSplitPlan1[3];
+		            	date_sminute = dateSplitPlan1[4];
+		            	
+		            	//endTime 가공
+		            	var dateSplitPlan2 = item.endTime.split("-");
+		            	date_eyear = dateSplitPlan2[0]; 
+		            	date_emonth = dateSplitPlan2[1]; 
+		            	date_eday = dateSplitPlan2[2];
+		            	date_ehour = dateSplitPlan2[3];
+		            	date_eminute = dateSplitPlan2[4];
+		            	
+		            	splited = date_syear + "" + date_smonth + "" + date_sday
+		            	splitedStartTime = date_shour +":"+ date_sminute; 
+		            	splitedEndTime = date_ehour+":"+date_eminute;
+		            	
+		            	if(item.btmRecordNum == 0){
+			            	if(splited == dateSplited){
+			            		//현재 클릭한 날짜와 받아온 planVO의 날짜가 일치한다면  plan명, 시작시간, 종료시간을 각각 배열에 담는다.
+			            		NomalTitle.push(item.dContents);
+			            		NomalStartTime.push(splitedStartTime);
+			            		NomalEndTime.push(splitedEndTime);
+			            		NomalNum.push(item.dayPlanNum);
+			            	}//end outer if
+		            	}
+		        	});//end each
+		        		
+		        
+		        	alert('bb');
+		        	
+		        		//여기서 부터 이제 새부 목표가 있는지 없는지 확인해야 함(NomalTitle.length =0 이라면) 없다면 key를 사용해서 아래에서 새롭게 만들어줘야됨.
+		        		$(NomalTitle).each(function(index,item) {
+		        			notDateNomal
+		        			
+			        		$('#inputPercent').attr('placeholder','진행중인 세부목표가 없습니다.');
+		 	        		$('#currentPercent').html('');
+		 	   	 	        $('#currentPercent').append("세부목표 없음");
+		 	   	        	$('#dayAchieve').attr('disabled','disabled');	
+		 	        		$('#inputPercent').attr('readonly','readonly');
+		 	       	        $('#DayRecordTable').append(
+		 	   		            	'<tr id="d'+index+'">'+
+		 	   				            '<td id="n'+index+'">'+(index+1)+'</td>'+
+		 	   				            '<td id="f'+index+'">'+NomalTitle[index]+'</td>'+
+		 	   				            '<td id="l'+index+'">'+NomalStartTime[index]+'</td>'+
+		 	   				            '<td id="m'+index+'">'+NomalEndTime[index]+'</td>'+
+		 	   				            '<td><button type="button" data-toggle="modal" onclick = "openEditModal('+1+','+NomalNum[index]+','+index+1+','+'\'f'+index+'\''+','+'\'l'+index+'\''+','+'\'m'+index+'\')" data-uid="'+index+1+'" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
+		 	   				            '<td><button type="button" data-toggle="modal" onclick="openDeleteModal('+btmRecordNum+','+NomalNum[index]+')" data-uid="'+index+1+'" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>'+
+		 	   				        '</tr>'
+		 	   		        );
+		 	        			
+		 	        	});
+		        	
+	        	}//end if
+        	}
         
         	//어팬드 해야됨 배열3개를 가지고(타이틀,스타트,엔드)
            
@@ -498,7 +557,7 @@ $(document).ready(function(){
            
        }
 
-    });
+    });// end full calendar
     
     if(calendar) {
     	  $(window).resize(function() {
