@@ -50,7 +50,7 @@
 					str += "<td> 날짜 : " + item.msgDate;
 					str += "</td></tr>";
 					str += "<tr><td colspan='2' class='msgContent'>";
-					if(item.msgContent == "다음의 목표에 참가하시겠습니까?") {
+					if(item.msgContent == "초대하신 목표에 참가하시겠습니까?") {
 						item.msgContent += '<br><input type="button" value="승인" id="join-btn' + index + '" class="join-btn">';
 						item.msgContent += ' <input type="button" value="거절" id="notJoin-btn'+ index +'" class="notJoin-btn">';
 						senders[index] = item.sender;
@@ -154,6 +154,7 @@
 	$(".join-btn").click(function() {
 		var btnId = $(this).attr("id");
 		var index = /\d/.exec(btnId);
+		console.log("숫자만 추출 : " + index);
 		for(var i=0; i<=index; i++) {
 			if(senders[i] == senders[index]) {
 				$.ajax ({

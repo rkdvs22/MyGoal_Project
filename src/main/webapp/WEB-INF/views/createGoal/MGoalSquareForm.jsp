@@ -192,12 +192,13 @@ var mGoal_modals = new Array();
 var bGoal_modals = new Array();
 var bGoalCounts = new Array();
 var btnsClickCount = new Array(8);
+var tGoal_days = "";
 
 for(var i=0; i<btnsClickCount.length; i++) {
 	btnsClickCount[i] = 0;
 }
 
-// modal 창에서 사용자가 입력하는 값에 따라 가능여부를 판단하고 날짜를 계산하는 함수이다.
+// modal 창에서 사용자가 입력하는 값에 따라 가능여부를 판단하고 중간목표의 기간을 계산하는 함수이다.
 function createGoalModals() {
 	var goalCount = $("#bGoalcount option:selected").val();
 	$(".bg_content").empty();
@@ -225,7 +226,7 @@ function createGoalModals() {
 	
 	// 사용자가 날짜를 선택했을 경우 자동으로 남는날짜를 계산한다.
 	$("#endMpicker").on("change", function() {
-		if($("#startMpicker").val() != "") {
+		if($("#startMpicker").val() != "" && $("#endMpicker").val() != "") {
 			m_eDate = $("#endMpicker").datepicker("getDate");
 			m_sDate = $("#startMpicker").datepicker("getDate");
 			if(m_eDate - m_sDate < 0) {
@@ -245,7 +246,11 @@ function createGoalModals() {
 		var minuate = second / 60;
 		var hour = minuate / 60;
 		progressDay = (hour / 24)+1;
-		$("#m_eventdays > b").text("진행기간 : " + progressDay + "일");
+		if(progressDay > tGoal_days) {
+			alert("최종목표 일자보다 중간목표 일자가 많을 수 없습니다");
+			return false;
+		}
+		$("#m_eventdays > b").html("진행기간 : " + progressDay + "일");
 	});
 	
 	
@@ -346,11 +351,11 @@ $(function() {
 				// 다른 중간목표 기간과 겹치지 않도록 한다.
 				if(bBtn_num > 1) {
 					for(var i=0; i<mGoal_modals.length; i++) {
-						if($("#startMpicker").val() == mGoal_modals[i].sDate) {
-							alert("시작날짜가 이전 중간목표의 시작날짜와 동일합니다.");
+						if($("#startMpicker").val() <= mGoal_modals[i].sDate) {
+							alert("시작날짜가 이전 중간목표의 날짜와 겹칩니다");
 							return false;
-						} else if($("#endMpicker").val() == mGoal_modals[i].eDate) {
-							alert("종료날짜가 이전 중간목표의 종료날짜와 동일합니다.");
+						} else if($("#endMpicker").val() <= mGoal_modals[i].eDate) {
+							alert("종료날짜가 이전 중간목표의 날짜와 겹칩니다");
 							return false;
 						}
 					}
@@ -406,11 +411,10 @@ $(function() {
 				
 				if(click_flag == true) {
 					inputMbtnValue(bBtn_num);
-					$("#m_eventdays").text("");
+					$("#m_eventdays > b").text("");
 					$(".midgoal > input").val("");
 					$("#bGoalcount").val("");
 					$(".bg_content > input").val("");
-					$("#m_eventdays").val("");
 				} else {
 					updateMbtnValue(bBtn_num);
 				}
@@ -421,11 +425,9 @@ $(function() {
 			// modal의 취소버튼을 눌렀을 경우, 사용자가 입력했던 중간목표 및 세부목표와 관련된 값들을 지운다.
 			"취소":function() {
 				cancel_flag = true;
-				$("#m_eventdays").text("");
-				$(".midgoal > input").val("");
-				$("#bGoalcount").val("");
-				$(".bg_content > input").val("");
-				$("#mBtn" + (catchNum+1)).attr("disabled", true);
+				if(btnsClickCount[catchNum] == 0) {
+					$("#mBtn" + (catchNum+1)).attr("disabled", true);
+				}
 				for(var i=0; i<btnsClickCount.length; i++) {
 					if(catchNum == (i+1)) {
 						btnsClickCount[i] = 0;
@@ -737,10 +739,23 @@ $(function() {
 		}
 	});
 	
-	// 나가기 버튼을 눌렀을 시 메인화면으로 이동한다.
+	// 나가기 버튼을 눌렀을 시 방은 지워지고 메인화면으로 이동한다.
 	$("#exitBtn").click(function() {
-		var result = confirm("정말 나가시겠습니까? 작성중인 정보는 모두 삭제됩니다");
-		if(result) window.location.replace("/goal");
+		var result = confirm("정말 나가시겠습니까? 해당하는 정보는 모두 삭제됩니다");
+		if(result) {
+			if($("#host-id").text() == '${sessionScope.userid}') {
+				$.ajax ({
+					url: "exitCreateGoal",
+					type: "post",
+					data: {"id":'${sessionScope.userid}'},
+					success: function() {
+						alert("메인화면으로 이동합니다");
+						window.location.replace("/goal");
+					},
+				});
+			}
+			// else : HOST가 아니므로 ID, 지정색, 사진, 인원수만 원 상태로.
+		}
 	});
 	
 	// 초대 modal창 안에서 유저 아이디를 찾고 싶을 때
@@ -778,8 +793,8 @@ $(function() {
 	var tGoal_s = (tEndDate - tStartDate) / 1000;
 	var tGoal_m = tGoal_s / 60;
 	var tGoal_h = tGoal_m / 60;
-	var tGoal_days = (tGoal_h / 24) + 1;
-	$(".subject > p > b").html("Title : " + '${b_info.tGoalTitle}' + " [Period : " + tGoal_days + "days]");
+	tGoal_days = (tGoal_h / 24) + 1;
+	$(".subject > p > b").html("Title : " + '${b_info.tGoalTitle}' + "  [ Period : " + tGoal_days + "days ]");
 	var sDate_sp = tStartDate.toString().split(' ');
 	var eDate_sp = tEndDate.toString().split(' ');
 	$("#tGoal_date").html(sDate_sp[3]+ "/" + sDate_sp[1] + "/" + sDate_sp[2] 
@@ -790,7 +805,32 @@ $(function() {
 		$("#readyBtn").hide();
 	} else $("#startBtn").hide();
 	
-	
+	var maxMember = '${b_info.maxMember}';
+	switch (maxMember) {
+	case "1":
+		$(".player2 > td").remove();
+		$(".player3 > td").remove();
+		$(".player4 > td").remove();
+		$(".player2").prepend('<td colspan="6" id="p2_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user-empty.png"></td>');
+		$(".player3").prepend('<td colspan="6" id="p3_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user-empty.png"></td>');
+		$(".player4").prepend('<td colspan="6" id="p4_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user-empty.png"></td>');
+		break;
+	case "2":
+		$(".player3 > td").remove();
+		$(".player4 > td").remove();
+		$(".player3").prepend('<td colspan="6" id="p3_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user-empty.png"></td>');
+		$(".player4").prepend('<td colspan="6" id="p4_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user-empty.png"></td>');
+		break;
+	case "3":
+		$(".player4 > td").remove();
+		$(".player4").prepend('<td colspan="6" id="p4_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user-empty.png"></td>');
+		break;
+	case "4":
+		break;
+	default:
+		console.log("swicth error");
+		break;
+	}
 });
 	
 </script>
@@ -843,28 +883,28 @@ $(function() {
 			<td id="host-id" class="player-id">${sessionScope.userid}</td>
 		</tr>
 		<tr class="player2">
-			<td></td>
+			<td id="p2_empty"></td>
 			<td id="p2_img"><img src="/goal/resources/img/avatar-2-64.png"></td>
 			<td></td>
 			<td class="player-color">Not yet</td>
 			<td></td>
-			<td>Empty</td>
+			<td id="p2" class="player-id">Empty</td>
 		</tr>
 		<tr class="player3">
-			<td></td>
+			<td id="p3_empty"></td>
 			<td id="p3_img"><img src="/goal/resources/img/avatar-2-64.png"></td>
 			<td></td>
 			<td class="player-color">Not yet</td>
 			<td></td>
-			<td>Empty</td>
+			<td id="p3" class="player-id">Empty</td>
 		</tr>
 		<tr class="player4">
-			<td></td>
+			<td id="p4_empty"></td>
 			<td id="p4_img"><img src="/goal/resources/img/avatar-2-64.png"></td>
 			<td></td>
 			<td class="player-color">Not yet</td>
 			<td></td>
-			<td>ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</td>
+			<td id="p4" class="player-id">Empty</td>
 		</tr>
 		<tr>
 			<td></td>

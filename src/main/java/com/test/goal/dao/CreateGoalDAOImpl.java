@@ -94,4 +94,32 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
 		return mapper.findThatGoal(senderId);
 	}
+
+	// 목표를 만든 사용자가 나가기 버튼을 클릭했을 경우 관련된 데이터를 삭제하기 위해 현 게시글의 정보를 받아온다.
+	@Override
+	public BoardVO findCurrentBoard(String id) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		return mapper.findCurrentBoard(id);
+	}
+	
+	// 목표를 만든 사용자가 나가기 버튼을 클릭했을 경우 관련된 데이터를 삭제하기 위해 현재 MainProgress의 정보를 받아온다.
+	@Override
+	public MainProgressVO findCurrentTgoal(BoardVO vo) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		return mapper.findCurrentTgoal(vo);
+	}
+	
+	// 목표를 만든 사용자가 나가기 버튼을 클릭했을 경우 관련된 데이터를 삭제한다.
+	@Override
+	public void exitCreateGoal(String id) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		System.out.println(id);
+		BoardVO vo = findCurrentBoard(id);
+		System.out.println(vo);
+		MainProgressVO mVO = findCurrentTgoal(vo);
+		System.out.println(mVO);
+		mapper.deleteCurrentBoard(id);
+		mapper.deleteCurrentTgoal(vo);
+		mapper.deleteCurrentMainProgress(mVO);
+	}
 }

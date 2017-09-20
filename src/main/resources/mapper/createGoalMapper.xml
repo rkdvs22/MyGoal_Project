@@ -44,18 +44,56 @@
 	
 	<!-- 현재 게시글의 정보를 받아온다. -->
 	<select id="getBoardInfo" resultType="BoardVO">
-		SELECT boardNum, b.userid, b.tGoalNum, t.tStartDate as startDate, t.tEndDate as endDate, tGoalTitle 
-		FROM board b, topgoal t
+		SELECT boardNum, b.userid, b.tGoalNum, t.tStartDate as startDate, t.tEndDate as endDate, tGoalTitle, m.maxmember
+		FROM board b, topgoal t, mainprogress m
 		WHERE t.tGoalNum = b.tGoalNum
+		AND t.progressnum = m.progressnum
 		AND boardNum = (
 			SELECT MAX(boardNum) FROM board
 		)
 	</select>
 	
+	<!-- 초대받은 방의 정보를 받아온다. -->
 	<select id="findThatGoal" parameterType="string" resultType="BoardVO">
 		SELECT * FROM board
 		WHERE boardnum = (
 			SELECT MAX(boardnum) FROM board WHERE userid = #{senderId}
 		)
 	</select>
+	
+	<!-- 목표를 만든 사용자가 나가기 버튼을 클릭했을 경우 관련된 데이터를 삭제하기 위해 현 게시글의 정보를 받아온다. -->
+	<select id="findCurrentBoard" parameterType="string" resultType="BoardVO">
+		SELECT * FROM board
+		WHERE boardnum = (
+			SELECT MAX(boardnum) FROM board WHERE userid = #{id}
+		)
+	</select>
+	
+	<select id="findCurrentTgoal" parameterType="BoardVO" resultType="MainProgressVO">
+		SELECT * FROM topgoal
+		WHERE tgoalnum = (
+			SELECT MAX(tgoalnum) FROM topgoal WHERE userid = #{userid}
+		)
+	</select>
+	
+	<!-- 생성중이던 목표 게시글 삭제 : invaild table error????? -->
+	<delete id="deleteCurrentBoard" parameterType="string">
+		DELETE FROM board
+		WHERE userid = #{id}
+		AND boardnum = (
+			SELECT MAX(boardnum) FROM board WHERE userid = #{id}
+		)
+	</delete>
+	
+	<!-- 생성중이던 최종목표 삭제 -->
+	<delete id="deleteCurrentTgoal" parameterType="BoardVO">
+		DELETE FROM topgoal
+		WHERE tgoalnum = #{tgoalnum}
+	</delete>
+	
+	<!-- 생성중이던 MainProgress의 데이터 삭제 -->
+	<delete id="deleteCurrentMainProgress" parameterType="TopGoalVO">
+		DELETE FROM mainprogress
+		WHERE progressnum = #{progressNum}
+	</delete>
 </mapper>

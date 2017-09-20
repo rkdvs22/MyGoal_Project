@@ -74,13 +74,12 @@ public class CreateGoalController {
 	@RequestMapping(value = "create", method = RequestMethod.POST)
 	public String create(TopGoalVO tvo, MainProgressVO mvo, Model model, int progressNum, HttpSession session) {
 		mvo.setProgressNum(progressNum);
-		System.out.println(tvo);
 		model.addAttribute("topGoal", dao.create1(tvo));
 		int topGoalNum = dao.getTgoalNum().gettGoalNum();
 		tvo.settGoalNum(topGoalNum);
 		writeBoard(tvo);
 		model.addAttribute("b_info", dao.getBoardInfo());
-		System.out.println(dao.getBoardInfo().toString());
+		System.out.println("[BOARD INFO] : " + dao.getBoardInfo());
 		return "/createGoal/MGoalSquareForm";
 	}
 	
@@ -308,7 +307,7 @@ public class CreateGoalController {
 			msgVO.setSender(myId);
 			msgVO.setReceiver(friendId);
 			msgVO.setMsgTitle("[SYSTEM] " + myId + "님께서 " + friendId + "님을 초대 하셨습니다 ");
-			msgVO.setMsgContent("다음의 목표에 참가하시겠습니까?");
+			msgVO.setMsgContent("초대하신 목표에 참가하시겠습니까?");
 			// 목표에 대한 정보를 view단에서 보여줄 예정. 중간 세이브
 			boolean result = msg_dao.writeMsg(msgVO);
 			if(result) result_count++;
@@ -340,5 +339,12 @@ public class CreateGoalController {
 		// mainprogress 테이블의 progressNum을 이용해 MEMBERLIST 테이블에 사용자의 ID를 추가한다.
 		// =================== 09.19 Save ====================
 		return "";
+	}
+	
+	// 목표를 만든 사용자가 나가기 버튼을 클릭했을 경우 관련된 데이터를 삭제한다.
+	@RequestMapping(value = "exitCreateGoal", method = RequestMethod.POST)
+	@ResponseBody
+	public void exitCreateGoal(String id) {
+		dao.exitCreateGoal(id);
 	}
 }

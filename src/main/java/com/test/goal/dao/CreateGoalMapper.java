@@ -36,5 +36,13 @@ public interface CreateGoalMapper {
 
 	public BoardVO findThatGoal(String senderId); // 초대 메시지에 승인할 시 해당하는 목표가 무엇인지 찾는다.
 
+	public BoardVO findCurrentBoard(String id); // 목표를 만든 사용자가 나가기 버튼을 클릭했을 경우 관련된 데이터를 삭제하기 위해 현 게시글의 정보를 받아온다.
 
+	public MainProgressVO findCurrentTgoal(BoardVO vo); // 목표를 만든 사용자가 나가기 버튼을 클릭했을 경우 관련된 데이터를 삭제하기 위해 현재 MainProgress의 정보를 받아온다.
+
+	public int deleteCurrentBoard(String id); // 생성중이던 목표 게시글 삭제
+
+	public int deleteCurrentTgoal(BoardVO vo); // 생성중이던 최종목표 삭제
+
+	public int deleteCurrentMainProgress(MainProgressVO mVO); // 생성중이던 MainProgress의 데이터 삭제
 }
