@@ -202,7 +202,7 @@
 			</li>
 			<li class="red">
 				<a href="/goal/createGoal/createForm">
-					<i class="font-icon font-icon-case-2"></i>
+					<i class="glyphicon glyphicon-pencil"></i>
 					<span class="lbl">Create Goal</span>
 				</a>
 			</li>

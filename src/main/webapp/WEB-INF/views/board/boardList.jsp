@@ -15,6 +15,9 @@
 	<link href="/goal/resources/img/favicon.png" rel="icon" type="image/png">
 	<link href="/goal/resources/img/favicon.ico" rel="shortcut icon">
 	
+	<link rel="stylesheet" href="/goal/resources/css/separate/vendor/select2.min.css">
+	<link rel="stylesheet" href="/goal/resources/css/separate/vendor/typeahead.min.css">
+	
 	<link rel="stylesheet" href="/goal/resources/css/separate/elements/cards.min.css">
     <link rel="stylesheet" href="/goal/resources/css/lib/font-awesome/font-awesome.min.css">
     <link rel="stylesheet" href="/goal/resources/css/lib/bootstrap/bootstrap.min.css">
@@ -33,30 +36,27 @@
 					<div class="tbl-cell">
 						<h3>Board</h3>
 					</div>
+					
 				<!-- 검색 -->
 					<form action="boardList" method="get">
 					<div class="form-group row">
-						<select name="searchSelect">
-							<option value="ID">ID</option>
-							<option value="TITLE">Goal Title</option>
-						</select>
-						<input type="text" class="col-md-5" name="searchKeyid">
-						<input type="submit" class="font-icon-search">
-						<!-- <input type="image" class="glyphicon glyphicon-search" src="" onclikc=""> -->
-						
-						<!-- <div class="col-md-2">
-							<select class="select2-arrow manual select2-no-search-arrow" name="searchSelect">
-								<option value="id" selected="selected">ID</option>
-								<option value="title">Title</option>
-							</select>
-							<input class="form-control" type="text" name="searchKeyid"placeholder="Search">
-							<input type="submit" class="font-icon-search">
+						<div class="typeahead-container">
+							<div class="typeahead-field">
+								<select class="" name="searchSelect">
+									<option value="ID">ID</option>
+									<option value="TITLE">Goal Title</option>
+								</select>
+								<span class="typeahead-query">
+									<input class="form-control" type="text" id="searchKeyid" name="searchKeyid" placeholder="Search">
+								</span>
+								<span class="typeahead-button">
+									<button type="submit"class="font-icon-search"></button>
+								</span>
+							</div>
 						</div>
- 						<div class="col-md-7">
-							<a href="#" onclick="search('${searchKeyid}')"><i class="font-icon-search"></i></a>
-						</div> -->
 					</div>
 					</form>
+					
 				</div>
 			</div>
 		</header>
@@ -87,7 +87,7 @@
 						<p>종료날짜</p><p>${list.endDate}</p>
 					</div>
 					<div class="card-typical-section">
-						<div class="card-typical-linked">${list.currentMemberNumber}/${list.maxMemberNumber}</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<div class="card-typical-linked">${list.currentMemberNumber}/</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<a href="#" class="card-typical-likes" onclick="addFavorite('${boardnum}')">
 							<i class="font-icon font-icon-heart" id="favoriteNum">${list.favorite}</i>
 						</a>
