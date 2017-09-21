@@ -8,18 +8,19 @@
 	
 	<!-- 게시글 목록, 검색, 페이징 -->
 	<select id="boardList" parameterType="map" resultType="BoardVO">
-		select b.userid as "userid", b.favorite as "favorite",t.tGoalNum as "tGoalNum", t.tGoalTitle as "tGoalTitle", t.tStartDate as "startDate", t.tEndDate as "endDate", t.openStatus as "openStatus", t.progressNum as "progressNum", l.currentMemberNumber as "currentMemberNumber", m.maxMember as "maxMember", m.type as "type"
+		select b.boardnum as "boardnum", b.userid as "userid", b.favorite as "favorite",t.tGoalNum as "tGoalNum", t.tGoalTitle as "tGoalTitle", t.tStartDate as "startDate", t.tEndDate as "endDate", t.openStatus as "openStatus", t.progressNum as "progressNum", l.currentMemberNumber as "currentMemberNumber", m.maxMember as "maxMember", m.type as "type"
 		from board b inner join topGoal t
 		on b.tGoalNum = t.tGoalNum inner join mainProgress m
 		on t.progressNum = m.progressNum inner join (select progressNum, count(listNum) as currentMemberNumber from memberList group by progressNum) l
 		on m.progressNum = l.progressNum
+		where not m.maxMember = 1 or t.openStatus = 'N'
 		<if test="searchSelect == 'ID'">
 			where b.userid like '%'||#{searchKeyid}||'%'
 		</if>
 		<if test="searchSelect == 'TITLE'">
 			where t.tGoalTitle like '%'||#{searchKeyid}||'%'
 		</if>
-		order by b.favorite desc
+		order by t.tStartDate desc
 	</select>
 	
 	<!-- 페이징 : 전체 게시글 수 가져오기 -->
@@ -38,9 +39,13 @@
 	</select>
 
 	<!-- 게시글 좋아요 -->
-	<update id="favorite" parameterType="int">
+	<update id="addFavorite" parameterType="int">
 		update board set favorite = favorite + 1 where boardnum = #{boardnum}	
 	</update>
+	
+	<!-- <select id="selectTopGoal">
+	
+	</select> -->
 	
 	
 </mapper>

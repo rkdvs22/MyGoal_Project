@@ -23,6 +23,12 @@
     <link rel="stylesheet" href="/goal/resources/css/lib/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="/goal/resources/css/main.css">
     
+    <style>
+    	.card-typical-content {
+    		height: 180px;
+    		overflow-y: auto;
+    	} 
+    </style>
 </head>
 <body>
 
@@ -76,7 +82,7 @@
 									<p class="user-card-row-name">${list.userid}</a></p>
 								</div>
 								<div class="tbl-cell tbl-cell-status">
-									<button type="button" class="btn btn-rounded btn-inline btn-success btn-sm" name="checkId" onclick="start()">Start</button>
+									<button type="button" class="btn btn-rounded btn-inline btn-success btn-sm" name="checkId" onclick="start('${list.tGoalNum}')">Start</button>
 								</div>
 							</div>
 						</div>
@@ -89,7 +95,7 @@
 					<div class="card-typical-section">
 						<div class="card-typical-linked">${list.currentMemberNumber}/${list.maxMember}</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<a href="#" class="card-typical-likes" onclick="addFavorite('${list.boardnum}')">
-							<i class="font-icon font-icon-heart" id="favoriteNum">${list.favorite}</i>
+							<i class="font-icon font-icon-heart" data-boardnum="${list.boardnum}" id="favoriteNum">${list.favorite}</i>
 						</a>
 					</div>
 						<%-- <input type="hidden" name="tGoalNum" value="${tGoalNum}">
@@ -149,27 +155,27 @@
 		}
 		
 		// start 버튼 눌렀을때 (마방진 페이지로 이동)
-		function start() {
-			location.href = "/goal/createGoal/MGoalSquareForm?tgoalnum="+tgoalnum;
+		function start(tGoalNum) {
+			location.href = "/goal/createGoal/MGoalSquareForm?tGoalNum="+tGoalNum;
 		}
 		
 		// 좋아요 (이미지 클릭시 숫자 증가)
 		function addFavorite(boardnum) {
-			var result = confirm("좋아요 한다고");
+			//var result = confirm("좋아요");
 			
-			if(result) {
+			if(boardnum) {
 				$.ajax({
-					url: "/goal/board/addFavorite?boardnum="+boardnum,
-					type: "get",
-					/* data: {"boardnum":boardnum}, */
+					url: "/goal/board/addFavorite",
+					type: "post",
+					data: {"boardnum":boardnum},
 					success: function() {
-						alert("favorite");					
+						var temp=$("i[data-boardnum='"+boardnum+"']").html();
+						$("i[data-boardnum='"+boardnum+"']").text(parseInt(temp)+1);
 					}
 				});
 			}
 		}
 		
-		console.log('${goalList}');
 	</script>
 
 <script src="/goal/resources/js/app.js"></script>

@@ -38,6 +38,13 @@ public class BoardDAOImpl implements BoardDAO {
 		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
 		mapper.addFavorite(boardnum);
 	}
+	
+	// tGoalNum 이용 TopGoal 테이블에서 host의 progressNum 정보찾기
+	@Override
+	public String selectTopGoal(int tGoalNum) {
+		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
+		return mapper.selectTopGoal(tGoalNum);
+	}
 
 
 	

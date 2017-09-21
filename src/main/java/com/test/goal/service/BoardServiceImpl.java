@@ -39,6 +39,12 @@ public class BoardServiceImpl implements BoardService {
 	public void addFavorite(int boardnum) {
 		dao.addFavorite(boardnum);
 	}
+
+	// tGoalNum 이용 TopGoal 테이블에서 host의 progressNum 정보찾기
+	@Override
+	public String selectTopGoal(int tGoalNum) {
+		return dao.selectTopGoal(tGoalNum);
+	}
 	
 	
 }

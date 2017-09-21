@@ -45,10 +45,16 @@ public class BoardController {
 	}
 	
 	// 좋아요 기능
-	@RequestMapping(value = "addFavorite", method = RequestMethod.GET)
+	@RequestMapping(value = "addFavorite", method = RequestMethod.POST)
 	@ResponseBody
 	public void addFavorite(int boardnum) {
 		service.addFavorite(boardnum);
+	}
+	
+	// tGoalNum 이용 TopGoal 테이블에서 host의 progressNum 정보찾기
+	@RequestMapping(value = "selectTopGoal", method = RequestMethod.GET)
+	public String selectTopGoal(int tGoalNum) {
+		return service.selectTopGoal(tGoalNum);
 	}
 	
 	

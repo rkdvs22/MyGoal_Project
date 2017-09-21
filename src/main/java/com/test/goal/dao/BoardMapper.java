@@ -15,4 +15,6 @@ public interface BoardMapper {
 
 	public void addFavorite(int boardnum); // 좋아요
 
+	public String selectTopGoal(int tGoalNum); // tGoalNum 이용 TopGoal 테이블에서 host의 progressNum 정보찾기
+
 }
