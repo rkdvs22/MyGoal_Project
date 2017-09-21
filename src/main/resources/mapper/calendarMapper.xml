@@ -84,7 +84,7 @@
 	
 	<select id = "getDayPlanNumSequence" resultType="int">
 	
-		select DAYRECORD_SEQ.NEXTVAL from dual
+		select DAYPlAN_SEQ.NEXTVAL from dual
 	
 	</select>
 	

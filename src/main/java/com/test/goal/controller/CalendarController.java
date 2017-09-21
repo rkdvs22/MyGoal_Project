@@ -79,4 +79,14 @@ public class CalendarController {
 		
 		service.updateDayPlan(vo);
 	}
+	
+	@RequestMapping(value = "createDayPlan", method = RequestMethod.POST)
+	@ResponseBody
+	public int createDayPlan(DayPlanVO vo, HttpServletRequest request) {
+		
+		String userId  = (String) request.getSession().getAttribute("userid");
+		vo.setUserId(userId);
+		
+		return service.createDayPlan(vo);
+	}
 }

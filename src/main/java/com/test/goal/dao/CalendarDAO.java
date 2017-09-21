@@ -22,4 +22,6 @@ public interface CalendarDAO {
 
 	void updateDayPlan(DayPlanVO vo);
 
+	int createDayPlan(DayPlanVO vo);
+
 }

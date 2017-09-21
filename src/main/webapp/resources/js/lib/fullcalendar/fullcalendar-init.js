@@ -381,12 +381,11 @@ $(document).ready(function(){
 	            	splitedStartDate = date_styear+""+date_stmonth+""+date_stday; // item의 BTMRecord의 시작날짜
 	            	splitedEndDate = date_edyear+""+date_edmonth+""+date_edday;
 	        		
-	            	if(parseInt(dateSplited) < parseInt(splitedStartDate) || parseInt(dateSplited) > parseInt(splitedEndDate)){
+	            	if(parseInt(dateSplited) <= parseInt(splitedStartDate) || parseInt(dateSplited) > parseInt(splitedEndDate)){
 	            		notHaveBTM += 1;
 	            	}
 	        	});//end each
         	}
-        	
         	
         	//리스트를 띄우기 전에 테이블 body를 모두 비운다. 
         	$('#DayRecordTable').html('');
@@ -458,8 +457,7 @@ $(document).ready(function(){
 	        	    $('#currentPercent').append('달성률:'+" "+ sumAchieve+"%");
 	        	}else if(PlanTitle.length == 0 && (parseInt(dateSplited) != parseInt(today)) && notHaveBTM+1 == btmRecordlist.length){
 	        		notNomal = 1;
-	        		$('#inputPercent').attr('placeholder','입력할 수 있는 기간이 아닙니다.');
-	        		$('#inputPercent').attr('readonly','readonly');
+	        		$('#inputPercent').attr('placeholder','입력은 가능 - 달성 불가');
 	        		$('#currentPercent').html('');
 	        	    $('#currentPercent').append('달성률:'+" "+ sumAchieve+"%");
 	        	}
@@ -484,8 +482,7 @@ $(document).ready(function(){
 	 	   				        '</tr>'
 	 	   		        );
  	        		}else{
- 	        			$('#inputPercent').attr('placeholder','입력할 수 있는 기간이 아닙니다.');
- 	        			$('#inputPercent').attr('readonly','readonly');
+ 	        			$('#inputPercent').attr('placeholder','입력은 가능 - 달성 불가');
 	 	        		$('#currentPercent').html('');
 	 	        	    $('#currentPercent').append('달성률:'+" "+ sumAchieve+"%");	
 	 	       	        $('#DayRecordTable').append(
