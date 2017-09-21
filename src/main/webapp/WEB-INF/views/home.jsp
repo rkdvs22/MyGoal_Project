@@ -34,9 +34,6 @@
 	<script src="/goal/resources/js/lib/tether/tether.min.js"></script>
 	<script src="/goal/resources/js/lib/bootstrap/bootstrap.min.js"></script>
 	<script src="/goal/resources/js/plugins.js"></script>
-	<script src="/goal/resources/js/lib/jquery/jquery.min.js"></script>
-	<script src="/goal/resources/js/lib/tether/tether.min.js"></script>
-	<script src="/goal/resources/js/lib/bootstrap/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/goal/resources/js/lib/jqueryui/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="/goal/resources/js/lib/lobipanel/lobipanel.min.js"></script>
 	<script type="text/javascript" src="/goal/resources/js/lib/match-height/jquery.matchHeight.min.js"></script>

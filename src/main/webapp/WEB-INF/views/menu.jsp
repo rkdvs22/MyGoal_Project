@@ -41,6 +41,20 @@
 </head>
 <body class="with-side-menu-compact dark-theme dark-theme-green">
 <script>
+	$(document).ready(function() {
+		//프로필 사진 클릭시 드롭다운 메뉴
+		$(".dropdown-toggle").on("click", function() {
+			var currentValue = $(this).attr("aria-expanded");
+			if (currentValue == "true") {
+				$(this).attr("aria-expanded", "false");
+				$(this).parent().removeClass("show");
+			} else {
+				$(this).attr("aria-expanded", "true");
+				$(this).parent().addClass("show");
+			}
+		});
+	})
+	
 	// 로그인 화면으로 이동
 	function loginForm() {
 		location.href = "/goal/member/loginForm";

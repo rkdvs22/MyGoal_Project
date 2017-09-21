@@ -6,7 +6,10 @@
 <head>
 <meta charset="utf-8">
 <title>목표 트리</title>
-<script src="/goal/resources/js/jquery-3.2.1.min.js"></script>
+<script src="/goal/resources/js/lib/jquery/jquery.min.js"></script>
+<script src="/goal/resources/js/lib/tether/tether.min.js"></script>
+<script src="/goal/resources/js/lib/bootstrap/bootstrap.min.js"></script>
+<script src="/goal/resources/js/plugins.js"></script>
 <script>
 	$(function() {
 		$(".pop").hide();	//레이어 팝업창 숨김
@@ -339,8 +342,7 @@
 <link rel="stylesheet" href="css/lib/font-awesome/font-awesome.min.css">
 <link rel="stylesheet" href="css/lib/bootstrap/bootstrap.min.css">
 <link rel="stylesheet" href="/goal/resources/css/main.css">
-<link rel="stylesheet"
-	href="/goal/resources/css/goaltree/goaltree.css?version=7">
+<link rel="stylesheet" href="/goal/resources/css/goaltree/goaltree.css?version=7">
 </head>
 <body>
 	<div class="page-content">
