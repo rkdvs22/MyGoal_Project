@@ -67,5 +67,19 @@
 		select sum(achieve) from DayRecord where BTMRecordNum = #{btmRecordNum} group by BTMRecordNum
 		
 	</select>
+	
+	<select id = "deleteDayPlan" parameterType="int">
+	
+		delete from dayPlan where DayPlanNum = #{dayPlanNum} 
+	
+	</select>
+	
+	<update id="updateDayPlan" parameterType="DayPlanVO">
+		
+		update DayPlan set 
+		dContents = #{dContents}, startTime = to_date(#{startTime},'yyyy/mm/dd hh24:mi'), 
+		endTime = to_date(#{endTime},'yyyy/mm/dd hh24:mi') WHERE dayPlanNum = #{dayPlanNum}
+
+	</update>
 
 </mapper>

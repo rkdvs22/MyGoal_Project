@@ -95,5 +95,16 @@ public class CalendarServiceImpl implements CalendarService{
 		return nomalPlanList;
 	}
 
+	@Override
+	public void deleteDayPlan(int dayPlanNum) {
+		dao.deleteDayPlan(dayPlanNum);
+	}
+
+	@Override
+	public void updateDayPlan(DayPlanVO vo) {
+		dao.updateDayPlan(vo);
+	}
+
+
 }
 

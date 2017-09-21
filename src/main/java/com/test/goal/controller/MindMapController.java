@@ -72,6 +72,8 @@ public class MindMapController {
 		MemberGoalNum.put("아이언맨", 82);
 		MemberGoalNum.put("엔트맨", 83);
 		MemberGoalNum.put("승무쌤", 84);
+		
+		//준소쿠수 - 명예부원 (제5의 부원 조준석)
 		return service.randomAllocate(MemberGoalNum,progressNum,isClick,request,clickedNodeTitle,clickedNodeNum,BTMSectionNum);
 	}
 	

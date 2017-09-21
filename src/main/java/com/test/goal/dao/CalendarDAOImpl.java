@@ -56,4 +56,16 @@ public class CalendarDAOImpl implements CalendarDAO{
 		return mapper.getNomalPlanlist(userid);
 	}
 
+	@Override
+	public void deleteDayPlan(int dayPlanNum) {
+		CalendarMapper mapper = sqlsession.getMapper(CalendarMapper.class);
+	    mapper.deleteDayPlan(dayPlanNum);
+	}
+
+	@Override
+	public void updateDayPlan(DayPlanVO vo) {
+		CalendarMapper mapper = sqlsession.getMapper(CalendarMapper.class);
+	    mapper.updateDayPlan(vo);
+	}
+
 }

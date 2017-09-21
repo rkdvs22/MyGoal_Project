@@ -34,12 +34,14 @@
    <%@ include file="../menu.jsp" %>
 	<script>
 	
+		var clickedDate = "";
 		var tbtmRecordNum = 0;
 	    var tdayPlanNum = 0;
 		var tuid = 0;
 		var ttitle = "";
 		var tstartTime = "";
 		var tendTime = "";
+	    var trNumber = "";
 	    
 		//클릭한 날짜가 오늘 날짜인지 확인하는 변수 0이면 아님. 1이면 오늘날짜의 것. (1이면 클릭시 모달에서 수정이나 삭제가 가능하도록 (버튼이 보이도록))
 		var isToday = 0;
@@ -47,19 +49,30 @@
 			$(".update_time input").timepicki();
 		});
 		
-		function openDeleteModal(btmRecordNum,dayPlanNum){
+		function openDeleteModal(btmRecordNum,dayPlanNum,trNum){
 			$('#delete').on('click', function(e) { e.stopPropagation(); });
-			
 			tbtmRecordNum = btmRecordNum;
-			tdayPlanNum = dayPlanNum;
-			//삭제 내부 로직 작성  필요
-			
+		    tdayPlanNum = dayPlanNum;
+		    trNumber = trNum;
 			$("#delete").modal("show");
 		}
 		
 		function deleteModal(){
 			$('#delete').on('click', '[data-dismiss="modal"]', function(e) { e.stopPropagation(); });
-			$('#delete').modal('hide');
+			
+			//삭제 내부 로직 작성  필요
+		    $('#'+trNumber).html('');
+		    
+			$.ajax({
+				url: '/goal/calendar/deleteDayPlan',
+            	type: "POST",
+            	data:{"dayPlanNum":tdayPlanNum},
+            	dataType: "json",
+            	success: function() {
+            		alert('성공');
+            	}
+			});		
+					$('#delete').modal('hide');
 		}
 		
 		function openCreateModal(){
@@ -75,7 +88,9 @@
 			$('#create').modal('hide');
 		}
 		
-		  function openEditModal(btmRecordNum,dayPlanNum,uid,title,startTime,endTime){
+		  function openEditModal(clickedDay,btmRecordNum,dayPlanNum,uid,title,startTime,endTime){
+			  $('#edit').on('click', '[data-dismiss="modal"]', function(e) { e.stopPropagation(); });
+			  	 clickedDate = clickedDay+"";
 			  	 tbtmRecordNum = btmRecordNum;
 			   	 tdayPlanNum = dayPlanNum;
 				 tuid = uid;
@@ -83,9 +98,6 @@
 				 tstartTime = startTime;
 			     tendTime = endTime;
 		    	
-				$('#edit').on('click', function(e) { e.stopPropagation(); });
-				
-					
 				       var fn = $('#'+title).html();
 				       var ln = $('#'+startTime).html();
 				       var mn = $('#'+endTime).html();
@@ -96,23 +108,95 @@
 				$("#edit").modal("show");
 			}
 		  
-		  
+		  //클릭한 날짜도 받아와야 함.
 		  //업데이트를 실행하는 모달
 		  function updateModal(){
-			  
 			  var fn = $('#fn').val();
               var mn = $('#ln').val();
               var ln = $('#mn').val();
               
+			  $('#edit').on('click', '[data-dismiss="modal"]', function(e) { e.stopPropagation(); });
               $('#'+ttitle).html(fn);
               $('#'+tstartTime).html(mn);
               $('#'+tendTime).html(ln);
               
               //쿼리만 날리면 됨.
               
+              //클릭한 날짜의 시간을 형식에 맞춰서 넣음
+              
+              var clickDaySplit = clickedDate.split("");
+              var year = clickDaySplit[0]+clickDaySplit[1]+clickDaySplit[2]+clickDaySplit[3];
+              var month = clickDaySplit[4]+clickDaySplit[5];
+              var day = clickDaySplit[6]+clickDaySplit[7];
+              
+              var clickDayToString = year + "/" + month + "/" + day;
+              var startTime = "";
+              var endTime = "";
+              
+              var splitMn = "";
+              var splitLn = "";
+              var isMnPmAm = "";
+              var islnPmAm = "";
+              
+              var dateSplitTime1 = mn.split(" ");
+              splitMn = dateSplitTime1[0];
+              isMnPmAm = dateSplitTime1[1];
+              
+              if(isMnPmAm == "PM"){
+            	  var splitPM = splitMn.split(":");
+            	  var minute = "";
+            	  if(parseInt(splitPM[1]) < 10){
+            		  minute = "0" + parseInt(splitPM[1]); 
+            	  }else{
+            		  minute =  parseInt(splitPM[1]);
+            	  }
+            	  splitMn = parseInt(splitPM[0]) + 12 + ":" + minute;
+              }
+              
+              var dateSplitTime2 = ln.split(" ");
+              splitLn = dateSplitTime2[0]; 
+              islnPmAm = dateSplitTime2[1];
+              
+              if(islnPmAm == "PM"){
+            	  var splitPM2 = splitLn.split(":");
+            	  var minute2 = "";
+            	  if(parseInt(splitPM2[1]) < 10){
+            		  minute2 = "0" + parseInt(splitPM2[1]); 
+            	  }else{
+            		  minute2 =  parseInt(splitPM2[1]);
+            	  }
+            	  splitLn = parseInt(splitPM2[0]) + 12 + ":" + minute2;
+              }
+              
+              startTime = clickDayToString + " " + splitMn;
+              endTime = clickDayToString + " " + splitLn;
+              
+              
+              $.ajax({
+				url: '/goal/calendar/updateDayPlan',
+            	type: "POST",
+            	data:{"dContents":fn,"startTime":startTime,"endTime":endTime,"dayPlanNum":tdayPlanNum},
+            	dataType: "json",
+            	success: function() {
+            		alert('성공');
+            	}
+			});		
+              
+              
               $("#edit").modal("hide");
               
 		  }
+		  
+			function closeModal(){
+				$('#create').on('click', function(e) { e.stopPropagation(); });
+				
+				//내부로직 작성 필
+				$('#calendar').fullCalendar('removeEvents');
+   				 $('#calendar').fullCalendar('refetchEvents');
+
+				$("#warning").modal("hide");
+			}
+			
 		
 	</script>
 	
@@ -173,7 +257,7 @@
 									</li>
 									<li>
 										<div class="color-double orange"><div></div></div>
-										일일목표
+										일일계획
 									</li>
 								</ul>
 							</div>
@@ -286,7 +370,7 @@
 								
 								</div> <!-- end body -->
 				                <div class="modal-footer">
-				                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+				                    <button type="button" class="btn btn-default pull-left" onclick = "closeModal()">Close</button>
 				                </div>
 				            </div><!-- /.modal-content -->
 				        </div><!-- /.modal-dialog -->
@@ -304,7 +388,7 @@
 	<script type="text/javascript" src="/goal/resources/js/lib/moment/moment-with-locales.min.js?version=4"></script>
 	<script type="text/javascript" src="/goal/resources/js/lib/eonasdan-bootstrap-datetimepicker/bootstrap-datetimepicker.min.js?version=4"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar.js?version=10"></script>
-	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=49"></script>
+	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=55"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/ko.js"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/tableModal.js?version=3"></script>
     <script src="/goal/resources/js/app.js?version=4"></script>

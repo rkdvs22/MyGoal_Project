@@ -20,5 +20,9 @@ public interface CalendarMapper {
 
 	public int getAchieve(int btmRecordNum);
 
+	public void deleteDayPlan(int dayPlanNum);
+
+	public void updateDayPlan(DayPlanVO vo);
+
 
 }

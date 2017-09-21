@@ -18,4 +18,8 @@ public interface CalendarDAO {
 
 	ArrayList<DayPlanVO> getNomalPlanlist(String userid);
 
+	void deleteDayPlan(int dayPlanNum);
+
+	void updateDayPlan(DayPlanVO vo);
+
 }

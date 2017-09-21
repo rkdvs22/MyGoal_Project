@@ -3,6 +3,7 @@ package com.test.goal.controller;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -64,5 +65,18 @@ public class CalendarController {
 		DayRecordList = service.getChartRecord(BTMRecordNum,memberId);
 		
 		return DayRecordList;
+	}
+	
+	@RequestMapping(value = "deleteDayPlan", method = RequestMethod.POST)
+	@ResponseBody
+	public void deleteDayPlan(int dayPlanNum) {
+		service.deleteDayPlan(dayPlanNum);
+	}
+	
+	@RequestMapping(value = "updateDayPlan", method = RequestMethod.POST)
+	@ResponseBody
+	public void updateDayPlan(DayPlanVO vo) {
+		
+		service.updateDayPlan(vo);
 	}
 }

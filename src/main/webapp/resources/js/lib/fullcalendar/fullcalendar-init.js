@@ -3,10 +3,9 @@ $(document).ready(function(){
 /* ==========================================================================
     Fullcalendar
     ========================================================================== */
-		
+	var btmRecordlist = "";	
 	var dayRecordlist = "";
 	var nomallist = "";
-	var turnKey = "";
 	
 	$('#calendar').fullCalendar('today');
 	$('.fc-event').css('font-size', '.6em');
@@ -36,10 +35,12 @@ $(document).ready(function(){
                 	dataType: "json",
                 	success: function(result) {
                 		
+                		btmRecordlist = result.BTMRecordlist;
                 		dayRecordlist = result.DayRecordlist;
                 		nomallist = result.nomallist;
                     	var totalEvents = [];
                     	if(result.BTMRecordlist != null){
+                    		
 	                    	$(result.BTMRecordlist).each(function(item,index) {
 	                    		totalEvents.push({
 	                            	title: $(this).attr('bgoalTitle'),
@@ -307,7 +308,7 @@ $(document).ready(function(){
             });
         },
         
-        dayClick: function(date, jsEvent, view) {
+        dayClick: function(date, jsEvent, view, calEvent) {
         	      /*alert('Clicked on: ' + date.format());
         	      alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
         	      alert('Current view: ' + view.name);*/
@@ -318,9 +319,8 @@ $(document).ready(function(){
         	      */
         
         var btmRecordNum = 0;	
-        var BTMKey = 1;
         var notNomal = 0;
-        var notDateNomal = 0;
+        var notHaveBTM = 0;
         //월에 대한 페이지인가?	
        if(view.name == "month"){
     	   
@@ -358,12 +358,36 @@ $(document).ready(function(){
         	var NomalNum = [];
         	var btmRecordNum = 0;
         	
+        	//현재 클릭한 것이 세부목표가 있는지 없는지를 검사한다.
+        	if(btmRecordlist != null){
+        		$(btmRecordlist).each(function(index,item) {
+        			var splitedStartDate = "";
+	        		var splitedEndDate = "";
+	        		
+	        		//startDate 가공
+	            	var dateSplitPlan3 = item.startDate.split("-");
+	            	date_styear = dateSplitPlan3[0]; 
+	            	date_stmonth = dateSplitPlan3[1]; 
+	            	date_stday = dateSplitPlan3[2];
+	            	
+	            	//endDate 가공
+	            	var dateSplitPlan4 = item.endDate.split("-");
+	            	date_edyear = dateSplitPlan4[0]; 
+	            	date_edmonth = dateSplitPlan4[1]; 
+	            	date_edday = dateSplitPlan4[2];
+	            	
+	            	splitedStartDate = date_styear+""+date_stmonth+""+date_stday; // item의 BTMRecord의 시작날짜
+	            	splitedEndDate = date_edyear+""+date_edmonth+""+date_edday;
+	        		
+	            	if(parseInt(dateSplited) < parseInt(splitedStartDate) || parseInt(dateSplited) > parseInt(splitedEndDate)){
+	            		notHaveBTM += 1;
+	            	}
+	        	});//end each
+        	}
+        	
+        	
         	//리스트를 띄우기 전에 테이블 body를 모두 비운다. 
         	$('#DayRecordTable').html('');
-        	
-        	console.log(dayRecordlist);
-        	console.log(nomallist);
-        	
         	
         	if(dayRecordlist != null){
 	        	$(dayRecordlist).each(function(index,item) {
@@ -407,6 +431,7 @@ $(document).ready(function(){
 	            	splitedStartDate = date_styear+""+date_stmonth+""+date_stday; // item의 BTMRecord의 시작날짜
 	            	splitedEndDate = date_edyear+""+date_edmonth+""+date_edday;
 	            		
+	            	
 	            	//해당 기간에 속한다면
 	            	if(parseInt(dateSplited) >= parseInt(splitedStartDate) && parseInt(dateSplited) <= parseInt(splitedEndDate) && item.btmRecordNum != 0){
             			sumAchieve = item.achieve;
@@ -419,15 +444,14 @@ $(document).ready(function(){
     	            		PlanEndTime.push(splitedEndTime);
     	            		PlanNum.push(item.dayPlanNum);
             			}
-	            	}
-	            		
+	            	}	
 	        	});//end each
 	        	
 	        	if(PlanTitle.length == 0 && (parseInt(dateSplited) == parseInt(today))){
 	        		$('#inputPercent').attr('placeholder','100이내의 숫자');
 	        		$('#currentPercent').html('');
 	        	    $('#currentPercent').append('달성률:'+" "+ sumAchieve+"%");
-	        	}else if(PlanTitle.length == 0 && (parseInt(dateSplited) != parseInt(today))){
+	        	}else if(PlanTitle.length == 0 && (parseInt(dateSplited) != parseInt(today)) && notHaveBTM+1 == btmRecordlist.length){
 	        		notNomal = 1;
 	        		$('#inputPercent').attr('placeholder','입력할 수 있는 기간이 아닙니다.');
 	        		$('#inputPercent').attr('readonly','readonly');
@@ -444,6 +468,16 @@ $(document).ready(function(){
  	        			$('#inputPercent').attr('placeholder','100이내의 숫자');
  	        			$('#currentPercent').html('');
  	        	        $('#currentPercent').append('달성률:'+" "+ sumAchieve+"%");
+ 	        	        $('#DayRecordTable').append(
+	 	   		            	'<tr id="d'+index+'">'+
+	 	   				            '<td id="n'+index+'">'+(index+1)+'</td>'+
+	 	   				            '<td id="f'+index+'">'+PlanTitle[index]+'</td>'+
+	 	   				            '<td id="l'+index+'">'+PlanStartTime[index]+'</td>'+
+	 	   				            '<td id="m'+index+'">'+PlanEndTime[index]+'</td>'+
+	 	   				            '<td><button type="button" data-toggle="modal" onclick = "openEditModal('+parseInt(dateSplited)+','+btmRecordNum+','+PlanNum[index]+','+index+1+','+'\'f'+index+'\''+','+'\'l'+index+'\''+','+'\'m'+index+'\')" data-uid="'+index+1+'" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
+	 	   				            '<td><button type="button" data-toggle="modal" onclick= "openDeleteModal('+btmRecordNum+','+PlanNum[index]+','+'\'d'+index+'\')" data-uid="'+index+1+'" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>'+
+	 	   				        '</tr>'
+	 	   		        );
  	        		}else{
  	        			$('#inputPercent').attr('placeholder','입력할 수 있는 기간이 아닙니다.');
  	        			$('#inputPercent').attr('readonly','readonly');
@@ -455,15 +489,15 @@ $(document).ready(function(){
 	 	   				            '<td id="f'+index+'">'+PlanTitle[index]+'</td>'+
 	 	   				            '<td id="l'+index+'">'+PlanStartTime[index]+'</td>'+
 	 	   				            '<td id="m'+index+'">'+PlanEndTime[index]+'</td>'+
-	 	   				            '<td><button type="button" data-toggle="modal" onclick = "openEditModal('+btmRecordNum+','+PlanNum[index]+','+index+1+','+'\'f'+index+'\''+','+'\'l'+index+'\''+','+'\'m'+index+'\')" data-uid="'+index+1+'" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
-	 	   				            '<td><button type="button" data-toggle="modal" onclick= "openDeleteModal('+btmRecordNum+','+PlanNum[index]+')" data-uid="'+index+1+'" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>'+
+	 	   				            '<td><button type="button" data-toggle="modal" onclick = "openEditModal('+parseInt(dateSplited)+','+btmRecordNum+','+PlanNum[index]+','+index+1+','+'\'f'+index+'\''+','+'\'l'+index+'\''+','+'\'m'+index+'\')" data-uid="'+index+1+'" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
+	 	   				            '<td><button type="button" data-toggle="modal" onclick= "openDeleteModal('+btmRecordNum+','+PlanNum[index]+','+'\'d'+index+'\')" data-uid="'+index+1+'" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>'+
 	 	   				        '</tr>'
 	 	   		        );
  	        		}
- 	        	});
+ 	        	});//end each
         	}//end if (세부목표가 있는 DayPlan 모달 생성 구간 종료)
         	
-        	
+        
         	// 세부 목표가 없는 DayPlan을 가공한 후에 각각 배열에 담는 구간 
         	
         	if(btmRecordNum == 0){
@@ -504,12 +538,10 @@ $(document).ready(function(){
 		            	}
 		        	});//end each
 		        		
-		        
-		        	alert('bb');
 		        	
 		        		//여기서 부터 이제 새부 목표가 있는지 없는지 확인해야 함(NomalTitle.length =0 이라면) 없다면 key를 사용해서 아래에서 새롭게 만들어줘야됨.
+		        	if(NomalTitle.length != 0){
 		        		$(NomalTitle).each(function(index,item) {
-		        			notDateNomal
 		        			
 			        		$('#inputPercent').attr('placeholder','진행중인 세부목표가 없습니다.');
 		 	        		$('#currentPercent').html('');
@@ -522,13 +554,19 @@ $(document).ready(function(){
 		 	   				            '<td id="f'+index+'">'+NomalTitle[index]+'</td>'+
 		 	   				            '<td id="l'+index+'">'+NomalStartTime[index]+'</td>'+
 		 	   				            '<td id="m'+index+'">'+NomalEndTime[index]+'</td>'+
-		 	   				            '<td><button type="button" data-toggle="modal" onclick = "openEditModal('+1+','+NomalNum[index]+','+index+1+','+'\'f'+index+'\''+','+'\'l'+index+'\''+','+'\'m'+index+'\')" data-uid="'+index+1+'" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
-		 	   				            '<td><button type="button" data-toggle="modal" onclick="openDeleteModal('+btmRecordNum+','+NomalNum[index]+')" data-uid="'+index+1+'" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>'+
+		 	   				            '<td><button type="button" data-toggle="modal" onclick = "openEditModal('+parseInt(dateSplited)+','+1+','+NomalNum[index]+','+index+1+','+'\'f'+index+'\''+','+'\'l'+index+'\''+','+'\'m'+index+'\')" data-uid="'+index+1+'" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
+		 	   				            '<td><button type="button" data-toggle="modal" onclick="openDeleteModal('+btmRecordNum+','+NomalNum[index]+','+'\'d'+index+'\')" data-uid="'+index+1+'" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>'+
 		 	   				        '</tr>'
 		 	   		        );
 		 	        			
 		 	        	});
-		        	
+		        	}else if(NomalTitle.length == 0 && notNomal==0){
+		        		$('#inputPercent').attr('placeholder','진행중인 세부목표가 없습니다.');
+	 	        		$('#currentPercent').html('');
+	 	   	 	        $('#currentPercent').append("세부목표 없음");
+	 	   	        	$('#dayAchieve').attr('disabled','disabled');	
+	 	        		$('#inputPercent').attr('readonly','readonly');
+		        	}
 	        	}//end if
         	}
         
