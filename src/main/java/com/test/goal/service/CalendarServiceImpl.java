@@ -105,6 +105,11 @@ public class CalendarServiceImpl implements CalendarService{
 		dao.updateDayPlan(vo);
 	}
 
+	@Override
+	public int createDayPlan(DayPlanVO vo) {
+		return dao.createDayPlan(vo);
+	}
+
 
 }
 

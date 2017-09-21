@@ -318,7 +318,7 @@ $(document).ready(function(){
         	      alert('Clicked on: ' + date.format());
         	      */
         
-        var btmRecordNum = 0;	
+       
         var notNomal = 0;
         var notHaveBTM = 0;
         //월에 대한 페이지인가?	
@@ -337,6 +337,7 @@ $(document).ready(function(){
         	}
         	
         	var today = year+""+month+""+day
+        	getToday = year+"/"+month+"/"+day;
         	
         	var dateSplit = date.format().split("-");
         	date_year = dateSplit[0]; 
@@ -345,6 +346,8 @@ $(document).ready(function(){
         	var dateSplited = date_year + "" + date_month + "" + date_day
         		
         	// 세부 목표가 잇는 DayPlan을 가공한 후에 각각 배열에 담는 구간 
+        	
+        	dayClick = parseInt(dateSplited);
         	
         	var PlanTitle = [];
         	var PlanStartTime = [];
@@ -356,7 +359,6 @@ $(document).ready(function(){
         	var NomalStartTime = [];
         	var NomalEndTime = [];
         	var NomalNum = [];
-        	var btmRecordNum = 0;
         	
         	//현재 클릭한 것이 세부목표가 있는지 없는지를 검사한다.
         	if(btmRecordlist != null){
@@ -435,10 +437,11 @@ $(document).ready(function(){
 	            	//해당 기간에 속한다면
 	            	if(parseInt(dateSplited) >= parseInt(splitedStartDate) && parseInt(dateSplited) <= parseInt(splitedEndDate) && item.btmRecordNum != 0){
             			sumAchieve = item.achieve;
+            			btmRecordNum = item.btmRecordNum;
             			
             			// 클릭한 날짜에 직접적으로 속한다면 
             			if(splited == dateSplited){
-            				btmRecordNum = item.btmRecordNum;
+            				dayRecordNum = item.dayRecordNum;
             				PlanTitle.push(item.dContents);
     	            		PlanStartTime.push(splitedStartTime);
     	            		PlanEndTime.push(splitedEndTime);
@@ -446,6 +449,8 @@ $(document).ready(function(){
             			}
 	            	}	
 	        	});//end each
+	        	
+	        	
 	        	
 	        	if(PlanTitle.length == 0 && (parseInt(dateSplited) == parseInt(today))){
 	        		$('#inputPercent').attr('placeholder','100이내의 숫자');
@@ -530,6 +535,7 @@ $(document).ready(function(){
 		            	if(item.btmRecordNum == 0){
 			            	if(splited == dateSplited){
 			            		//현재 클릭한 날짜와 받아온 planVO의 날짜가 일치한다면  plan명, 시작시간, 종료시간을 각각 배열에 담는다.
+	            				dayRecordNum = item.dayRecordNum;
 			            		NomalTitle.push(item.dContents);
 			            		NomalStartTime.push(splitedStartTime);
 			            		NomalEndTime.push(splitedEndTime);

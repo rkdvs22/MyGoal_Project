@@ -33,7 +33,10 @@
 <body>
    <%@ include file="../menu.jsp" %>
 	<script>
-	
+		var getToday = "";
+	 	var btmRecordNum = 0;	
+		var dayRecordNum = 0;
+	 	
 		var clickedDate = "";
 		var tbtmRecordNum = 0;
 	    var tdayPlanNum = 0;
@@ -42,6 +45,8 @@
 		var tstartTime = "";
 		var tendTime = "";
 	    var trNumber = "";
+	    var index = 1;
+	    var dayClick = "";
 	    
 		//클릭한 날짜가 오늘 날짜인지 확인하는 변수 0이면 아님. 1이면 오늘날짜의 것. (1이면 클릭시 모달에서 수정이나 삭제가 가능하도록 (버튼이 보이도록))
 		var isToday = 0;
@@ -49,9 +54,9 @@
 			$(".update_time input").timepicki();
 		});
 		
-		function openDeleteModal(btmRecordNum,dayPlanNum,trNum){
+		function openDeleteModal(btmRecordNumber,dayPlanNum,trNum){
 			$('#delete').on('click', function(e) { e.stopPropagation(); });
-			tbtmRecordNum = btmRecordNum;
+			tbtmRecordNum = btmRecordNumber;
 		    tdayPlanNum = dayPlanNum;
 		    trNumber = trNum;
 			$("#delete").modal("show");
@@ -79,19 +84,80 @@
 			$('#create').on('click', function(e) { e.stopPropagation(); });
 			
 			//내부로직 작성 필
+			if($('#f0').attr('id') != null){
+				var trUid = $('#DayRecordTable tr:last').attr('id');
+				var trUidCode = trUid.split("");
+				index = parseInt(trUidCode[1])+2; 
+			}
+			 
+			$('#tn').val('');
+			$('#sn').val('');
+			$('#en').val('');
 			
 			$("#create").modal("show");
 		}
 		
 		function createModal(){
 			$('#create').on('click', '[data-dismiss="modal"]', function(e) { e.stopPropagation(); });
+			
+			var title = $('#tn').val(); 
+			var startTime = $('#sn').val();
+			var endTime = $('#en').val();	
+			
+			var splitStartTime = "";
+			var splitEndTime = "";
+			
+			var splitStart = startTime.split(" ");
+			splitStartTime = splitStart[0]; 
+			
+			var splitEnd = endTime.split(" ");
+			splitEndTime = splitEnd[0]; 
+				
+			//ajax 날리고 해당 dayRecordNum을 받아와야됨 미리 그걸 delete함수에 넣어줘야됨 자바 스크립트에서 클릭한 날짜를 받아와야함..
+			// dayRecordNum 시퀀스 역시 미리 dual에서 받아와야 함. (btmRecordNum만 1로 넣으면 됨.)
+			  dayClick = dayClick+"";
+			
+			  var clickDaySplit = dayClick.split("");
+              var year = clickDaySplit[0]+clickDaySplit[1]+clickDaySplit[2]+clickDaySplit[3];
+              var month = clickDaySplit[4]+clickDaySplit[5];
+              var day = clickDaySplit[6]+clickDaySplit[7];
+              
+              var clickDayToString = year + "/" + month + "/" + day;
+              
+              var sendStartTime = clickDayToString+" "+ splitStartTime;
+              var sendEndTime = clickDayToString+" "+splitEndTime;
+              
+			alert(btmRecordNum);
+			
+		 	$.ajax({
+				url: '/goal/calendar/createDayPlan',
+            	type: "POST",
+            	data:{"dContents":title,"startTime":sendStartTime,"endTime":sendEndTime,"dComplete":"Y","btmRecordNum":btmRecordNum,"dayRecordNum":dayRecordNum,"startDate":clickDayToString,"getToday":getToday},
+            	dataType: "json",
+            	success: function() {
+            		alert('성공');
+            	}
+			});
+			
+			/*  $('#DayRecordTable').append(
+		   		        '<tr id="d'+index-1+'">'+
+		   		            '<td id="n'+index-1+'">'+(index+1)+'</td>'+
+		   		            '<td id="f'+index-1+'">'+title+'</td>'+
+				            '<td id="l'+index-1+'">'+startTime+'</td>'+
+		   		            '<td id="m'+index-1+'">'+endTime+'</td>'+
+		   		            '<td><button type="button" data-toggle="modal" onclick = "openEditModal('+dayClick+','+1+','+NomalNum[index]+','+index+','+'\'f'+(index-1)+'\''+','+'\'l'+(index-1)+'\''+','+'\'m'+(index-1)+'\')" data-uid="'+index+'" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
+		   		            '<td><button type="button" data-toggle="modal" onclick="openDeleteModal('+btmRecordNum+','+NomalNum[index]+','+'\'d'+(index-1)+'\')" data-uid="'+index+'" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>'+
+		   		        '</tr>'
+		   	 ); */
+			 
+			index = 1;
 			$('#create').modal('hide');
 		}
 		
-		  function openEditModal(clickedDay,btmRecordNum,dayPlanNum,uid,title,startTime,endTime){
+		  function openEditModal(clickedDay,btmRecordNumber,dayPlanNum,uid,title,startTime,endTime){
 			  $('#edit').on('click', '[data-dismiss="modal"]', function(e) { e.stopPropagation(); });
 			  	 clickedDate = clickedDay+"";
-			  	 tbtmRecordNum = btmRecordNum;
+			  	 tbtmRecordNum = btmRecordNumber;
 			   	 tdayPlanNum = dayPlanNum;
 				 tuid = uid;
 			     ttitle = title;
@@ -192,8 +258,9 @@
 				
 				//내부로직 작성 필
 				$('#calendar').fullCalendar('removeEvents');
-   				 $('#calendar').fullCalendar('refetchEvents');
-
+   				$('#calendar').fullCalendar('refetchEvents');
+   				btmRecordNum = 0;
+   				dayRecordNum = 0;
 				$("#warning").modal("hide");
 			}
 			
@@ -355,9 +422,9 @@
 									        <h4 class="modal-title">일정 생성</h4>
 									      </div>
 									      <div class="modal-body" style="background-color: white;">
-									                  일정명:  <input id="fn" type="text" class="form-control" name="fname" placeholder="일정 제목">
-										        시작시간: <div class ="create_time"><input id="ln" type="text" class="form-control" name="time" placeholder="시작시간"></div>
-										        종료시간: <div class ="create_time"><input id="mn" type="text" class="form-control" name="time" placeholder="종료시간"></div>
+									                  일정명:  <input id="tn" type="text" class="form-control" name="fname" placeholder="일정 제목">
+										        시작시간: <div class ="update_time"><input id="sn" type="text" class="form-control" name="time" placeholder="시작시간"></div>
+										        종료시간: <div class ="update_time"><input id="en" type="text" class="form-control" name="time" placeholder="종료시간"></div>
 									      </div>
 									      <div class="modal-footer">
 									        <button type="button" id="createRecord" onclick = "createModal()" class="btn btn-warning" >create</button>
@@ -371,7 +438,7 @@
 								</div> <!-- end body -->
 				                <div class="modal-footer">
 				                    <button type="button" class="btn btn-default pull-left" onclick = "closeModal()">Close</button>
-				                </div>
+				             </div>
 				            </div><!-- /.modal-content -->
 				        </div><!-- /.modal-dialog -->
 				    </div><!-- /.modal -->
@@ -388,7 +455,7 @@
 	<script type="text/javascript" src="/goal/resources/js/lib/moment/moment-with-locales.min.js?version=4"></script>
 	<script type="text/javascript" src="/goal/resources/js/lib/eonasdan-bootstrap-datetimepicker/bootstrap-datetimepicker.min.js?version=4"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar.js?version=10"></script>
-	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=55"></script>
+	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=57"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/ko.js"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/tableModal.js?version=3"></script>
     <script src="/goal/resources/js/app.js?version=4"></script>

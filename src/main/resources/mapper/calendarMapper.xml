@@ -39,7 +39,7 @@
 		select p.dcontents as "dContents",to_char(p.startTime,'yyyy-mm-dd-hh24-mi') as "startTime",
 		to_char(p.endTime,'yyyy-mm-dd-hh24-mi') as "endTime",p.dayPlanNum as "dayPlanNum", 
 		b.bRecordNum as "btmRecordNum", to_char(d.startDate,'yyyy-mm-dd') as "startDate",
-		b.startDate as "BTMstartDate", b.endDate as "BTMendDate" 
+		b.startDate as "BTMstartDate", b.endDate as "BTMendDate", d.DayRecordNum as "dayRecordNum" 
 		from DayPlan p inner join (select DayRecordNum,btmRecordNum, startDate from DayRecord) d 
 		on d.DayRecordNum = p.DayRecordNum
 		inner join (select bRecordNum,to_char(startDate,'yyyy-mm-dd') as startDate, to_char(endDate,'yyyy-mm-dd')
@@ -53,7 +53,7 @@
 		select p.dcontents as "dContents", to_char(p.startTime,'yyyy-mm-dd-hh24-mi') as "startTime",
 		to_char(p.endTime,'yyyy-mm-dd-hh24-mi') as "endTime", p.dayPlanNum as "dayPlanNum",
 		to_char(p.startTime,'yyyy-mm-dd') as "startDate",
-		to_char(p.endTime,'yyyy-mm-dd') as "endDate"
+		to_char(p.endTime,'yyyy-mm-dd') as "endDate", d.DayRecordNum as "dayRecordNum"
 		from DayPlan p inner join DayRecord d 
 		on p.DayRecordNum = d.DayRecordNum inner join BTMRecord b
 		on b.bRecordNum = d.btmRecordNum inner join (select memberId from calendar where calendarNum = 7) c 
@@ -81,5 +81,52 @@
 		endTime = to_date(#{endTime},'yyyy/mm/dd hh24:mi') WHERE dayPlanNum = #{dayPlanNum}
 
 	</update>
+	
+	<select id = "getDayPlanNumSequence" resultType="int">
+	
+		select DAYRECORD_SEQ.NEXTVAL from dual
+	
+	</select>
+	
+	<select id = "getDayRecordNum" resultType="int">
+	
+		select DAYRECORD_SEQ.NEXTVAL from dual
+	
+	</select>
+	
+	<insert id = "insertDayPlan" parameterType="DayPlanVO">
+		
+		insert into DayPlan values(#{dayPlanNum},to_date(#{startTime},'yyyy/mm/dd hh24:mi'),to_date(#{endTime},'yyyy/mm/dd hh24:mi'),#{dContents},'Y',#{dayRecordNum})
+		
+	</insert>
+	
+	<insert id = "insertDayPlan1" parameterType="DayPlanVO">
+		
+		insert into DayPlan values(#{dayPlanNum},to_date(#{startTime},'yyyy/mm/dd hh24:mi'),to_date(#{endTime},'yyyy/mm/dd hh24:mi'),#{dContents},'Y',#{dayRecordNum})
+		
+	</insert>
+	
+	
+	<select id = "findDayRecordNum" parameterType="DayPlanVO" resultType="int">
+		
+		select r.dayRecordNum from DayRecord r inner join calendar c 
+		on c.calendarNum = r.calendarNum inner join member m 
+		on c.memberId = m.userId
+		where to_char(r.startDate,'yyyy/mm/dd') = #{startDate} and m.userid = #{userId}
+		
+	</select>
+	
+	<insert id = "exInsertToDayRecord" parameterType="DayPlanVO">
+		
+		insert into DayRecord values(#{dayRecordNum},0,'',to_date(#{startDate},'yyyy/mm/dd'),'','Y',1,1)
+		
+	</insert>
+	
+	<insert id = "exInsertDayRecord" parameterType="DayPlanVO">
+		
+		insert into DayRecord values(#{dayRecordNum},0,'',to_date(#{startDate},'yyyy/mm/dd'),'','N',1,1)
+		
+	</insert>
+	
 
 </mapper>

@@ -22,4 +22,6 @@ public interface CalendarService {
 
 	void updateDayPlan(DayPlanVO vo);
 
+	int createDayPlan(DayPlanVO vo);
+
 }

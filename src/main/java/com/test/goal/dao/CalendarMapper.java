@@ -24,5 +24,18 @@ public interface CalendarMapper {
 
 	public void updateDayPlan(DayPlanVO vo);
 
+	public int getDayPlanNumSequence();
+
+	public void insertDayPlan(DayPlanVO vo);
+
+	public int findDayRecordNum(DayPlanVO vo);
+
+	public void exInsertDayRecord(DayPlanVO vo);
+
+	public void exInsertToDayRecord(DayPlanVO vo);
+
+	public void insertDayPlan1(DayPlanVO vo);
+
+	public int getDayRecordNum();
 
 }

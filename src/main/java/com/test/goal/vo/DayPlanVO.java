@@ -14,6 +14,8 @@ public class DayPlanVO {
 	private int achieve;
 	private String BTMstartDate;
 	private String BTMendDate;
+	private String userId;
+	private String getToday;
 	
 	public int getDayPlanNum() {
 		return dayPlanNum;
@@ -90,12 +92,29 @@ public class DayPlanVO {
 	public void setBTMendDate(String bTMendDate) {
 		BTMendDate = bTMendDate;
 	}
+	
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	
+	public String getGetToday() {
+		return getToday;
+	}
+	public void setGetToday(String getToday) {
+		this.getToday = getToday;
+	}
+	
 	@Override
 	public String toString() {
 		return "DayPlanVO [dayPlanNum=" + dayPlanNum + ", startTime=" + startTime + ", endTime=" + endTime
 				+ ", dContents=" + dContents + ", dComplete=" + dComplete + ", dayRecordNum=" + dayRecordNum
 				+ ", startDate=" + startDate + ", endDate=" + endDate + ", btmRecordNum=" + btmRecordNum + ", achieve="
-				+ achieve + ", BTMstartDate=" + BTMstartDate + ", BTMendDate=" + BTMendDate + "]";
+				+ achieve + ", BTMstartDate=" + BTMstartDate + ", BTMendDate=" + BTMendDate + ", userId=" + userId
+				+ ", getToday=" + getToday + "]";
 	}
+	
 	
 }
