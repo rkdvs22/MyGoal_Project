@@ -95,7 +95,7 @@ public class CreateGoalController {
 	public void writeBoard(TopGoalVO tvo) {
 		
 		BoardVO vo = new BoardVO();
-		vo.setTgoalnum(tvo.gettGoalNum());
+		vo.settGoalNum(tvo.gettGoalNum());
 		vo.setUserid(tvo.getUserid());
 		dao.writeBoard(vo);
 	}

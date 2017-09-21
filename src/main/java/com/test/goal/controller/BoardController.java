@@ -45,7 +45,7 @@ public class BoardController {
 	}
 	
 	// 좋아요 기능
-	@RequestMapping(value = "addFavorite", method = RequestMethod.POST)
+	@RequestMapping(value = "addFavorite", method = RequestMethod.GET)
 	@ResponseBody
 	public void addFavorite(int boardnum) {
 		service.addFavorite(boardnum);

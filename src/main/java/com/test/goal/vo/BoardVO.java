@@ -4,29 +4,30 @@ public class BoardVO {
 	private int boardnum;
 	private String userid;
 	private int favorite;
-	private int tgoalnum;
+	private int tGoalNum;
 	private String startDate;
 	private String endDate;
 	private int currentMemberNumber; 
 	private int maxMember;
 	private String tGoalTitle;
 	private String openStatus;
+	private int progressNum;
 	
 	public BoardVO() {	}
 
-	public BoardVO(int boardnum, String userid, int favorite, int tgoalnum, String startDate, String endDate,
-			int currentMemberNumber, int maxMember, String tGoalTitle, String openStatus) {
-		super();
+	public BoardVO(int boardnum, String userid, int favorite, int tGoalNum, String startDate, String endDate,
+			int currentMemberNumber, int maxMember, String tGoalTitle, String openStatus, int progressNum) {
 		this.boardnum = boardnum;
 		this.userid = userid;
 		this.favorite = favorite;
-		this.tgoalnum = tgoalnum;
+		this.tGoalNum = tGoalNum;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.currentMemberNumber = currentMemberNumber;
 		this.maxMember = maxMember;
 		this.tGoalTitle = tGoalTitle;
 		this.openStatus = openStatus;
+		this.progressNum = progressNum;
 	}
 
 	public int getBoardnum() {
@@ -53,12 +54,12 @@ public class BoardVO {
 		this.favorite = favorite;
 	}
 
-	public int getTgoalnum() {
-		return tgoalnum;
+	public int gettGoalNum() {
+		return tGoalNum;
 	}
 
-	public void setTgoalnum(int tgoalnum) {
-		this.tgoalnum = tgoalnum;
+	public void settGoalNum(int tGoalNum) {
+		this.tGoalNum = tGoalNum;
 	}
 
 	public String getStartDate() {
@@ -85,11 +86,11 @@ public class BoardVO {
 		this.currentMemberNumber = currentMemberNumber;
 	}
 
-	public int getmaxMember() {
+	public int getMaxMember() {
 		return maxMember;
 	}
 
-	public void setmaxMember(int maxMember) {
+	public void setMaxMember(int maxMember) {
 		this.maxMember = maxMember;
 	}
 
@@ -109,12 +110,21 @@ public class BoardVO {
 		this.openStatus = openStatus;
 	}
 
+	public int getProgressNum() {
+		return progressNum;
+	}
+
+	public void setProgressNum(int progressNum) {
+		this.progressNum = progressNum;
+	}
+
 	@Override
 	public String toString() {
-		return "BoardVO [boardnum=" + boardnum + ", userid=" + userid + ", favorite=" + favorite + ", tgoalnum="
-				+ tgoalnum + ", startDate=" + startDate + ", endDate=" + endDate + ", currentMemberNumber="
-				+ currentMemberNumber + ", maxMember=" + maxMember + ", tGoalTitle=" + tGoalTitle
-				+ ", openStatus=" + openStatus + "]";
+		return "BoardVO [boardnum=" + boardnum + ", userid=" + userid + ", favorite=" + favorite + ", tGoalNum="
+				+ tGoalNum + ", startDate=" + startDate + ", endDate=" + endDate + ", currentMemberNumber="
+				+ currentMemberNumber + ", maxMember=" + maxMember + ", tGoalTitle=" + tGoalTitle + ", openStatus="
+				+ openStatus + ", progressNum=" + progressNum + "]";
 	}
+
 	
 }

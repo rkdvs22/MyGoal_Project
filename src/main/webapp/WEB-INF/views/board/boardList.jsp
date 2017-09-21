@@ -76,7 +76,7 @@
 									<p class="user-card-row-name">${list.userid}</a></p>
 								</div>
 								<div class="tbl-cell tbl-cell-status">
-									<button type="button" class="btn btn-rounded btn-inline btn-success btn-sm" name="checkId" onclick="">Start</button>
+									<button type="button" class="btn btn-rounded btn-inline btn-success btn-sm" name="checkId" onclick="start()">Start</button>
 								</div>
 							</div>
 						</div>
@@ -87,8 +87,8 @@
 						<p>종료날짜</p><p>${list.endDate}</p>
 					</div>
 					<div class="card-typical-section">
-						<div class="card-typical-linked">${list.currentMemberNumber}/</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<a href="#" class="card-typical-likes" onclick="addFavorite('${boardnum}')">
+						<div class="card-typical-linked">${list.currentMemberNumber}/${list.maxMember}</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="#" class="card-typical-likes" onclick="addFavorite('${list.boardnum}')">
 							<i class="font-icon font-icon-heart" id="favoriteNum">${list.favorite}</i>
 						</a>
 					</div>
@@ -148,6 +148,11 @@
 			location.href= "/goal/board/boardList?currentPage=" + currentPage + "&searchSelect=" + searchSelect + "&searchKeyid=" + searchKeyid;
 		}
 		
+		// start 버튼 눌렀을때 (마방진 페이지로 이동)
+		function start() {
+			location.href = "/goal/createGoal/MGoalSquareForm?tgoalnum="+tgoalnum;
+		}
+		
 		// 좋아요 (이미지 클릭시 숫자 증가)
 		function addFavorite(boardnum) {
 			var result = confirm("좋아요 한다고");
@@ -155,7 +160,7 @@
 			if(result) {
 				$.ajax({
 					url: "/goal/board/addFavorite?boardnum="+boardnum,
-					type: "post",
+					type: "get",
 					/* data: {"boardnum":boardnum}, */
 					success: function() {
 						alert("favorite");					
@@ -164,6 +169,7 @@
 			}
 		}
 		
+		console.log('${goalList}');
 	</script>
 
 <script src="/goal/resources/js/app.js"></script>

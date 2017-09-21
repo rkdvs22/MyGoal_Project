@@ -55,6 +55,10 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 	@Override
 	public void writeBoard(BoardVO vo) {
 		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		// 목표 생성시 MemberList 테이블에 데이터 추가
+		MainProgressVO mvo = mapper.findProgressNum();
+		vo.setProgressNum(mvo.getProgressNum());
+		mapper.createMemberList(vo);
 		mapper.writeBoard(vo);
 	}
 	

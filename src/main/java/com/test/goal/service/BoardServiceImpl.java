@@ -22,6 +22,7 @@ public class BoardServiceImpl implements BoardService {
 	// 게시글 목록, 검색, 페이징
 	@Override
 	public ArrayList<BoardVO> boardList(Map<String, String> map, PageNavigator navi) {
+		ArrayList<BoardVO> vo = dao.boardList(map, navi.getStartRecord(), navi.getCountPerPage());
 		return dao.boardList(map, navi.getStartRecord(), navi.getCountPerPage());
 	}
 	
