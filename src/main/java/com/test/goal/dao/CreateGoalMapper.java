@@ -47,4 +47,6 @@ public interface CreateGoalMapper {
 	public int deleteCurrentMainProgress(MainProgressVO mVO); // 생성중이던 MainProgress의 데이터 삭제
 
 	public void createMemberList(BoardVO vo); // 목표 생성시 MemberList 테이블에 데이터 추가
+
+	public void deleteCurrentMemberList(String id);
 }

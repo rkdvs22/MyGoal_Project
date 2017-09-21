@@ -69,6 +69,7 @@
 		)
 	</select>
 	
+	<!-- 현재 최종목표에 대한 정보를 받아온다. -->
 	<select id="findCurrentTgoal" parameterType="BoardVO" resultType="MainProgressVO">
 		SELECT * FROM topgoal
 		WHERE tgoalnum = (
@@ -76,7 +77,7 @@
 		)
 	</select>
 	
-	<!-- 생성중이던 목표 게시글 삭제 : invaild table error????? -->
+	<!-- 생성중이던 목표 게시글 삭제 -->
 	<delete id="deleteCurrentBoard" parameterType="string">
 		DELETE FROM board
 		WHERE userid = #{id}
@@ -102,4 +103,14 @@
 		INSERT INTO MEMBERLIST(LISTNUM, READY, PLAYERTYPE, USERID, PROGRESSNUM)
 		VALUES(MEMBERLIST_SEQ.NEXTVAL, 'Y', 'HOST', #{userid}, #{progressNum})
 	</insert>
+	
+	<!-- 생성중이던 MemberList의 데이터 삭제 (Only HOST) -->
+	<delete id="deleteCurrentMemberList" parameterType="string">
+		DELETE FROM memberlist
+		WHERE userid = #{id}
+		AND listnum = (
+			SELECT MAX(listnum) FROM memberlist
+			WHERE userid = #{id}
+		)
+	</delete>
 </mapper>

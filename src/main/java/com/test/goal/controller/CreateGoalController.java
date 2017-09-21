@@ -330,15 +330,15 @@ public class CreateGoalController {
 	@ResponseBody
 	public BoardVO findThatGoal(String senderId) {
 		BoardVO vo = dao.findThatGoal(senderId);
+		System.out.println(vo);
 		return vo;
 	}
 	
 	// 초대한 목표로 이동한다.
 	@RequestMapping(value = "joinThatGoal", method = RequestMethod.GET)
-	public String joinThatGoal(int boardNum, int progressNum, String id) {
-		// mainprogress 테이블의 progressNum을 이용해 MEMBERLIST 테이블에 사용자의 ID를 추가한다.
-		// =================== 09.19 Save ====================
-		return "";
+	public String joinThatGoal(int boardNum, String id, Model model) {
+		dao.joinThatGoal(boardNum, id);
+		return "redirect:/";
 	}
 	
 	// 목표를 만든 사용자가 나가기 버튼을 클릭했을 경우 관련된 데이터를 삭제한다.

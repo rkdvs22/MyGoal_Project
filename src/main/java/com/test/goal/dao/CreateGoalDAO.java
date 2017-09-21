@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 
 import com.test.goal.vo.BoardVO;
 import com.test.goal.vo.MainProgressVO;
+import com.test.goal.vo.MemberListVO;
 import com.test.goal.vo.MemberVO;
 import com.test.goal.vo.TopGoalVO;
 
@@ -32,6 +33,8 @@ public interface CreateGoalDAO {
 	public MainProgressVO findCurrentTgoal(BoardVO vo); // 목표를 만든 사용자가 나가기 버튼을 클릭했을 경우 관련된 데이터를 삭제하기 위해 현재 MainProgress의 정보를 받아온다.
 
 	public void exitCreateGoal(String id); // 목표를 만든 사용자가 나가기 버튼을 클릭했을 경우 관련된 데이터를 삭제한다.
+
+	public MemberListVO joinThatGoal(int boardNum, String id); // 초대한 목표로 이동한다.
 	
 	
 	

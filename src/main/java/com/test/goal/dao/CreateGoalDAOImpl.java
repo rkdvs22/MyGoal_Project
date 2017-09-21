@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 
 import com.test.goal.vo.BoardVO;
 import com.test.goal.vo.MainProgressVO;
+import com.test.goal.vo.MemberListVO;
 import com.test.goal.vo.MemberVO;
 import com.test.goal.vo.TopGoalVO;
 
@@ -117,13 +118,19 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 	@Override
 	public void exitCreateGoal(String id) {
 		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
-		System.out.println(id);
 		BoardVO vo = findCurrentBoard(id);
-		System.out.println(vo);
 		MainProgressVO mVO = findCurrentTgoal(vo);
-		System.out.println(mVO);
 		mapper.deleteCurrentBoard(id);
 		mapper.deleteCurrentTgoal(vo);
+		mapper.deleteCurrentMemberList(id);
 		mapper.deleteCurrentMainProgress(mVO);
+	}
+
+	// 초대한 목표로 이동한다. BOARD, TOPGOAL, MAINPROGRESS, MEMBERLIST 테이블에 사용자를 등록한다.
+	@Override
+	public MemberListVO joinThatGoal(int boardNum, String id) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+//		mapper.input
+		return null;
 	}
 }

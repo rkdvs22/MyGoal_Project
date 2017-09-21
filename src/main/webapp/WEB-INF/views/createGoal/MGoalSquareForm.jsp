@@ -161,6 +161,27 @@
 	.checkList {
 		text-align: center;
 	}
+	
+	/* 유저 입장불가 칸에 대한 이미지 크기 조정 */
+	.empty-user {
+		width: 292px;
+		height: 64px;
+	}
+	
+	/* 배경 이미지 */
+	#background {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-image: url('/goal/resources/img/road.jpg');
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		background-size: 100%;
+		opacity: 0.2;
+		filter:alpha(opacity=40);
+	}
 </style>
 
 </head>
@@ -172,9 +193,7 @@ function noEvent() {
 	if (event.keyCode == 116) {
 		event.keyCode= 2;
 		return false;
-	}
-	else if(event.ctrlKey && (event.keyCode==78 || event.keyCode == 82))
-	{
+	} else if(event.ctrlKey && (event.keyCode==78 || event.keyCode == 82)) {
 		return false;
 	}
 }
@@ -697,7 +716,7 @@ $(function() {
 	// 친구초대를 위한 modal창 설정
 	$(".invite-modal").dialog({
 		autoOpen: false,
-		width: 350,
+		width: 450,
 		height: 500,
 		maxHeight: 500,
 		position: [500, 200],
@@ -721,9 +740,6 @@ $(function() {
 					data: {"nameList":nameList},
 					success: function(result) {
 						alert("초대 메시지를 전송하였습니다");
-					},
-					error: function(result) {
-						alert("초대 메시지 전송 실패! 다시 시도해주세요");
 					}
 				});
 				
@@ -805,6 +821,7 @@ $(function() {
 		$("#readyBtn").hide();
 	} else $("#startBtn").hide();
 	
+	// 사용자가 설정한 인원수를 벗어날 경우 그 만큼 X표시를 한다.
 	var maxMember = '${b_info.maxMember}';
 	switch (maxMember) {
 	case "1":
@@ -835,6 +852,7 @@ $(function() {
 	
 </script>
 
+<div id="background"></div>
 
 <!-- 최종목표, 중간목표 마방진 버튼 -->
 <article>

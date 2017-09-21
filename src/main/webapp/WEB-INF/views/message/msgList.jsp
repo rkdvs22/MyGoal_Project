@@ -8,10 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script src="/goal/resources/js/lib/jquery/jquery.min.js"></script>
-<script src="/goal/resources/js/lib/tether/tether.min.js"></script>
-<script src="/goal/resources/js/lib/bootstrap/bootstrap.min.js"></script>
-<script src="/goal/resources/js/plugins.js"></script>
+<script src="/goal/resources/js/jquery-3.2.1.min.js"></script>
 <script>
 	jQuery(document).ready(function() {
 	    jQuery('.tabs .tab-links a').on('click', function(e)  {
@@ -53,15 +50,16 @@
 					str += "<td> 날짜 : " + item.msgDate;
 					str += "</td></tr>";
 					str += "<tr><td colspan='2' class='msgContent'>";
-					if(item.msgContent == "초대하신 목표에 참가하시겠습니까?") {
-						item.msgContent += '<br><input type="button" value="승인" id="join-btn' + index + '" class="join-btn">';
-						item.msgContent += ' <input type="button" value="거절" id="notJoin-btn'+ index +'" class="notJoin-btn">';
+					if(item.msgContent == "초대하신 목표에 참가하시겠습니까?" && receivedMsg != '${sessionScope.userid}') {
 						senders[index] = item.sender;
+						item.msgContent += '<br><input type="button" value="승인" id="join-btn' + index + '" class="join-btn" onclick="joinGoal('+ index +')">';
+						item.msgContent += ' <input type="button" value="거절" id="notJoin-btn'+ index +'" class="notJoin-btn" onclick="notJoinGoal('+ index +')">';
 					}
 					str += item.msgContent;
 					str += "</td></tr>";
 					str += "</table>";
 					str += "</div><br>";
+					console.log(str);
 					
 					$("#tab1_right_top").append(str);
 				});
@@ -154,27 +152,23 @@
 	
 	
 	// 초대 메시지에 승인을 누를 시 해당하는 목표의 방으로 입장.
-	$(".join-btn").click(function() {
-		var btnId = $(this).attr("id");
-		var index = /\d/.exec(btnId);
-		console.log("숫자만 추출 : " + index);
+	function joinGoal(index) {
 		for(var i=0; i<=index; i++) {
 			if(senders[i] == senders[index]) {
 				$.ajax ({
-					url: "findThatGoal",
+					url: "/goal/createGoal/findThatGoal",
 					type: "post",
 					data: {"senderId":senders[i]},
-					success: function(vo) {
-						location.href='/goal/createGoal/joinThatGoal?boardNum=' + vo.boardNum
-								+ '&progressNum=' + vo.progressNum 
-								+ '&id=' + ${sessionScope.userid};
+					success: function(vo){
+						location.href='/goal/createGoal/joinThatGoal?boardNum=' + vo.boardnum
+						+ '&id=' + '${sessionScope.userid}';
 					},
 					error: function() { alert("승인실패!!!!!!!!!!!!!!!!!!!!!!!!!"); }
 				});
 				break;
 			}
 		}
-	});
+	}
 </script>
 <link rel="stylesheet" href="/goal/resources/css/main.css?version=1">
 <link rel="stylesheet" href="/goal/resources/css/message/message.css?version=1">
