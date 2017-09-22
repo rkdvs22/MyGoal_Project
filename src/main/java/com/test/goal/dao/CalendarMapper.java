@@ -38,4 +38,17 @@ public interface CalendarMapper {
 
 	public int getDayRecordNum();
 
+	public int getAchieved(DayRecordVO vo);
+
+	public int checkBTMRecord(DayRecordVO vo);
+
+	public int isProgressing(DayRecordVO vo);
+
+	public void updateDayRecord(DayRecordVO vo);
+
+	public void completeUpdateDayRecord(DayRecordVO vo);
+
+	public int getDayAchieve(DayRecordVO vo);
+
+
 }

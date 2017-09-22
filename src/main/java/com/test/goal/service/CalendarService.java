@@ -24,4 +24,10 @@ public interface CalendarService {
 
 	int createDayPlan(DayPlanVO vo);
 
+	int getAchieve(DayRecordVO vo);
+
+	void updateAchieve(DayRecordVO vo);
+
+	int getDayAchieve(DayRecordVO vo);
+
 }

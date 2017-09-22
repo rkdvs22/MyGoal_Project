@@ -24,4 +24,16 @@ public interface CalendarDAO {
 
 	int createDayPlan(DayPlanVO vo);
 
+	int getAchieve(DayRecordVO vo);
+
+	int checkBTMRecord(DayRecordVO vo);
+
+	int isProgressing(DayRecordVO vo);
+
+	void updateDayRecord(DayRecordVO vo);
+
+	void completeUpdateDayRecord(DayRecordVO vo);
+
+	int getDayAchieve(DayRecordVO vo);
+
 }

@@ -33,6 +33,7 @@
 <body>
    <%@ include file="../menu.jsp" %>
 	<script>
+		
 		var getToday = "";
 	 	var btmRecordNum = 0;	
 		var dayRecordNum = 0;
@@ -132,7 +133,6 @@
 	              var sendStartTime = clickDayToString+" "+ splitStartTime;
 	              var sendEndTime = clickDayToString+" "+splitEndTime;
 	              
-				alert(index);
 			 	$.ajax({
 					url: '/goal/calendar/createDayPlan',
 	            	type: "POST",
@@ -268,23 +268,74 @@
    				btmRecordNum = 0;
    				dayRecordNum = 0;
    				index = 0;
+   				$('#inputPercent').attr('placeholder','100이내의 숫자');	
 				$("#warning").modal("hide");
 			}
 			
 			function updateAchieve(){
-				
+				var sendAchieve = 0;
 				if($('#inputPercent').val() == ''){
 					alert('100이내의 자연수를 입력해 주세요.')
 					return false;
 				}else{
+						if($('#dayPercent').text() !=''){
+							var thisDayPercent = $('#dayPercent').text();
+							var dayPercentSplit1 = thisDayPercent.split(":");
+							var dayPercentSplit2 = dayPercentSplit1[1].split(""); 
+							var dayPercent = "";
+							
+							 if(dayPercentSplit2.length = 4){
+								dayPercent = dayPercentSplit2[1]+dayPercentSplit2[2]; 
+							}else if(dayPercentSplit2.length = 3){
+								dayPercent = dayPercentSplit2[1];
+							} 
+						}else{
+							var dayPercent = "";
+						}
+						
 						var getTextPercent = $('#inputPercent').val();
 						var getPercent = $('#currentPercent').text()
 						var firstParsing = getPercent.split(":");
 						var secondParsing = firstParsing[1].split("%");
 						var percent = 0;
-						percent = parseInt(secondParsing[0]);
+						percent = parseInt(getTextPercent);
 						
-						alert(percent);						
+							
+						if((100-parseInt(secondParsing[0])) < percent-parseInt(dayPercent)){
+							alert('달성률은 100%를 넘길수 없습니다...- 현재 남은 달성률: '+(100-parseInt(secondParsing[0])));
+						}else{
+							 dayClick = dayClick+"";
+							 
+							  var clickDaySplit = dayClick.split("");
+				              var year = clickDaySplit[0]+clickDaySplit[1]+clickDaySplit[2]+clickDaySplit[3];
+				              var month = clickDaySplit[4]+clickDaySplit[5];
+				              var day =  clickDaySplit[6]+clickDaySplit[7];
+				              var clickDayToString = year + "/" + month + "/" + day;
+							
+							if(percent > 100){
+								alert('달성률은 100을 넘길수 없습니다.');
+								return false;
+							}else if(percent < 0){
+								alert('달성률은 -값이 될 수 없습니다.');
+								return false;
+							}else{	
+								 $.ajax({
+									url: '/goal/calendar/updateAchieve',
+					            	type: "POST",
+					            	data:{"startDate":clickDayToString,"getToday":getToday,"achieve":percent,"dayAchieve":percent},
+					            	dataType: "json",
+					            	success: function(result) {
+					            		$('#currentPercent').html('');
+					            		$('#currentPercent').append('달성률:'+" "+ result[0]+"%");
+					            		$('#dayPercent').html('');
+						            	$('#dayPercent').append('<br>this Day:'+" "+result[1]+"%");
+					            		$('#inputPercent').attr('placeholder','');	
+					            	}
+								});		 
+							}
+						}		
+					           $('#inputPercent').attr('placeholder','100이내의 숫자');					            	
+					           
 				}
 			}
 			
@@ -379,7 +430,7 @@
 									    		<td class="col-xs-3"><input type= "text" id = "inputPercent" placeholder="100이내의 숫자" size="27px"></td>
 									    		<td class="col-xs-1">
 									    		<button id = "dayAchieve" class = "success btn btn-success btn-sm" onclick = "updateAchieve()"><span class="glyphicon glyphicon-ok"></span></button></td>
-									    		<td class="col-xs-6"><div><span id = "currentPercent"></span></div></td>
+									    		<td class="col-xs-6"><div><span id = "currentPercent"></span><span id = "dayPercent"></span></div></td>
 									    		<td></td>
 									    		<td><button type="button" id = "create_Button" data-toggle="modal" class="btn btn-default pull-left" onclick = "openCreateModal()">Create</button></td>
 									    	</tr>
@@ -479,7 +530,7 @@
 	<script type="text/javascript" src="/goal/resources/js/lib/moment/moment-with-locales.min.js?version=4"></script>
 	<script type="text/javascript" src="/goal/resources/js/lib/eonasdan-bootstrap-datetimepicker/bootstrap-datetimepicker.min.js?version=4"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar.js?version=10"></script>
-	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=58"></script>
+	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=67"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/ko.js"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/tableModal.js?version=3"></script>
     <script src="/goal/resources/js/app.js?version=4"></script>

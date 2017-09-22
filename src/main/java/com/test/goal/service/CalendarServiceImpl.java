@@ -110,6 +110,32 @@ public class CalendarServiceImpl implements CalendarService{
 		return dao.createDayPlan(vo);
 	}
 
+	@Override
+	public int getAchieve(DayRecordVO vo) {
+		return dao.getAchieve(vo);
+	}
+
+	@Override
+	public void updateAchieve(DayRecordVO vo) {
+		int isProgressing = dao.checkBTMRecord(vo);
+		//업데이트할 대상을 찾아오는 쿼리
+		int targetBTMRecordNum = dao.isProgressing(vo);
+		vo.setBtmRecordNum(targetBTMRecordNum);
+		if(isProgressing == 0){
+			dao.updateDayRecord(vo);
+		}else if(isProgressing == 1){
+			if(vo.getAchieve() == 100){
+				dao.completeUpdateDayRecord(vo);
+			}else{
+				dao.updateDayRecord(vo);
+			}
+		}
+	}
+
+	@Override
+	public int getDayAchieve(DayRecordVO vo) {
+		return dao.getDayAchieve(vo);
+	}
 
 }
 

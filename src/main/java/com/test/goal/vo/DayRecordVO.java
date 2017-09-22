@@ -14,7 +14,9 @@ public class DayRecordVO {
 	private int calendarNum;
 	private int btmRecordNum;
 	private String memberId;
-	
+	private String getToday;
+	private String userId;
+	private int dayAchieve;
 	
 	public DayRecordVO() {
 	}
@@ -110,12 +112,45 @@ public class DayRecordVO {
 		this.memberId = memberId;
 	}
 
+	
+
+	public String getGetToday() {
+		return getToday;
+	}
+
+
+	public void setGetToday(String getToday) {
+		this.getToday = getToday;
+	}
+
+
+	public String getUserId() {
+		return userId;
+	}
+
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	
+
+	public int getDayAchieve() {
+		return dayAchieve;
+	}
+
+
+	public void setDayAchieve(int dayAchieve) {
+		this.dayAchieve = dayAchieve;
+	}
+
 
 	@Override
 	public String toString() {
 		return "DayRecordVO [dayRecordNum=" + dayRecordNum + ", achieve=" + achieve + ", color=" + color
 				+ ", startDate=" + startDate + ", completeTime=" + completeTime + ", status=" + status
-				+ ", calendarNum=" + calendarNum + ", btmRecordNum=" + btmRecordNum + ", memberId=" + memberId + "]";
+				+ ", calendarNum=" + calendarNum + ", btmRecordNum=" + btmRecordNum + ", memberId=" + memberId
+				+ ", getToday=" + getToday + ", userId=" + userId + ", dayAchieve=" + dayAchieve + "]";
 	}
+	
 
 }

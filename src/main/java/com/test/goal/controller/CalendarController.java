@@ -86,7 +86,42 @@ public class CalendarController {
 		
 		String userId  = (String) request.getSession().getAttribute("userid");
 		vo.setUserId(userId);
-		
 		return service.createDayPlan(vo);
+	}
+	
+	@RequestMapping(value = "updateAchieve", method = RequestMethod.POST)
+	@ResponseBody
+	public ArrayList<Integer> updateAchieve(DayRecordVO vo, HttpServletRequest request) {
+		
+		ArrayList<Integer> list = new ArrayList<>();
+		
+		String userId  = (String) request.getSession().getAttribute("userid");
+		vo.setUserId(userId);
+		service.updateAchieve(vo);
+		int achieve = service.getAchieve(vo);
+		
+		list.add(achieve);
+		list.add(vo.getDayAchieve());
+		
+		return list;
+	}
+	
+	@RequestMapping(value = "getAchieve", method = RequestMethod.POST)
+	@ResponseBody
+	public int getAchieve(DayRecordVO vo, HttpServletRequest request) {
+		
+		String userId  = (String) request.getSession().getAttribute("userid");
+		vo.setUserId(userId);
+		return service.getAchieve(vo);
+	}
+	
+	@RequestMapping(value = "getDayAchieve", method = RequestMethod.POST)
+	@ResponseBody
+	public int getDayAchieve(DayRecordVO vo, HttpServletRequest request) {
+		
+		String userId  = (String) request.getSession().getAttribute("userid");
+		vo.setUserId(userId);
+		
+		return service.getDayAchieve(vo);
 	}
 }

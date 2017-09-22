@@ -127,7 +127,6 @@ $(document).ready(function(){
 			  	      date_month = dateSplit[1]; 
 			  	      date_day = dateSplit[2]; 
 			  	      var dateSplited = date_year + "" + date_month + "" + date_day
-			  	      
 		            	  // Add popover
 			            $('body').append(
 			                '<div class="fc-popover click">' +
@@ -316,14 +315,17 @@ $(document).ready(function(){
         	   /*   alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
         	      alert('Current view: ' + view.name);
         	      alert('Clicked on: ' + date.format());
-        	      */
-        
-       
+        	   */
+        	
+          $('#dayPercent').html('');	
+         $('#dayAchieve').removeAttr('disabled');	
+         $('#inputPercent').removeAttr('readonly');
         var notNomal = 0;
         var notHaveBTM = 0;
         //월에 대한 페이지인가?	
        if(view.name == "month"){
     	   
+    	    var dayAchieve = 0; 
         	var time = new Date() 
         	
         	var year = time.getYear()+1900 
@@ -344,9 +346,9 @@ $(document).ready(function(){
         	date_month = dateSplit[1]; 
         	date_day = dateSplit[2]; 
         	var dateSplited = date_year + "" + date_month + "" + date_day
-        		
+        	var formatDate =  date_year + "/" + date_month + "/" + date_day	
         	// 세부 목표가 잇는 DayPlan을 가공한 후에 각각 배열에 담는 구간 
-        	
+        
         	dayClick = parseInt(dateSplited);
         	
         	var PlanTitle = [];
@@ -452,14 +454,36 @@ $(document).ready(function(){
 	        	
 	        	
 	        	if(PlanTitle.length == 0 && (parseInt(dateSplited) == parseInt(today))){
-	        		$('#inputPercent').attr('placeholder','100이내의 숫자');
-	        		$('#currentPercent').html('');
-	        	    $('#currentPercent').append('달성률:'+" "+ sumAchieve+"%");
+	        		$.ajax({
+						url: '/goal/calendar/getAchieve',
+		            	type: "POST",
+		            	data:{"startDate":formatDate,"getToday":getToday},
+		            	dataType: "json",
+		            	success: function(result) {
+		            		$('#inputPercent').attr('placeholder','100이내의 숫자');
+		            		$('#currentPercent').html('');
+		            		$('#currentPercent').append('달성률:'+" "+ result+"%");
+		            	}
+					});		 
+	        		
 	        	}else if(PlanTitle.length == 0 && (parseInt(dateSplited) != parseInt(today)) && notHaveBTM+1 == btmRecordlist.length){
 	        		notNomal = 1;
+	        		$.ajax({
+						url: '/goal/calendar/getAchieve',
+		            	type: "POST",
+		            	data:{"startDate":formatDate,"getToday":getToday},
+		            	dataType: "json",
+		            	success: function(result) {
+		            		$('#inputPercent').attr('placeholder','100이내의 숫자');
+		            		$('#currentPercent').html('');
+		            		$('#currentPercent').append('달성률:'+" "+ result+"%");
+		            	}
+					});		 
+	        		
 	        		$('#inputPercent').attr('placeholder','입력은 가능 - 달성 불가');
 	        		$('#currentPercent').html('');
 	        	    $('#currentPercent').append('달성률:'+" "+ sumAchieve+"%");
+	        	    
 	        	}
         
 	        	
@@ -481,6 +505,7 @@ $(document).ready(function(){
 	 	   				            '<td><button type="button" data-toggle="modal" onclick= "openDeleteModal('+btmRecordNum+','+PlanNum[index]+','+'\'d'+index+'\')" data-uid="'+index+1+'" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>'+
 	 	   				        '</tr>'
 	 	   		        );
+ 	        	        
  	        		}else{
  	        			$('#inputPercent').attr('placeholder','입력은 가능 - 달성 불가');
 	 	        		$('#currentPercent').html('');
@@ -572,6 +597,7 @@ $(document).ready(function(){
 		        	}
 	        	}//end if
         	}
+        	
         
         	//어팬드 해야됨 배열3개를 가지고(타이틀,스타트,엔드)
            
@@ -580,6 +606,15 @@ $(document).ready(function(){
         		alert('오늘이예요');
         	}//end if     
         	
+        	$.ajax({
+   				url: '/goal/calendar/getDayAchieve',
+              	type: "POST",
+              	data:{"startDate":formatDate},
+              	dataType: "json",
+              	success: function(achieve) {
+              		 $('#dayPercent').append('<br>this Day:'+" "+achieve+"%");
+              	}
+   			});	
         	
         	
         	//마지막으로 모달띄워줘요!

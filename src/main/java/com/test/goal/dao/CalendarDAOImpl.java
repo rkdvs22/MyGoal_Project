@@ -106,4 +106,40 @@ public class CalendarDAOImpl implements CalendarDAO{
 		return dayPlanNum;
 	}
 
+	@Override
+	public int getAchieve(DayRecordVO vo) {
+		CalendarMapper mapper = sqlsession.getMapper(CalendarMapper.class);
+	    return mapper.getAchieved(vo);
+	}
+
+	@Override
+	public int checkBTMRecord(DayRecordVO vo) {
+		CalendarMapper mapper = sqlsession.getMapper(CalendarMapper.class);
+	    return mapper.checkBTMRecord(vo);
+	}
+
+	@Override
+	public int isProgressing(DayRecordVO vo) {
+		CalendarMapper mapper = sqlsession.getMapper(CalendarMapper.class);
+	    return mapper.isProgressing(vo);
+	}
+
+	@Override
+	public void updateDayRecord(DayRecordVO vo) {
+		CalendarMapper mapper = sqlsession.getMapper(CalendarMapper.class);
+	    mapper.updateDayRecord(vo);
+	}
+
+	@Override
+	public void completeUpdateDayRecord(DayRecordVO vo) {
+		CalendarMapper mapper = sqlsession.getMapper(CalendarMapper.class);
+	    mapper.completeUpdateDayRecord(vo);
+	}
+
+	@Override
+	public int getDayAchieve(DayRecordVO vo) {
+		CalendarMapper mapper = sqlsession.getMapper(CalendarMapper.class);
+	    return mapper.getDayAchieve(vo);
+	}
+
 }
