@@ -260,13 +260,13 @@
 	            <div class="col-xl-6 dahsboard-column">
 	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
 	                    <header class="box-typical-header panel-heading">
-	                        <h3 class="panel-title">Recent orders</h3>
+	                        <h3 class="panel-title">Recent Messages</h3>
 	                    </header>
 	                    <div class="box-typical-body panel-body">
 	                        <table class="tbl-typical">
 	                            <tr>
-	                                <th><div>Status</div></th>
-	                                <th><div>Clients</div></th>
+	                                <th><div>Title</div></th>
+	                                <th><div>Sender</div></th>
 	                                <th align="center"><div>Orders#</div></th>
 	                                <th align="center"><div>Date</div></th>
 	                            </tr>

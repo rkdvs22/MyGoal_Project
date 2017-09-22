@@ -53,6 +53,8 @@
 				$(this).parent().addClass("show");
 			}
 		});
+		
+		//
 	})
 	
 	// 로그인 화면으로 이동

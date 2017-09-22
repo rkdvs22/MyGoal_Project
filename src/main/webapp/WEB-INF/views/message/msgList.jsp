@@ -8,7 +8,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script src="/goal/resources/js/jquery-3.2.1.min.js"></script>
+<script src="/goal/resources/js/lib/jquery/jquery.min.js"></script>
+<script src="/goal/resources/js/lib/tether/tether.min.js"></script>
+<script src="/goal/resources/js/lib/bootstrap/bootstrap.min.js"></script>
+<script src="/goal/resources/js/plugins.js"></script>
 <script>
 	jQuery(document).ready(function() {
 	    jQuery('.tabs .tab-links a').on('click', function(e)  {
