@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.test.goal.dao.BoardDAO;
 import com.test.goal.service.BoardService;
 import com.test.goal.util.PageNavigator;
 import com.test.goal.vo.BoardVO;
 import com.test.goal.vo.MainProgressVO;
+import com.test.goal.vo.MemberListVO;
+import com.test.goal.vo.TopGoalVO;
 
 @Controller
 @RequestMapping("/board")
@@ -51,11 +54,22 @@ public class BoardController {
 		service.addFavorite(boardnum);
 	}
 	
-	// tGoalNum 이용 TopGoal 테이블에서 host의 progressNum 정보찾기
-	@RequestMapping(value = "selectTopGoal", method = RequestMethod.GET)
-	public String selectTopGoal(int tGoalNum) {
-		return service.selectTopGoal(tGoalNum);
+	// 마방진페이지로 이동
+	@RequestMapping(value = "toMsquare", method = RequestMethod.GET)
+	public String toMsquare(BoardVO bvo, TopGoalVO tvo, RedirectAttributes rttr) {
+		int tGoalNum = service.getTopGoalNum().gettGoalNum();
+		bvo.settGoalNum(tGoalNum);
+
+		return "/createGoal/MGoalSquareForm";
 	}
+	
+	
+	/*public void inputMemberList(TopGoalVO tvo) {
+		MemberListVO mlvo = new MemberListVO();
+		mlvo.setProgressNum(tvo.getProgressNum());
+		mlvo.setUserId(tvo.getUserid());
+		service.inputMemberList(mlvo);
+	}*/
 	
 	
 }

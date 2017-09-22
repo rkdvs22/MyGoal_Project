@@ -30,5 +30,6 @@
 		<mapper resource="mapper/boardMapper.xml"/>
 		<mapper resource="mapper/mindMapMapper.xml"/>
 		<mapper resource="mapper/createGoalMapper.xml"/>
+		<mapper resource="mapper/homeMapper.xml"/>
 	</mappers>
 </configuration>

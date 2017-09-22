@@ -39,11 +39,11 @@ public class BoardDAOImpl implements BoardDAO {
 		mapper.addFavorite(boardnum);
 	}
 	
-	// tGoalNum 이용 TopGoal 테이블에서 host의 progressNum 정보찾기
+	// Board 테이블에서 가장 최신화된 tGoalNum, userid을 가져옴
 	@Override
-	public String selectTopGoal(int tGoalNum) {
+	public BoardVO getTopGoalNum() {
 		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
-		return mapper.selectTopGoal(tGoalNum);
+		return mapper.getTopGoalNum();
 	}
 
 

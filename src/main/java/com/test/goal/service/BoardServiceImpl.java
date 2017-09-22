@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.test.goal.dao.BoardDAO;
 import com.test.goal.util.PageNavigator;
 import com.test.goal.vo.BoardVO;
+import com.test.goal.vo.MemberListVO;
+import com.test.goal.vo.TopGoalVO;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -40,11 +42,18 @@ public class BoardServiceImpl implements BoardService {
 		dao.addFavorite(boardnum);
 	}
 
-	// tGoalNum 이용 TopGoal 테이블에서 host의 progressNum 정보찾기
+	// Board 테이블에서 가장 최신화된 tGoalNum, userid을 가져옴
 	@Override
-	public String selectTopGoal(int tGoalNum) {
-		return dao.selectTopGoal(tGoalNum);
+	public BoardVO getTopGoalNum() {
+		return dao.getTopGoalNum();
 	}
+
+	/*@Override
+	public void inputMemberList(MemberListVO mlvo) {
+		
+	}*/
+
+	
 	
 	
 }
