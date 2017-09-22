@@ -54,10 +54,10 @@
 	</select>
 	
 	<!-- 초대받은 방의 정보를 받아온다. -->
-	<select id="findThatGoal" parameterType="string" resultType="BoardVO">
-		SELECT * FROM board
-		WHERE boardnum = (
-			SELECT MAX(boardnum) FROM board WHERE userid = #{senderId}
+	<select id="findThatGoal" parameterType="string" resultType="TopGoalVO">
+		SELECT * FROM topgoal
+		WHERE tgoalnum = (
+			SELECT MAX(tgoalnum) FROM topgoal WHERE userid = #{senderId}
 		)
 	</select>
 	
@@ -113,4 +113,24 @@
 			WHERE userid = #{id}
 		)
 	</delete>
+	
+	<!-- 초대받은 목표 (TOPGOAL 테이블) 에 초대받은 사람의 ID를 입력한다. -->
+	<insert id="inputUserTgoal" parameterType="TopGoalVO">
+		INSERT INTO topgoal
+		VALUES (
+		TOPGOAL_SEQ.NEXTVAL, #{tGoalTitle}, TO_DATE(#{tStartDate}, 'YY/MM/DD'), TO_DATE(#{tEndDate}, 'YY/MM/DD'), #{tClear}, #{tStartStatus}, #{openStatus}, #{userid}, #{progressNum}
+		)
+	</insert>
+	
+	<!-- 초대받은 목표 (TOPGOAL 테이블) 에 초대받은 사람의 ID를 입력한다. -->
+	<insert id="inputUserMemberList" parameterType="TopGoalVO">
+		INSERT INTO memberlist VALUES (MEMBERLIST_SEQ.NEXTVAL, 'N', 'NORMAL', #{userid}, #{color, jdbcType=NULL}, #{progressNum})
+	</insert>
+	
+	<!-- 초대에 수락한 사용자에 대한 정보를 받아온다. -->
+	<select id="findUserNowInput" parameterType="TopGoalVO" resultType="MemberListVO">
+		SELECT * FROM memberlist
+		WHERE userid = #{userid}
+		AND progressnum = #{progressNum}
+	</select>
 </mapper>

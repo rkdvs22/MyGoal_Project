@@ -175,7 +175,7 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-image: url('/goal/resources/img/road.jpg');
+		background-image: url('/goal/resources/img/Goals.jpg');
 		background-repeat: no-repeat;
 		background-attachment: fixed;
 		background-size: 100%;
@@ -200,14 +200,12 @@ function noEvent() {
 document.onkeydown = noEvent;
 
 
-var ok_flag = true;
 var m_eDate = "";
 var m_sDate = "";
 var b_sDate = new Array();
 var b_eDate = new Array();
 var progressDay = "";
 
-var mGoal_modals = new Array();
 var bGoal_modals = new Array();
 var bGoalCounts = new Array();
 var btnsClickCount = new Array(8);
@@ -255,9 +253,8 @@ function createGoalModals() {
 				$("#msg_ok").click(function() {
 					$(".card.mb-4").css("display", "none");
 				});
-				ok_flag = false;
 				return false;
-			} else ok_flag = true;
+			}
 		}
 		
 		progressDay = "";
@@ -280,9 +277,8 @@ function createGoalModals() {
 			m_eDate = $("#endMpicker").datepicker("getDate");
 			if (m_sDate > m_eDate) {
 				alert("시작일이 종료일보다 이후일 수 없습니다");
-				ok_flag = false;
-				return;
-			} ok_flag = true;
+				return false;
+			}
 		}
 	});
 	
@@ -351,38 +347,34 @@ $(function() {
 				|| $("#startMpicker").val() == ""
 				|| $("#endMpicker").val() == "") {
 					$("#error_div").css("display", "block");
-					ok_flag = false;
+					alert("중간목표 항목을 입력하지 않았습니다");
+					return false;
 				}
 				
 				// 사용자가 입력하지 않은 세부목표 항목에 대해 체크한다.
 				for(var i=0; i<goalCount; i++) {
 					if($("#b_progressday" + (i+1)).val() == ""
 					|| $("#b_goal" + (i+1)).val() == "") {
-						ok_flag = false;
+						alert("세부목표 항목을 입력하지 않았습니다");
+						return false;
 					}
-				}
-				
-				if(ok_flag == false) {
-					alert("입력하지 않은 항목이 있습니다");
-					return false;
 				}
 				
 				// 다른 중간목표 기간과 겹치지 않도록 한다.
-				if(bBtn_num > 1) {
-					for(var i=0; i<mGoal_modals.length; i++) {
-						if($("#startMpicker").val() <= mGoal_modals[i].sDate) {
-							alert("시작날짜가 이전 중간목표의 날짜와 겹칩니다");
-							return false;
-						} else if($("#endMpicker").val() <= mGoal_modals[i].eDate) {
-							alert("종료날짜가 이전 중간목표의 날짜와 겹칩니다");
-							return false;
-						}
-					}
-				}
+// 				if(bBtn_num > 1) {
+// 					for(var i=0; i<mGoal_modals.length; i++) {
+// 						if($("#startMpicker").val() <= mGoal_modals[i].sDate) {
+// 							alert("시작날짜가 이전 중간목표의 날짜와 겹칩니다");
+// 							return false;
+// 						} else if($("#endMpicker").val() <= mGoal_modals[i].eDate) {
+// 							alert("종료날짜가 이전 중간목표의 날짜와 겹칩니다");
+// 							return false;
+// 						}
+// 					}
+// 				}
 				
-				// 사용자가 작성한 중간목표를 저장한다.
-				mGoal_modals[catchNum-1] = {
-					mGoalNum: catchNum,
+				// 사용자가 작성한 중간목표를 저장해 무결성 검사에 이용한다.
+				var mGoal_modals = {
 					mGoal: $("#Mgoal").val(),
 					sDate: $("#startMpicker").val(),
 					eDate: $("#endMpicker").val()
@@ -395,6 +387,9 @@ $(function() {
 					var b_eventDays = Number($("#b_progressday" + (i+1)).val());
 					if($("#b_progressday" + (i+1)).val() > m_eventDays) {
 						alert((i+1) + "번째 : 세부목표 진행일자는 중간목표 진행일자보다 많을 수 없습니다");
+						return false;
+					} else if($("#b_progressday" + (i+1)).val() < m_eventDays) {
+						alert((i+1) + "번째 : 세부목표 진행일자는 중간목표 진행일자보다 적을 수 없습니다");
 						return false;
 					}
 				}
@@ -428,12 +423,33 @@ $(function() {
 					}
 				}
 				
+				// 사용자가 입력한 각 중간목표와 각 세부목표를 데이터베이스에 추가한다.
+				var midGoal = new Object();
+				midGoal.mGoal = $("#Mgoal").val();
+				midGoal.sDate = $("#startMpicker").val();
+				midGoal.eDate = $("#endMpicker").val();
+				var test = JSON.stringify(midGoal);
+				$.ajaxSettings.traditional = true;
+				$.ajax ({
+					url: "/goal/createGoal/inputGoal",
+					method: "post",
+					dataType: "json",
+					contentType: "application/json;charset=UTF-8",
+					data: JSON.stringify({"midGoal":{"key1":midGoal}, "btmGoal":{"key2":bGoal_modals}}),
+					success: function() {
+						alert("중간목표 들어감");
+						
+						
+// 						inputMbtnValue(bBtn_num);
+// 						$("#m_eventdays > b").text("");
+// 						$(".midgoal > input").val("");
+// 						$("#bGoalcount").val("");
+// 						$(".bg_content > input").val("");
+
+					}
+				});
+				
 				if(click_flag == true) {
-					inputMbtnValue(bBtn_num);
-					$("#m_eventdays > b").text("");
-					$(".midgoal > input").val("");
-					$("#bGoalcount").val("");
-					$(".bg_content > input").val("");
 				} else {
 					updateMbtnValue(bBtn_num);
 				}
@@ -821,26 +837,26 @@ $(function() {
 		$("#readyBtn").hide();
 	} else $("#startBtn").hide();
 	
-	// 사용자가 설정한 인원수를 벗어날 경우 그 만큼 X표시를 한다.
+	// 사용자가 설정한 인원수를 벗어날 경우 그 만큼 슬롯을 가린다.
 	var maxMember = '${b_info.maxMember}';
 	switch (maxMember) {
 	case "1":
 		$(".player2 > td").remove();
 		$(".player3 > td").remove();
 		$(".player4 > td").remove();
-		$(".player2").prepend('<td colspan="6" id="p2_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user-empty.png"></td>');
-		$(".player3").prepend('<td colspan="6" id="p3_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user-empty.png"></td>');
-		$(".player4").prepend('<td colspan="6" id="p4_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user-empty.png"></td>');
+		$(".player2").prepend('<td colspan="6" id="p2_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user_close.png"></td>');
+		$(".player3").prepend('<td colspan="6" id="p3_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user_close.png"></td>');
+		$(".player4").prepend('<td colspan="6" id="p4_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user_close.png"></td>');
 		break;
 	case "2":
 		$(".player3 > td").remove();
 		$(".player4 > td").remove();
-		$(".player3").prepend('<td colspan="6" id="p3_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user-empty.png"></td>');
-		$(".player4").prepend('<td colspan="6" id="p4_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user-empty.png"></td>');
+		$(".player3").prepend('<td colspan="6" id="p3_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user_close.png"></td>');
+		$(".player4").prepend('<td colspan="6" id="p4_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user_close.png"></td>');
 		break;
 	case "3":
 		$(".player4 > td").remove();
-		$(".player4").prepend('<td colspan="6" id="p4_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user-empty.png"></td>');
+		$(".player4").prepend('<td colspan="6" id="p4_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user_close.png"></td>');
 		break;
 	case "4":
 		break;

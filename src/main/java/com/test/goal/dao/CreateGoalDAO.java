@@ -26,7 +26,7 @@ public interface CreateGoalDAO {
 
 	public BoardVO getBoardInfo(); // 현재 게시글의 정보를 얻는다
 
-	public BoardVO findThatGoal(String senderId); // 초대 메시지에 승인할 시 해당하는 목표가 무엇인지 찾는다.
+	public TopGoalVO findThatGoal(String senderId); // 목표 초대에 승인했을 경우 초대한 목표에 대한 정보를 찾는다.
 	
 	public BoardVO findCurrentBoard(String id); // 목표를 만든 사용자가 나가기 버튼을 클릭했을 경우 관련된 데이터를 삭제하기 위해 현 게시글의 정보를 받아온다.
 
@@ -34,7 +34,7 @@ public interface CreateGoalDAO {
 
 	public void exitCreateGoal(String id); // 목표를 만든 사용자가 나가기 버튼을 클릭했을 경우 관련된 데이터를 삭제한다.
 
-	public MemberListVO joinThatGoal(int boardNum, String id); // 초대한 목표로 이동한다.
+	public MemberListVO joinThatGoal(TopGoalVO vo); // 초대한 목표로 이동한다.
 	
 	
 	
