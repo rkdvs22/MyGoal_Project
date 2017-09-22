@@ -451,9 +451,10 @@
 									</th>
 								</tr>
 								</thead>
+								<c:forEach items="${homeBoard}" var="board">
 								<tbody>
 									<tr>
-										<td></td>
+										<td>${board.userid}</td>
 										<td></td>
 										<td></td>
 										<td></td>
@@ -481,6 +482,7 @@
 										</td>
 									</tr> --%>
 								</tbody>
+								</c:forEach>
 							</table>
 	                    </div><!--.box-typical-body-->
 	                </section><!--.box-typical-dashboard-->

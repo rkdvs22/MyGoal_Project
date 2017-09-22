@@ -95,7 +95,7 @@
 					<div class="card-typical-section">
 						<div class="card-typical-linked">${list.currentMemberNumber}/${list.maxMember}</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<a href="#" class="card-typical-likes" onclick="addFavorite('${list.boardnum}')">
-							<i class="font-icon font-icon-heart" data-boardnum="${list.boardnum}" id="favoriteNum">${list.favorite}</i>
+							<i class="font-icon font-icon-heart" data-like="false" data-boardnum="${list.boardnum}" id="favoriteNum">${list.favorite}</i>
 						</a>
 					</div>
 						<%-- <input type="hidden" name="tGoalNum" value="${tGoalNum}">
@@ -156,14 +156,18 @@
 		
 		// start 버튼 눌렀을때 (마방진 페이지로 이동)
 		function start(tGoalNum) {
-			location.href = "/goal/createGoal/MGoalSquareForm?tGoalNum="+tGoalNum;
+			location.href = "/goal/board/toMsquare?tGoalNum="+tGoalNum;
 		}
 		
 		// 좋아요 (이미지 클릭시 숫자 증가)
 		function addFavorite(boardnum) {
 			//var result = confirm("좋아요");
+			var likeit=$("i[data-boardnum='"+boardnum+"']").attr("data-like");
 			
-			if(boardnum) {
+			if(likeit=="false"){
+				$("i[data-boardnum='"+boardnum+"']").attr("data-like","true");
+			
+				if(boardnum) {
 				$.ajax({
 					url: "/goal/board/addFavorite",
 					type: "post",
@@ -171,8 +175,12 @@
 					success: function() {
 						var temp=$("i[data-boardnum='"+boardnum+"']").html();
 						$("i[data-boardnum='"+boardnum+"']").text(parseInt(temp)+1);
-					}
-				});
+						}
+					});
+				}
+			}
+			else{
+				alert("이미 좋아함");
 			}
 		}
 		
