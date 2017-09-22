@@ -530,7 +530,7 @@
 	<script type="text/javascript" src="/goal/resources/js/lib/moment/moment-with-locales.min.js?version=4"></script>
 	<script type="text/javascript" src="/goal/resources/js/lib/eonasdan-bootstrap-datetimepicker/bootstrap-datetimepicker.min.js?version=4"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar.js?version=10"></script>
-	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=67"></script>
+	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=68"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/ko.js"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/tableModal.js?version=3"></script>
     <script src="/goal/resources/js/app.js?version=4"></script>

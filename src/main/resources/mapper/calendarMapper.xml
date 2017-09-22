@@ -36,8 +36,8 @@
 	
 	<select id = "getDayRecordList" parameterType="string" resultType="DayPlanVO">
 		
-		select p.dcontents as "dContents",to_char(p.startTime,'yyyy-mm-dd-hh24-mi') as "startTime",
-		to_char(p.endTime,'yyyy-mm-dd-hh24-mi') as "endTime",p.dayPlanNum as "dayPlanNum", 
+		select p.dcontents as "dContents",to_char(p.startTime,'yyyy-mm-dd-hh24-mi') as "startTime",to_char(p.startTime,'yyyy-mm-dd hh24-mi') as "schedulePlanStart",
+		to_char(p.endTime,'yyyy-mm-dd-hh24-mi') as "endTime",to_char(p.endTime,'yyyy-mm-dd hh24-mi') as "schedulePlanEnd",p.dayPlanNum as "dayPlanNum", 
 		b.bRecordNum as "btmRecordNum", to_char(d.startDate,'yyyy-mm-dd') as "startDate",
 		b.startDate as "BTMstartDate", b.endDate as "BTMendDate", d.DayRecordNum as "dayRecordNum" 
 		from DayPlan p inner join (select DayRecordNum,btmRecordNum, startDate from DayRecord) d 
@@ -50,8 +50,8 @@
 	
 	<select id = "getNomalPlanlist" parameterType="string" resultType="DayPlanVO">
 	
-		select p.dcontents as "dContents", to_char(p.startTime,'yyyy-mm-dd-hh24-mi') as "startTime",
-		to_char(p.endTime,'yyyy-mm-dd-hh24-mi') as "endTime", p.dayPlanNum as "dayPlanNum",
+		select p.dcontents as "dContents", to_char(p.startTime,'yyyy-mm-dd-hh24-mi') as "startTime", to_char(p.startTime,'yyyy-mm-dd hh24-mi') as "schedulePlanStart",
+		to_char(p.endTime,'yyyy-mm-dd-hh24-mi') as "endTime",to_char(p.endTime,'yyyy-mm-dd hh24-mi') as "schedulePlanEnd", p.dayPlanNum as "dayPlanNum",
 		to_char(p.startTime,'yyyy-mm-dd') as "startDate",
 		to_char(p.endTime,'yyyy-mm-dd') as "endDate", d.DayRecordNum as "dayRecordNum"
 		from DayPlan p inner join DayRecord d 

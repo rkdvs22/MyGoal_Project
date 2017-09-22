@@ -49,6 +49,10 @@ public class CalendarController {
 		DayRecordlist= service.getDayRecordList((String)request.getSession().getAttribute("userid"));
 		nomallist = service.getNomalPlanlist((String)request.getSession().getAttribute("userid"));
 		
+		for (DayPlanVO dayPlanVO : DayRecordlist) {
+			System.out.println(dayPlanVO.toString());
+		}
+		
 		getRecordMap.put("BTMRecordlist", BTMRecordlist);
 		getRecordMap.put("DayRecordlist", DayRecordlist);
 		getRecordMap.put("nomallist", nomallist);

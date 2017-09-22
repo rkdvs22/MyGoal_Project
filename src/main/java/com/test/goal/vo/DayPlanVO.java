@@ -16,6 +16,8 @@ public class DayPlanVO {
 	private String BTMendDate;
 	private String userId;
 	private String getToday;
+	private String schedulePlanStart;
+	private String schedulePlanEnd;
 	
 	public int getDayPlanNum() {
 		return dayPlanNum;
@@ -106,6 +108,18 @@ public class DayPlanVO {
 	public void setGetToday(String getToday) {
 		this.getToday = getToday;
 	}
+	public String getSchedulePlanStart() {
+		return schedulePlanStart;
+	}
+	public void setSchedulePlanStart(String schedulePlanStart) {
+		this.schedulePlanStart = schedulePlanStart;
+	}
+	public String getSchedulePlanEnd() {
+		return schedulePlanEnd;
+	}
+	public void setSchedulePlanEnd(String schedulePlanEnd) {
+		this.schedulePlanEnd = schedulePlanEnd;
+	}
 	
 	@Override
 	public String toString() {
@@ -113,8 +127,8 @@ public class DayPlanVO {
 				+ ", dContents=" + dContents + ", dComplete=" + dComplete + ", dayRecordNum=" + dayRecordNum
 				+ ", startDate=" + startDate + ", endDate=" + endDate + ", btmRecordNum=" + btmRecordNum + ", achieve="
 				+ achieve + ", BTMstartDate=" + BTMstartDate + ", BTMendDate=" + BTMendDate + ", userId=" + userId
-				+ ", getToday=" + getToday + "]";
+				+ ", getToday=" + getToday + ", schedulePlanStart=" + schedulePlanStart + ", schedulePlanEnd="
+				+ schedulePlanEnd + "]";
 	}
-	
 	
 }

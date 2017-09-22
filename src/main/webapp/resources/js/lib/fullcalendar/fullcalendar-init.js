@@ -58,8 +58,8 @@ $(document).ready(function(){
 	                    	$(result.DayRecordlist).each(function(item,index) {
 	                    		totalEvents.push({
 	                            	title: $(this).attr('dContents'),
-	                            	start: $(this).attr('startDate'), // will be parsed
-	                            	end : $(this).attr('endDate'),
+	                            	start: $(this).attr('schedulePlanStart'), // will be parsed
+	                            	end : $(this).attr('schedulePlanEnd'),
 	                            	color : "#F3B600",
 	                            	dayPlanNum : $(this).attr('dayPlanNum'),
 	                            	btmRecordNum : $(this).attr('btmRecordNum'),
@@ -73,8 +73,8 @@ $(document).ready(function(){
 	                    	$(result.nomallist).each(function(item,index) {
 	                    		totalEvents.push({
 	                            	title: $(this).attr('dContents'),
-	                            	start: $(this).attr('startDate'), // will be parsed
-	                            	end : $(this).attr('endDate'),
+	                            	start: $(this).attr('schedulePlanStart'), // will be parsed
+	                            	end : $(this).attr('schedulePlanEnd'),
 	                            	color : "#F3B600",
 	                            	//dayPlanNum은 무조건 1이됨.
 	                            	dayPlanNum : $(this).attr('dayPlanNum'),
