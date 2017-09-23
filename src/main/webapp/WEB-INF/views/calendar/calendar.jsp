@@ -42,14 +42,17 @@
 		var tbtmRecordNum = 0;
 	    var tdayPlanNum = 0;
 		var tuid = 0;
-		var ttitle = "";
-		var tstartTime = "";
-		var tendTime = "";
 	    var trNumber = "";
 	    var index = 0;
 	    var dayClick = "";
 	    //이전에 삭제했던 tr의 넘버를 담버두는 변수(trNumber)
 	    var deleteTr = 0;
+	    
+	    //수정 부분의 number를 담아두는 변수
+	    var updateTr = 0;
+	    var getTitle = "";
+	    var getStarTime = "";
+	    var getEndTime = "";
 	    
 	    
 		//클릭한 날짜가 오늘 날짜인지 확인하는 변수 0이면 아님. 1이면 오늘날짜의 것. (1이면 클릭시 모달에서 수정이나 삭제가 가능하도록 (버튼이 보이도록))
@@ -69,11 +72,22 @@
 		function deleteModal(){
 			$('#delete').on('click', '[data-dismiss="modal"]', function(e) { e.stopPropagation(); });
 			
+			
+			var splitCheckNum = trNumber.split("");
+			var deleteNum = parseInt(splitCheckNum[1]);
+			
+			if(deleteTr<deleteNum && deleteTr !=0){
+				deleteTr = deleteTr+1 
+				deleteNum = deleteNum - deleteTr;
+				trNumber = splitCheckNum[0]+deleteNum;
+			}
+			
 			//삭제 내부 로직 작성  필요
 		    $('#'+trNumber).html('');
 		    
 			//trNumber 이후의 모든 fn,ln,mn의 뒤에 넘버를 -1 해줘야함.
-			alert(trNumber); 
+			
+			
 			$.ajax({
 				url: '/goal/calendar/deleteDayPlan',
             	type: "POST",
@@ -83,8 +97,6 @@
             	
             	}
 			});		
-					deleteTr = trNumber;
-					alert(deleteTr);
 					$('#delete').modal('hide');
 		}
 		
@@ -124,7 +136,7 @@
 				
 				var splitEnd = endTime.split(" ");
 				splitEndTime = splitEnd[0]; 
-					
+				
 				//ajax 날리고 해당 dayRecordNum을 받아와야됨 미리 그걸 delete함수에 넣어줘야됨 자바 스크립트에서 클릭한 날짜를 받아와야함..
 				// dayRecordNum 시퀀스 역시 미리 dual에서 받아와야 함. (btmRecordNum만 1로 넣으면 됨.)
 				  dayClick = dayClick+"";
@@ -136,8 +148,37 @@
 	              
 	              var clickDayToString = year + "/" + month + "/" + day;
 	              
-	              var sendStartTime = clickDayToString+" "+ splitStartTime;
-	              var sendEndTime = clickDayToString+" "+splitEndTime;
+	              //여기부터시작
+	              
+	              var splitMn = "";
+	              var splitLn = "";
+	              var isStartPmAm = splitEnd[1];
+	              var isEndPmAm = splitEnd[1];
+	              var hour = "";
+	              var mimute = "";
+	              var isStartTime = "";
+	              var isEndTime = "";
+	              
+	              if(isStartPmAm == "PM"){
+	            	  var secondSplit  =  splitStartTime.split(":");
+	            	  hour =  parseInt(secondSplit[0]) + 12 + "";
+	            	  minute = secondSplit[1];
+	            	  isStartTime = hour+":"+minute;
+	              }else{
+	            	  isStartTime = splitStartTime;
+	              }
+	              
+	              if(isEndPmAm == "PM"){
+	            	  var secondSplit  =  splitEndTime.split(":");
+	            	  hour =  parseInt(secondSplit[0]) + 12 + "";
+	            	  minute = secondSplit[1];
+	            	  isEndTime = hour+":"+minute;
+	              }else{
+	            	  isEndTime = splitEndTime;
+	              }
+	              
+	              var sendStartTime = clickDayToString+" "+ isStartTime;
+	              var sendEndTime = clickDayToString+" "+isEndTime;
 	              
 			 	$.ajax({
 					url: '/goal/calendar/createDayPlan',
@@ -149,8 +190,8 @@
 	            			'<tr id="d'+index+'">'+
 	  		   		            '<td id="n'+index+'">'+(index+1)+'</td>'+
 	  		   		            '<td id="f'+index+'">'+title+'</td>'+
-	  				            '<td id="l'+index+'">'+startTime+'</td>'+
-	  		   		            '<td id="m'+index+'">'+endTime+'</td>'+
+	  				            '<td id="l'+index+'">'+isStartTime+'</td>'+
+	  		   		            '<td id="m'+index+'">'+isEndTime+'</td>'+
 	  		   		            '<td><button type="button" data-toggle="modal" onclick = "openEditModal('+dayClick+','+1+','+result+','+index+','+'\'f'+(index)+'\''+','+'\'l'+(index)+'\''+','+'\'m'+(index)+'\')" data-uid="'+index+'" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
 	  		   		            '<td><button type="button" data-toggle="modal" onclick="openDeleteModal('+btmRecordNum+','+result+','+'\'d'+(index)+'\')" data-uid="'+index+'" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>'+
 	  		   		        '</tr>'
@@ -167,10 +208,11 @@
 			  	 clickedDate = clickedDay+"";
 			  	 tbtmRecordNum = btmRecordNumber;
 			   	 tdayPlanNum = dayPlanNum;
-		    	
-			     alert(title);
-			     alert(startTime);
-			     alert(endTime);
+			   	 
+			      getTitle = title;
+				  getStarTime = startTime;
+				  getEndTime = endTime;
+			      
 			     
 				       var fn = $('#'+title).html();
 				       var ln = $('#'+startTime).html();
@@ -194,10 +236,32 @@
 	              var mn = $('#ln').val();
 	              var ln = $('#mn').val();
 	              
+	              var splitMn = mn.split("");
+	              var splitLn = ln.split("");
+	              
+	              var intMn = 0;
+	              var intLn = 0;
+	              
+	           	  if(splitMn[6]+splitMn[7] == 'PM'){
+	           		  intMn = parseInt(splitMn[0]+splitMn[1])+12;
+	           	  }else{
+	           		  intMn = parseInt(splitMn[0]+splitMn[1]);
+	           	  }
+	           	  
+	           	  if(splitLn[6]+splitLn[7] == 'PM'){
+	           		  intLn = parseInt(splitLn[0]+splitLn[1])+12;
+	           	  }else{
+	           		intLn = parseInt(splitLn[0]+splitLn[1]);
+	           	  }
+	              
+	              var splitedMn = intMn+splitMn[2]+splitMn[3]+splitMn[4];
+	              var splitedLn = intLn+splitLn[2]+splitLn[3]+splitLn[4];
+	              
+	              
 				  $('#edit').on('click', '[data-dismiss="modal"]', function(e) { e.stopPropagation(); });
-	              $('#'+ttitle).html(fn);
-	              $('#'+tstartTime).html(mn);
-	              $('#'+tendTime).html(ln);
+	              $('#'+getTitle).html(fn);
+	              $('#'+getStarTime).html(splitedMn);
+	              $('#'+getEndTime).html(splitedLn);
 	              
 	              //클릭한 날짜의 시간을 형식에 맞춰서 넣음
 	              
@@ -210,43 +274,9 @@
 	              var startTime = "";
 	              var endTime = "";
 	              
-	              var splitMn = "";
-	              var splitLn = "";
-	              var isMnPmAm = "";
-	              var islnPmAm = "";
+	              startTime = clickDayToString + " " + splitedMn;
+	              endTime = clickDayToString + " " + splitedLn;
 	              
-	              var dateSplitTime1 = mn.split(" ");
-	              splitMn = dateSplitTime1[0];
-	              isMnPmAm = dateSplitTime1[1];
-	              
-	              if(isMnPmAm == "PM"){
-	            	  var splitPM = splitMn.split(":");
-	            	  var minute = "";
-	            	  if(parseInt(splitPM[1]) < 10){
-	            		  minute = "0" + parseInt(splitPM[1]); 
-	            	  }else{
-	            		  minute =  parseInt(splitPM[1]);
-	            	  }
-	            	  splitMn = parseInt(splitPM[0]) + 12 + ":" + minute;
-	              }
-	              
-	              var dateSplitTime2 = ln.split(" ");
-	              splitLn = dateSplitTime2[0]; 
-	              islnPmAm = dateSplitTime2[1];
-	              
-	              if(islnPmAm == "PM"){
-	            	  var splitPM2 = splitLn.split(":");
-	            	  var minute2 = "";
-	            	  if(parseInt(splitPM2[1]) < 10){
-	            		  minute2 = "0" + parseInt(splitPM2[1]); 
-	            	  }else{
-	            		  minute2 =  parseInt(splitPM2[1]);
-	            	  }
-	            	  splitLn = parseInt(splitPM2[0]) + 12 + ":" + minute2;
-	              }
-	              
-	              startTime = clickDayToString + " " + splitMn;
-	              endTime = clickDayToString + " " + splitLn;
 	              
 	              $.ajax({
 					url: '/goal/calendar/updateDayPlan',
@@ -272,6 +302,9 @@
    				btmRecordNum = 0;
    				dayRecordNum = 0;
    				index = 0;
+   				deleteTr = 0;
+   				updateTr = 0;
+   				
    				$('#inputPercent').attr('placeholder','100이내의 숫자');	
 				$("#warning").modal("hide");
 			}
