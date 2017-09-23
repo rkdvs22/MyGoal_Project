@@ -16,7 +16,7 @@ import com.test.goal.dao.HomeDAO;
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
+
 	@Autowired
 	private HomeDAO dao;
 	
@@ -24,12 +24,12 @@ public class HomeController {
 	public String home(Locale locale, Model model) {
 		return "home";
 	}
-
+	
 	// 게시판 불러오기
 	@RequestMapping(value = "homeBoard", method = RequestMethod.GET)
 	public String homeBoard(Model model) {
 		model.addAttribute("homeBoard", dao.homeBoard());
-		return "homeBoard";
+		return "/homeBoard";
 	}
 	
 }

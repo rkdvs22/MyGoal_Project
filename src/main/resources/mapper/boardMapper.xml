@@ -13,7 +13,6 @@
 		on b.tGoalNum = t.tGoalNum inner join mainProgress m
 		on t.progressNum = m.progressNum inner join (select progressNum, count(listNum) as currentMemberNumber from memberList group by progressNum) l
 		on m.progressNum = l.progressNum
-		where not m.maxMember = 1 or t.openStatus = 'N'
 		<if test="searchSelect == 'ID'">
 			where b.userid like '%'||#{searchKeyid}||'%'
 		</if>
