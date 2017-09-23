@@ -7,7 +7,7 @@ import java.util.UUID;
 import org.springframework.web.multipart.MultipartFile;
 
 public class FileService {
-private static final String FILE_PATH ="C:/test/";
+private static final String FILE_PATH ="C:/testImg/";
 	
 	// 파일 저장
 	public static String saveFile(MultipartFile uploadFile) {
@@ -24,7 +24,7 @@ private static final String FILE_PATH ="C:/test/";
 	
 	// 파일 삭제
 	public static void deleteFile(String fileName) {
-		File file = new File("C:/test/" + fileName);
+		File file = new File("C:/testImg/" + fileName);
 		if(file.exists()) file.delete(); // file이 존재했을때 삭제 로직 실행	
 		
 	}

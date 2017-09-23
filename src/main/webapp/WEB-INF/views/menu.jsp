@@ -81,12 +81,13 @@
 				<div class="site-header-shown">
 				<c:if test="${empty userid eq true}">
 				<!-- 헤더 로그인/회원가입 버튼 -->
-	                 <button type="button" class="btn btn-rounded btn-inline btn-success-outline btn-sm" onclick="loginForm()">LOGIN</button>
-	                 <button type="button" class="btn btn-rounded btn-inline btn-success-outline btn-sm" onclick="joinForm()">SIGN UP</button>
+	                 <button type="button" class="btn btn-rounded btn-success-outline btn-sm" onclick="loginForm()">LOGIN</button>
+	                 <button type="button" class="btn btn-rounded btn-success-outline btn-sm" onclick="joinForm()">SIGN UP</button>
                 </c:if>
                 
 				<!-- 헤더 메시지 알람 부분 -->
 				<c:if test="${empty userid eq false}">
+				<a style="color:grey">${sessionScope.userid} 님이 로그인 중입니다.</a>
 					<div class="dropdown dropdown-notification notif">
 						<a href="#"
 						class="header-alarm dropdown-toggle active"

@@ -59,5 +59,12 @@ public class MemberDAOImpl implements MemberDAO {
 		return mapper.updateMember(vo);
 	}
 
+	// ID, PWD 일치여부
+	@Override
+	public MemberVO idMatchUp(MemberVO vo) {
+		MemberMapper mapper = sqlsession.getMapper(MemberMapper.class);
+		return mapper.idMatchUp(vo);
+	}
+
 
 }

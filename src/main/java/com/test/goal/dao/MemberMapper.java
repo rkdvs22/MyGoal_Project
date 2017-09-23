@@ -19,6 +19,8 @@ public interface MemberMapper {
 
 	public MemberVO memberList(String userid); // 회원목록
 
+	public MemberVO idMatchUp(MemberVO vo); // ID, PWD 일치여부
+
 
 
 	

@@ -29,7 +29,7 @@ public class HomeController {
 	@RequestMapping(value = "homeBoard", method = RequestMethod.GET)
 	public String homeBoard(Model model) {
 		model.addAttribute("homeBoard", dao.homeBoard());
-		return "/homeBoard";
+		return "homeBoard";
 	}
 	
 }

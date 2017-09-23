@@ -33,9 +33,10 @@
                         <button type="button" class="btn btn-rounded btn-inline btn-success btn-sm" id="checkId" name="checkId">중복확인</button>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" id="pwd" name="password"placeholder="Password" onchange="check()"/>
+                        <input type="password" class="form-control" id="pwd" name="password" placeholder="Password" onchange="check()"/>
                         <input type="password" class="form-control" id="pwdCheck" placeholder="Repeat password"  onchange="check()"/>
-                        <p id="same"></p>
+                        <font name="check" size="2"></font>
+                        <!-- <p id="same"></p> -->
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" name="email" placeholder="E-Mail"/>
@@ -125,18 +126,26 @@
     }
 	
 	// 비밀번호 확인
-	function check() {
-		var pwd = $("#pwd").val();
-		var pwdCheck = $("#pwdCheck").val();
+	$(function() {
 		
-		if(pwd != pwdCheck) {
-			document.getElementById("same").innerHTML='비밀번호가 일치하지 않습니다.';
-			document.getElementById("same").style.color='red';
-		} else {
-			document.getElementById("same").innerHTML='비밀번호가 일치합니다.';
-			document.getElementById("same").style.color='green';
-		}
-	}
+		$('#pwd').keyup(function() {
+			$('font[name=check]').text('');
+		}); // #pwd.keyup
+		
+		$('#pwdCheck').keyup(function() {
+			if($('#pwd').val() != $('#pwdCheck').val()) {
+				$('font[name=check]').text('');
+				$('font[name=check]').html("비밀번호가 일치하지 않습니다.");
+				$('font[name=check]').css('color','red');
+			} else{
+				$('font[name=check]').text('');
+				$('font[name=check]').html("비밀번호가 일치합니다.");
+				$('font[name=check]').css('color','green');
+			}
+		});
+		
+	});
+	
 	
     </script>
 <script src="/goal/resources/js/app.js"></script>

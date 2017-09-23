@@ -64,12 +64,6 @@ public class BoardController {
 	}
 	
 	
-	/*public void inputMemberList(TopGoalVO tvo) {
-		MemberListVO mlvo = new MemberListVO();
-		mlvo.setProgressNum(tvo.getProgressNum());
-		mlvo.setUserId(tvo.getUserid());
-		service.inputMemberList(mlvo);
-	}*/
 	
 	
 }

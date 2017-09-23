@@ -124,6 +124,7 @@
 							</li>
 						<c:if test="${counter == navi.currentPage}"></b></c:if>
 					</c:forEach>
+					
 					<li class="page-item">
 						<a class="page-link" href="javascript:pageProc(${navi.currentPage + navi.pagePerGroup}, '${searchSelect}', '${searchKeyid}')" aria-label="Next">
 							<span aria-hidden="true">&raquo;</span>

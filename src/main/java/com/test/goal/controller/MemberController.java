@@ -41,6 +41,7 @@ public class MemberController {
 	// 회원가입 기능
 	@RequestMapping(value = "join", method = RequestMethod.POST)
 	public String join(MemberVO vo, MultipartFile uploadFile) {
+		System.out.println(vo);
 		if(!uploadFile.isEmpty()) {
 			String originalFileName = uploadFile.getOriginalFilename();
 			String image = FileService.saveFile(uploadFile);
@@ -60,7 +61,8 @@ public class MemberController {
 	// 로그인 기능
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public String login(MemberVO vo, HttpSession session) {
-		if(dao.login(vo) != null) {
+		MemberVO result = dao.login(vo);
+		if(result != null) {
 			session.setAttribute("userid", vo.getUserid());
 			return "redirect:/";
 		}
@@ -91,7 +93,7 @@ public class MemberController {
 	
 	// 회원정보수정 기능
 	@RequestMapping(value = "updateMember", method = RequestMethod.POST)
-	public boolean updateMember(MemberVO vo, Model model, MultipartFile uploadFile) {
+	public boolean updateMember(MemberVO vo, Model model, MultipartFile uploadFile, HttpSession session) {
 		String oldImage = memberList(vo.getImage());
 		if(!uploadFile.isEmpty()) {
 			String originalFileName = uploadFile.getOriginalFilename();
@@ -102,7 +104,8 @@ public class MemberController {
 			FileService.deleteFile(vo.getImage());
 			return false;
 		} if(!uploadFile.isEmpty()) FileService.deleteFile(oldImage);
-			
+		
+		String userid = (String) session.getAttribute("userid");
 		model.addAttribute("result", dao.updateMember(vo));
 		model.addAttribute("userid", vo.getUserid());
 		
@@ -138,6 +141,13 @@ public class MemberController {
 		rttr.addFlashAttribute("result", false);
 		return "/member/find";
 	}
-
+	
+	// ID, PWD 일치여부
+	@RequestMapping(value = "idMatchUp", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean idMatchUp(MemberVO vo) {
+		if(dao.idMatchUp(vo) == null) return false;
+		return true;
+	}
 	
 }

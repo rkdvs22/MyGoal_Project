@@ -70,17 +70,19 @@ public class FriendController {
 		map.put("userid", userid);
 		
 		model.addAttribute("searchKeyid", searchKeyid);
-		ArrayList<MemberVO> searchList = dao.searchFriend(map);
-		model.addAttribute("searchList", searchList);
+		model.addAttribute("searchList", dao.searchFriend(map));
+		/*ArrayList<MemberVO> searchList = dao.searchFriend(map);
+		model.addAttribute("searchList", searchList);*/
+		
 		
 		
 		// 친구여부 : null이 아닐 때 친구 추가 버튼 비활성화
-		ArrayList<MyFriendVO> result = new ArrayList<>();
+/*		ArrayList<MyFriendVO> result = new ArrayList<MyFriendVO>();
 		for (MemberVO m : searchList) {
 			result = dao.isFriend(userid, m.getUserid());
 		}
 		
-		model.addAttribute("result", result);
+		model.addAttribute("result", result);*/
 		
 		return "/friend/searchFriend";
 	}
