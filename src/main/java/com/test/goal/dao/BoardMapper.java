@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.session.RowBounds;
 
 import com.test.goal.vo.BoardVO;
+import com.test.goal.vo.TopGoalVO;
 
 public interface BoardMapper {
 
@@ -15,6 +16,7 @@ public interface BoardMapper {
 
 	public void addFavorite(int boardnum); // 좋아요
 
-	public String selectTopGoal(int tGoalNum); // tGoalNum 이용 TopGoal 테이블에서 host의 progressNum 정보찾기
+	public BoardVO getTopGoalNum(); // Board 테이블에서 가장 최신화된 tGoalNum, userid을 가져옴
+
 
 }

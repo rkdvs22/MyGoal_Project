@@ -13,7 +13,6 @@
 		on b.tGoalNum = t.tGoalNum inner join mainProgress m
 		on t.progressNum = m.progressNum inner join (select progressNum, count(listNum) as currentMemberNumber from memberList group by progressNum) l
 		on m.progressNum = l.progressNum
-		where not m.maxMember = 1 or t.openStatus = 'N'
 		<if test="searchSelect == 'ID'">
 			where b.userid like '%'||#{searchKeyid}||'%'
 		</if>
@@ -35,7 +34,7 @@
 		<if test="searchSelect == 'TITLE'">
 			where t.tGoalTitle like '%'||#{searchKeyid}||'%'
 		</if>
-		order by b.favorite desc
+		order by t.tStartDate desc
 	</select>
 
 	<!-- 게시글 좋아요 -->
@@ -43,9 +42,18 @@
 		update board set favorite = favorite + 1 where boardnum = #{boardnum}	
 	</update>
 	
-	<!-- <select id="selectTopGoal">
+	<!-- Board 테이블에서 가장 최신화된 tGoalNum, userid을 가져옴 (Board의 userid는 host의 id) -->
+	<select id="getTopGoalNum" resultType="BoardVO">
+		select userid, tGoalNum from Board 
+		where tGoalNum = (select max(tGoalNum) from board where userid = #{userid}) 
+	</select>
 	
-	</select> -->
+	<!-- TopGoal테이블에 사용자에 대한 데이터 값 입력 (TopGoal의 userid는 member의 id) -->
+	<insert id="inputTopGoal" parameterType="TopGoalVO">
+		insert into TopGoal(tGoalNum, tGoalTitle, tStartDate, tEndDate, userid, progressNum) 	
+		values (TOPGOAL_SEQ.NEXTVAL, #{tGoalTitle}, #{tStartDate}, #{tEndDate}, #{userid}, #{progressNum}) 	
+	</insert>
 	
 	
+
 </mapper>

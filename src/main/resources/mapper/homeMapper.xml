@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.test.goal.dao.MainMapper">
+
+	<!-- 게시판 불러오기 -->  
+	<select id="homeBoard" resultType="BoardVO">
+		select b.boardnum as "boardnum", b.userid as "userid", b.favorite as "favorite",t.tGoalNum as "tGoalNum", t.tGoalTitle as "tGoalTitle", t.tStartDate as "startDate", t.tEndDate as "endDate", t.openStatus as "openStatus", t.progressNum as "progressNum", l.currentMemberNumber as "currentMemberNumber", m.maxMember as "maxMember", m.type as "type"
+		from board b inner join topGoal t
+		on b.tGoalNum = t.tGoalNum inner join mainProgress m
+		on t.progressNum = m.progressNum inner join (select progressNum, count(listNum) as currentMemberNumber from memberList group by progressNum) l
+		on m.progressNum = l.progressNum
+		order by b.favorite desc
+	</select>
+
+</mapper>

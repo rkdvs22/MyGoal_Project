@@ -163,8 +163,8 @@
 					type: "post",
 					data: {"senderId":senders[i]},
 					success: function(vo){
-						location.href='/goal/createGoal/joinThatGoal?boardNum=' + vo.boardnum
-						+ '&id=' + '${sessionScope.userid}';
+						console.log(vo.userid);
+						location.href='/goal/createGoal/joinThatGoal?&id=' + vo.userid;
 					},
 					error: function() { alert("승인실패!!!!!!!!!!!!!!!!!!!!!!!!!"); }
 				});

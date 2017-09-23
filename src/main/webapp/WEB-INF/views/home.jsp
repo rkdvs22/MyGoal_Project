@@ -438,6 +438,7 @@
 	                    </header>
 	                    
 	                    <div class="box-typical-body panel-body">
+	                    <form action="/homeBoard" method="get">
                        		<table id="table-edit" class="table table-bordered table-hover">
 								<thead>
 								<tr>
@@ -452,8 +453,9 @@
 								</tr>
 								</thead>
 								<tbody>
+								<c:forEach items="${homeBoard}" var="board">
 									<tr>
-										<td></td>
+										<td>${board.userid}</td>
 										<td></td>
 										<td></td>
 										<td></td>
@@ -480,8 +482,10 @@
 											<img src="img/photo-64-1.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="Nicholas<br/>Barrett">
 										</td>
 									</tr> --%>
+								</c:forEach>
 								</tbody>
 							</table>
+						</form>
 	                    </div><!--.box-typical-body-->
 	                </section><!--.box-typical-dashboard-->
 	                

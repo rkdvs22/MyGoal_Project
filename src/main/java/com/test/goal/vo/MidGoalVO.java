@@ -12,8 +12,7 @@ public class MidGoalVO {
 	private String mEndDate;
 	private int tGoalNum;
 	
-	public MidGoalVO() {
-	}
+	public MidGoalVO() {}
 
 	public int getmGoalNum() {
 		return mGoalNum;

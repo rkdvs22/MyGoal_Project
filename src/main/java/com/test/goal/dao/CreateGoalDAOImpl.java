@@ -93,9 +93,9 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 		return mapper.findIdinModal(keyWord);
 	}
 
-	// 초대 메시지에 승인할 시 해당하는 목표가 무엇인지 찾는다.
+	// 목표 초대에 승인했을 경우 초대한 목표에 대한 정보를 찾는다.
 	@Override
-	public BoardVO findThatGoal(String senderId) {
+	public TopGoalVO findThatGoal(String senderId) {
 		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
 		return mapper.findThatGoal(senderId);
 	}
@@ -126,11 +126,12 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 		mapper.deleteCurrentMainProgress(mVO);
 	}
 
-	// 초대한 목표로 이동한다. BOARD, TOPGOAL, MAINPROGRESS, MEMBERLIST 테이블에 사용자를 등록한다.
+	// TOPGOAL, MEMBERLIST 테이블에 사용자를 등록한 뒤 초대한 목표로 이동한다.
 	@Override
-	public MemberListVO joinThatGoal(int boardNum, String id) {
+	public MemberListVO joinThatGoal(TopGoalVO vo) {
 		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
-//		mapper.input
-		return null;
+		mapper.inputUserTgoal(vo);
+		mapper.inputUserMemberList(vo);
+		return mapper.findUserNowInput(vo);
 	}
 }

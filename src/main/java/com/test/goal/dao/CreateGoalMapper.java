@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.test.goal.vo.BoardVO;
 import com.test.goal.vo.MainProgressVO;
+import com.test.goal.vo.MemberListVO;
 import com.test.goal.vo.MemberVO;
 import com.test.goal.vo.TopGoalVO;
 
@@ -34,7 +35,7 @@ public interface CreateGoalMapper {
 
 	public BoardVO getBoardInfo(); // 현재 게시글의 정보를 불러온다.
 
-	public BoardVO findThatGoal(String senderId); // 초대 메시지에 승인할 시 해당하는 목표가 무엇인지 찾는다.
+	public TopGoalVO findThatGoal(String senderId); // 목표 초대에 승인했을 경우 초대한 목표에 대한 정보를 찾는다.
 
 	public BoardVO findCurrentBoard(String id); // 목표를 만든 사용자가 나가기 버튼을 클릭했을 경우 관련된 데이터를 삭제하기 위해 현 게시글의 정보를 받아온다.
 
@@ -48,5 +49,11 @@ public interface CreateGoalMapper {
 
 	public void createMemberList(BoardVO vo); // 목표 생성시 MemberList 테이블에 데이터 추가
 
-	public void deleteCurrentMemberList(String id);
+	public void deleteCurrentMemberList(String id); // 생성중이던 MemberList의 HOST 정보 삭제
+
+	public int inputUserTgoal(TopGoalVO vo); // 초대받은 목표 (TOPGOAL 테이블) 에 초대받은 사람의 ID를 입력한다.
+
+	public int inputUserMemberList(TopGoalVO vo); // 초대받은 목표 (MEMBERLIST 테이블) 에 초대받은 사람의 ID를 입력한다.
+
+	public MemberListVO findUserNowInput(TopGoalVO vo); // 초대에 수락한 사용자에 대한 정보를 받아온다.
 }
