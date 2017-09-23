@@ -152,7 +152,7 @@
 	              
 	              var splitMn = "";
 	              var splitLn = "";
-	              var isStartPmAm = splitEnd[1];
+	              var isStartPmAm = splitStart[1];
 	              var isEndPmAm = splitEnd[1];
 	              var hour = "";
 	              var mimute = "";
@@ -161,20 +161,46 @@
 	              
 	              if(isStartPmAm == "PM"){
 	            	  var secondSplit  =  splitStartTime.split(":");
-	            	  hour =  parseInt(secondSplit[0]) + 12 + "";
-	            	  minute = secondSplit[1];
-	            	  isStartTime = hour+":"+minute;
+	            	  if(parseInt(secondSplit[0]) == 12){
+	            		  hour =  parseInt(secondSplit[0])+"";  
+	            		  minute = secondSplit[1];
+		            	  isStartTime = hour+":"+minute;
+	            	  }else{
+		            	  hour =  parseInt(secondSplit[0]) + 12 + "";
+		            	  minute = secondSplit[1];
+		            	  isStartTime = hour+":"+minute;
+	            	  }
 	              }else{
-	            	  isStartTime = splitStartTime;
+	            	  var secondSplit  =  splitStartTime.split(":");		            	  
+	            	  if(parseInt(secondSplit[0]) == 12){
+	            		  hour =  0+"";  
+	            		  minute = secondSplit[1];
+		            	  isStartTime = hour+":"+minute;
+	            	  }else{
+		            	  isStartTime = splitStartTime;
+	            	  }
 	              }
 	              
 	              if(isEndPmAm == "PM"){
 	            	  var secondSplit  =  splitEndTime.split(":");
-	            	  hour =  parseInt(secondSplit[0]) + 12 + "";
-	            	  minute = secondSplit[1];
-	            	  isEndTime = hour+":"+minute;
+	            	  if(parseInt(secondSplit[0]) == 12){
+	            		  hour =  parseInt(secondSplit[0])+"";  
+	            		  minute = secondSplit[1];
+		            	  isEndTime = hour+":"+minute;
+	            	  }else{
+		            	  hour =  parseInt(secondSplit[0]) + 12 + "";
+		            	  minute = secondSplit[1];
+		            	  isEndTime = hour+":"+minute;
+	            	  }
 	              }else{
-	            	  isEndTime = splitEndTime;
+	            	  var secondSplit  =  splitEndTime.split(":");		            	  
+	            	  if(parseInt(secondSplit[0]) == 12){
+	            		  hour =  0+"";  
+	            		  minute = secondSplit[1];
+		            	  isEndTime = hour+":"+minute;
+	            	  }else{
+		            	  isEndTime = splitEndTime;
+	            	  }
 	              }
 	              
 	              var sendStartTime = clickDayToString+" "+ isStartTime;
@@ -243,15 +269,31 @@
 	              var intLn = 0;
 	              
 	           	  if(splitMn[6]+splitMn[7] == 'PM'){
-	           		  intMn = parseInt(splitMn[0]+splitMn[1])+12;
+	           		  if(splitMn[0]+splitMn[1] == '12'){
+	           			  intMn = parseInt(splitMn[0]+splitMn[1]);
+	           		  }else{
+		           		  intMn = parseInt(splitMn[0]+splitMn[1])+12;
+	           		  }
 	           	  }else{
-	           		  intMn = parseInt(splitMn[0]+splitMn[1]);
+	           		  if(splitMn[0]+splitMn[1] == '12'){
+	           			 intMn = 0;
+	           		  }else{
+		           		  intMn = parseInt(splitMn[0]+splitMn[1]);
+	           		  }
 	           	  }
 	           	  
 	           	  if(splitLn[6]+splitLn[7] == 'PM'){
-	           		  intLn = parseInt(splitLn[0]+splitLn[1])+12;
+	           		if(splitLn[0]+splitLn[1] == '12'){
+	           			  intLn = parseInt(splitLn[0]+splitLn[1]);
+	           		  }else{
+		           		  intLn = parseInt(splitLn[0]+splitLn[1])+12;
+	           		  }
 	           	  }else{
-	           		intLn = parseInt(splitLn[0]+splitLn[1]);
+	           		 if(splitLn[0]+splitLn[1] == '12'){
+	           			 intLn = 0;
+	           		  }else{
+		           		  intLn = parseInt(splitLn[0]+splitLn[1]);
+	           		  }
 	           	  }
 	              
 	              var splitedMn = intMn+splitMn[2]+splitMn[3]+splitMn[4];
@@ -567,7 +609,7 @@
 	<script type="text/javascript" src="/goal/resources/js/lib/moment/moment-with-locales.min.js?version=4"></script>
 	<script type="text/javascript" src="/goal/resources/js/lib/eonasdan-bootstrap-datetimepicker/bootstrap-datetimepicker.min.js?version=4"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar.js?version=10"></script>
-	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=77"></script>
+	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=78"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/ko.js"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/tableModal.js?version=3"></script>
     <script src="/goal/resources/js/app.js?version=4"></script>

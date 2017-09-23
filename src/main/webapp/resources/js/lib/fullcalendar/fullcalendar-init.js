@@ -15,7 +15,7 @@ $(document).ready(function(){
         header: {
             left: '',
             center: 'prev, title, next',
-            right: 'agendaWeek,month'
+            right: 'month'
         },
         buttonIcons: {
             prev: 'font-icon font-icon-arrow-left',
