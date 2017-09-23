@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
- <link rel="stylesheet" href="/goal/resources/css/lib/fullcalendar/calendarModal.css?version=22">
+ <link rel="stylesheet" href="/goal/resources/css/lib/fullcalendar/calendarModal.css?version=23">
 </head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -53,6 +53,7 @@
 	    var getTitle = "";
 	    var getStarTime = "";
 	    var getEndTime = "";
+	    var getAchieve = 0;
 	    
 	    
 		//클릭한 날짜가 오늘 날짜인지 확인하는 변수 0이면 아님. 1이면 오늘날짜의 것. (1이면 클릭시 모달에서 수정이나 삭제가 가능하도록 (버튼이 보이도록))
@@ -85,9 +86,6 @@
 			//삭제 내부 로직 작성  필요
 		    $('#'+trNumber).html('');
 		    
-			//trNumber 이후의 모든 fn,ln,mn의 뒤에 넘버를 -1 해줘야함.
-			
-			
 			$.ajax({
 				url: '/goal/calendar/deleteDayPlan',
             	type: "POST",
@@ -346,8 +344,6 @@
    				index = 0;
    				deleteTr = 0;
    				updateTr = 0;
-   				
-   				$('#inputPercent').attr('placeholder','100이내의 숫자');	
 				$("#warning").modal("hide");
 			}
 			
@@ -379,7 +375,6 @@
 						var percent = 0;
 						percent = parseInt(getTextPercent);
 						
-							
 						if((100-parseInt(secondParsing[0])) < percent-parseInt(dayPercent)){
 							alert('달성률은 100%를 넘길수 없습니다...- 현재 남은 달성률: '+(100-parseInt(secondParsing[0])));
 						}else{
@@ -412,13 +407,17 @@
 					            	}
 								});		 
 							}
+							if(parseInt(secondParsing[0])+percent-parseInt(dayPercent) == 100){
+								alert('달성률 100%를 축하합니다!');
+								window.location.reload();	
+								
+							}
 						}		
 					           $('#inputPercent').attr('placeholder','100이내의 숫자');					            	
 					           
 				}
 			}
 			
-		
 	</script>
 	
 	
@@ -596,7 +595,7 @@
 				            </div><!-- /.modal-content -->
 				        </div><!-- /.modal-dialog -->
 				    </div><!-- /.modal -->
-								
+				    
 	
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
@@ -609,7 +608,7 @@
 	<script type="text/javascript" src="/goal/resources/js/lib/moment/moment-with-locales.min.js?version=4"></script>
 	<script type="text/javascript" src="/goal/resources/js/lib/eonasdan-bootstrap-datetimepicker/bootstrap-datetimepicker.min.js?version=4"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar.js?version=10"></script>
-	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=78"></script>
+	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=92"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/ko.js"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/tableModal.js?version=3"></script>
     <script src="/goal/resources/js/app.js?version=4"></script>

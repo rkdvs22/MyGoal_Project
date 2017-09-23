@@ -45,7 +45,6 @@
 			    color:#fff;
 			}
 			
-			
 			 .modal-header-warning {
 				color:#fff;
 			    padding:9px 15px;
@@ -89,13 +88,6 @@
 			.modal-deleteContent{
 				position:absolute !important;
 				background-color: #d9534f;
-				left:300;
-				width: 500px;
-				height: 200px;
-			}
-			
-			.modal-createContent{
-				position:absolute !important;
 				left:300;
 				width: 500px;
 				height: 200px;

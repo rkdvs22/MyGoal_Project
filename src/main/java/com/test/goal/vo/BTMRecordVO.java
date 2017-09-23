@@ -103,7 +103,7 @@ public class BTMRecordVO {
 	public void setBGoalTitle(String bGoalTitle) {
 		BGoalTitle = bGoalTitle;
 	}
-
+	
 	public int getIsComplete() {
 		return isComplete;
 	}

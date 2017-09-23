@@ -109,7 +109,6 @@ public class CalendarController {
 	@RequestMapping(value = "getAchieve", method = RequestMethod.POST)
 	@ResponseBody
 	public int getAchieve(DayRecordVO vo, HttpServletRequest request) {
-		
 		String userId  = (String) request.getSession().getAttribute("userid");
 		vo.setUserId(userId);
 		return service.getAchieve(vo);
@@ -134,4 +133,5 @@ public class CalendarController {
 		
 		return service.getBTMRecord(vo);
 	}
+	
 }

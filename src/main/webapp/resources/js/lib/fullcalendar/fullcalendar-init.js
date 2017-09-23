@@ -320,6 +320,7 @@ $(document).ready(function(){
          $('#dayPercent').html('');	
          $('#dayAchieve').removeAttr('disabled');	
          $('#inputPercent').removeAttr('readonly');
+         $('#inputPercent').html('');
         var notNomal = 0;
         var notHaveBTM = 0;
         //월에 대한 페이지인가?	
@@ -362,7 +363,7 @@ $(document).ready(function(){
         	var NomalEndTime = [];
         	var NomalNum = [];
         	
-        	//현재 클릭한 것이 세부목표가 있는지 없는지를 검사한다.
+        	//현재 클릭한 것에 일일계획이 있는지 없는지를 검사한다.
         	if(btmRecordlist != null){
         		$(btmRecordlist).each(function(index,item) {
         			var splitedStartDate = "";
@@ -383,7 +384,7 @@ $(document).ready(function(){
 	            	splitedStartDate = date_styear+""+date_stmonth+""+date_stday; // item의 BTMRecord의 시작날짜
 	            	splitedEndDate = date_edyear+""+date_edmonth+""+date_edday;
 	        		
-	            	if(parseInt(dateSplited) <= parseInt(splitedStartDate) || parseInt(dateSplited) > parseInt(splitedEndDate)){
+	            	if(parseInt(dateSplited) < parseInt(splitedStartDate) || parseInt(dateSplited) > parseInt(splitedEndDate)-1){
 	            		notHaveBTM += 1;
 	            	}
 	        	});//end each
@@ -391,6 +392,7 @@ $(document).ready(function(){
         	
         	//리스트를 띄우기 전에 테이블 body를 모두 비운다. 
         	$('#DayRecordTable').html('');
+        	
         	
         	if(dayRecordlist != null){
 	        	$(dayRecordlist).each(function(index,item) {
@@ -435,10 +437,14 @@ $(document).ready(function(){
 	            	splitedEndDate = date_edyear+""+date_edmonth+""+date_edday;
 	            		
 	            	
+	            	
+	            	console.log(item.btmRecordNum);
 	            	//해당 기간에 속한다면
 	            	if(parseInt(dateSplited) >= parseInt(splitedStartDate) && parseInt(dateSplited) <= parseInt(splitedEndDate) && item.btmRecordNum != 0){
             			sumAchieve = item.achieve;
             			btmRecordNum = item.btmRecordNum;
+            			
+            			
             			
             			// 클릭한 날짜에 직접적으로 속한다면 
             			if(splited == dateSplited){
@@ -451,6 +457,7 @@ $(document).ready(function(){
 	            	}	
 	        	});//end each
 	        	
+	        	
 	        	if(PlanTitle.length == 0 && (parseInt(dateSplited) == parseInt(today))){
 	        		notNomal = 1;
 	        		$.ajax({
@@ -459,14 +466,23 @@ $(document).ready(function(){
 		            	data:{"startDate":formatDate,"getToday":getToday},
 		            	dataType: "json",
 		            	success: function(result) {
-		            		$('#inputPercent').attr('placeholder','100이내의 숫자');
-		            		$('#currentPercent').html('');
-		            		$('#currentPercent').append('달성률:'+" "+ result+"%");
+		            		sumAchieve = result;
+		            		if(sumAchieve == 100){
+		            			$('#inputPercent').html('');
+		            			$('#inputPercent').attr('placeholder','100%입니다 -수정불가-');
+		            			$('#inputPercent').attr('readonly','readonly');
+			 	        		$('#currentPercent').html('');
+			 	   	 	        $('#currentPercent').append("100%달성");
+			 	   	        	$('#dayAchieve').attr('disabled','disabled');
+		            		}else{
+		            			$('#inputPercent').html('');
+		            			$('#inputPercent').attr('placeholder','100이내의 숫자');
+		            			$('#currentPercent').html('');
+		            			$('#currentPercent').append('달성률:'+" "+ result+"%");
+		            		}
+		            		
 		            	}
 					});		 
-	        		
-	        		$('#currentPercent').html('');
-	        	    $('#currentPercent').append('달성률:'+" "+ sumAchieve+"%");
 	        		
 	        	}else if(PlanTitle.length == 0 && (parseInt(dateSplited) != parseInt(today)) && notHaveBTM+1 == btmRecordlist.length){
 	        		notNomal = 1;
@@ -476,13 +492,24 @@ $(document).ready(function(){
 		            	data:{"startDate":formatDate,"getToday":getToday},
 		            	dataType: "json",
 		            	success: function(result) {
-		            		$('#inputPercent').attr('placeholder','100이내의 숫자');
-		            		$('#currentPercent').html('');
-		            		$('#currentPercent').append('달성률:'+" "+ result+"%");
+		            		sumAchieve = result;
+		            		if(sumAchieve == 100){
+		            			$('#inputPercent').html('');
+		            			$('#inputPercent').attr('placeholder','100%입니다 -수정불가-');
+		            			$('#inputPercent').attr('readonly','readonly');
+			 	        		$('#currentPercent').html('');
+			 	   	 	        $('#currentPercent').append("100%달성");
+			 	   	        	$('#dayAchieve').attr('disabled','disabled');	
+		            		}else{
+		            			$('#inputPercent').html('');
+		            			$('#inputPercent').attr('placeholder','100이내의 숫자');
+		            			$('#currentPercent').html('');
+		            			$('#currentPercent').append('달성률:'+" "+ result+"%");
+		            		}
 		            	}
 					});		 
 	        		
-	        		
+	        		$('#inputPercent').html('');
 	        		$('#inputPercent').attr('placeholder','입력은 가능 - 달성 불가');
 	        		$('#currentPercent').html('');
 	        	    $('#currentPercent').append('달성률:'+" "+ sumAchieve+"%");
@@ -490,41 +517,86 @@ $(document).ready(function(){
 	        	}
         
 	        	
+	        	
 	        	// 표기만 1부터 시작할 뿐 index 값은 사실 0부터 시작하니 데이터 보낼 때 0을 기준으로 시작해서 보내야 함.
- 	        	$(PlanTitle).each(function(index,item) {
- 	        		
- 	        		//클릭한것이 오늘이라면 readOnly를 하지 않는다.
- 	        		if(parseInt(dateSplited) == parseInt(today)){
- 	        			$('#inputPercent').attr('placeholder','100이내의 숫자');
- 	        			$('#currentPercent').html('');
- 	        	        $('#currentPercent').append('달성률:'+" "+ sumAchieve+"%");
- 	        	        $('#DayRecordTable').append(
-	 	   		            	'<tr id="d'+index+'">'+
-	 	   				            '<td id="n'+index+'">'+(index+1)+'</td>'+
-	 	   				            '<td id="f'+index+'">'+PlanTitle[index]+'</td>'+
-	 	   				            '<td id="l'+index+'">'+PlanStartTime[index]+'</td>'+
-	 	   				            '<td id="m'+index+'">'+PlanEndTime[index]+'</td>'+
-	 	   				            '<td><button type="button" data-toggle="modal" onclick = "openEditModal('+parseInt(dateSplited)+','+btmRecordNum+','+PlanNum[index]+','+index+1+','+'\'f'+index+'\''+','+'\'l'+index+'\''+','+'\'m'+index+'\')" data-uid="'+index+1+'" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
-	 	   				            '<td><button type="button" data-toggle="modal" onclick= "openDeleteModal('+btmRecordNum+','+PlanNum[index]+','+'\'d'+index+'\')" data-uid="'+index+1+'" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>'+
-	 	   				        '</tr>'
-	 	   		        );
- 	        	        
- 	        		}else{
- 	        			$('#inputPercent').attr('placeholder','입력은 가능 - 달성 불가');
+	        	if(PlanTitle.length != 0){
+	        		if(sumAchieve == 100){
+	        			$('#inputPercent').html('');
+            			$('#inputPercent').attr('placeholder','100%입니다 -수정불가-');
+            			$('#inputPercent').attr('readonly','readonly');
 	 	        		$('#currentPercent').html('');
-	 	        	    $('#currentPercent').append('달성률:'+" "+ sumAchieve+"%");	
-	 	       	        $('#DayRecordTable').append(
-	 	   		            	'<tr id="d'+index+'">'+
-	 	   				            '<td id="n'+index+'">'+(index+1)+'</td>'+
-	 	   				            '<td id="f'+index+'">'+PlanTitle[index]+'</td>'+
-	 	   				            '<td id="l'+index+'">'+PlanStartTime[index]+'</td>'+
-	 	   				            '<td id="m'+index+'">'+PlanEndTime[index]+'</td>'+
-	 	   				            '<td><button type="button" data-toggle="modal" onclick = "openEditModal('+parseInt(dateSplited)+','+btmRecordNum+','+PlanNum[index]+','+index+1+','+'\'f'+index+'\''+','+'\'l'+index+'\''+','+'\'m'+index+'\')" data-uid="'+index+1+'" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
-	 	   				            '<td><button type="button" data-toggle="modal" onclick= "openDeleteModal('+btmRecordNum+','+PlanNum[index]+','+'\'d'+index+'\')" data-uid="'+index+1+'" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>'+
-	 	   				        '</tr>'
-	 	   		        );
- 	        		}
- 	        	});//end each
+	 	   	 	        $('#currentPercent').append("100%달성");
+	 	   	        	$('#dayAchieve').attr('disabled','disabled');	
+	 	   	        	
+	 	   	        	$(PlanTitle).each(function(index,item) {
+		 	        		
+		 	        		//클릭한것이 오늘이라면 readOnly를 하지 않는다.
+		 	        		if(parseInt(dateSplited) == parseInt(today)){
+		 	        	        $('#DayRecordTable').append(
+			 	   		            	'<tr id="d'+index+'">'+
+			 	   				            '<td id="n'+index+'">'+(index+1)+'</td>'+
+			 	   				            '<td id="f'+index+'">'+PlanTitle[index]+'</td>'+
+			 	   				            '<td id="l'+index+'">'+PlanStartTime[index]+'</td>'+
+			 	   				            '<td id="m'+index+'">'+PlanEndTime[index]+'</td>'+
+			 	   				            '<td><button type="button" data-toggle="modal" onclick = "openEditModal('+parseInt(dateSplited)+','+btmRecordNum+','+PlanNum[index]+','+index+1+','+'\'f'+index+'\''+','+'\'l'+index+'\''+','+'\'m'+index+'\')" data-uid="'+index+1+'" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
+			 	   				            '<td><button type="button" data-toggle="modal" onclick= "openDeleteModal('+btmRecordNum+','+PlanNum[index]+','+'\'d'+index+'\')" data-uid="'+index+1+'" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>'+
+			 	   				        '</tr>'
+			 	   		        );
+		 	        	        
+		 	        		}else{
+			 	       	        $('#DayRecordTable').append(
+			 	   		            	'<tr id="d'+index+'">'+
+			 	   				            '<td id="n'+index+'">'+(index+1)+'</td>'+
+			 	   				            '<td id="f'+index+'">'+PlanTitle[index]+'</td>'+
+			 	   				            '<td id="l'+index+'">'+PlanStartTime[index]+'</td>'+
+			 	   				            '<td id="m'+index+'">'+PlanEndTime[index]+'</td>'+
+			 	   				            '<td><button type="button" data-toggle="modal" onclick = "openEditModal('+parseInt(dateSplited)+','+btmRecordNum+','+PlanNum[index]+','+index+1+','+'\'f'+index+'\''+','+'\'l'+index+'\''+','+'\'m'+index+'\')" data-uid="'+index+1+'" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
+			 	   				            '<td><button type="button" data-toggle="modal" onclick= "openDeleteModal('+btmRecordNum+','+PlanNum[index]+','+'\'d'+index+'\')" data-uid="'+index+1+'" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>'+
+			 	   				        '</tr>'
+			 	   		        );
+		 	        		}
+		 	        	});//end each
+            		}else{
+            			
+            			$(PlanTitle).each(function(index,item) {
+    	 	        		
+    	 	        		//클릭한것이 오늘이라면 readOnly를 하지 않는다.
+    	 	        		if(parseInt(dateSplited) == parseInt(today)){
+    	 	        			$('#inputPercent').html('');
+    	 	        			$('#inputPercent').attr('placeholder','100이내의 숫자');
+    	 	        			$('#currentPercent').html('');
+    	 	        	        $('#currentPercent').append('달성률:'+" "+ sumAchieve+"%");
+    	 	        	        $('#DayRecordTable').append(
+    		 	   		            	'<tr id="d'+index+'">'+
+    		 	   				            '<td id="n'+index+'">'+(index+1)+'</td>'+
+    		 	   				            '<td id="f'+index+'">'+PlanTitle[index]+'</td>'+
+    		 	   				            '<td id="l'+index+'">'+PlanStartTime[index]+'</td>'+
+    		 	   				            '<td id="m'+index+'">'+PlanEndTime[index]+'</td>'+
+    		 	   				            '<td><button type="button" data-toggle="modal" onclick = "openEditModal('+parseInt(dateSplited)+','+btmRecordNum+','+PlanNum[index]+','+index+1+','+'\'f'+index+'\''+','+'\'l'+index+'\''+','+'\'m'+index+'\')" data-uid="'+index+1+'" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
+    		 	   				            '<td><button type="button" data-toggle="modal" onclick= "openDeleteModal('+btmRecordNum+','+PlanNum[index]+','+'\'d'+index+'\')" data-uid="'+index+1+'" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>'+
+    		 	   				        '</tr>'
+    		 	   		        );
+    	 	        	        
+    	 	        		}else{
+    	 	        			$('#inputPercent').html('');
+    	 	        			$('#inputPercent').attr('placeholder','입력은 가능 - 달성 불가');
+    		 	        		$('#currentPercent').html('');
+    		 	        	    $('#currentPercent').append('달성률:'+" "+ sumAchieve+"%");	
+    		 	       	        $('#DayRecordTable').append(
+    		 	   		            	'<tr id="d'+index+'">'+
+    		 	   				            '<td id="n'+index+'">'+(index+1)+'</td>'+
+    		 	   				            '<td id="f'+index+'">'+PlanTitle[index]+'</td>'+
+    		 	   				            '<td id="l'+index+'">'+PlanStartTime[index]+'</td>'+
+    		 	   				            '<td id="m'+index+'">'+PlanEndTime[index]+'</td>'+
+    		 	   				            '<td><button type="button" data-toggle="modal" onclick = "openEditModal('+parseInt(dateSplited)+','+btmRecordNum+','+PlanNum[index]+','+index+1+','+'\'f'+index+'\''+','+'\'l'+index+'\''+','+'\'m'+index+'\')" data-uid="'+index+1+'" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
+    		 	   				            '<td><button type="button" data-toggle="modal" onclick= "openDeleteModal('+btmRecordNum+','+PlanNum[index]+','+'\'d'+index+'\')" data-uid="'+index+1+'" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>'+
+    		 	   				        '</tr>'
+    		 	   		        );
+    	 	        		}
+    	 	        	});//end each
+            			
+            		}
+	        	}
         	}//end if (세부목표가 있는 DayPlan 모달 생성 구간 종료)
         	
         
@@ -573,7 +645,7 @@ $(document).ready(function(){
 		        		//여기서 부터 이제 새부 목표가 있는지 없는지 확인해야 함(NomalTitle.length =0 이라면) 없다면 key를 사용해서 아래에서 새롭게 만들어줘야됨.
 		        	if(NomalTitle.length != 0){
 		        		$(NomalTitle).each(function(index,item) {
-		        			
+		        			$('#inputPercent').html('');
 			        		$('#inputPercent').attr('placeholder','진행중인 세부목표가 없습니다.');
 		 	        		$('#currentPercent').html('');
 		 	   	 	        $('#currentPercent').append("세부목표 없음");
@@ -592,6 +664,7 @@ $(document).ready(function(){
 		 	        			
 		 	        	});
 		        	}else if(NomalTitle.length == 0 && notNomal==0){
+		        		$('#inputPercent').html('');
 		        		$('#inputPercent').attr('placeholder','진행중인 세부목표가 없습니다.');
 	 	        		$('#currentPercent').html('');
 	 	   	 	        $('#currentPercent').append("세부목표 없음");
@@ -610,6 +683,7 @@ $(document).ready(function(){
               	dataType: "json",
               	success: function(achieve) {
               		 $('#dayPercent').append('<br>this Day:'+" "+achieve+"%");
+              		
               	}
    			});	
         	
@@ -623,7 +697,6 @@ $(document).ready(function(){
               		btmRecordNum = result;
               	}
    			});	
-        	
         	
         	//마지막으로 모달띄워줘요!
         	 $("#warning").modal("show");

@@ -35,8 +35,6 @@ public class CalendarServiceImpl implements CalendarService{
 			long startDate = 0;
 			long endDate = 0;
 			
-		
-			
 			String[] parsing1 = BTMRecordList.get(i).getStartDate().split(" ");
 			String[] parsing2 = parsing1[0].split("-");
 			String[] parsing3 = BTMRecordList.get(i).getEndDate().split(" ");
@@ -125,6 +123,7 @@ public class CalendarServiceImpl implements CalendarService{
 			dao.updateDayRecord(vo);
 		}else if(isProgressing == 1){
 			if(vo.getAchieve() == 100){
+				System.out.println(111);
 				dao.completeUpdateDayRecord(vo);
 			}else{
 				dao.updateDayRecord(vo);
