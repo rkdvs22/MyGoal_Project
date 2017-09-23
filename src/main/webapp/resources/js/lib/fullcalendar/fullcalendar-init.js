@@ -317,7 +317,7 @@ $(document).ready(function(){
         	      alert('Clicked on: ' + date.format());
         	   */
         	
-          $('#dayPercent').html('');	
+         $('#dayPercent').html('');	
          $('#dayAchieve').removeAttr('disabled');	
          $('#inputPercent').removeAttr('readonly');
         var notNomal = 0;
@@ -451,9 +451,8 @@ $(document).ready(function(){
 	            	}	
 	        	});//end each
 	        	
-	        	
-	        	
 	        	if(PlanTitle.length == 0 && (parseInt(dateSplited) == parseInt(today))){
+	        		notNomal = 1;
 	        		$.ajax({
 						url: '/goal/calendar/getAchieve',
 		            	type: "POST",
@@ -465,6 +464,9 @@ $(document).ready(function(){
 		            		$('#currentPercent').append('달성률:'+" "+ result+"%");
 		            	}
 					});		 
+	        		
+	        		$('#currentPercent').html('');
+	        	    $('#currentPercent').append('달성률:'+" "+ sumAchieve+"%");
 	        		
 	        	}else if(PlanTitle.length == 0 && (parseInt(dateSplited) != parseInt(today)) && notHaveBTM+1 == btmRecordlist.length){
 	        		notNomal = 1;
@@ -479,6 +481,7 @@ $(document).ready(function(){
 		            		$('#currentPercent').append('달성률:'+" "+ result+"%");
 		            	}
 					});		 
+	        		
 	        		
 	        		$('#inputPercent').attr('placeholder','입력은 가능 - 달성 불가');
 	        		$('#currentPercent').html('');
@@ -600,12 +603,6 @@ $(document).ready(function(){
         	
         
         	//어팬드 해야됨 배열3개를 가지고(타이틀,스타트,엔드)
-           
-	        //오늘에 해당하는 것만 달성률을 입력할 수 있어요(여기에 달성률 입력시 100을 넘는지도 검사해야 함 안넘으면 쿼리로 넘기고 딱 100일시 목표달성 성공 모달 출력)	      
-        	if(parseInt(today) == parseInt(dateSplited)){
-        		alert('오늘이예요');
-        	}//end if     
-        	
         	$.ajax({
    				url: '/goal/calendar/getDayAchieve',
               	type: "POST",
@@ -613,6 +610,17 @@ $(document).ready(function(){
               	dataType: "json",
               	success: function(achieve) {
               		 $('#dayPercent').append('<br>this Day:'+" "+achieve+"%");
+              	}
+   			});	
+        	
+        	
+        	$.ajax({
+   				url: '/goal/calendar/getBTMRecord',
+              	type: "POST",
+              	data:{"startDate":formatDate},
+              	dataType: "json",
+              	success: function(result) {
+              		btmRecordNum = result;
               	}
    			});	
         	

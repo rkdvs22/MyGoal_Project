@@ -137,5 +137,10 @@ public class CalendarServiceImpl implements CalendarService{
 		return dao.getDayAchieve(vo);
 	}
 
+	@Override
+	public int getBTMRecord(DayRecordVO vo) {
+		return dao.getBTMRecord(vo);
+	}
+
 }
 

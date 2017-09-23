@@ -48,6 +48,9 @@
 	    var trNumber = "";
 	    var index = 0;
 	    var dayClick = "";
+	    //이전에 삭제했던 tr의 넘버를 담버두는 변수(trNumber)
+	    var deleteTr = 0;
+	    
 	    
 		//클릭한 날짜가 오늘 날짜인지 확인하는 변수 0이면 아님. 1이면 오늘날짜의 것. (1이면 클릭시 모달에서 수정이나 삭제가 가능하도록 (버튼이 보이도록))
 		var isToday = 0;
@@ -69,15 +72,19 @@
 			//삭제 내부 로직 작성  필요
 		    $('#'+trNumber).html('');
 		    
+			//trNumber 이후의 모든 fn,ln,mn의 뒤에 넘버를 -1 해줘야함.
+			alert(trNumber); 
 			$.ajax({
 				url: '/goal/calendar/deleteDayPlan',
             	type: "POST",
             	data:{"dayPlanNum":tdayPlanNum},
             	dataType: "json",
             	success: function() {
-            		alert('성공');
+            	
             	}
 			});		
+					deleteTr = trNumber;
+					alert(deleteTr);
 					$('#delete').modal('hide');
 		}
 		
@@ -100,7 +107,6 @@
 		
 		function createModal(){
 			$('#create').on('click', '[data-dismiss="modal"]', function(e) { e.stopPropagation(); });
-			
 			if($('#tn').val() == '' || $('#sn').val() == '' || $('#en').val() == ''){
 				alert('빈칸이 있습니다 다시 확인하세요');
 				return false;
@@ -139,15 +145,14 @@
 	            	data:{"dContents":title,"startTime":sendStartTime,"endTime":sendEndTime,"dComplete":"Y","btmRecordNum":btmRecordNum,"dayRecordNum":dayRecordNum,"startDate":clickDayToString,"getToday":getToday},
 	            	dataType: "json",
 	            	success: function(result) {
-	            		alert(index);
 	            		 $('#DayRecordTable').append(
 	            			'<tr id="d'+index+'">'+
 	  		   		            '<td id="n'+index+'">'+(index+1)+'</td>'+
 	  		   		            '<td id="f'+index+'">'+title+'</td>'+
 	  				            '<td id="l'+index+'">'+startTime+'</td>'+
 	  		   		            '<td id="m'+index+'">'+endTime+'</td>'+
-	  		   		            '<td><button type="button" data-toggle="modal" onclick = "openEditModal('+dayClick+','+1+','+result+','+index+','+'\'f'+(index-1)+'\''+','+'\'l'+(index-1)+'\''+','+'\'m'+(index-1)+'\')" data-uid="'+index+'" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
-	  		   		            '<td><button type="button" data-toggle="modal" onclick="openDeleteModal('+btmRecordNum+','+result+','+'\'d'+(index-1)+'\')" data-uid="'+index+'" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>'+
+	  		   		            '<td><button type="button" data-toggle="modal" onclick = "openEditModal('+dayClick+','+1+','+result+','+index+','+'\'f'+(index)+'\''+','+'\'l'+(index)+'\''+','+'\'m'+(index)+'\')" data-uid="'+index+'" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>'+
+	  		   		            '<td><button type="button" data-toggle="modal" onclick="openDeleteModal('+btmRecordNum+','+result+','+'\'d'+(index)+'\')" data-uid="'+index+'" class="delete btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>'+
 	  		   		        '</tr>'
 	     		   	 ); 
 	            	}
@@ -162,11 +167,11 @@
 			  	 clickedDate = clickedDay+"";
 			  	 tbtmRecordNum = btmRecordNumber;
 			   	 tdayPlanNum = dayPlanNum;
-				 tuid = uid;
-			     ttitle = title;
-				 tstartTime = startTime;
-			     tendTime = endTime;
 		    	
+			     alert(title);
+			     alert(startTime);
+			     alert(endTime);
+			     
 				       var fn = $('#'+title).html();
 				       var ln = $('#'+startTime).html();
 				       var mn = $('#'+endTime).html();
@@ -249,7 +254,6 @@
 	            	data:{"dContents":fn,"startTime":startTime,"endTime":endTime,"dayPlanNum":tdayPlanNum},
 	            	dataType: "json",
 	            	success: function() {
-	            		alert('성공');
 	            	}
 				});		
 	              
@@ -530,7 +534,7 @@
 	<script type="text/javascript" src="/goal/resources/js/lib/moment/moment-with-locales.min.js?version=4"></script>
 	<script type="text/javascript" src="/goal/resources/js/lib/eonasdan-bootstrap-datetimepicker/bootstrap-datetimepicker.min.js?version=4"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar.js?version=10"></script>
-	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=68"></script>
+	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=77"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/ko.js"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/tableModal.js?version=3"></script>
     <script src="/goal/resources/js/app.js?version=4"></script>

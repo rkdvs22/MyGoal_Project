@@ -36,4 +36,6 @@ public interface CalendarDAO {
 
 	int getDayAchieve(DayRecordVO vo);
 
+	int getBTMRecord(DayRecordVO vo);
+
 }

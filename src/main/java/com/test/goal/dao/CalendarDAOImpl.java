@@ -73,24 +73,23 @@ public class CalendarDAOImpl implements CalendarDAO{
 		//여기서 4가지 경우를 검사해서 경우별로 다르게 쿼리를 날림 단 먼저 DayPlanNum 시퀀스는 dual을 통해 받아와야 함.
 		CalendarMapper mapper = sqlsession.getMapper(CalendarMapper.class);
 		int btmRecordNum = vo.getBtmRecordNum();
+		System.out.println(vo.toString());
 		int dayRecordNum = vo.getDayRecordNum();
 		int dayPlanNum = mapper.getDayPlanNumSequence();
 		int findDayRecordNum = 0;	
 		vo.setDayPlanNum(dayPlanNum);
+		System.out.println(vo.toString());
 		
 		if(btmRecordNum != 0 && dayRecordNum != 0){
 			mapper.insertDayPlan(vo);
-			
 		}else if(btmRecordNum != 0 && dayRecordNum == 0){
 			// select문을 통해 BTMRecordNum을 매개로 DayPlan의 startDate 날짜를 조건으로 하여 해당 DayRecordNum을 찾아와야 한다.
-			
 			dayRecordNum = mapper.findDayRecordNum(vo);
 			vo.setDayRecordNum(dayRecordNum);
 			mapper.insertDayPlan(vo);
-			
+			System.out.println(1);
 		}else if(btmRecordNum == 0 && dayRecordNum != 0){
 			mapper.insertDayPlan(vo);
-			
 		}else if(btmRecordNum == 0 && dayRecordNum == 0 ){
 			// dayRecord를 먼저 한개 insert 해야만 한다.
 			findDayRecordNum = mapper.getDayRecordNum();
@@ -100,7 +99,7 @@ public class CalendarDAOImpl implements CalendarDAO{
 			}else{
 				mapper.exInsertDayRecord(vo);
 			}
-			mapper.insertDayPlan1(vo);
+			mapper.insertDayPlan(vo);
 		}
 		
 		return dayPlanNum;
@@ -140,6 +139,12 @@ public class CalendarDAOImpl implements CalendarDAO{
 	public int getDayAchieve(DayRecordVO vo) {
 		CalendarMapper mapper = sqlsession.getMapper(CalendarMapper.class);
 	    return mapper.getDayAchieve(vo);
+	}
+
+	@Override
+	public int getBTMRecord(DayRecordVO vo) {
+		CalendarMapper mapper = sqlsession.getMapper(CalendarMapper.class);
+	    return mapper.getBTMRecord(vo);
 	}
 
 }

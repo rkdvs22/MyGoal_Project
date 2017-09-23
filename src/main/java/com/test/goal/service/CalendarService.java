@@ -30,4 +30,6 @@ public interface CalendarService {
 
 	int getDayAchieve(DayRecordVO vo);
 
+	int getBTMRecord(DayRecordVO vo);
+
 }

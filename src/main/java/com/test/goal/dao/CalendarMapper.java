@@ -34,8 +34,6 @@ public interface CalendarMapper {
 
 	public void exInsertToDayRecord(DayPlanVO vo);
 
-	public void insertDayPlan1(DayPlanVO vo);
-
 	public int getDayRecordNum();
 
 	public int getAchieved(DayRecordVO vo);
@@ -49,6 +47,8 @@ public interface CalendarMapper {
 	public void completeUpdateDayRecord(DayRecordVO vo);
 
 	public int getDayAchieve(DayRecordVO vo);
+
+	public int getBTMRecord(DayRecordVO vo);
 
 
 }

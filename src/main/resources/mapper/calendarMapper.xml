@@ -96,16 +96,10 @@
 	
 	<insert id = "insertDayPlan" parameterType="DayPlanVO">
 		
-		insert into DayPlan values(#{dayPlanNum},to_date(#{startTime},'yyyy/mm/dd hh24:mi'),to_date(#{endTime},'yyyy/mm/dd hh24:mi'),#{dContents},'Y',#{dayRecordNum})
+		insert into DayPlan values(#{dayPlanNum},
+		to_date(#{startTime},'yyyy/mm/dd hh24:mi'),to_date(#{endTime},'yyyy/mm/dd hh24:mi'),#{dContents},'Y',#{dayRecordNum})
 		
 	</insert>
-	
-	<insert id = "insertDayPlan1" parameterType="DayPlanVO">
-		
-		insert into DayPlan values(#{dayPlanNum},to_date(#{startTime},'yyyy/mm/dd hh24:mi'),to_date(#{endTime},'yyyy/mm/dd hh24:mi'),#{dContents},'Y',#{dayRecordNum})
-		
-	</insert>
-	
 	
 	<select id = "findDayRecordNum" parameterType="DayPlanVO" resultType="int">
 		
@@ -131,7 +125,8 @@
 	<select id = "getAchieved" parameterType="DayRecordVO" resultType="int">
 	
 		select d.achieve as achieve
-		from (select bRecordNum from btmRecord where memberid = #{userId} and to_date(#{startDate},'yyyy/mm/dd') &gt;= startDate and to_date(#{startDate},'yyyy/mm/dd') &lt;= endDate) b
+		from (select bRecordNum from btmRecord where memberid = #{userId} and to_date(#{startDate},'yyyy/mm/dd') &gt;= to_date(to_char(startDate,'yyyy/mm/dd'),'yyyy/mm/dd')
+		and to_date(#{startDate},'yyyy/mm/dd') &lt;= to_date(to_char(endDate,'yyyy/mm/dd'),'yyyy/mm/dd')) b
 		inner join (select sum(achieve) as achieve,BTMRecordNum from dayRecord group by BTMRecordNum) d
 		on b.bRecordNum = d.BTMRecordNum
 	
@@ -140,7 +135,8 @@
 	<select id = "checkBTMRecord" parameterType="DayRecordVO" resultType="int">
 	
 		select count(bRecordNum) from btmRecord
-		where to_date(sysdate,'yyyy/mm/dd') &gt;= startDate and to_date(sysdate,'yyyy/mm/dd') &lt;= endDate and memberId = #{userId}
+		where to_date(sysdate,'yyyy/mm/dd') &gt;= to_date(to_char(startDate,'yyyy/mm/dd'),'yyyy/mm/dd')
+		and to_date(sysdate,'yyyy/mm/dd') &lt;= to_date(to_char(endDate,'yyyy/mm/dd'),'yyyy/mm/dd') and memberId = #{userId}
 	
 	</select>
 	
@@ -148,12 +144,14 @@
 	
 	
 		select bRecordNum from btmRecord 
-		where to_date(#{startDate},'yyyy/mm/dd') &gt;= startDate and to_date(#{startDate},'yyyy/mm/dd') &lt;= endDate and memberId = #{userId}
+		where to_date(#{startDate},'yyyy/mm/dd') &gt;= to_date(to_char(startDate,'yyyy/mm/dd'),'yyyy/mm/dd') and 
+		to_date(#{startDate},'yyyy/mm/dd') &lt;= to_date(to_char(endDate,'yyyy/mm/dd'),'yyyy/mm/dd') and memberId = #{userId}
 	
 	</select>
 	
 	<update id = "updateDayRecord" parameterType= "DayRecordVO">
-		update DayRecord set achieve = #{achieve} where btmRecordNum = #{btmRecordNum} and startDate = to_date(#{startDate},'yyyy/mm/dd')
+		update DayRecord set achieve = #{achieve} where btmRecordNum = #{btmRecordNum} 
+		and to_date(to_char(startDate,'yyyy/mm/dd'),'yyyy/mm/dd') = to_date(#{startDate},'yyyy/mm/dd')
 	</update>
 	
 	<update id = "completeUpdateDayRecord" parameterType= "DayRecordVO">
@@ -168,7 +166,16 @@
 		DayRecord d inner join calendar c
 		on d.calendarNum = c.calendarNum inner join member m
 		on c.memberid = m.userid 
-		where d.startDate = to_date(#{startDate},'yyyy/mm/dd') and m.userid = #{userId}
+		where to_date(to_char(d.startDate,'yyyy/mm/dd'),'yyyy/mm/dd') = to_date(#{startDate},'yyyy/mm/dd') and m.userid = #{userId}
 	
+	</select>
+	
+	<select id = "getBTMRecord" parameterType="DayRecordVO" resultType="int">
+		
+		select d.btmRecordNum as "btmRecordNum" from DayRecord d inner join btmRecord b 
+		on d.btmRecordNum = b.bRecordNum inner join member m
+		on b.memberId = m.userId
+		where to_date(to_char(d.startDate,'yyyy/mm/dd'),'yyyy/mm/dd') = #{startDate} and m.userId = #{userId}
+		
 	</select>
 </mapper>

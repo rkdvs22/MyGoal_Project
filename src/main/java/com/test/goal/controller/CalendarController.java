@@ -49,10 +49,6 @@ public class CalendarController {
 		DayRecordlist= service.getDayRecordList((String)request.getSession().getAttribute("userid"));
 		nomallist = service.getNomalPlanlist((String)request.getSession().getAttribute("userid"));
 		
-		for (DayPlanVO dayPlanVO : DayRecordlist) {
-			System.out.println(dayPlanVO.toString());
-		}
-		
 		getRecordMap.put("BTMRecordlist", BTMRecordlist);
 		getRecordMap.put("DayRecordlist", DayRecordlist);
 		getRecordMap.put("nomallist", nomallist);
@@ -127,5 +123,15 @@ public class CalendarController {
 		vo.setUserId(userId);
 		
 		return service.getDayAchieve(vo);
+	}
+	
+	@RequestMapping(value = "getBTMRecord", method = RequestMethod.POST)
+	@ResponseBody
+	public int getBTMRecord(DayRecordVO vo, HttpServletRequest request) {
+		
+		String userId  = (String) request.getSession().getAttribute("userid");
+		vo.setUserId(userId);
+		
+		return service.getBTMRecord(vo);
 	}
 }
