@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 
+import com.test.goal.vo.BTMGoalVO;
 import com.test.goal.vo.BoardVO;
 import com.test.goal.vo.MainProgressVO;
 import com.test.goal.vo.MemberListVO;
 import com.test.goal.vo.MemberVO;
+import com.test.goal.vo.MidGoalVO;
 import com.test.goal.vo.TopGoalVO;
 
 @Repository
@@ -133,5 +135,27 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 		mapper.inputUserTgoal(vo);
 		mapper.inputUserMemberList(vo);
 		return mapper.findUserNowInput(vo);
+	}
+
+	// 작성한 중간목표를 입력한다.
+	@Override
+	public MidGoalVO inputMidGoal(MidGoalVO mvo) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		mapper.inputMidGoal(mvo);
+		return selectNowMidGoal(mvo);
+	}
+	
+	// 현재 작성한 중간목표를 불러온다.
+	@Override
+	public MidGoalVO selectNowMidGoal(MidGoalVO mvo) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		return mapper.selectNowMidGoal(mvo);
+	}
+
+	// 작성한 세부목표들을 입력한다.
+	@Override
+	public void inputBtmGoal(BTMGoalVO vo) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		mapper.inputBtmGoal(vo);
 	}
 }

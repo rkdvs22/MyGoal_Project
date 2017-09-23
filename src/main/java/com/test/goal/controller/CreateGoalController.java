@@ -368,35 +368,44 @@ public class CreateGoalController {
 			, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public void inputGoal(@RequestBody Map<String, Object> map
-						, MidGoalVO mvo, BTMGoalVO bvo) {
+						, MidGoalVO mvo) {
+		
 		// 중간목표
 		String mGoal = ( (HashMap<Object, Object>) ( (HashMap<Object, Object>)
 						map.get("midGoal") ).get("key1") ).get("mGoal").toString();
 		String m_sDate = ( (HashMap<Object, Object>) ( (HashMap<Object, Object>)
 						map.get("midGoal") ).get("key1") ).get("sDate").toString();
 		String m_eDate = ( (HashMap<Object, Object>) ( (HashMap<Object, Object>)
-						map.get("midGoal") ).get("key1") ).get("sDate").toString();
+						map.get("midGoal") ).get("key1") ).get("eDate").toString();
+		String tGoalNum = map.get("tGoalNum").toString();
 		
 		mvo.setmGoalTitle(mGoal);
 		String[] m_sDateSp = m_sDate.split("-");
 		String[] m_eDateSp = m_eDate.split("-");
 		mvo.setmStartDate(m_sDateSp[0] + "/" + m_sDateSp[1] + "/" + m_sDateSp[2]);
 		mvo.setmEndDate(m_eDateSp[0] + "/" + m_eDateSp[1] + "/" + m_eDateSp[2]);
+		mvo.settGoalNum(Integer.parseInt(tGoalNum));
+		
+		dao.inputMidGoal(mvo);
 		
 		// 세부목표
+		MidGoalVO current_vo = dao.selectNowMidGoal(mvo);
 		for(int i=0; i<((ArrayList<Object>)( (HashMap<Object, Object>)map.get("btmGoal") ).get("key2")).size(); i++) {
-			String m_b_GoalNum = ( (HashMap<Object, Object>) ( (ArrayList<Object>)
-								( (HashMap<Object, Object>)map.get("btmGoal") ).get("key2")).get(i)).get("m_b_GoalNum").toString();
+//			String m_b_GoalNum = ( (HashMap<Object, Object>) ( (ArrayList<Object>)
+//								( (HashMap<Object, Object>)map.get("btmGoal") ).get("key2")).get(i)).get("m_b_GoalNum").toString();
 			String bGoal = ( (HashMap<Object, Object>) ( (ArrayList<Object>)
 							( (HashMap<Object, Object>)map.get("btmGoal") ).get("key2")).get(i)).get("bGoal").toString();
+			System.out.println(i + "번째 : " + bGoal);
 			String bGoalDay = ( (HashMap<Object, Object>) ( (ArrayList<Object>)
 							( (HashMap<Object, Object>)map.get("btmGoal") ).get("key2")).get(i)).get("bGoalDay").toString();
-			String[] GoalNum = m_b_GoalNum.split("-");
-			bvo.setmGoalNum(Integer.parseInt(GoalNum[0]));
-			bvo.setbGoalNum(Integer.parseInt(GoalNum[1]));
-			
 			String[] bGoalDaySp = bGoalDay.split("-");
-			bvo.setPeriod(Integer.parseInt(bGoalDaySp[2]));
+			
+			BTMGoalVO bvo_temp = new BTMGoalVO();
+			bvo_temp.setbGoalTitle(bGoal);
+			bvo_temp.setPeriod(Integer.parseInt(bGoalDaySp[2]));
+			bvo_temp.setmGoalNum(current_vo.getmGoalNum());
+			dao.inputBtmGoal(bvo_temp);
 		}
+		
 	}
 }

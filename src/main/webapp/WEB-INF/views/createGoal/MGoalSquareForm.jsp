@@ -430,22 +430,19 @@ $(function() {
 				midGoal.eDate = $("#endMpicker").val();
 				var test = JSON.stringify(midGoal);
 				$.ajaxSettings.traditional = true;
+				
 				$.ajax ({
 					url: "/goal/createGoal/inputGoal",
 					method: "post",
 					dataType: "json",
 					contentType: "application/json;charset=UTF-8",
-					data: JSON.stringify({"midGoal":{"key1":midGoal}, "btmGoal":{"key2":bGoal_modals}}),
+					data: JSON.stringify({"midGoal":{"key1":midGoal}, "btmGoal":{"key2":bGoal_modals}, "tGoalNum":'${b_info.tGoalNum}'}),
 					success: function() {
-						alert("중간목표 들어감");
-						
-						
-// 						inputMbtnValue(bBtn_num);
-// 						$("#m_eventdays > b").text("");
-// 						$(".midgoal > input").val("");
-// 						$("#bGoalcount").val("");
-// 						$(".bg_content > input").val("");
-
+						inputMbtnValue(bBtn_num);
+						$("#m_eventdays > b").text("");
+						$(".midgoal > input").val("");
+						$("#bGoalcount").val("");
+						$(".bg_content > input").val("");
 					}
 				});
 				

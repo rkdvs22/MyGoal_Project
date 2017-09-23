@@ -2,10 +2,12 @@ package com.test.goal.dao;
 
 import java.util.ArrayList;
 
+import com.test.goal.vo.BTMGoalVO;
 import com.test.goal.vo.BoardVO;
 import com.test.goal.vo.MainProgressVO;
 import com.test.goal.vo.MemberListVO;
 import com.test.goal.vo.MemberVO;
+import com.test.goal.vo.MidGoalVO;
 import com.test.goal.vo.TopGoalVO;
 
 public interface CreateGoalMapper {
@@ -56,4 +58,12 @@ public interface CreateGoalMapper {
 	public int inputUserMemberList(TopGoalVO vo); // 초대받은 목표 (MEMBERLIST 테이블) 에 초대받은 사람의 ID를 입력한다.
 
 	public MemberListVO findUserNowInput(TopGoalVO vo); // 초대에 수락한 사용자에 대한 정보를 받아온다.
+
+	public int inputMidGoal(MidGoalVO mvo); // 작성한 중간목표를 입력한다.
+
+	public MidGoalVO selectNowMidGoal(MidGoalVO mvo); // 현재 작성한 중간목표를 불러온다.
+
+	public int inputBtmGoal(BTMGoalVO vo); // 작성한 세부목표들을 입력한다.
+	
+	
 }

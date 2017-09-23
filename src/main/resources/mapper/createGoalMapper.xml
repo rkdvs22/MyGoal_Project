@@ -133,4 +133,27 @@
 		WHERE userid = #{userid}
 		AND progressnum = #{progressNum}
 	</select>
+	
+	<!-- 작성한 중간목표를 입력한다 -->
+	<insert id="inputMidGoal" parameterType="MidGoalVO">
+		INSERT INTO midgoal VALUES (MIDGOAL_SEQ.NEXTVAL, #{mGoalTitle}, 'N', #{mStartDate}, #{mEndDate}, #{tGoalNum})
+	</insert>
+	
+	<!-- 현재 작성한 중간목표를 불러온다. -->
+	<select id="selectNowMidGoal" parameterType="MidGoalVO" resultType="MidGoalVO">
+		SELECT MAX(mgoalnum) as mGoalNum FROM midgoal
+		WHERE tgoalnum = #{tGoalNum}
+	</select>
+	
+	<!-- 작성한 세부목표들을 입력한다. -->
+	<insert id="inputBtmGoal" parameterType="BTMGoalVO">
+		INSERT INTO btmgoal VALUES (
+			BTMGOAL_SEQ.NEXTVAL,
+			#{bGoalTitle},
+			'N',
+			#{period},
+			#{rankingId, jdbcType=NULL},
+			#{mGoalNum}
+		)
+	</insert>
 </mapper>
