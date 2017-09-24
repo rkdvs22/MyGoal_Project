@@ -32,10 +32,22 @@ public interface CalendarDAO {
 
 	void updateDayRecord(DayRecordVO vo);
 
-	void completeUpdateDayRecord(DayRecordVO vo);
+	int completeUpdateDayRecord(DayRecordVO vo);
 
 	int getDayAchieve(DayRecordVO vo);
 
 	int getBTMRecord(DayRecordVO vo);
+
+	int updateBTMGoalComplete(DayRecordVO vo);
+
+	int updateMIDGoalComplete(DayRecordVO vo);
+
+	int getTotalBTMRecordAmount(DayRecordVO vo);
+
+	int getSuccessBTMRecordAmount(DayRecordVO vo);
+
+	int getSuccessMIDRecordAmount(DayRecordVO vo);
+
+	void updateTopGoalComplete(DayRecordVO vo);
 
 }

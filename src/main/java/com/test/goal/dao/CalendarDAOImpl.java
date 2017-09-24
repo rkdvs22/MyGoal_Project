@@ -127,9 +127,9 @@ public class CalendarDAOImpl implements CalendarDAO{
 	}
 
 	@Override
-	public void completeUpdateDayRecord(DayRecordVO vo) {
+	public int completeUpdateDayRecord(DayRecordVO vo) {
 		CalendarMapper mapper = sqlsession.getMapper(CalendarMapper.class);
-	    mapper.completeUpdateDayRecord(vo);
+	   return mapper.completeUpdateDayRecord(vo);
 	}
 
 	@Override
@@ -142,6 +142,42 @@ public class CalendarDAOImpl implements CalendarDAO{
 	public int getBTMRecord(DayRecordVO vo) {
 		CalendarMapper mapper = sqlsession.getMapper(CalendarMapper.class);
 	    return mapper.getBTMRecord(vo);
+	}
+
+	@Override
+	public int updateBTMGoalComplete(DayRecordVO vo) {
+		CalendarMapper mapper = sqlsession.getMapper(CalendarMapper.class);
+	    return mapper.updateBTMGoalComplete(vo);
+	}
+
+	@Override
+	public int updateMIDGoalComplete(DayRecordVO vo) {
+		CalendarMapper mapper = sqlsession.getMapper(CalendarMapper.class);
+	    return mapper.updateMIDGoalComplete(vo);
+	}
+
+	@Override
+	public int getTotalBTMRecordAmount(DayRecordVO vo) {
+		CalendarMapper mapper = sqlsession.getMapper(CalendarMapper.class);
+	    return mapper.getTotalBTMRecordAmount(vo);
+	}
+
+	@Override
+	public int getSuccessBTMRecordAmount(DayRecordVO vo) {
+		CalendarMapper mapper = sqlsession.getMapper(CalendarMapper.class);
+	    return mapper.getSuccessBTMRecordAmount(vo);
+	}
+
+	@Override
+	public int getSuccessMIDRecordAmount(DayRecordVO vo) {
+		CalendarMapper mapper = sqlsession.getMapper(CalendarMapper.class);
+	    return mapper.getSuccessMIDRecordAmount(vo);
+	}
+
+	@Override
+	public void updateTopGoalComplete(DayRecordVO vo) {
+		CalendarMapper mapper = sqlsession.getMapper(CalendarMapper.class);
+	    mapper.updateTopGoalComplete(vo);
 	}
 
 }

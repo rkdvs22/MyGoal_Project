@@ -44,11 +44,23 @@ public interface CalendarMapper {
 
 	public void updateDayRecord(DayRecordVO vo);
 
-	public void completeUpdateDayRecord(DayRecordVO vo);
+	public int completeUpdateDayRecord(DayRecordVO vo);
 
 	public int getDayAchieve(DayRecordVO vo);
 
 	public int getBTMRecord(DayRecordVO vo);
+
+	public int updateBTMGoalComplete(DayRecordVO vo);
+
+	public int updateMIDGoalComplete(DayRecordVO vo);
+
+	public int getTotalBTMRecordAmount(DayRecordVO vo);
+
+	public int getSuccessBTMRecordAmount(DayRecordVO vo);
+
+	public int getSuccessMIDRecordAmount(DayRecordVO vo);
+
+	public void updateTopGoalComplete(DayRecordVO vo);
 
 
 }

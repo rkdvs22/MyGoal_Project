@@ -54,7 +54,7 @@ public class CalendarServiceImpl implements CalendarService{
 			if(toDay >= startDate && toDay <= endDate && BTMRecordList.get(i).getIsComplete() != 1){
 				color = "#C2E0BA"; // 현재 진행중 - 녹색계열
 				BTMRecordList.get(i).setColor(color);
-			}else if(BTMRecordList.get(i).getIsComplete() == 1){
+			}else if(BTMRecordList.get(i).getIsComplete() == 1 || (toDay >= startDate && toDay <= endDate && BTMRecordList.get(i).getIsComplete() == 1)){
 				color = "#oac9FF"; //푸른 계열 완료 색상
 				BTMRecordList.get(i).setColor(color);
 			}else{
@@ -122,9 +122,32 @@ public class CalendarServiceImpl implements CalendarService{
 		if(isProgressing == 0){
 			dao.updateDayRecord(vo);
 		}else if(isProgressing == 1){
-			if(vo.getAchieve() == 100){
-				System.out.println(111);
-				dao.completeUpdateDayRecord(vo);
+			if(vo.getTotalAchieve() == 100){
+				int successQuery = dao.completeUpdateDayRecord(vo);
+				int isSuccessBTM = 0;
+				int istotalBTMRecord = 0;
+				int successBTMRecord = 0;
+				int successUpdateMIDGoal = 0;
+				int successMIDRecord = 0;
+				//전체 변경하는 쿼리를 작성한다.
+				if(successQuery == 1){
+					isSuccessBTM = dao.updateBTMGoalComplete(vo);
+					if(isSuccessBTM == 1){
+						istotalBTMRecord = dao.getTotalBTMRecordAmount(vo); 
+						successBTMRecord = dao.getSuccessBTMRecordAmount(vo);
+						if(istotalBTMRecord == successBTMRecord){
+							successUpdateMIDGoal = dao.updateMIDGoalComplete(vo);
+							if(successUpdateMIDGoal == 1){
+								successMIDRecord = dao.getSuccessMIDRecordAmount(vo);
+								if(successMIDRecord == 8){
+									dao.updateTopGoalComplete(vo);
+								}
+							}
+						}
+					}
+				}
+				
+				
 			}else{
 				dao.updateDayRecord(vo);
 			}

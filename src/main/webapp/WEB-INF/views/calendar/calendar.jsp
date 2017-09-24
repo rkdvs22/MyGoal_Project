@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
- <link rel="stylesheet" href="/goal/resources/css/lib/fullcalendar/calendarModal.css?version=23">
+ <link rel="stylesheet" href="/goal/resources/css/lib/fullcalendar/calendarModal.css?version=24">
 </head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -393,31 +393,49 @@
 								alert('달성률은 -값이 될 수 없습니다.');
 								return false;
 							}else{	
-								 $.ajax({
-									url: '/goal/calendar/updateAchieve',
-					            	type: "POST",
-					            	data:{"startDate":clickDayToString,"getToday":getToday,"achieve":percent,"dayAchieve":percent},
-					            	dataType: "json",
-					            	success: function(result) {
-					            		$('#currentPercent').html('');
-					            		$('#currentPercent').append('달성률:'+" "+ result[0]+"%");
-					            		$('#dayPercent').html('');
-						            	$('#dayPercent').append('<br>this Day:'+" "+result[1]+"%");
-					            		$('#inputPercent').attr('placeholder','');	
-					            	}
-								});		 
+								if(parseInt(secondParsing[0])+percent-parseInt(dayPercent) == 100){
+									$.ajax({
+										url: '/goal/calendar/updateAchieve',
+						            	type: "POST",
+						            	data:{"startDate":clickDayToString,"getToday":getToday,"achieve":percent,"totalAchieve":parseInt(secondParsing[0])+percent-parseInt(dayPercent)},
+						            	dataType: "json",
+						            	success: function(result) {
+						            		$('#currentPercent').html('');
+						            		$('#currentPercent').append('달성률:'+" "+ result[0]+"%");
+						            		$('#dayPercent').html('');
+							            	$('#dayPercent').append('<br>this Day:'+" "+result[1]+"%");
+						            		$('#inputPercent').attr('placeholder','');	
+											$('#success').modal('show');	
+						            	}
+									});		
+									
+								}else{
+									 $.ajax({
+										url: '/goal/calendar/updateAchieve',
+						            	type: "POST",
+						            	data:{"startDate":clickDayToString,"getToday":getToday,"achieve":percent,"totalAchieve":parseInt(secondParsing[0])+percent-parseInt(dayPercent)},
+						            	dataType: "json",
+						            	success: function(result) {
+						            		$('#currentPercent').html('');
+						            		$('#currentPercent').append('달성률:'+" "+ result[0]+"%");
+						            		$('#dayPercent').html('');
+							            	$('#dayPercent').append('<br>this Day:'+" "+result[1]+"%");
+						            		$('#inputPercent').attr('placeholder','');	
+						            		window.location.reload();	
+						            	}
+									});		 
+								}
 							}
-							if(parseInt(secondParsing[0])+percent-parseInt(dayPercent) == 100){
-								alert('달성률 100%를 축하합니다!');
-								window.location.reload();	
-								
-							}
+							
 						}		
-					           $('#inputPercent').attr('placeholder','100이내의 숫자');					            	
+					          $('#inputPercent').attr('placeholder','100이내의 숫자');					            	
 					           
 				}
 			}
 			
+			function windowReload(){
+				window.location.reload();	
+			}
 	</script>
 	
 	
@@ -541,7 +559,7 @@
 										        시작시간: <div class ="update_time"><input id="ln" type="text" class="form-control" name="time" placeholder="시작시간"></div>
 										        종료시간: <div class ="update_time"><input id="mn" type="text" class="form-control" name="time" placeholder="종료시간"></div>
 									      </div>
-									      <div class="modal-footer">
+									      <div class="modal-footer" style="background-color: white;">
 									        <button type="button" id="up" class="btn btn-warning" onclick="updateModal()">Update</button>
 									        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 									      </div>
@@ -587,6 +605,23 @@
 								  </div>
 								</div>
 								
+								<div id="success" class="modal fade" role="dialog" aria-hidden="true">
+								  <div class="modal-dialog">
+								    <div class="modal-successContent">
+								      <div class="modal-header-success">
+								        <button type="button" class="close" data-dismiss="modal">×</button>
+								        <h4 class="modal-title">미션 Success!</h4>
+								      </div>
+								      <div class="modal-body" style="background-color: white;">
+								        <strong>목표를 클리어 하셨습니다. 축하합니다! </strong>
+								        <p>- 새로운 목표에 도전해 보세요. -</p>
+								      </div>
+								      <div class="modal-footer" style="background-color: white;">
+								        <button type="button" class="btn btn-default" onclick = "windowReload()">Close</button>
+								      </div>
+								    </div>
+								  </div>
+								</div>
 								
 								</div> <!-- end body -->
 				                <div class="modal-footer">
@@ -608,7 +643,7 @@
 	<script type="text/javascript" src="/goal/resources/js/lib/moment/moment-with-locales.min.js?version=4"></script>
 	<script type="text/javascript" src="/goal/resources/js/lib/eonasdan-bootstrap-datetimepicker/bootstrap-datetimepicker.min.js?version=4"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar.js?version=10"></script>
-	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=92"></script>
+	<script src="/goal/resources/js/lib/fullcalendar/fullcalendar-init.js?version=95"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/ko.js"></script>
 	<script src="/goal/resources/js/lib/fullcalendar/tableModal.js?version=3"></script>
     <script src="/goal/resources/js/app.js?version=4"></script>

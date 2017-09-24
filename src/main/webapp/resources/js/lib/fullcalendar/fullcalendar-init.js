@@ -353,7 +353,9 @@ $(document).ready(function(){
         	dayClick = parseInt(dateSplited);
         	
         	var PlanTitle = [];
+        	var PlanStartDate = [];
         	var PlanStartTime = [];
+        	var PlanEndDate = [];
         	var PlanEndTime = [];
         	var PlanNum = [];
         	var sumAchieve = 0;
@@ -433,12 +435,10 @@ $(document).ready(function(){
 	            	splited = date_syear + "" + date_smonth + "" + date_sday; // item의 DayPlan의 날짜
 	            	splitedStartTime = date_shour +":"+ date_sminute;  //item의 DayPlan의 시작시간
 	            	splitedEndTime = date_ehour+":"+date_eminute; //item의 DayPlan의 종료시간
-	            	splitedStartDate = date_styear+""+date_stmonth+""+date_stday; // item의 BTMRecord의 시작날짜
-	            	splitedEndDate = date_edyear+""+date_edmonth+""+date_edday;
+	            	splitedStartDate = date_styear+date_stmonth+date_stday; // item의 BTMRecord의 시작날짜
+	            	splitedEndDate = date_edyear+date_edmonth+date_edday;
 	            		
 	            	
-	            	
-	            	console.log(item.btmRecordNum);
 	            	//해당 기간에 속한다면
 	            	if(parseInt(dateSplited) >= parseInt(splitedStartDate) && parseInt(dateSplited) <= parseInt(splitedEndDate) && item.btmRecordNum != 0){
             			sumAchieve = item.achieve;
@@ -450,7 +450,9 @@ $(document).ready(function(){
             			if(splited == dateSplited){
             				dayRecordNum = item.dayRecordNum;
             				PlanTitle.push(item.dContents);
+            				PlanStartDate.push(splitedStartDate);
     	            		PlanStartTime.push(splitedStartTime);
+    	            		PlanEndDate.push(splitedEndDate);
     	            		PlanEndTime.push(splitedEndTime);
     	            		PlanNum.push(item.dayPlanNum);
             			}
@@ -557,11 +559,9 @@ $(document).ready(function(){
 		 	        		}
 		 	        	});//end each
             		}else{
-            			
             			$(PlanTitle).each(function(index,item) {
-    	 	        		
     	 	        		//클릭한것이 오늘이라면 readOnly를 하지 않는다.
-    	 	        		if(parseInt(dateSplited) == parseInt(today)){
+    	 	        		if(parseInt(dateSplited) == parseInt(today) || parseInt(dateSplited) >= parseInt(PlanStartDate[index]) && parseInt(dateSplited) <=  parseInt(PlanEndDate[index])){
     	 	        			$('#inputPercent').html('');
     	 	        			$('#inputPercent').attr('placeholder','100이내의 숫자');
     	 	        			$('#currentPercent').html('');

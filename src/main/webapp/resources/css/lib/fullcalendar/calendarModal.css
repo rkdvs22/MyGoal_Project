@@ -71,6 +71,19 @@
 			     border-top-right-radius: 5px;
 			}
 			
+			.modal-header-success{
+				color:#fff;
+			    padding:9px 15px;
+			    border-bottom:1px solid #eee;
+			    background-color: green;
+			    -webkit-border-top-left-radius: 5px;
+			    -webkit-border-top-right-radius: 5px;
+			    -moz-border-radius-topleft: 5px;
+			    -moz-border-radius-topright: 5px;
+			     border-top-left-radius: 5px;
+			     border-top-right-radius: 5px;
+			}
+			
 			.modal-content{
 				position:absolute !important;
 				left:300;
@@ -93,6 +106,14 @@
 				height: 200px;
 			}
 			
+			.modal-sucessContent{
+				position:absolute !important;
+				background-color: green;
+				left:300;
+				width: 600px;
+				height: 400px;
+			}
+			
 			#edit{
 				position: absolute;
 				top: 150;
@@ -106,6 +127,12 @@
 			}
 			
 			#create{
+				position: absolute;
+				top: 150;
+				left:200;
+			}
+			
+			#success{
 				position: absolute;
 				top: 150;
 				left:200;

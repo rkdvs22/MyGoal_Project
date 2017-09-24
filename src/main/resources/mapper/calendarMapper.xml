@@ -134,9 +134,9 @@
 	
 	<select id = "checkBTMRecord" parameterType="DayRecordVO" resultType="int">
 	
-		select count(bRecordNum) from btmRecord
-		where to_date(sysdate,'yyyy/mm/dd') &gt;= to_date(to_char(startDate,'yyyy/mm/dd'),'yyyy/mm/dd')
-		and to_date(sysdate,'yyyy/mm/dd') &lt;= to_date(to_char(endDate,'yyyy/mm/dd'),'yyyy/mm/dd') and memberId = #{userId}
+	select count(bRecordNum) from btmRecord
+		where to_date(to_char(sysdate,'yyyy/mm/dd'),'yyyy/mm/dd') &gt;= to_date(to_char(startDate,'yyyy/mm/dd'),'yyyy/mm/dd')
+		and to_date(to_char(sysdate,'yyyy/mm/dd'),'yyyy/mm/dd') &lt;= to_date(to_char(endDate,'yyyy/mm/dd'),'yyyy/mm/dd') and memberId = #{userId}
 	
 	</select>
 	
@@ -156,7 +156,7 @@
 	
 	<update id = "completeUpdateDayRecord" parameterType= "DayRecordVO">
 		update DayRecord set achieve = #{achieve}, completeTime = to_date(to_char(sysdate,'yyyy/mm/dd hh24:mi'),'yyyy/mm/dd hh24:mi')
-		where btmRecordNum = #{btmRecordNum} and startDate = to_date(#{startDate},'yyyy/mm/dd')
+		where btmRecordNum = #{btmRecordNum} and to_date(to_char(startDate,'yyyy/mm/dd'),'yyyy/mm/dd') = to_date(#{startDate},'yyyy/mm/dd')
 	</update>
 	
 	
@@ -178,4 +178,48 @@
 		where to_date(to_char(d.startDate,'yyyy/mm/dd'),'yyyy/mm/dd') = #{startDate} and m.userId = #{userId}
 		
 	</select>
+	
+	<update id = "updateBTMGoalComplete" parameterType="DayRecordVO">
+	
+		update BTMGoal set BCLEAR = 'Y' where BGoalNum = (select bGoalNum from BTMRecord where bRecordNum = #{btmRecordNum})
+	
+	</update>
+	
+	<select id = "getTotalBTMRecordAmount" parameterType="DayRecordVO" resultType="int">
+	
+		select count(bGoalNum) as "totalNum" from BTMGoal 
+		where mGoalNum = (select mGoalNum from BTMGoal where bGoalNum = (select bGoalNum from BTMRecord where BRecordNum = #{btmRecordNum}))
+	
+	</select>
+	
+	<select id="getSuccessBTMRecordAmount" parameterType="DayRecordVO" resultType="int">
+	
+		select count(bGoalNum) as "ClearNum" from BTMGoal 
+		where mGoalNum = (select mGoalNum from BTMGoal 
+		where bGoalNum = (select bGoalNum from BTMRecord where BRecordNum = #{btmRecordNum})) and BClear = 'Y'
+	
+	</select>
+	
+	<update id = "updateMIDGoalComplete" parameterType="DayRecordVO">
+	
+		update MIDGoal set MClear = 'Y'where mGoalNum = (select mGoalNum from BTMGoal 
+		where bGoalNum = (select bGoalNum from BTMRecord where BRecordNum = #{btmRecordNum}))
+	
+	</update>
+	
+	<select id = "getSuccessMIDRecordAmount" parameterType="DayRecordVO" resultType="int">
+	
+		select count(mGoalNum) from MidGoal where tGoalNum = (select tGoalNum from MidGoal 
+		where mGoalNum = (select mGoalNum from BTMGoal where bGoalNum = (select bGoalNum from BTMRecord where BRecordNum = #{btmRecordNum}))) and MClear = 'Y'
+	
+	</select>
+	
+	<update id = "updateTopGoalComplete" parameterType="DayRecordVO">
+	
+		update TopGoal set tClear = 'Y' where tGoalNum = (select tGoalNum from MidGoal
+		where mGoalNum = (select mGoalNum from BTMGoal where bGoalNum = (select bGoalNum from BTMRecord where BRecordNum = #{btmRecordNum})))
+	
+	</update>
+	
+	
 </mapper>

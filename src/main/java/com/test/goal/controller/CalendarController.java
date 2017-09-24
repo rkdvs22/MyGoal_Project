@@ -94,14 +94,13 @@ public class CalendarController {
 	public ArrayList<Integer> updateAchieve(DayRecordVO vo, HttpServletRequest request) {
 		
 		ArrayList<Integer> list = new ArrayList<>();
-		
 		String userId  = (String) request.getSession().getAttribute("userid");
 		vo.setUserId(userId);
 		service.updateAchieve(vo);
 		int achieve = service.getAchieve(vo);
 		
 		list.add(achieve);
-		list.add(vo.getDayAchieve());
+		list.add(vo.getTotalAchieve());
 		
 		return list;
 	}
