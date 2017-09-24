@@ -202,7 +202,7 @@
 	            <div class="col-xl-6 dahsboard-column">
 				 <section class="box-typical box-typical-dashboard panel panel-default scrollable">
 	                    <header class="box-typical-header panel-heading">
-	                        <div class="panel-title" style="float:left">Recent Messages</div>
+	                        <div class="panel-title" style="float:left">최근 받은 메시지</div>
 	                        <div class="panel-more" style="float:right">
 	                        	<a class="glyphicon glyphicon-plus" href="/goal/message/sendNReceiveList"></a>
 	                        </div>
@@ -213,19 +213,21 @@
                        		<table id="table-edit" class="table table-bordered table-hover">
 								<thead>
 								<tr>
-									<th width="120">Sender</th>
-									<th>Title</th>
-									<th>Content</th>
-									<th width="120">Date</th>
+									<th width="120">발신인</th>
+									<th>제목</th>
+									<th>내용</th>
+									<th width="120">날짜</th>
 								</tr>
 								</thead>
 								<tbody>
+									<c:forEach items="${homeMessage}" var="message">
 									<tr>
-										<td>Sender</td>
-										<td>Title</td>
-										<td>Content</td>
-										<td>Date</td>
+										<td>${message.sender}</td>
+										<td>${message.msgTitle}</td>
+										<td>${message.msgContent}</td>
+										<td>${message.msgDate}</td>
 									</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 	                    </div><!--.box-typical-body-->
@@ -264,13 +266,6 @@
 	                                <a href="#">
 	                                    <i class="font-icon font-icon-re"></i>
 	                                </a>
-	                                <!--Реализация кнопками-->
-	                                <!--<button type="button" class="star">-->
-	                                <!--<i class="font-icon font-icon-star"></i>-->
-	                                <!--</button>-->
-	                                <!--<button type="button">-->
-	                                <!--<i class="font-icon font-icon-re"></i>-->
-	                                <!--</button>-->
 	                            </div>
 	                        </article>
 	                        <article class="comment-item">
@@ -301,13 +296,6 @@
 	                                <a href="#">
 	                                    <i class="font-icon font-icon-re"></i>
 	                                </a>
-	                                <!--Реализация кнопками-->
-	                                <!--<button type="button" class="star">-->
-	                                <!--<i class="font-icon font-icon-star"></i>-->
-	                                <!--</button>-->
-	                                <!--<button type="button">-->
-	                                <!--<i class="font-icon font-icon-re"></i>-->
-	                                <!--</button>-->
 	                            </div>
 	                        </article>
 	                    </div><!--.box-typical-body-->
@@ -318,21 +306,20 @@
 	            <!-- 게시판 -->
 	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
 	                    <header class="box-typical-header panel-heading">
-	                    	<div class="panel-title" style="float:left">Board</div>
+	                    	<div class="panel-title" style="float:left">게시판</div>
 	                        <div class="panel-more" style="float:right">
 	                        	<a class="glyphicon glyphicon-plus" href="/goal/board/boardList"></a>
 	                        </div>
 	                    </header>
 	                    
 	                    <div class="box-typical-body panel-body">
-	                    <form action="/homeBoard" method="get">
                        		<table id="table-edit" class="table table-bordered table-hover">
 								<thead>
 								<tr>
 									<th>ID</th>
-									<th>Title</th>
-									<th width="120">Start Date</th>
-									<th width="120">End Date</th>
+									<th>제목</th>
+									<th width="120">시작일</th>
+									<th width="120">종료일</th>
 									<th width="70">인원</th>
 									<th class="table-icon-cell">
 										<i class="font-icon font-icon-heart"></i>
@@ -343,36 +330,15 @@
 								<c:forEach items="${homeBoard}" var="board">
 									<tr>
 										<td>${board.userid}</td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td class="table-photo"></td>
+										<td>${board.tGoalTitle}</td>
+										<td>${board.startDate}</td>
+										<td>${board.endDate}</td>
+										<td>${board.currentMemberNumber}/${board.maxMember}</td>
+										<td class="table-photo">${board.favorite}</td>
 									</tr>
-							<%-- 		<tr>
-										<td>1</td>
-										<td>Last quarter revene</td>
-										<td class="color-blue-grey-lighter">Revene for last quarter in state America for year 2013, whith...</td>
-										<td class="table-icon-cell">5</td>
-										<td class="table-date">6 minutes ago</td>
-										<td class="table-photo">
-											<img src="img/photo-64-1.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="Nicholas<br/>Barrett">
-										</td>
-									</tr>
-									<tr>
-										<td>1</td>
-										<td>Last quarter revene</td>
-										<td class="color-blue-grey-lighter">Revene for last quarter in state America for year 2013, whith...</td>
-										<td class="table-icon-cell">5</td>
-										<td class="table-date">6 minutes ago</td>
-										<td class="table-photo">
-											<img src="img/photo-64-1.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="Nicholas<br/>Barrett">
-										</td>
-									</tr> --%>
 								</c:forEach>
 								</tbody>
 							</table>
-						</form>
 	                    </div><!--.box-typical-body-->
 	                </section><!--.box-typical-dashboard-->
 	                
