@@ -200,93 +200,37 @@
 	
 	        <div class="row">
 	            <div class="col-xl-6 dahsboard-column">
-	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
+				 <section class="box-typical box-typical-dashboard panel panel-default scrollable">
 	                    <header class="box-typical-header panel-heading">
-	                        <h3 class="panel-title">Recent Messages</h3>
+	                        <div class="panel-title" style="float:left">Recent Messages</div>
+	                        <div class="panel-more" style="float:right">
+	                        	<a class="glyphicon glyphicon-plus" href="/goal/message/sendNReceiveList"></a>
+	                        </div>
 	                    </header>
+	                    
 	                    <div class="box-typical-body panel-body">
-	                        <table class="tbl-typical">
-	                            <tr>
-	                                <th><div>Title</div></th>
-	                                <th><div>Sender</div></th>
-	                                <th align="center"><div>Orders#</div></th>
-	                                <th align="center"><div>Date</div></th>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-primary">Paid</span>
-	                                    <span class="label label-success">Active</span>
-	                                </td>
-	                                <td>John Doe</td>
-	                                <td align="center">3435362</td>
-	                                <td class="color-blue-grey" nowrap align="center"><span class="semibold">Today</span> 8:30</td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-primary">Paid</span>
-	                                    <span class="label label-success">Active</span>
-	                                </td>
-	                                <td>Thomas Bayer</td>
-	                                <td align="center">3435362</td>
-	                                <td class="color-blue-grey" nowrap align="center"><span class="semibold">Today</span> 16:30</td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-primary">Paid</span>
-	                                    <span class="label label-default">Inactive</span>
-	                                </td>
-	                                <td>Nicolas Karabat</td>
-	                                <td align="center">3435362</td>
-	                                <td class="color-blue-grey" nowrap align="center"><span class="semibold">Yesterday</span></td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-default">Unpaid</span>
-	                                    <span class="label label-default">Inactive</span>
-	                                </td>
-	                                <td>Alexandre Pome</td>
-	                                <td align="center">3435362</td>
-	                                <td class="color-blue-grey" nowrap align="center">23th May</td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-primary">Paid</span>
-	                                    <span class="label label-success">Active</span>
-	                                </td>
-	                                <td>John Doe</td>
-	                                <td align="center">3435362</td>
-	                                <td class="color-blue-grey" nowrap align="center"><span class="semibold">Today</span> 8:30</td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-primary">Paid</span>
-	                                    <span class="label label-success">Active</span>
-	                                </td>
-	                                <td>Thomas Bayer</td>
-	                                <td align="center">3435362</td>
-	                                <td class="color-blue-grey" nowrap align="center"><span class="semibold">Today</span> 16:30</td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-primary">Paid</span>
-	                                    <span class="label label-default">Inactive</span>
-	                                </td>
-	                                <td>Nicolas Karabat</td>
-	                                <td align="center">3435362</td>
-	                                <td class="color-blue-grey" nowrap align="center"><span class="semibold">Yesterday</span></td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-default">Unpaid</span>
-	                                    <span class="label label-default">Inactive</span>
-	                                </td>
-	                                <td>Alexandre Pome</td>
-	                                <td align="center">3435362</td>
-	                                <td class="color-blue-grey" nowrap align="center">23th May</td>
-	                            </tr>
-	                        </table>
+
+                       		<table id="table-edit" class="table table-bordered table-hover">
+								<thead>
+								<tr>
+									<th width="120">Sender</th>
+									<th>Title</th>
+									<th>Content</th>
+									<th width="120">Date</th>
+								</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Sender</td>
+										<td>Title</td>
+										<td>Content</td>
+										<td>Date</td>
+									</tr>
+								</tbody>
+							</table>
 	                    </div><!--.box-typical-body-->
-	                </section><!--.box-typical-dashboard-->
+	                </section>
+				 
 	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
 	                    <header class="box-typical-header panel-heading">
 	                        <h3 class="panel-title">Comments</h3>
@@ -374,9 +318,10 @@
 	            <!-- 게시판 -->
 	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
 	                    <header class="box-typical-header panel-heading">
-	                        <h3 class="panel-title">Board</h3>
-	                    	<div class="tbl-cell"></div>
-	                        <a class="glyphicon glyphicon-plus" href="/goal/board/boardList"></a>
+	                    	<div class="panel-title" style="float:left">Board</div>
+	                        <div class="panel-more" style="float:right">
+	                        	<a class="glyphicon glyphicon-plus" href="/goal/board/boardList"></a>
+	                        </div>
 	                    </header>
 	                    
 	                    <div class="box-typical-body panel-body">
