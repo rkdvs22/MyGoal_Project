@@ -21,7 +21,7 @@
 		}
 	});
 	
-	//목표 개수만큼 열매 달기 feat.조준석 앞으로 하나 남음
+	//목표 개수만큼 열매 달기 feat.조준석
 	function locateGoal() {
 		var result = ${goalNum};
 		var date = new Date();	//오늘 날짜
@@ -390,17 +390,18 @@
 			<div class="tbl">
 				<div class="tbl-row">
 					<div class="tbl-cell">
-						<h3>
-							Goal Tree <small class="text-muted">${sessionScope.userid}</small>
-						</h3>
+						<h3>Goal Tree</h3>
+					</div>
+					<div class="tbl-cell">
+						${sessionScope.userid}님의 
 						<select id="year" name="year" onchange="yearList()">
-							<option id="2015" value="2015">2015</option>
-							<option id="2016" value="2016">2016</option>
-							<option id="2017" value="2017" selected="selected">2017</option>
-						</select>
+						<option id="2015" value="2015">2015</option>
+						<option id="2016" value="2016">2016</option>
+						<option id="2017" value="2017" selected="selected">2017</option>
+						</select>년 목표
+					</div>
 					</div>
 				</div>
-			</div>
 		</header>
 
 		<%@ include file="../menu.jsp"%>
