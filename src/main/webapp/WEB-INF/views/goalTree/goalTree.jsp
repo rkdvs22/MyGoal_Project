@@ -24,17 +24,57 @@
 	//목표 개수만큼 열매 달기 feat.조준석 앞으로 하나 남음
 	function locateGoal() {
 		var result = ${goalNum};
+		var date = new Date();	//오늘 날짜
 		var str = "";
-
+		
+		var time = new Date() 
+    	
+    	var year = time.getYear()+1900
+    	var month = time.getMonth() +1
+    	if((month+"").length <2){
+    		month = "0"+month;
+    	}
+    	var day = time.getDate() 
+    	if((day+"").length <2){
+    		day = "0"+day;
+    	}
+    	
+    	var today = parseInt(year+month+day);
+		
 		<c:forEach var="goalList" items="${goalList}" varStatus="status">
-			if ("${goalList.tClear}" == "N") {	//미클리어
-				str += '<div class="apple" id="a' + ${status.index + 1} + '" onclick="goSquare(' + ${goalList.tGoalNum} + ')">'
+			var startDate = 0;
+			var endDate = 0;
+			var checkDate = "";
+			var tyear = "";
+			var tmonth = "";
+			var tday = "";
+			
+			if ("${goalList.tClear}" == "N") { //진행 중
+				
+				checkDate = "${goalList.tEndDate}";
+				var splitCheckDate = checkDate.split("-"); 
+				tyear = splitCheckDate[0];
+				tmonth = splitCheckDate[1];
+				tday = splitCheckDate[2];
+					
+				endDate = parseInt(tyear+tmonth+tday);
+				
+				if (today > endDate) {	//달성 실패
+					str += '<div class="apple" id="a' + ${status.index + 1} + '" onclick="goSquare(' + ${goalList.tGoalNum} + ')">'
+					+ "<img src='/goal/resources/img/goaltree/apple2.png' width='100%'>"
+					+ "</div>";
+					$("#pop" + ${status.index + 1}).prepend("<font color='red'>[달성 실패] </font>");
+				} else {	//진행 중
+					str += '<div class="apple" id="a' + ${status.index + 1} + '" onclick="goSquare(' + ${goalList.tGoalNum} + ')">'
 					+ "<img src='/goal/resources/img/goaltree/apple3.png' width='100%'>"
 					+ "</div>";
-			} else if ("${goalList.tClear}" == "Y") {	//클리어
+					$("#pop" + ${status.index + 1}).prepend("<font color='green'>[달성 중] </font>");
+				}
+			} else if ("${goalList.tClear}" == "Y") { //클리어
 				str += "<div class='apple' id='a" + ${status.index + 1} + "' onclick='goSquare(" + ${goalList.tGoalNum} + ")'>"
 					+ "<img src='/goal/resources/img/goaltree/apple1.png' width='100%'>"
 					+ "</div>";
+				$("#pop" + ${status.index + 1}).prepend("<font color='blue'>[달성 완료] </font>");
 			}
 		</c:forEach>
 		
@@ -339,8 +379,8 @@
 		 $("#noGoalAlert").css("display", "none");
 	 }
 </script>
-<link rel="stylesheet" href="css/lib/font-awesome/font-awesome.min.css">
-<link rel="stylesheet" href="css/lib/bootstrap/bootstrap.min.css">
+<link rel="stylesheet" href="/goal/resources/css/lib/font-awesome/font-awesome.min.css">
+<link rel="stylesheet" href="/goal/resources/css/lib/bootstrap/bootstrap.min.css">
 <link rel="stylesheet" href="/goal/resources/css/main.css">
 <link rel="stylesheet" href="/goal/resources/css/goaltree/goaltree.css?version=7">
 </head>
@@ -406,7 +446,6 @@
 		<!-- 대주제 팝업창으로 표시하기 -->
 		<c:forEach var="goalList" items="${goalList}" varStatus="status">
 			<div class="pop" id="pop${status.index + 1}">
-				<div class="poptail"></div>
 				${goalList.tGoalTitle}<br> 달성 기간 : ${goalList.tStartDate} ~ ${goalList.tEndDate}
 			</div>
 		</c:forEach>

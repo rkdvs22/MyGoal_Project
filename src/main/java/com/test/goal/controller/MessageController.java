@@ -20,7 +20,7 @@ public class MessageController {
 	private MessageDAO dao;
 
 	// 메시지 보내기
-	@RequestMapping(value = {"writeMsg", "writeMsg2"}, method = RequestMethod.POST)
+	@RequestMapping(value = "writeMsg", method = RequestMethod.POST)
 	@ResponseBody
 	public boolean writeMsg(MessageVO vo, HttpSession session, RedirectAttributes attr) {
 		String userid = (String) session.getAttribute("userid");
