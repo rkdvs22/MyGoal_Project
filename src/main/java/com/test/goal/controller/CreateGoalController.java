@@ -21,6 +21,7 @@ import com.test.goal.dao.FriendDAO;
 import com.test.goal.dao.MessageDAO;
 import com.test.goal.vo.BTMGoalVO;
 import com.test.goal.vo.BoardVO;
+import com.test.goal.vo.FindHostVO;
 import com.test.goal.vo.MainProgressVO;
 import com.test.goal.vo.MemberVO;
 import com.test.goal.vo.MessageVO;
@@ -78,6 +79,8 @@ public class CreateGoalController {
 	// 목표大작성 기능
 	@RequestMapping(value = "create", method = RequestMethod.POST)
 	public String create(TopGoalVO tvo, MainProgressVO mvo, Model model, int progressNum, HttpSession session) {
+		String hostId = (String)session.getAttribute("userid");
+		session.setAttribute("hostId", hostId);
 		mvo.setProgressNum(progressNum);
 		model.addAttribute("topGoal", dao.create1(tvo));
 		int topGoalNum = dao.getTgoalNum().gettGoalNum();
@@ -340,7 +343,7 @@ public class CreateGoalController {
 	
 	// 초대한 목표로 이동한다.
 	@RequestMapping(value = "joinThatGoal", method = RequestMethod.GET)
-	public String joinThatGoal(String id, Model model, HttpSession session) {
+	public String joinThatGoal(String id, Model model, HttpSession session, FindHostVO host_vo) {
 		TopGoalVO vo = findThatGoal(id);
 		String invitedId = (String) session.getAttribute("userid");
 		vo.setUserid(invitedId);
@@ -351,7 +354,11 @@ public class CreateGoalController {
 		vo.settStartDate(sDate[0] + "/" + sDate[1] + "/" + sDate[2]);
 		vo.settEndDate(eDate[0] + "/" + eDate[1] + "/" + eDate[2]);
 		model.addAttribute("newUser", dao.joinThatGoal(vo));
-		// 참여 했음에도 정보가 뜨지 않는거 어떻게 좀........
+		model.addAttribute("b_info", dao.getBoardInfo());
+		
+		host_vo.setMyId(invitedId);
+		model.addAttribute("host", dao.findThisGoalHost(host_vo));
+		
 		return "/createGoal/MGoalSquareForm";
 	}
 	
@@ -391,11 +398,8 @@ public class CreateGoalController {
 		// 세부목표
 		MidGoalVO current_vo = dao.selectNowMidGoal(mvo);
 		for(int i=0; i<((ArrayList<Object>)( (HashMap<Object, Object>)map.get("btmGoal") ).get("key2")).size(); i++) {
-//			String m_b_GoalNum = ( (HashMap<Object, Object>) ( (ArrayList<Object>)
-//								( (HashMap<Object, Object>)map.get("btmGoal") ).get("key2")).get(i)).get("m_b_GoalNum").toString();
 			String bGoal = ( (HashMap<Object, Object>) ( (ArrayList<Object>)
 							( (HashMap<Object, Object>)map.get("btmGoal") ).get("key2")).get(i)).get("bGoal").toString();
-			System.out.println(i + "번째 : " + bGoal);
 			String bGoalDay = ( (HashMap<Object, Object>) ( (ArrayList<Object>)
 							( (HashMap<Object, Object>)map.get("btmGoal") ).get("key2")).get(i)).get("bGoalDay").toString();
 			String[] bGoalDaySp = bGoalDay.split("-");
@@ -407,5 +411,28 @@ public class CreateGoalController {
 			dao.inputBtmGoal(bvo_temp);
 		}
 		
+	}
+	
+	// 사용자가 선택한 색상의 hex값을 테이블에 갱신한다.
+	@RequestMapping(value = "updateColor", method = RequestMethod.POST)
+	@ResponseBody
+	public void updateColor(@RequestBody Map<String, String> map) {
+		dao.updateColor(map);
+	}
+	
+	// 준비를 누른 사람이 이전에 레디를 했는지에 대한 여부를 불러온다.
+	@RequestMapping(value = "getReadyFlag", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean getReadyFlag(@RequestBody Map<String, String> map) {
+		String ready_result = dao.getReadyFlag(map);
+		if(ready_result.equals("Y")) return true;
+		else return false;
+	}
+	
+	// 준비를 누른 사람이 이전에 레디를 했는지에 대한 여부를 불러온다.
+	@RequestMapping(value = "switchReady", method = RequestMethod.POST)
+	@ResponseBody
+	public void switchReady(@RequestBody Map<String, String> map) {
+		System.out.println(map);
 	}
 }

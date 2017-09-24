@@ -118,9 +118,14 @@
 	<insert id="inputUserTgoal" parameterType="TopGoalVO">
 		INSERT INTO topgoal
 		VALUES (
-		TOPGOAL_SEQ.NEXTVAL, #{tGoalTitle}, TO_DATE(#{tStartDate}, 'YY/MM/DD'), TO_DATE(#{tEndDate}, 'YY/MM/DD'), #{tClear}, #{tStartStatus}, #{openStatus}, #{userid}, #{progressNum}
+			#{tGoalNum}, #{tGoalTitle}, TO_DATE(#{tStartDate}, 'YY/MM/DD'), TO_DATE(#{tEndDate}, 'YY/MM/DD'), #{tClear}, #{tStartStatus}, #{openStatus}, #{userid}, #{progressNum}
 		)
 	</insert>
+	
+	<!-- TOPGOAL 테이블에 들어오는 사람의 ID를 입력하기 전에 시퀀스값을 받아온다  -->
+	<select id="findNewTgoalNum" resultType="int">
+		SELECT TOPGOAL_SEQ.NEXTVAL FROM DUAL
+	</select>
 	
 	<!-- 초대받은 목표 (TOPGOAL 테이블) 에 초대받은 사람의 ID를 입력한다. -->
 	<insert id="inputUserMemberList" parameterType="TopGoalVO">
@@ -156,4 +161,43 @@
 			#{mGoalNum}
 		)
 	</insert>
+	
+	<!-- 해당하는 방의 HOST 아이디를 불러온다. -->
+	<select id="findThisGoalHost" parameterType="FindHostVO" resultType="string">
+		select m.userId as userid from memberList m inner join mainProgress p
+		on m.progressNum = p.progressNum inner join topGoal t
+		on p.progressNum = t.progressNum inner join member b
+		on t.userId = b.userId
+		where b.userId = #{myId}
+		and t.tGoalNum = #{tGoalNum}
+		and m.playerType = 'HOST'
+	</select>
+	
+	<!-- 목표 입장 전 내 최종목표 시퀀스 번호를 반환한다. -->
+	<select id="findMyTgoalNum" parameterType="string" resultType="int">
+		SELECT MAX(tgoalnum) FROM topgoal WHERE userid = #{myId}
+	</select>
+	
+	<!-- 사용자가 선택한 색상의 hex값을 테이블에 갱신한다. -->
+	<update id="updateColor" parameterType="hashmap">
+		UPDATE memberlist SET color = #{hex}
+		WHERE userid = #{id}
+		AND progressnum = (
+			SELECT MAX(progressnum) FROM memberlist
+			WHERE userid = #{id}
+		)
+	</update>
+	
+	<!-- 클릭한 사람이 이전에 레디를 했는지에 대한 여부를 불러온다. -->
+	<select id="getReadyFlag" parameterType="hashmap" resultType="string">
+		SELECT ready FROM memberlist
+		WHERE progressnum = TO_NUMBER(#{progressNum})
+		AND userid = #{id}
+	</select>
+	
+	<!-- 현재 최종목표에 해당하는 ProgressNum을 반환한다. -->
+	<select id="getProgressNum" parameterType="int" resultType="int">
+		SELECT MAX(progressnum) as progressnum FROM topgoal
+		WHERE tgoalnum = #{tGoalNum}
+	</select>
 </mapper>

@@ -1,9 +1,11 @@
 package com.test.goal.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.test.goal.vo.BTMGoalVO;
 import com.test.goal.vo.BoardVO;
+import com.test.goal.vo.FindHostVO;
 import com.test.goal.vo.MainProgressVO;
 import com.test.goal.vo.MemberListVO;
 import com.test.goal.vo.MemberVO;
@@ -64,6 +66,16 @@ public interface CreateGoalMapper {
 	public MidGoalVO selectNowMidGoal(MidGoalVO mvo); // 현재 작성한 중간목표를 불러온다.
 
 	public int inputBtmGoal(BTMGoalVO vo); // 작성한 세부목표들을 입력한다.
+
+	public String findThisGoalHost(FindHostVO host_vo); // 해당하는 방의 HOST 아이디를 불러온다.
+
+	public int findMyTgoalNum(String myId); // 내가 참여할 방의 최종목표 시퀀스 번호를 반환한다.
 	
-	
+	public int findNewTgoalNum(); // TOPGOAL 테이블에 들어오는 사람의 ID를 입력하기 전에 시퀀스값을 받아온다.
+
+	public int updateColor(Map<String, String> map); // 사용자가 선택한 색상의 hex값을 테이블에 갱신한다.
+
+	public int getProgressNum(int tGoalNum); // 현재 최종목표에 해당하는 ProgressNum을 반환한다.
+
+	public String getReadyFlag(Map<String, String> map); // 준비를 누른 사람이 이전에 레디를 했는지에 대한 여부를 불러온다.
 }

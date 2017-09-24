@@ -199,7 +199,6 @@ function noEvent() {
 }
 document.onkeydown = noEvent;
 
-
 var m_eDate = "";
 var m_sDate = "";
 var b_sDate = new Array();
@@ -360,19 +359,6 @@ $(function() {
 					}
 				}
 				
-				// 다른 중간목표 기간과 겹치지 않도록 한다.
-// 				if(bBtn_num > 1) {
-// 					for(var i=0; i<mGoal_modals.length; i++) {
-// 						if($("#startMpicker").val() <= mGoal_modals[i].sDate) {
-// 							alert("시작날짜가 이전 중간목표의 날짜와 겹칩니다");
-// 							return false;
-// 						} else if($("#endMpicker").val() <= mGoal_modals[i].eDate) {
-// 							alert("종료날짜가 이전 중간목표의 날짜와 겹칩니다");
-// 							return false;
-// 						}
-// 					}
-// 				}
-				
 				// 사용자가 작성한 중간목표를 저장해 무결성 검사에 이용한다.
 				var mGoal_modals = {
 					mGoal: $("#Mgoal").val(),
@@ -485,7 +471,7 @@ $(function() {
 	function inputMbtnValue(bBtn_num) {
 		for(var i=0; i<8; i++) {
 			if($("#mBtn"+(i+1)).attr("value") == bBtn_num) {
-				$("#mBtn"+(i+1)).attr("value", mGoal_modals[i].mGoal);
+				$("#mBtn"+(i+1)).attr("value", mGoal_modals.mGoal);
 				break;
 			}
 		}
@@ -612,9 +598,65 @@ $(function() {
 			$("#mBtn6").removeAttr("disabled");
 		});
 		
-		// 레디 버튼 클릭 ================================== 변경할것
+		// 레디 버튼 클릭시 그림 변경 및 레디 여부를 업데이트한다.
+		
 		$("#readyBtn").click(function() {
-// 			<td id="p3_ready"><img src="/goal/resources/img/user_ready.png"></td> 활용
+			// 준비를 누른 사람이 이전에 레디를 했는지에 대한 여부를 불러온다.
+			$.ajax ({
+				url: "/goal/createGoal/getReadyFlag",
+				type: "post",
+				contentType: "application/json;charset=UTF-8",
+				dataType: "json",
+				data: JSON.stringify({"id":'${sessionScope.userid}', "tGoalNum":'${b_info.tGoalNum}'}),
+				success: function(result) {
+					// Ready 상태가 N 일 경우 Y로, Y일 경우 N으로 바꾼다.
+					if(result) {
+						for(var i=1; i<4; i++) {
+							if($("#p"+(i+1)).text() == '${sessionScope.userid}') {
+								$("#p"+(i+1)+"_img").html("");
+								
+								$("#p"+(i+1)+"_img").html('<img src="/goal/resources/img/avatar-2-64.png">');
+								
+								$.ajax({
+									url: "/goal/createGoal/switchReady",
+									type: "post",
+									contentType: "application/json;charset=UTF-8",
+									dataType: "json",
+									data: JSON.stringify({"id":'${sessionScope.userid}', "ready":"N"}),
+									success: function() {},
+									error: function(result) {
+										console.log("에러 : " + result)
+									}
+								});
+								break;
+							}
+						}
+					} else {
+						for(var i=1; i<4; i++) {
+							if($("#p"+(i+1)).text() == '${sessionScope.userid}') {
+								$("#p"+(i+1)+"_img").html("");
+								
+								$("#p"+(i+1)+"_img").html('<img src="/goal/resources/img/user_ready.png">');
+								
+								$.ajax({
+									url: "/goal/createGoal/switchReady",
+									type: "post",
+									contentType: "application/json;charset=UTF-8",
+									dataType: "json",
+									data: JSON.stringify({"id":'${sessionScope.userid}', "ready":"Y"}),
+									success: function() {},
+									error: function(result) {
+										console.log("에러 : " + result)
+									}
+								});
+								break;
+							}
+						}
+					}
+				}
+			})
+			
+			
 			
 		});
 		
@@ -648,6 +690,7 @@ $(function() {
 		for(var i=0; i<countArray[1]; i++) {
 			var bGoal = bGoal_modals[i].bGoal;
 			var dayArray = /\d/.exec(bGoal_modals[i].bGoalDay);
+			console.log(dayArray);
 			$("#b_goal" + (i+1)).val(bGoal);
 			$("#b_progressday" + (i+1)).val(dayArray[0]);
 		}
@@ -666,8 +709,25 @@ $(function() {
 		resizable: false,
 		buttons:{
 			"확인":function () {
-				$(".host > .player-color").text("");
-				$(".host > .player-color").html('<div class="pickcolor" style="background-color: '+hex+';"></div>');
+				console.log("컬러 확인");
+				// 사용자가 선택한 색상의 hex값을 테이블에 갱신한다.
+				var id = '${sessionScope.userid}';
+				for(var i=0; i<4; i++) {
+					if(id == $("#p"+(i+1)).text()) {
+						$("#p"+(i+1)+ "-tr > .player-color").text("");
+						
+						$.ajax({
+							url: "/goal/createGoal/updateColor",
+							type: "post",
+							contentType: "application/json;charset=UTF-8",
+							dataType: "json",
+							data: JSON.stringify({"id":'${sessionScope.userid}', "hex":hex}),
+							success: function() {}
+						});
+						$("#p"+(i+1)+ "-tr > .player-color").html('<div class="pickcolor" style="background-color: '+hex+';"></div>');
+						break;
+					}
+				}
 				$(".pickcolor").css("border-radius", "50%");
 				$(this).dialog("close");
 			},
@@ -714,8 +774,8 @@ $(function() {
 			success: function(friendList) {
 				$(friendList).each(function(index, item) {
 					if('${sessionScope.userid}' == item.userid) {
-						var friend_row = '<tr class="friend"><td>' + item.frdid + '</td>'
-						friend_row += '<td></td><td>연동예정</td><td></td>';
+						var friend_row = '<tr class="friend"><td>' + item.frdid + '</td>';
+						friend_row += '<td></td>';
 						friend_row += '<th><input style="margin: 0px 3px 1px 30px; width: 13px; HEIGHT: 13px" type="checkbox" name="checkList" class="checkList" value="'+ item.frdid +'"></th></tr>';
 						$(".friendList").append(friend_row);
 					}
@@ -729,7 +789,7 @@ $(function() {
 	// 친구초대를 위한 modal창 설정
 	$(".invite-modal").dialog({
 		autoOpen: false,
-		width: 450,
+		width: 350,
 		height: 500,
 		maxHeight: 500,
 		position: [500, 200],
@@ -744,17 +804,32 @@ $(function() {
 					count += 1;
 				});
 				
-				jQuery.ajaxSettings.traditional = true;
+				// 인원수가 다 차있을 경우 초대메시지를 보낼 수 없다.
+				var maxMember = '${b_info.maxMember}';
+				var currentMembers = 1;
 				
-				// 사용자가 체크박스에서 선택한 사람에게 초대 메시지를 보낸다.
-				$.ajax ({
-					url: "writeInviteMsg",
-					type: "post",
-					data: {"nameList":nameList},
-					success: function(result) {
-						alert("초대 메시지를 전송하였습니다");
+				for(var i=1; i<4; i++) {
+					if($("#p"+(i+1)).text() != "Empty") {
+						currentMembers += 1;
 					}
-				});
+					
+					if(currentMembers >= maxMember) {
+						alert("빈 자리가 없어 초대장을 보낼 수 없습니다");
+						return false;
+					} else {
+						// 사용자가 체크박스에서 선택한 사람에게 초대 메시지를 보낸다.
+						jQuery.ajaxSettings.traditional = true;
+						$.ajax ({
+							url: "writeInviteMsg",
+							type: "post",
+							data: {"nameList":nameList},
+							success: function(result) {
+								alert("초대 메시지를 전송하였습니다");
+							}
+						});
+						break;
+					}
+				}
 				
 				$(".friendList").html("");
 				$(this).dialog("close");
@@ -772,7 +847,7 @@ $(function() {
 	$("#exitBtn").click(function() {
 		var result = confirm("정말 나가시겠습니까? 해당하는 정보는 모두 삭제됩니다");
 		if(result) {
-			if($("#host-id").text() == '${sessionScope.userid}') {
+			if($("#p1-tr").text() == '${sessionScope.userid}') {
 				$.ajax ({
 					url: "exitCreateGoal",
 					type: "post",
@@ -787,7 +862,7 @@ $(function() {
 		}
 	});
 	
-	// 초대 modal창 안에서 유저 아이디를 찾고 싶을 때
+	// 초대 modal창 안에서 유저 아이디 검색을 누를때 해당하는 결과를 보여준다.
 	$("#searchBtn").click(function() {
 		var keyWord = $("#search-id").val();
 		if(keyWord == "") {
@@ -808,7 +883,7 @@ $(function() {
 					$(".friendList").html("");
 					$("#switch-th").text("아이디");
 					var id_row = '<tr class="id"><td>' + item.userid + '</td>'
-					id_row += '<td></td><td>연동예정</td><td></td>';
+					id_row += '<td></td>';
 					id_row += '<th><input style="margin: 0px 3px 1px 30px; width: 13px; height: 13px" type="checkbox" name="checkList" class="checkList" value="'+ item.userid +'"></th></tr>';
 					$(".friendList").append(id_row);
 				});
@@ -830,7 +905,7 @@ $(function() {
 	+ " ~ " + eDate_sp[3]+ "/" + eDate_sp[1] + "/" + eDate_sp[2]);
 	
 	// 목표를 만든 사람일 경우 시작버튼, 참가한 사람일 경우 준비 버튼이 보이도록 한다.
-	if($("#host-id").text() == '${sessionScope.userid}') {
+	if($("#p1").text() == '${sessionScope.userid}') {
 		$("#readyBtn").hide();
 	} else $("#startBtn").hide();
 	
@@ -860,6 +935,21 @@ $(function() {
 	default:
 		console.log("swicth error");
 		break;
+	}
+	
+	// 초대받은 유저가 방에 입장했을 경우 그 유저의 ID를 추가한다.
+	if('${newUser.userId}' != "") {
+		for(var i=1; i<4; i++) {
+			if($("#p" + (i+1)).text() == "Empty") {
+				$("#p" + (i+1)).text('${newUser.userId}');
+				break;
+			}
+		}
+	}
+	
+	// 방장 이외에는 중간목표 및 세부목표 편집을 할 수 없다.
+	if('${sessionScope.userid}' !=  '${sessionScope.hostId}') {
+		$(".btn-group > input").attr("disabled", true);
 	}
 });
 	
@@ -905,15 +995,22 @@ $(function() {
 			<th><pre>   </pre></th>
 			<th><pre> 아이디</pre></th>
 		</tr>
-		<tr class="host">
+		<tr class="host" id="p1-tr">
 			<td></td>
 			<td id="host_img"><img src="/goal/resources/img/avatar-2-64.png"></td>
 			<td><pre>   </pre></td>
 			<td class="player-color">Not yet</td>
 			<td><pre>   </pre></td>
-			<td id="host-id" class="player-id">${sessionScope.userid}</td>
+			<c:choose>
+				<c:when test="${sessionScope.userid eq sessionScope.hostId}">
+					<td id="p1" class="player-id">${sessionScope.userid}</td>
+				</c:when>
+				<c:otherwise>
+					<td id="p1" class="player-id">${host}</td>
+				</c:otherwise>
+			</c:choose>
 		</tr>
-		<tr class="player2">
+		<tr class="player2" id="p2-tr">
 			<td id="p2_empty"></td>
 			<td id="p2_img"><img src="/goal/resources/img/avatar-2-64.png"></td>
 			<td></td>
@@ -921,7 +1018,7 @@ $(function() {
 			<td></td>
 			<td id="p2" class="player-id">Empty</td>
 		</tr>
-		<tr class="player3">
+		<tr class="player3" id="p3-tr">
 			<td id="p3_empty"></td>
 			<td id="p3_img"><img src="/goal/resources/img/avatar-2-64.png"></td>
 			<td></td>
@@ -929,7 +1026,7 @@ $(function() {
 			<td></td>
 			<td id="p3" class="player-id">Empty</td>
 		</tr>
-		<tr class="player4">
+		<tr class="player4" id="p4-tr">
 			<td id="p4_empty"></td>
 			<td id="p4_img"><img src="/goal/resources/img/avatar-2-64.png"></td>
 			<td></td>
@@ -1057,7 +1154,7 @@ $(function() {
 	<table>
 		<thead>
 			<tr>
-				<td colspan="5" class="search-form">
+				<td colspan="3" class="search-form">
 					<input type="text" id="search-id">
 					<input type="button" value="ID검색" id="searchBtn"><br>
 					<hr>
@@ -1065,8 +1162,6 @@ $(function() {
 			</tr>
 			<tr>
 				<th id="switch-th">친구</th>
-				<th><pre>     </pre></th>
-				<th>상태</th>
 				<th><pre>     </pre></th>
 				<th>초대여부</th>
 			</tr>

@@ -21,6 +21,7 @@
 		<typeAlias type="com.test.goal.vo.MainProgressVO" alias="MainProgressVO"/>
 		<typeAlias type="com.test.goal.vo.DayPlanVO" alias="DayPlanVO"/>
 		<typeAlias type="com.test.goal.vo.MemberListVO" alias="MemberListVO"/>
+		<typeAlias type="com.test.goal.vo.FindHostVO" alias="FindHostVO"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/memberMapper.xml" />

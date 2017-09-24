@@ -165,8 +165,7 @@
 					success: function(vo){
 						console.log(vo.userid);
 						location.href='/goal/createGoal/joinThatGoal?&id=' + vo.userid;
-					},
-					error: function() { alert("승인실패!!!!!!!!!!!!!!!!!!!!!!!!!"); }
+					}
 				});
 				break;
 			}

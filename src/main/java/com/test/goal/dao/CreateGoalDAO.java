@@ -1,11 +1,13 @@
 package com.test.goal.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.ui.Model;
 
 import com.test.goal.vo.BTMGoalVO;
 import com.test.goal.vo.BoardVO;
+import com.test.goal.vo.FindHostVO;
 import com.test.goal.vo.MainProgressVO;
 import com.test.goal.vo.MemberListVO;
 import com.test.goal.vo.MemberVO;
@@ -44,7 +46,11 @@ public interface CreateGoalDAO {
 
 	public void inputBtmGoal(BTMGoalVO vo); // 작성한 세부목표들을 입력한다.
 
-	
+	public String findThisGoalHost(FindHostVO host_vo); // 해당하는 방의 HOST 아이디를 불러온다.
+
+	public int updateColor(Map<String, String> map); // 사용자가 선택한 색상의 hex값을 테이블에 갱신한다.
+
+	public String getReadyFlag(Map<String, String> map); // 준비를 누른 사람이 이전에 레디를 했는지에 대한 여부를 불러온다.
 	
 	
 	

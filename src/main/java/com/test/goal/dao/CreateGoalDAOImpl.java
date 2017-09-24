@@ -1,6 +1,7 @@
 package com.test.goal.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 
 import com.test.goal.vo.BTMGoalVO;
 import com.test.goal.vo.BoardVO;
+import com.test.goal.vo.FindHostVO;
 import com.test.goal.vo.MainProgressVO;
 import com.test.goal.vo.MemberListVO;
 import com.test.goal.vo.MemberVO;
@@ -132,6 +134,8 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 	@Override
 	public MemberListVO joinThatGoal(TopGoalVO vo) {
 		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		int goalNum = mapper.findNewTgoalNum();
+		vo.settGoalNum(goalNum);
 		mapper.inputUserTgoal(vo);
 		mapper.inputUserMemberList(vo);
 		return mapper.findUserNowInput(vo);
@@ -157,5 +161,30 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 	public void inputBtmGoal(BTMGoalVO vo) {
 		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
 		mapper.inputBtmGoal(vo);
+	}
+
+	// 해당하는 방의 HOST 아이디를 불러온다.
+	@Override
+	public String findThisGoalHost(FindHostVO host_vo) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		int newTgoalNum = mapper.findMyTgoalNum(host_vo.getMyId());
+		host_vo.settGoalNum(newTgoalNum);
+		return mapper.findThisGoalHost(host_vo);
+	}
+
+	// 사용자가 선택한 색상의 hex값을 테이블에 갱신한다.
+	@Override
+	public int updateColor(Map<String, String> map) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		return mapper.updateColor(map);
+	}
+
+	// 준비를 누른 사람이 이전에 레디를 했는지에 대한 여부를 불러온다.
+	@Override
+	public String getReadyFlag(Map<String, String> map) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		int progressNum = mapper.getProgressNum(Integer.parseInt(map.get("tGoalNum").toString()));
+		map.put("progressNum", String.valueOf(progressNum));
+		return mapper.getReadyFlag(map);
 	}
 }
