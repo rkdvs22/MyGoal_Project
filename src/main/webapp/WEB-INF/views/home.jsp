@@ -80,20 +80,25 @@
       function drawVisualization() {
         // Some raw data (not necessarily accurate)
         var data = google.visualization.arrayToDataTable([
-         ['Month', 'Bolivia', 'Ecuador', 'Madagascar', 'Papua New Guinea', 'Rwanda', 'Average'],
-         ['2004/05',  165,      938,         522,             998,           450,      614.6],
-         ['2005/06',  135,      1120,        599,             1268,          288,      682],
-         ['2006/07',  157,      1167,        587,             807,           397,      623],
-         ['2007/08',  139,      1110,        615,             968,           215,      609.4],
-         ['2008/09',  136,      691,         629,             1026,          366,      569.6]
+         ['세부목표명', '달성률', '달성률변화'],
+         ['달리기',  15, 15],
+         ['점프',  53, 53],
+         ['팔굽혀펴기', 81, 81],
+         ['스트레칭',  60, 60],
       ]);
 
     var options = {
-      title : 'Monthly Coffee Production by Country',
-      vAxis: {title: 'Cups'},
-      hAxis: {title: 'Month'},
+      title : '선택한 중간목표: 온몸운동하기',
+      vAxis: {title: '달성률(%)',viewWindow:{
+	          max:100,
+	          min:0
+	        }},
+      hAxis: {title: '세부목표명'},
       seriesType: 'bars',
-      series: {5: {type: 'line'}}
+      series: {
+    	  0: {color: '#FFB900'},	    	  
+    	  1: {type: 'line',color: '#e2431e'}
+      	},
     };
 
     var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
@@ -109,7 +114,6 @@
 	                <div class="chart-statistic-box">
 	                    <div class="chart-txt">
 	                        <div class="chart-txt-top">
-	                        	 <br><br>
 	                            <p><span class="number">Achieve Chart</span></p>
 	                            <br>
 	                            <p class="caption">- 아래 선택 -</p>
@@ -117,11 +121,31 @@
 	                        <table class="tbl-data">
 	                            <tr>
 	                                <td class="price color-purple">목표선택</td>
-	                                <td>드롭박스</td>
+	                            </tr>
+	                            <tr>    
+	                                <td>
+	                                <select name = "topGoalSelected" style="width: 150px;">
+	                                	<option value = 0 selected="selected">-전체목표를 선택-</option>
+	                                	<option value = "tGoalNum1">다이어트하기</option>
+	                                	<option value = "tGoalNum2">정처기 1달</option>
+	                                	<option value = "tGoalNum3">전국 일주하기</option>
+	                                	<option value = "tGoalNum4">책 10권읽기</option>
+	                                </select>
+	                                </td>
 	                            </tr>
 	                            <tr>
 	                                <td class="price color-yellow">중간목표</td>
-	                                <td>드롭박스</td>
+	                            </tr>
+	                            <tr>    
+	                                <td>
+	                                <select name = "btmGoalSelected" style="width: 150px;"s>
+	                                	<option value = 0 selected="selected">-중간목표를 선택-</option>
+	                                	<option value = "bGoalNum1">온몸운동하기</option>
+	                                	<option value = "bGoalNum2">지구력기르기</option>
+	                                	<option value = "bGoalNum3">근력향상프로젝트</option>
+	                                	<option value = "bGoalNum4">정신력 무장</option>
+	                                </select>
+	                                </td>
 	                            </tr>
 	                        </table>
 	                    </div>
