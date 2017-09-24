@@ -28,7 +28,7 @@
 	<link rel="stylesheet" href="/goal/resources/css/separate/pages/widgets.min.css">
 	<link rel="stylesheet" href="/goal/resources/css/lib/font-awesome/font-awesome.min.css">
 	<link rel="stylesheet" href="/goal/resources/css/lib/bootstrap/bootstrap.min.css">
-	<link rel="stylesheet" href="/goal/resources/css/main.css">
+	<link rel="stylesheet" href="/goal/resources/css/main.css?version=1">
 	
 	<script src="/goal/resources/js/lib/jquery/jquery.min.js"></script>
 	<script src="/goal/resources/js/lib/tether/tether.min.js"></script>
@@ -45,9 +45,62 @@
 
 	<%@ include file="menu.jsp" %>
 
-	<script>
 	
-	</script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['Work',     11],
+          ['Eat',      2],
+          ['Commute',  2],
+          ['Watch TV', 2],
+          ['Sleep',    7]
+        ]);
+
+        var options = {
+          
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+    
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawVisualization);
+
+      function drawVisualization() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+         ['Month', 'Bolivia', 'Ecuador', 'Madagascar', 'Papua New Guinea', 'Rwanda', 'Average'],
+         ['2004/05',  165,      938,         522,             998,           450,      614.6],
+         ['2005/06',  135,      1120,        599,             1268,          288,      682],
+         ['2006/07',  157,      1167,        587,             807,           397,      623],
+         ['2007/08',  139,      1110,        615,             968,           215,      609.4],
+         ['2008/09',  136,      691,         629,             1026,          366,      569.6]
+      ]);
+
+    var options = {
+      title : 'Monthly Coffee Production by Country',
+      vAxis: {title: 'Cups'},
+      hAxis: {title: 'Month'},
+      seriesType: 'bars',
+      series: {5: {type: 'line'}}
+    };
+
+    var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+  }
+    </script>
+
 
 <div class="page-content">
 	    <div class="container-fluid">
@@ -72,8 +125,7 @@
 	                            </tr>
 	                        </table>
 	                    </div>
-	                    <div class="chart-container">
-	                       
+	                    <div id="chart_div" class="chart-container"  style="width: 450px; height: 316px;">
 	                    </div>
 	                </div><!--.chart-statistic-box-->
 	            </div><!--.col-->
@@ -91,7 +143,7 @@
 	                    </div><!--.col-->
 	                    
 	                     <div class="col-sm-6">
-	                        <article class="statistic-box green">
+	                        <article class="statistic-box blue">
 	                            <div>
 	                                <div class="number">29</div>
 	                                <div class="caption"><div>달성</div></div>
@@ -101,9 +153,12 @@
 	                        </article>
 	                    </div><!--.col-->
 	                    
-	                    <div class="col-sm-6">
-						</div>
-							                    
+	                      <div class="col-sm-6">
+	                            <div>
+	                               <div class="statistic-box" id="piechart" style="width: 320px; height: 145px;"></div>
+	                            </div>
+	                    </div>
+	                    
 	                    <div class="col-sm-6">
 	                        <article class="statistic-box yellow">
 	                            <div>

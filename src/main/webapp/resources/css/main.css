@@ -12006,9 +12006,9 @@ body.modal-open {
 	background-image: url(../img/statistic-box-red.png)
 }
 
-.statistic-box.purple {
-	background-color: #ac6bec;
-	background-image: url(../img/statistic-box-purple.png)
+.statistic-box.blue {
+	background-color: #oac9FF;
+	background-image: url(../img/statistic-box-blue.png)
 }
 
 .statistic-box.yellow {

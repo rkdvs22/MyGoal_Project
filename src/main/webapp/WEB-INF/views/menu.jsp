@@ -27,7 +27,7 @@
 	<link rel="stylesheet" href="/goal/resources/css/separate/pages/widgets.min.css">
 	<link rel="stylesheet" href="/goal/resources/css/lib/font-awesome/font-awesome.min.css">
 	<link rel="stylesheet" href="/goal/resources/css/lib/bootstrap/bootstrap.min.css">
-	<link rel="stylesheet" href="/goal/resources/css/main.css?version=6">
+	<link rel="stylesheet" href="/goal/resources/css/main.css?version=8">
 	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<script src="/goal/resources/js/lib/tether/tether.min.js"></script>
 	<script src="/goal/resources/js/lib/bootstrap/bootstrap.min.js"></script>
