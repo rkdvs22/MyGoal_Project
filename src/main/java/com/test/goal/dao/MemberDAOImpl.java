@@ -21,6 +21,7 @@ public class MemberDAOImpl implements MemberDAO {
 	// 회원가입
 	@Override
 	public int join(MemberVO vo) {
+		System.out.println(vo.toString());
 		MemberMapper mapper = sqlsession.getMapper(MemberMapper.class);
 		return mapper.join(vo);
 	}

@@ -30,7 +30,6 @@
    // 친구삭제
    function test(frd) {
       var result = confirm("정말로 삭제하시겠습니까?");
-      //var frd = $("#deleteFriend").attr("value");
       if(result) {
          $.ajax({
             url:"/goal/friend/deleteFriend?frd="+frd,
@@ -45,7 +44,6 @@
       }
    }
       
-   //});
 
 
 </script>
@@ -77,7 +75,7 @@
                            <img src="/goal/resources/img/photo-184-1.jpg" alt="">
                         </div>
                         <div class="card-user-name">${frd.frdid}</div>
-                        <a href="#"><i class="font-icon font-icon-mail"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="#" onclick="mail('${frd.frdid}')"><i class="font-icon font-icon-mail"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <a href="#" onclick="test('${frd.frdid}')"><i class="font-icon font-icon-trash" id="deleteFriend"></i></a>
                      </article><!--.card-user-->
                   </div>

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.test.goal.vo.BoardVO;
+import com.test.goal.vo.MemberListVO;
 import com.test.goal.vo.TopGoalVO;
 
 @Repository
@@ -44,6 +45,35 @@ public class BoardDAOImpl implements BoardDAO {
 	public BoardVO getTopGoalNum() {
 		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
 		return mapper.getTopGoalNum();
+	}
+
+	// TopGoal 테이블에서 tGoalNum을 이용 progressNum 가져옴
+	@Override
+	public TopGoalVO getGoalProgressNum() {
+		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
+		return mapper.getGoalProgressNum();
+	}
+
+	//TopGoal 테이블의 progressNum을 이용하여 MemberList 테이블의 progressNum 가져옴
+	@Override
+	public MemberListVO getMemberProgressNum() {
+		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
+		return mapper.getMemberProgressNum();
+	}
+
+	// MemberList 테이블에 user에 대한 데이터 입력
+	@Override
+	public void inputMemberList(MemberListVO lvo) {
+		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
+		mapper.inputMemberList(lvo);
+	}
+
+	// TopGoal 테이블에 user에 대한 데이터 입력
+	@Override
+	public void inputTopGoal(TopGoalVO tvo) {
+		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
+		MemberListVO lvo = mapper.getMemberProgressNum();
+		mapper.inputTopGoal(lvo);
 	}
 
 

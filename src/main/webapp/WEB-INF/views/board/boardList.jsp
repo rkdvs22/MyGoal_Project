@@ -98,8 +98,8 @@
 							<i class="font-icon font-icon-heart" data-like="false" data-boardnum="${list.boardnum}" id="favoriteNum">${list.favorite}</i>
 						</a>
 					</div>
-						<%-- <input type="hidden" name="tGoalNum" value="${tGoalNum}">
-						<input type="hidden" name="boardNum" value="${boardNum}"> --%>
+						<input type="hidden" name="tGoalNum" value="${tGoalNum}">
+						<input type="hidden" name="boardNum" value="${boardNum}">
 				</article><!--.card-typical-->
 			</div><!--.card-grid-col-->
 		</div><!--.card-grid-->
@@ -162,7 +162,6 @@
 		
 		// 좋아요 (이미지 클릭시 숫자 증가)
 		function addFavorite(boardnum) {
-			//var result = confirm("좋아요");
 			var likeit=$("i[data-boardnum='"+boardnum+"']").attr("data-like");
 			
 			if(likeit=="false"){
@@ -180,9 +179,9 @@
 					});
 				}
 			}
-			else{
+			/* else{
 				alert("이미 좋아함");
-			}
+			} */
 		}
 		
 	</script>

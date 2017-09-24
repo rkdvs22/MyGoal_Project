@@ -8,7 +8,13 @@
 	
 	<!-- 회원가입 -->
 	<insert id="join" parameterType="MemberVO">
-		insert into Member values (#{userid}, #{password}, #{email}, #{tel1}, #{tel2}, #{tel3}, #{image})
+	<if test = "image!=null">
+		insert into Member values (#{userid,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{tel1,jdbcType=VARCHAR}, #{tel2,jdbcType=VARCHAR}, #{tel3,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR})
+	</if>
+	<if test = "image==null">
+		insert into Member values 
+		(#{userid,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{tel1,jdbcType=VARCHAR}, #{tel2,jdbcType=VARCHAR}, #{tel3,jdbcType=VARCHAR},null)
+	</if>	
 	</insert>
 	
 	<!-- 로그인 -->
@@ -20,7 +26,7 @@
 	<!-- 회원정보수정 -->
 	<update id="updateMember" parameterType="MemberVO">
 		update Member set password = #{password}, email = #{email}, tel1 = #{tel1}, tel2 = #{tel2}, tel3 = #{tel3}, image = #{image}
-			where userid = #{userid} 	
+			where userid = #{userid}
 	</update>
 	
 	<!-- ID/PWD 찾기 -->

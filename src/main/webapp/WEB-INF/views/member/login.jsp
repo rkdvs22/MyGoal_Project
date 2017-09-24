@@ -41,7 +41,7 @@
                         <input type="password" class="form-control" id="password" name="password" placeholder="Password"/>
                     </div>
                    <div class="form-group row">
-                    <button type="button" class="btn btn-rounded btn-success" id="btnLogin">LOGIN</button>
+                    <button type="submit" class="btn btn-rounded btn-success" id="btnLogin">LOGIN</button>
                     </div>
                     <p class="sign-note"><a href="/goal/member/findForm">ID/Password 찾기</a> / <a href="/goal">돌아가기</a></p>
                 </form>
@@ -78,9 +78,6 @@
         		url:"/goal/member/idMatchUp",
         		type: "get",
         		data: {"userid":$("#userid").val(), "password":$("#password").val()},
-        		success: function(result) {
-        			$("#fm").submit();
-        		},
         		error: function(result) {
         			result.preventDefault();
         			swal({

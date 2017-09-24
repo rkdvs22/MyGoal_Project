@@ -18,6 +18,12 @@ public interface BoardService {
 
 	public BoardVO getTopGoalNum(); // Board 테이블에서 가장 최신화된 tGoalNum, userid을 가져옴
 
-	//public void inputMemberList(MemberListVO mlvo);
+	public TopGoalVO getGoalProgressNum(); // TopGoal 테이블에서 tGoalNum을 이용 progressNum 알아오기
+	
+	public MemberListVO getMemberProgressNum(); // TopGoal 테이블의 progressNum을 이용하여 MemberList 테이블의 progressNum 가져옴
 
+	public void inputMemberList(MemberListVO lvo); // MemberList 테이블에 user에 대한 데이터 입력
+
+	public void inputTopGoal(TopGoalVO tvo); // TopGoal 테이블에 user에 대한 데이터 입력
+	
 }

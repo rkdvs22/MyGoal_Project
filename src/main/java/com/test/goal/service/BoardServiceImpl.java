@@ -48,10 +48,30 @@ public class BoardServiceImpl implements BoardService {
 		return dao.getTopGoalNum();
 	}
 
-	/*@Override
-	public void inputMemberList(MemberListVO mlvo) {
-		
-	}*/
+	// TopGoal 테이블에서 tGoalNum을 이용 progressNum 가져옴
+	@Override
+	public TopGoalVO getGoalProgressNum() {
+		return dao.getGoalProgressNum();
+	}
+
+	//TopGoal 테이블의 progressNum을 이용하여 MemberList 테이블의 progressNum 가져옴
+	@Override
+	public MemberListVO getMemberProgressNum() {
+		return dao.getMemberProgressNum();
+	}
+
+	// MemberList 테이블에 user에 대한 데이터 입력
+	@Override
+	public void inputMemberList(MemberListVO lvo) {
+		dao.inputMemberList(lvo);
+	}
+
+	// TopGoal 테이블에 user에 대한 데이터 입력
+	@Override
+	public void inputTopGoal(TopGoalVO tvo) {
+		dao.inputTopGoal(tvo);
+	}
+
 
 	
 	

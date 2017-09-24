@@ -56,14 +56,28 @@ public class BoardController {
 	
 	// 마방진페이지로 이동
 	@RequestMapping(value = "toMsquare", method = RequestMethod.GET)
-	public String toMsquare(BoardVO bvo, TopGoalVO tvo, RedirectAttributes rttr) {
+	public String toMsquare(BoardVO bvo, TopGoalVO tvo, MemberListVO lvo, Model model) {
 		int tGoalNum = service.getTopGoalNum().gettGoalNum();
 		bvo.settGoalNum(tGoalNum);
 
+		int progressNum = service.getGoalProgressNum().getProgressNum();
+		tvo.setProgressNum(progressNum);
+		
+		/*int memberProgressNum = service.getMemberProgressNum().getProgressNum();
+		lvo.setProgressNum(memberProgressNum);*/
+		inputTopGoal(tvo);
+		//model.addAttribute("inputTopGoal", service.inputTopGoal(tvo));
+		
 		return "/createGoal/MGoalSquareForm";
 	}
 	
-	
-	
-	
+	// TopGoal 테이블에 user에 대한 데이터 입력
+	public void inputTopGoal(TopGoalVO tvo) {
+		TopGoalVO vo = new TopGoalVO();
+		vo.settGoalNum(tvo.gettGoalNum());
+		vo.setUserid(tvo.getUserid());
+		vo.setProgressNum(tvo.getProgressNum());
+		service.inputTopGoal(tvo);
+	}
+		
 }

@@ -1,6 +1,7 @@
 package com.test.goal.controller;
 
 
+import java.nio.file.Files;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -69,10 +70,18 @@ public class MemberController {
 		return "/member/login";
 	}
 	
-	// 중복확인
+	// ID 중복확인
 	@RequestMapping(value = "idCheck", method = RequestMethod.POST)
 	@ResponseBody
 	public boolean idCheck(MemberVO vo) {
+		if(dao.login(vo) == null) return false;
+		return true;
+	}
+	
+	// 이메일 중복확인
+	@RequestMapping(value = "emailCheck", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean emailCheck(MemberVO vo) {
 		if(dao.login(vo) == null) return false;
 		return true;
 	}
@@ -86,13 +95,33 @@ public class MemberController {
 	
 	// 회원정보수정 화면전환
 	@RequestMapping(value = "updateMemberForm", method = RequestMethod.GET)
-	public String updateMemberForm(String userid, Model model) {
+	public String updateMemberForm(HttpSession session, Model model) {
+		String userid=(String)session.getAttribute("userid");
+		System.out.println("나와라"+userid);
 		model.addAttribute("vo", dao.memberList(userid)); // 해당 user에 대한 정보
 		return "/member/updateMember";
 	}
 	
 	// 회원정보수정 기능
 	@RequestMapping(value = "updateMember", method = RequestMethod.POST)
+	public String updateMember(MemberVO vo, Model model, MultipartFile uploadFile, HttpSession session) {
+		//String userid = (String) session.getAttribute("userid");
+		String oldImage = memberList(vo.getImage());
+		
+		if(!uploadFile.isEmpty()) {
+			String originalFileName = uploadFile.getOriginalFilename();
+			String image = FileService.saveFile(uploadFile);
+			
+			vo.setImage(image);
+		} else if(dao.updateMember(vo) != 1) {
+			FileService.deleteFile(vo.getImage());
+		} else if(!uploadFile.isEmpty()) FileService.deleteFile(oldImage);
+		
+		model.addAttribute("result", dao.updateMember(vo));
+		model.addAttribute("userid", vo.getUserid());
+		return "forward:/member/updateMember";
+	}
+	/*@RequestMapping(value = "updateMember", method = RequestMethod.POST)
 	public boolean updateMember(MemberVO vo, Model model, MultipartFile uploadFile, HttpSession session) {
 		String oldImage = memberList(vo.getImage());
 		if(!uploadFile.isEmpty()) {
@@ -111,7 +140,7 @@ public class MemberController {
 		
 		return true;
 		//return "forward:/member/updateMember";
-	}
+	}*/
 	
 	// 회원목록
 	@RequestMapping(value = "memberList", method = RequestMethod.GET)
