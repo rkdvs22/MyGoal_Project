@@ -97,50 +97,32 @@ public class MemberController {
 	@RequestMapping(value = "updateMemberForm", method = RequestMethod.GET)
 	public String updateMemberForm(HttpSession session, Model model) {
 		String userid=(String)session.getAttribute("userid");
-		System.out.println("나와라"+userid);
-		model.addAttribute("vo", dao.memberList(userid)); // 해당 user에 대한 정보
+		MemberVO vo = dao.memberList(userid);
+		model.addAttribute("vo", vo); // 해당 user에 대한 정보
 		return "/member/updateMember";
 	}
 	
 	// 회원정보수정 기능
 	@RequestMapping(value = "updateMember", method = RequestMethod.POST)
-	public String updateMember(MemberVO vo, Model model, MultipartFile uploadFile, HttpSession session) {
+	public String updateMember(MemberVO vo, Model model, MultipartFile uploadFile) {
 		//String userid = (String) session.getAttribute("userid");
-		String oldImage = memberList(vo.getImage());
-		
+		//String oldImage = vo.getImage();
+		System.out.println("나와랏2:" +vo.toString());
 		if(!uploadFile.isEmpty()) {
 			String originalFileName = uploadFile.getOriginalFilename();
 			String image = FileService.saveFile(uploadFile);
 			
 			vo.setImage(image);
-		} else if(dao.updateMember(vo) != 1) {
+		}
+		if(dao.updateMember(vo) != 1) {
 			FileService.deleteFile(vo.getImage());
-		} else if(!uploadFile.isEmpty()) FileService.deleteFile(oldImage);
+		}
+		//if(!uploadFile.isEmpty()) FileService.deleteFile(oldImage);
 		
 		model.addAttribute("result", dao.updateMember(vo));
-		model.addAttribute("userid", vo.getUserid());
-		return "forward:/member/updateMember";
+		//model.addAttribute("userid", userid);
+		return "redirect:/";
 	}
-	/*@RequestMapping(value = "updateMember", method = RequestMethod.POST)
-	public boolean updateMember(MemberVO vo, Model model, MultipartFile uploadFile, HttpSession session) {
-		String oldImage = memberList(vo.getImage());
-		if(!uploadFile.isEmpty()) {
-			String originalFileName = uploadFile.getOriginalFilename();
-			String image = FileService.saveFile(uploadFile);
-			
-			vo.setImage(image);
-		} if(dao.updateMember(vo) != 1) {
-			FileService.deleteFile(vo.getImage());
-			return false;
-		} if(!uploadFile.isEmpty()) FileService.deleteFile(oldImage);
-		
-		String userid = (String) session.getAttribute("userid");
-		model.addAttribute("result", dao.updateMember(vo));
-		model.addAttribute("userid", vo.getUserid());
-		
-		return true;
-		//return "forward:/member/updateMember";
-	}*/
 	
 	// 회원목록
 	@RequestMapping(value = "memberList", method = RequestMethod.GET)

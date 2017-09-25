@@ -29,10 +29,10 @@
  <div class="page-center">
         <div class="page-center-in">
             <div class="container-fluid">
-                <form class="sign-box" action="updateMember" name="fm" method="post" enctype="multipart/form-data">
+                <form class="sign-box" action="/goal/member/updateMember" name="fm" method="post" enctype="multipart/form-data">
                     <header class="sign-title">Update Member</header>
                     <div class="form-group">
-                        <input type="text" class="form-control" value="${userid}" id="userid" name="userid" placeholder="ID" readonly="readonly"/>
+                        <input type="text" class="form-control" value="${vo.userid}" id="userid" name="userid" placeholder="ID" readonly="readonly"/>
                     </div>
                     <div class="form-group">
                         <input type="password" class="form-control" id="pwd" name="password" placeholder="Password"/>
@@ -56,13 +56,16 @@
                     </div>
                     <div>
                     <c:if test="${vo.image != null}">
-						${vo.image}
+						<input type="file" multiple accept='image/*' id="imgUpload" name="uploadFile" value="${vo.image}">
+                    	<img onclick="document.getElementById('imgUpload').click()" id="showImg" style="width:100px ; height:120px;">
                     </c:if>
-                    	<input type="file" multiple accept='image/*' id="imgUpload" name="uploadFile"> <img onclick="document.getElementById('imgUpload').click()" id="showImg" style="width:100px ; height:120px;">
+                    <c:if test="${vo.image == null}">
+                    	<input type="file" multiple accept='image/*' id="imgUpload" name="uploadFile">
+                    	<img onclick="document.getElementById('imgUpload').click()" id="showImg" style="width:100px ; height:120px;">
+                    </c:if>
                     </div>
-                    <button type="button" class="btn btn-rounded btn-success sign-up" onclick="memberUpdate()">Update</button>
+                    <input type="button" class="btn btn-rounded btn-success sign-up" value="Update" onclick="memberUpdate()">
                     <p class="sign-note"><a href="/goal">Main으로 돌아가기</a></p>
-                    <input type="hidden" name="userid" value="${userid}">
                 </form>
             </div>
         </div>
@@ -96,15 +99,17 @@
         });
     
      // 수정 확인   
-    function memberUpdate() {
+   function memberUpdate() {
+    	
+    	 var result;
     	if(result) {
     		result.preventDefault();
 			swal({
 				title: "Are you sure?",
-				text: "수정하시겠습니까?"
+				text: "수정 하시겠습니까?"
 			});
-			document.fm.submit();
     	}
+    	document.fm.submit(); 
     }
     
     // 이미지 업로드, 미리보기
