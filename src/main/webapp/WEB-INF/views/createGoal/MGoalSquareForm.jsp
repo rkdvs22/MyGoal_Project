@@ -312,6 +312,7 @@ function catchbBtnNum(bBtn_num) {
 var click_flag = true;
 
 var cancel_flag = false;
+var mGoal_modals = "";
 
 $(function() {
 	
@@ -359,8 +360,9 @@ $(function() {
 					}
 				}
 				
-				// 사용자가 작성한 중간목표를 저장해 무결성 검사에 이용한다.
-				var mGoal_modals = {
+				// 사용자가 작성한 중간목표를 저장한다.
+				mGoal_modals = "";
+				mGoal_modals = {
 					mGoal: $("#Mgoal").val(),
 					sDate: $("#startMpicker").val(),
 					eDate: $("#endMpicker").val()
@@ -414,7 +416,6 @@ $(function() {
 				midGoal.mGoal = $("#Mgoal").val();
 				midGoal.sDate = $("#startMpicker").val();
 				midGoal.eDate = $("#endMpicker").val();
-				var test = JSON.stringify(midGoal);
 				$.ajaxSettings.traditional = true;
 				
 				$.ajax ({
@@ -433,6 +434,7 @@ $(function() {
 				});
 				
 				if(click_flag == true) {
+					inputMbtnValue(bBtn_num);
 				} else {
 					updateMbtnValue(bBtn_num);
 				}
@@ -668,16 +670,16 @@ $(function() {
 	
 	// 해당하는 버튼의 value값을 사용자가 입력한 중간목표로 수정하는 함수.
 	function updateMbtnValue(bBtn_num) {
-		$("#mBtn"+bBtn_num).attr("value", mGoal_modals[bBtn_num-1].mGoal);
+		$("#mBtn"+bBtn_num).attr("value", mGoal_modals.mGoal);
 	}
 	
 	// 중간목표 및 세부목표를 수정할 때 이전에 저장했던 값을 보여주는 함수.
 	function updateGoals(bBtn_num) {
-		$("#Mgoal").val(mGoal_modals[bBtn_num-1].mGoal);
-		$("#startMpicker").val(mGoal_modals[bBtn_num-1].sDate);
-		$("#endMpicker").val(mGoal_modals[bBtn_num-1].eDate);
+		$("#Mgoal").val(mGoal_modals.mGoal);
+		$("#startMpicker").val(mGoal_modals.sDate);
+		$("#endMpicker").val(mGoal_modals.eDate);
 		
-		var tempValue = new Date(mGoal_modals[bBtn_num-1].eDate) - new Date(mGoal_modals[bBtn_num-1].sDate);
+		var tempValue = new Date(mGoal_modals.eDate) - new Date(mGoal_modals.sDate);
 		var tempSecond = tempValue / 1000;
 		var tempMin = tempSecond / 60;
 		var tempHour = tempMin / 60;
@@ -690,7 +692,6 @@ $(function() {
 		for(var i=0; i<countArray[1]; i++) {
 			var bGoal = bGoal_modals[i].bGoal;
 			var dayArray = /\d/.exec(bGoal_modals[i].bGoalDay);
-			console.log(dayArray);
 			$("#b_goal" + (i+1)).val(bGoal);
 			$("#b_progressday" + (i+1)).val(dayArray[0]);
 		}
@@ -709,7 +710,6 @@ $(function() {
 		resizable: false,
 		buttons:{
 			"확인":function () {
-				console.log("컬러 확인");
 				// 사용자가 선택한 색상의 hex값을 테이블에 갱신한다.
 				var id = '${sessionScope.userid}';
 				for(var i=0; i<4; i++) {
@@ -820,7 +820,7 @@ $(function() {
 						// 사용자가 체크박스에서 선택한 사람에게 초대 메시지를 보낸다.
 						jQuery.ajaxSettings.traditional = true;
 						$.ajax ({
-							url: "writeInviteMsg",
+							url: "/goal/createGoal/writeInviteMsg",
 							type: "post",
 							data: {"nameList":nameList},
 							success: function(result) {
@@ -949,8 +949,18 @@ $(function() {
 	
 	// 방장 이외에는 중간목표 및 세부목표 편집을 할 수 없다.
 	if('${sessionScope.userid}' !=  '${sessionScope.hostId}') {
-		$(".btn-group > input").attr("disabled", true);
+		$("#dialog > div").attr("readonly", true);
 	}
+	
+	// 시작버튼 클릭 시 참가한 사용자들이 모든 준비를 마쳤는지 확인하고 목표를 시작한다.
+	$("#startBtn").click(function() {
+		
+		// 무결성 처리는 연동이 끝난 후에 진행 ============================================
+		var startConfirm = confirm("목표를 시작 하시겠습니까?");
+		if(startConfirm) {
+			
+		}
+	});
 });
 	
 </script>
@@ -1003,6 +1013,9 @@ $(function() {
 			<td><pre>   </pre></td>
 			<c:choose>
 				<c:when test="${sessionScope.userid eq sessionScope.hostId}">
+					<td id="p1" class="player-id">${sessionScope.userid}</td>
+				</c:when>
+				<c:when test="${sessionScope.userid eq b_info.userid}">
 					<td id="p1" class="player-id">${sessionScope.userid}</td>
 				</c:when>
 				<c:otherwise>

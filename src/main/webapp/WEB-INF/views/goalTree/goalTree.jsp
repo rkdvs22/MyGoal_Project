@@ -266,8 +266,7 @@
 	
 	//해당 마방진으로 이동
 	function goSquare(goalNum) {
-		location.href = "http://www.daum.net";
-		//location.href = "goal/mindMap/square?goalNum=" + goalNum;
+		location.href = "/goal/goalTree/treeToGoal?goalNum=" + goalNum;
 	}
 	
 	//최상위 목표 타이틀 출력

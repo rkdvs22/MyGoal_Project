@@ -200,4 +200,32 @@
 		SELECT MAX(progressnum) as progressnum FROM topgoal
 		WHERE tgoalnum = #{tGoalNum}
 	</select>
+	
+	<!-- GoalTree에서 선택한 목표 게시글에 대한 정보를 받아온다 -->
+	<select id="getBoardFromTree" parameterType="hashmap" resultType="BoardVO">
+		SELECT boardNum, b.userid, b.tGoalNum, t.tStartDate as startDate, t.tEndDate as endDate, t.tGoalTitle, m.maxmember
+		FROM board b, topgoal t, mainprogress m
+		WHERE t.tGoalNum = b.tGoalNum
+		AND t.progressnum = m.progressnum
+		AND t.tGoalNum = #{goalNum}
+		AND t.userid = #{id}
+	</select>
+	
+	<!-- GoalTree에서 선택한 목표에 대한 MainProgress 테이블의 데이터를 반환한다. -->
+	<select id="getMainProgress" parameterType="int" resultType="MainProgressVO">
+		SELECT * FROM mainprogress
+		WHERE progressnum = #{progressNum}
+	</select>
+	
+	<!-- GoalTree에서 선택한 TopGoal 테이블의 데이터들을 반환한다. -->
+	<select id="getTopGoalFromTree" parameterType="hashmap" resultType="TopGoalVO">
+		SELECT * FROM topgoal
+		WHERE progressnum = #{progressNum}
+	</select>
+	
+	<!-- GoalTree에서 선택한 목표에 따라 MemberList 테이블의 데이터들을 반환한다. -->
+	<select id="getMemberList" parameterType="int" resultType="MemberListVO">
+		SELECT * FROM memberlist
+		WHERE progressnum = #{progressNum}
+	</select>
 </mapper>

@@ -187,4 +187,22 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 		map.put("progressNum", String.valueOf(progressNum));
 		return mapper.getReadyFlag(map);
 	}
+
+	// GoalTree에서 목표를 선택할 시 그에 맞는 마방진으로 이동한다.
+	@Override
+	public Map<String, Object> treeToGoal(Map<String, Object> map) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		BoardVO board_vo = mapper.getBoardFromTree(map);
+		System.out.println(board_vo);
+		int progressNum = mapper.getProgressNum((int)map.get("goalNum"));
+		ArrayList<TopGoalVO> tGoal_list = mapper.getTopGoalFromTree(progressNum);
+		MainProgressVO progress_vo = mapper.getMainProgress(progressNum);
+		ArrayList<MemberListVO> member_list = mapper.getMemberList(progressNum);
+		
+		map.put("b_info", board_vo);
+		map.put("tGoal_list", tGoal_list);
+		map.put("progress_info", progress_vo);
+		map.put("member_list", member_list);
+		return map;
+	}
 }
