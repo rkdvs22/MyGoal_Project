@@ -12012,11 +12012,13 @@ body.modal-open {
 }
 
 .statistic-box.yellow {
+	width:665px !important;
 	background-color: #fdad2a;
 	background-image: url(../img/statistic-box-yellow.png)
 }
 
 .statistic-box.green {
+	width:500px;
 	background-color: #46c35f;
 	background-image: url(../img/statistic-box-green.png)
 }

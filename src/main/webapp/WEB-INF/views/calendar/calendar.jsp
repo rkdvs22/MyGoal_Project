@@ -237,7 +237,6 @@
 				  getStarTime = startTime;
 				  getEndTime = endTime;
 			      
-			     
 				       var fn = $('#'+title).html();
 				       var ln = $('#'+startTime).html();
 				       var mn = $('#'+endTime).html();

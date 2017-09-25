@@ -44,4 +44,32 @@
 		select * from Member where userid = #{userid} and password = #{password}
 	</select>
 	
+	<select id = "getTotalNum" parameterType="string" resultType="int">
+		select count(tGoalNum) from topGoal where userid = #{userid}
+	</select>
+	
+	<select id = "getClearNum" parameterType="string" resultType="int">
+		select count(tGoalNum) from topGoal where userid = #{userid} and tclear = 'Y'
+	</select>
+	
+	<select id = "getFailNum" parameterType="string" resultType="int">
+		select count(tGoalNum) from topGoal where userid = #{userid} and tclear = 'N'
+	</select>
+	
+	<select id = "getTopGoalList" parameterType="string" resultType="TopGoalVO">
+		select tGoalTitle,tGoalNum from TopGoal where userid = #{userid} and
+	    to_date(to_char(sysdate,'yyyy/mm/dd'),'yyyy/mm/dd') &gt; to_date(to_char(tendDate,'yyyy/mm/dd'),'yyyy/mm/dd')
+	</select>
+	
+	<select id = "getMGoalList" parameterType="int" resultType="MidGoalVO">
+		select mGoalTitle,mGoalNum from MidGoal where tGoalNum = #{tGoalNum}
+	</select>
+	
+	<select id = "getBTMGoalList" parameterType="int" resultType="BTMGoalVO">
+		select b.bGoalTitle as "bGoalTitle",d.achieve as "achieve" from BTMGoal b inner join BTMRecord t 
+		on b.bGoalNum = t.bGoalNum inner join (select sum(achieve) as achieve, btmRecordNum from dayRecord group by btmRecordNum) d 
+		on t.bRecordNum = d.BTMRecordNum 
+		where b.mGoalNum = #{mGoalNum}
+	</select>
+	
 </mapper>

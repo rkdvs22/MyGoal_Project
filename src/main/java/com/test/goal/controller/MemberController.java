@@ -2,8 +2,10 @@ package com.test.goal.controller;
 
 
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,7 +24,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.test.goal.dao.MemberDAO;
 import com.test.goal.util.FileService;
 import com.test.goal.util.Mail;
+import com.test.goal.vo.BTMGoalVO;
 import com.test.goal.vo.MemberVO;
+import com.test.goal.vo.MidGoalVO;
 import com.test.goal.vo.MyFriendVO;
 
 @Controller
@@ -65,6 +70,26 @@ public class MemberController {
 		MemberVO result = dao.login(vo);
 		if(result != null) {
 			session.setAttribute("userid", vo.getUserid());
+			
+			//여기서부터 로직처리
+			
+			session.setAttribute("totalNum", "");
+			session.setAttribute("clearNum", "");
+			session.setAttribute("failNum", "");
+			session.setAttribute("topGoalList", "");
+			
+			int totalNum = dao.getTotalNum((String)session.getAttribute("userid"));
+			int clearNum = dao.getClearNum((String)session.getAttribute("userid"));
+			int failNum = dao.getFailNum((String)session.getAttribute("userid"));
+			
+			ArrayList<MidGoalVO> topGoalList  = dao.getTopGoalList((String)session.getAttribute("userid"));
+			
+			session.setAttribute("totalNum", totalNum);
+			session.setAttribute("clearNum", clearNum);
+			session.setAttribute("failNum", failNum);
+			session.setAttribute("topGoalList", topGoalList);
+			
+			
 			return "redirect:/";
 		}
 		return "/member/login";
@@ -161,4 +186,15 @@ public class MemberController {
 		return true;
 	}
 	
+	@RequestMapping(value = "getMGoalList", method = RequestMethod.POST)
+	@ResponseBody
+	public ArrayList<MidGoalVO> getMGoalList(int tGoalNum) {
+		return dao.getMGoalList(tGoalNum);
+	}
+	
+	@RequestMapping(value = "getBTMGoalList", method = RequestMethod.POST)
+	@ResponseBody
+	public ArrayList<BTMGoalVO> getBTMGoalList(int mGoalNum) {
+		return dao.getBTMGoalList(mGoalNum);
+	}
 }

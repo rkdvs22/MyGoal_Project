@@ -5,7 +5,9 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.test.goal.vo.BTMGoalVO;
 import com.test.goal.vo.MemberVO;
+import com.test.goal.vo.MidGoalVO;
 import com.test.goal.vo.MyFriendVO;
 
 public interface MemberDAO {
@@ -22,6 +24,18 @@ public interface MemberDAO {
 	public MemberVO memberList(String userid); // 회원목록
 
 	public MemberVO idMatchUp(MemberVO vo); // ID, PWD 일치여부
-	
+
+	public int getTotalNum(String userid);
+
+	public int getClearNum(String userid);
+
+	public int getFailNum(String userid);
+
+	public ArrayList<MidGoalVO> getTopGoalList(String userid);
+
+	public ArrayList<MidGoalVO> getMGoalList(int tGoalNum);
+
+	public ArrayList<BTMGoalVO> getBTMGoalList(int mGoalNum);
+
 	
 }

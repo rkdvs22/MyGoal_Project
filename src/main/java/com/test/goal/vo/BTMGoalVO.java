@@ -13,6 +13,7 @@ public class BTMGoalVO {
 	private int period;
 	private String rankingId;
 	private int mGoalNum;
+	private int achieve;
 	
 	public BTMGoalVO() {
 	}
@@ -65,10 +66,18 @@ public class BTMGoalVO {
 		this.mGoalNum = mGoalNum;
 	}
 
+	public int getAchieve() {
+		return achieve;
+	}
+
+	public void setAchieve(int achieve) {
+		this.achieve = achieve;
+	}
+
 	@Override
 	public String toString() {
 		return "BTMGoalVO [bGoalNum=" + bGoalNum + ", bGoalTitle=" + bGoalTitle + ", bClear=" + bClear + ", period="
-				+ period + ", rankingId=" + rankingId + ", mGoalNum=" + mGoalNum + "]";
+				+ period + ", rankingId=" + rankingId + ", mGoalNum=" + mGoalNum + ", achieve=" + achieve + "]";
 	}
-	
+		
 }

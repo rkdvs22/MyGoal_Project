@@ -28,7 +28,7 @@
 	<link rel="stylesheet" href="/goal/resources/css/separate/pages/widgets.min.css">
 	<link rel="stylesheet" href="/goal/resources/css/lib/font-awesome/font-awesome.min.css">
 	<link rel="stylesheet" href="/goal/resources/css/lib/bootstrap/bootstrap.min.css">
-	<link rel="stylesheet" href="/goal/resources/css/main.css?version=1">
+	<link rel="stylesheet" href="/goal/resources/css/main.css?version=3">
 	
 	<script src="/goal/resources/js/lib/jquery/jquery.min.js"></script>
 	<script src="/goal/resources/js/lib/tether/tether.min.js"></script>
@@ -45,33 +45,6 @@
 
 	<%@ include file="menu.jsp" %>
 
-	
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Work',     11],
-          ['Eat',      2],
-          ['Commute',  2],
-          ['Watch TV', 2],
-          ['Sleep',    7]
-        ]);
-
-        var options = {
-          
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-        chart.draw(data, options);
-      }
-    </script>
-    
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
@@ -104,6 +77,49 @@
     var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
     chart.draw(data, options);
   }
+      
+      $(function(){
+    	  
+    	  $('#topGoalSelected').on("change",function(){
+    		  
+    			var tGoalNum = $( "#topGoalSelected option:selected" ).val();
+    			
+    			$.ajax({
+					url:"/goal/member/getMGoalList",
+					type:"POST",
+					data:{"tGoalNum":tGoalNum},
+					dataType:"json",
+					success:function(MidGoalList){
+						$(MidGoalList).each(function(index,item) {
+			    	  		$('#midGoalSelected').append(
+			              		'<option value ='+item.mGoalNum+'>'+item.mGoalTitle+'</option>'
+			              	);
+			       		 });
+					},
+					error: function(){
+					}
+				});
+    	  });
+    	  
+    	  $('#midGoalSelected').on("change",function(){
+    		  
+    		  var mGoalNum = $( "#midGoalSelected option:selected" ).val();
+    		  
+    		  $.ajax({
+					url:"/goal/member/getBTMGoalList",
+					type:"POST",
+					data:{"mGoalNum":mGoalNum},
+					dataType:"json",
+					success:function(BTMGoalList){
+						
+					},
+					error: function(){
+					}
+				});
+    	  });
+    	  
+      });
+      
     </script>
 
 
@@ -122,72 +138,137 @@
 	                            <tr>
 	                                <td class="price color-purple">목표선택</td>
 	                            </tr>
+	                            <c:if test = "${sessionScope.userid != null}">
 	                            <tr>    
 	                                <td>
-	                                <select name = "topGoalSelected" style="width: 150px;">
-	                                	<option value = 0 selected="selected">-전체목표를 선택-</option>
-	                                	<option value = "tGoalNum1">다이어트하기</option>
-	                                	<option value = "tGoalNum2">정처기 1달</option>
-	                                	<option value = "tGoalNum3">전국 일주하기</option>
-	                                	<option value = "tGoalNum4">책 10권읽기</option>
-	                                </select>
+		                                <select name = "topGoalSelected" id = "topGoalSelected" style="width: 150px;">
+		                                	<option value = 0 selected="selected">-전체목표를 선택-</option>
+		                                	<c:if test = "${sessionScope.topGoalList != null}">
+												<c:forEach items="${sessionScope.topGoalList}" var="topGoal">
+													<option value = "${topGoal.tGoalNum}">${topGoal.tGoalTitle}</option>
+												</c:forEach>		                                	
+		                                	</c:if>
+		                                </select>
 	                                </td>
 	                            </tr>
+	                            
+	                            <!-- 여기서부터 받아온걸 체인지 이벤트가 발생할 때 처리 -->
 	                            <tr>
 	                                <td class="price color-yellow">중간목표</td>
 	                            </tr>
 	                            <tr>    
 	                                <td>
-	                                <select name = "btmGoalSelected" style="width: 150px;"s>
-	                                	<option value = 0 selected="selected">-중간목표를 선택-</option>
-	                                	<option value = "bGoalNum1">온몸운동하기</option>
-	                                	<option value = "bGoalNum2">지구력기르기</option>
-	                                	<option value = "bGoalNum3">근력향상프로젝트</option>
-	                                	<option value = "bGoalNum4">정신력 무장</option>
-	                                </select>
+		                                <select  id = "midGoalSelected" name = "midGoalSelected" style="width: 150px;">
+		                                	<option value = 0 selected="selected">-중간목표를 선택-</option>
+		                                </select>
 	                                </td>
 	                            </tr>
+	                            </c:if>
 	                        </table>
 	                    </div>
-	                    <div id="chart_div" class="chart-container"  style="width: 450px; height: 316px;">
-	                    </div>
+	                    	<c:if test = "${sessionScope.userid != null}">
+	                    		<div id="chart_div" class="chart-container"  style="width: 450px; height: 316px;"></div>
+	                    	</c:if>
 	                </div><!--.chart-statistic-box-->
 	            </div><!--.col-->
-	            <div class="col-xl-6">
+	            
+	            <c:if test = "${sessionScope.userid == null}">
+	            	<div class="col-xl-6">
 	                <div class="row">
-	                    <div class="col-sm-6">
-	                        <article class="statistic-box red">
+	                
+	                	<div class="col-sm-6">
+	                        <article class="statistic-box yellow">
 	                            <div>
-	                                <div class="number">26</div>
-	                                <div class="caption"><div>미달성</div></div>
+	                                <div class="number">0</div>
+	                                <div class="caption"><div>로그인해 주세요</div></div>
 	                                <div class="percent">
 	                                </div>
 	                            </div>
+	                        </article>
+	                    </div><!--.col-->
+	                    
+	                     <div>
+	                        <article class="statistic-box red">
+		                            <div>
+		                                <div class="number"></div>
+		                                <div class="caption"><pre>                  </pre></div>
+		                                <div class="percent">
+		                                </div>
+		                            </div>
+	                        
+	                        </article>
+	                    </div><!--.col-->
+	                
+	                    <div class="col-sm-6">
+	                        <article class="statistic-box red">
+		                            <div>
+		                                <div class="number">0</div>
+		                                <div class="caption"><div>로그인해 주세요</div></div>
+		                                <div class="percent">
+		                                </div>
+		                            </div>
+	                        
 	                        </article>
 	                    </div><!--.col-->
 	                    
 	                     <div class="col-sm-6">
 	                        <article class="statistic-box blue">
 	                            <div>
-	                                <div class="number">29</div>
-	                                <div class="caption"><div>달성</div></div>
+	                                <div class="number">0</div>
+	                                <div class="caption"><div>로그인해 주세요</div></div>
 	                                <div class="percent">
 	                                </div>
 	                            </div>
 	                        </article>
 	                    </div><!--.col-->
 	                    
-	                      <div class="col-sm-6">
-	                            <div>
-	                               <div class="statistic-box" id="piechart" style="width: 320px; height: 145px;"></div>
-	                            </div>
-	                    </div>
-	                    
-	                    <div class="col-sm-6">
+	                </div><!--.row-->
+	            </div><!--.col-->
+	            </c:if>
+	            
+	            <c:if test = "${sessionScope.userid != null}">
+	            <div class="col-xl-6">
+	                <div class="row">
+	                	 <div class="col-sm-6">
 	                        <article class="statistic-box yellow">
 	                            <div>
-	                                <div class="number">104</div>
-	                                <div class="caption"><div>전체 목표</div></div>
+	                                <div class="number">${sessionScope.totalNum}</div>
+	                                <div class="caption"><div>Total</div></div>
+	                                <div class="percent">
+	                                </div>
+	                            </div>
+	                        </article>
+	                    </div><!--.col-->
+	                    
+	                      <div>
+	                        <article class="statistic-box red">
+		                            <div>
+		                                <div class="number"></div>
+		                                <div class="caption"><pre>                  </pre></div>
+		                                <div class="percent">
+		                                </div>
+		                            </div>
+	                        
+	                        </article>
+	                    </div><!--.col-->
+	                
+	                    <div class="col-sm-6">
+	                        <article class="statistic-box red">
+		                            <div>
+		                                <div class="number">${sessionScope.failNum}</div>
+		                                <div class="caption"><div>Fail</div></div>
+		                                <div class="percent">
+		                                </div>
+		                            </div>
+	                        
+	                        </article>
+	                    </div><!--.col-->
+	                    
+	                     <div class="col-sm-6">
+	                        <article class="statistic-box blue">
+	                            <div>
+	                                <div class="number">${sessionScope.clearNum}</div>
+	                                <div class="caption"><div>Success</div></div>
 	                                <div class="percent">
 	                                </div>
 	                            </div>
@@ -196,6 +277,8 @@
 	                   
 	                </div><!--.row-->
 	            </div><!--.col-->
+	            </c:if>
+	            
 	        </div><!--.row-->
 	
 	        <div class="row">
