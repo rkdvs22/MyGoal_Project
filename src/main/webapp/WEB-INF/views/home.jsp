@@ -209,7 +209,10 @@
 	                    </header>
 	                    
 	                    <div class="box-typical-body panel-body">
-
+							<c:if test="${sessionScope.userid == null}">
+	                    	<p style="text-align:center; line-height:242px;">로그인 후에 이용하실 수 있습니다.</p>
+	                    	</c:if>
+	                    	<c:if test="${sessionScope.userid != null}">
                        		<table id="table-edit" class="table table-bordered table-hover">
 								<thead>
 								<tr>
@@ -230,9 +233,10 @@
 									</c:forEach>
 								</tbody>
 							</table>
+							</c:if>
 	                    </div><!--.box-typical-body-->
 	                </section>
-				 
+				 <!-- 
 	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
 	                    <header class="box-typical-header panel-heading">
 	                        <h3 class="panel-title">Comments</h3>
@@ -298,8 +302,10 @@
 	                                </a>
 	                            </div>
 	                        </article>
-	                    </div><!--.box-typical-body-->
+	                    </div>.box-typical-body
 	                </section>
+	                
+	                 -->
 	            </div><!--.col-->
 	            
 	            <div class="col-xl-6 dahsboard-column">
@@ -313,14 +319,18 @@
 	                    </header>
 	                    
 	                    <div class="box-typical-body panel-body">
+	                    	<c:if test="${sessionScope.userid == null}">
+	                    	<p style="text-align:center; line-height:242px;">로그인 후에 이용하실 수 있습니다.</p>
+	                    	</c:if>
+	                    	<c:if test="${sessionScope.userid != null}">
                        		<table id="table-edit" class="table table-bordered table-hover">
 								<thead>
 								<tr>
 									<th>ID</th>
 									<th>제목</th>
-									<th width="120">시작일</th>
-									<th width="120">종료일</th>
-									<th width="70">인원</th>
+									<th width="100">시작일</th>
+									<th width="100">종료일</th>
+									<th width="55">인원</th>
 									<th class="table-icon-cell">
 										<i class="font-icon font-icon-heart"></i>
 									</th>
@@ -339,10 +349,11 @@
 								</c:forEach>
 								</tbody>
 							</table>
+							</c:if>
 	                    </div><!--.box-typical-body-->
 	                </section><!--.box-typical-dashboard-->
 	                
-	                
+	                <!-- 
 	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
 	                    <header class="box-typical-header panel-heading">
 	                        <h3 class="panel-title">Contacts</h3>
@@ -478,8 +489,10 @@
 	                                </div>
 	                            </article>
 	                        </div>
-	                    </div><!--.box-typical-body-->
-	                </section><!--.box-typical-dashboard-->
+	                    </div>.box-typical-body
+	                </section>.box-typical-dashboard
+	                
+	                 -->
 	            </div><!--.col-->
 	        </div>
 	    </div><!--.container-fluid-->

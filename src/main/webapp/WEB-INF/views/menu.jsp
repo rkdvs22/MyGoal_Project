@@ -87,62 +87,10 @@
                 
 				<!-- 헤더 메시지 알람 부분 -->
 				<c:if test="${empty userid eq false}">
-				<a style="color:grey">${sessionScope.userid} 님이 로그인 중입니다.</a>
-					<div class="dropdown dropdown-notification notif">
-						<a href="#"
-						class="header-alarm dropdown-toggle active"
-						id="dd-notification"
-						data-toggle="dropdown"
-						aria-haspopup="true"
-						aria-expanded="false">
-							<i class="font-icon-alarm"></i>
-						</a>
-						<div class="dropdown-menu dropdown-menu-right dropdown-menu-notif" aria-labelledby="dd-notification">
-							<div class="dropdown-menu-notif-header">
-								Notifications
-								<span class="label label-pill label-danger">4</span>
-							</div>
-							<div class="dropdown-menu-notif-list">
-								<div class="dropdown-menu-notif-item">
-									<div class="photo">
-										<img src="/goal/resources/img/photo-64-1.jpg" alt="">
-									</div>
-									<div class="dot"></div>
-									<a href="#">Morgan</a> was bothering about something
-									<div class="color-blue-grey-lighter">7 hours ago</div>
-								</div>
-								<div class="dropdown-menu-notif-item">
-									<div class="photo">
-										<img src="/goal/resources/img/photo-64-2.jpg" alt="">
-									</div>
-									<div class="dot"></div>
-										<a href="#">Lioneli</a> had commented on this <a href="#">Super Important Thing</a>
-										<div class="color-blue-grey-lighter">7 hours ago</div>
-								</div>
-								<div class="dropdown-menu-notif-item">
-									<div class="photo">
-										<img src="/goal/resources/img/photo-64-3.jpg" alt="">
-									</div>
-									<div class="dot"></div>
-									<a href="#">Xavier</a> had commented on the <a href="#">Movie title</a>
-									<div class="color-blue-grey-lighter">7 hours ago</div>
-								</div>
-								<div class="dropdown-menu-notif-item">
-									<div class="photo">
-										<img src="/goal/resources/img/photo-64-4.jpg" alt="">
-									</div>
-									<a href="#">Lionely</a> wants to go to <a href="#">Cinema</a> with you to see <a href="#">This Movie</a>
-									<div class="color-blue-grey-lighter">7 hours ago</div>
-								</div>
-							</div>
-							<div class="dropdown-menu-notif-more">
-								<a href="#">See more</a>
-							</div>
-						</div>
-					</div>
+				<span style="color:#E7E7E7">${sessionScope.userid} 님이 로그인 중입니다.</span>
 					
 					<!-- 헤더 개인정보부분 -->
-					<div class="dropdown user-menu">
+					<div class="dropdown user-menu" style="float:right;">
 					<c:if test="${image == null}">
 						<button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<img src="/goal/resources/img/avatar-2-64.png" alt="" >
