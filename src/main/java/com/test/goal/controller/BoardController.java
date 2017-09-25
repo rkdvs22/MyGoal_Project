@@ -74,9 +74,11 @@ public class BoardController {
 	// TopGoal 테이블에 user에 대한 데이터 입력
 	public void inputTopGoal(TopGoalVO tvo) {
 		TopGoalVO vo = new TopGoalVO();
+		
 		vo.settGoalNum(tvo.gettGoalNum());
 		vo.setUserid(tvo.getUserid());
 		vo.setProgressNum(tvo.getProgressNum());
+		
 		service.inputTopGoal(tvo);
 	}
 		

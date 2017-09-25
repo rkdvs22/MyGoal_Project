@@ -64,7 +64,7 @@
                     	<img onclick="document.getElementById('imgUpload').click()" id="showImg" style="width:100px ; height:120px;">
                     </c:if>
                     </div>
-                    <input type="button" class="btn btn-rounded btn-success sign-up" value="Update" onclick="memberUpdate()">
+                    <input type="button" class="btn btn-rounded btn-success sign-up" id="btnUpdate" value="Update">
                     <p class="sign-note"><a href="/goal">Main으로 돌아가기</a></p>
                 </form>
             </div>
@@ -75,6 +75,7 @@
 <script src="/goal/resources/js/lib/tether/tether.min.js"></script>
 <script src="/goal/resources/js/lib/bootstrap/bootstrap.min.js"></script>
 <script src="/goal/resources/js/plugins.js"></script>
+<script src="/goal/resources/js/lib/bootstrap-sweetalert/sweetalert.min.js"></script>
     <script type="text/javascript" src="/goal/resources/js/lib/match-height/jquery.matchHeight.min.js"></script>
     <script>
         $(function() {
@@ -99,18 +100,28 @@
         });
     
      // 수정 확인   
-   function memberUpdate() {
-    	
-    	 var result;
-    	if(result) {
-    		result.preventDefault();
+	  $('#btnUpdate').click(function(e){
+			e.preventDefault();
 			swal({
-				title: "Are you sure?",
-				text: "수정 하시겠습니까?"
-			});
-    	}
-    	document.fm.submit(); 
-    }
+						title: "Are you sure?",
+						text: "수정 하시겠습니까?",
+						type: "warning",
+						showCancelButton: true,
+						cancelButtonClass: "btn-default",
+						confirmButtonClass: "btn-warning",
+						confirmButtonText: "Yes",
+						closeOnConfirm: false
+					},
+					function(){
+						swal({
+							title: "Modified!",
+							text: "수정되었습니다.",
+							type: "success",
+							confirmButtonClass: "btn-success"
+						});
+						document.fm.submit();
+					});
+		});
     
     // 이미지 업로드, 미리보기
     function readURL(input) {

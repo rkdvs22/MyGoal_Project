@@ -35,15 +35,16 @@
                     </div>
                     <header class="sign-title">LOGIN</header>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="userid" name="userid" placeholder="ID"/>
+                        <input type="text" class="form-control" id="userid" name="userid" placeholder="ID" required="required"/>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Password"/>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required="required"/>
                     </div>
                    <div class="form-group row">
                     <button type="submit" class="btn btn-rounded btn-success" id="btnLogin">LOGIN</button>
                     </div>
                     <p class="sign-note"><a href="/goal/member/findForm">ID/Password 찾기</a> / <a href="/goal">돌아가기</a></p>
+                	
                 </form>
             </div>
         </div>
@@ -71,10 +72,12 @@
                 },100);
             });
         });
-    
+   
+        
         // ID, PWD 일치여부
-        $('#btnLogin').click(function() {
-        	$.ajax({
+      /*   $('#btnLogin').click(function() {
+        	
+			$.ajax({
         		url:"/goal/member/idMatchUp",
         		type: "get",
         		data: {"userid":$("#userid").val(), "password":$("#password").val()},
@@ -86,17 +89,8 @@
         			});
         		}
         	});
-        });
+        }); */
         
-       
-       /*  $('#btnLogin').click(function(e){
-			e.preventDefault();
-			swal({
-				title: "Are you sure?",
-				text: "ID나 PASSWORD가 일치하지 않습니다."
-			});
-		}); */
-        	
     </script>
 <script src="/goal/resources/js/app.js"></script>
 

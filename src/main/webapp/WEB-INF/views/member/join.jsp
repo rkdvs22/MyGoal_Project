@@ -29,16 +29,16 @@
                 <form class="sign-box" action="join" method="post" enctype="multipart/form-data">
                     <header class="sign-title">Sign Up</header>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="userid" name="userid" placeholder="ID"/>
+                        <input type="text" class="form-control" id="userid" name="userid" placeholder="ID" required="required"/>
                         <button type="button" class="btn btn-rounded btn-inline btn-success btn-sm" id="checkId" name="checkId">중복확인</button>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" id="pwd" name="password" placeholder="Password"/>
+                        <input type="password" class="form-control" id="pwd" name="password" placeholder="Password" required="required"/>
                         <input type="password" class="form-control" id="pwdCheck" placeholder="Repeat password"/>
                         <font name="check" size="2"></font>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="email" name="email" placeholder="E-Mail"/>
+                        <input type="text" class="form-control" id="email" name="email" placeholder="E-Mail" required="required"/>
                     </div>
                     <div class="form-group">
 						<select class="select2-arrow manual select2-no-search-arrow" id="tel1" name="tel1">
