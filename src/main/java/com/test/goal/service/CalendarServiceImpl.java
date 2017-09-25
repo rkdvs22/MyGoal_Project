@@ -120,9 +120,11 @@ public class CalendarServiceImpl implements CalendarService{
 		int targetBTMRecordNum = dao.isProgressing(vo);
 		vo.setBtmRecordNum(targetBTMRecordNum);
 		if(isProgressing == 0){
+			System.out.println(11);
 			dao.updateDayRecord(vo);
 		}else if(isProgressing == 1){
 			if(vo.getTotalAchieve() == 100){
+				System.out.println(22);
 				int successQuery = dao.completeUpdateDayRecord(vo);
 				int isSuccessBTM = 0;
 				int istotalBTMRecord = 0;

@@ -48,17 +48,42 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawVisualization);
+    
 
-      function drawVisualization() {
+    function drawVisualization(BTMGoalList) {
         // Some raw data (not necessarily accurate)
+        
+        $('#chart_div').show();
+        
+        var bGoalTitle = [];
+        var achieve = [];
+        
+    	$(BTMGoalList).each(function(index,item) {
+			
+    		var title  = item.bGoalTitle;
+    		var achi = item.achieve;
+    		bGoalTitle.push(
+            	 title
+        	)
+    		
+    		achieve.push(
+            	 achi
+        	);
+	  		
+   		 });
+    	
+        
         var data = google.visualization.arrayToDataTable([
-         ['세부목표명', '달성률', '달성률변화'],
-         ['달리기',  15, 15],
-         ['점프',  53, 53],
-         ['팔굽혀펴기', 81, 81],
-         ['스트레칭',  60, 60],
+        
       ]);
+        
+        data.addColumn('string', '세부목표명');
+        data.addColumn('number', '달성률');
+        data.addColumn('number', '달성률변화');
+        
+          for(i = 0; i < bGoalTitle.length; i++){
+        	 data.addRow([bGoalTitle[i], achieve[i], achieve[i]]);
+         } 
 
     var options = {
       title : '선택한 중간목표: 온몸운동하기',
@@ -79,7 +104,7 @@
   }
       
       $(function(){
-    	  
+    	  $('#chart_div').hide();
     	  $('#topGoalSelected').on("change",function(){
     		  
     			var tGoalNum = $( "#topGoalSelected option:selected" ).val();
@@ -90,7 +115,12 @@
 					data:{"tGoalNum":tGoalNum},
 					dataType:"json",
 					success:function(MidGoalList){
+						$('#midGoalSelected').html('');
+						$('#midGoalSelected').append(
+								'<option value = 0 selected="selected">-중간목표를 선택-</option>'
+			              	);
 						$(MidGoalList).each(function(index,item) {
+							
 			    	  		$('#midGoalSelected').append(
 			              		'<option value ='+item.mGoalNum+'>'+item.mGoalTitle+'</option>'
 			              	);
@@ -111,7 +141,11 @@
 					data:{"mGoalNum":mGoalNum},
 					dataType:"json",
 					success:function(BTMGoalList){
-						
+						if(BTMGoalList.length != 0){
+							drawVisualization(BTMGoalList);
+						}else{
+							$('#chart_div').hide();
+						}
 					},
 					error: function(){
 					}
@@ -167,7 +201,7 @@
 	                        </table>
 	                    </div>
 	                    	<c:if test = "${sessionScope.userid != null}">
-	                    		<div id="chart_div" class="chart-container"  style="width: 450px; height: 316px;"></div>
+	                    		<div id="chart_div" class="chart-container"  style="width: 450px; height: 316px; display:none;"></div>	
 	                    	</c:if>
 	                </div><!--.chart-statistic-box-->
 	            </div><!--.col-->
@@ -255,7 +289,7 @@
 	                    <div class="col-sm-6">
 	                        <article class="statistic-box red">
 		                            <div>
-		                                <div class="number">${sessionScope.failNum}</div>
+		                                <div class="number">${sessionScope.failNum-1}</div>
 		                                <div class="caption"><div>Fail</div></div>
 		                                <div class="percent">
 		                                </div>

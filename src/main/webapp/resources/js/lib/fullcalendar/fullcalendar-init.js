@@ -510,7 +510,6 @@ $(document).ready(function(){
 		            		}
 		            	}
 					});		 
-	        		
 	        		$('#inputPercent').html('');
 	        		$('#inputPercent').attr('placeholder','입력은 가능 - 달성 불가');
 	        		$('#currentPercent').html('');
@@ -561,7 +560,9 @@ $(document).ready(function(){
             		}else{
             			$(PlanTitle).each(function(index,item) {
     	 	        		//클릭한것이 오늘이라면 readOnly를 하지 않는다.
-    	 	        		if(parseInt(dateSplited) == parseInt(today) || parseInt(dateSplited) >= parseInt(PlanStartDate[index]) && parseInt(dateSplited) <=  parseInt(PlanEndDate[index])){
+    	 	        		if(parseInt(dateSplited) == parseInt(today) || parseInt(today) >= parseInt(PlanStartDate[index]) && parseInt(today) <=  parseInt(PlanEndDate[index])){
+    	 	        			console.log("dateSplited: " + dateSplited + " PlanStartDate: " + PlanStartDate[index] + " PlanEndDate[index]: " +PlanEndDate[index]);
+    	 	        			alert('asdasdad');
     	 	        			$('#inputPercent').html('');
     	 	        			$('#inputPercent').attr('placeholder','100이내의 숫자');
     	 	        			$('#currentPercent').html('');

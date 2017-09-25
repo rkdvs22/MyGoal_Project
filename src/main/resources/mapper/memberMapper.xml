@@ -57,8 +57,7 @@
 	</select>
 	
 	<select id = "getTopGoalList" parameterType="string" resultType="TopGoalVO">
-		select tGoalTitle,tGoalNum from TopGoal where userid = #{userid} and
-	    to_date(to_char(sysdate,'yyyy/mm/dd'),'yyyy/mm/dd') &gt; to_date(to_char(tendDate,'yyyy/mm/dd'),'yyyy/mm/dd')
+		select tGoalTitle,tGoalNum from TopGoal where userid = #{userid} 
 	</select>
 	
 	<select id = "getMGoalList" parameterType="int" resultType="MidGoalVO">
