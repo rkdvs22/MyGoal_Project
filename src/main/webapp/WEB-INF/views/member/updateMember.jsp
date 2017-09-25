@@ -118,7 +118,7 @@
 							text: "수정되었습니다.",
 							type: "success",
 							confirmButtonClass: "btn-success"
-						});
+						})
 						document.fm.submit();
 					});
 		});

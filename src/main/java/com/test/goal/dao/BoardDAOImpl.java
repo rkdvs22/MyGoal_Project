@@ -63,17 +63,16 @@ public class BoardDAOImpl implements BoardDAO {
 
 	// MemberList 테이블에 user에 대한 데이터 입력
 	@Override
-	public void inputMemberList(MemberListVO lvo) {
+	public MemberListVO inputMemberList(MemberListVO lvo) {
 		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
-		mapper.inputMemberList(lvo);
+		return mapper.inputMemberList(lvo);
 	}
 
 	// TopGoal 테이블에 user에 대한 데이터 입력
 	@Override
-	public void inputTopGoal(TopGoalVO tvo) {
+	public TopGoalVO inputTopGoal(TopGoalVO tvo) {
 		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
-		MemberListVO lvo = mapper.getMemberProgressNum();
-		mapper.inputTopGoal(lvo);
+		return mapper.inputTopGoal(tvo);
 	}
 
 

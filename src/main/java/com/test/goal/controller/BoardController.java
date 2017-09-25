@@ -2,6 +2,8 @@ package com.test.goal.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,23 +58,27 @@ public class BoardController {
 	
 	// 마방진페이지로 이동
 	@RequestMapping(value = "toMsquare", method = RequestMethod.GET)
-	public String toMsquare(BoardVO bvo, TopGoalVO tvo, MemberListVO lvo, Model model) {
+	public String toMsquare(BoardVO bvo, TopGoalVO tvo, MemberListVO lvo, Model model, HttpSession session) {
+		String userid = (String)session.getAttribute("userid");
+		session.setAttribute("userid", userid);
+		
 		int tGoalNum = service.getTopGoalNum().gettGoalNum();
 		bvo.settGoalNum(tGoalNum);
-
+		
 		int progressNum = service.getGoalProgressNum().getProgressNum();
 		tvo.setProgressNum(progressNum);
 		
-		/*int memberProgressNum = service.getMemberProgressNum().getProgressNum();
-		lvo.setProgressNum(memberProgressNum);*/
-		inputTopGoal(tvo);
-		//model.addAttribute("inputTopGoal", service.inputTopGoal(tvo));
+		int memberProgressNum = service.getMemberProgressNum().getProgressNum();
+		lvo.setProgressNum(memberProgressNum);
+		model.addAttribute("inputMemberList", service.inputMemberList(lvo));
+		model.addAttribute("inputTopGoal", service.inputTopGoal(tvo));
+		//inputTopGoal(tvo);
 		
 		return "/createGoal/MGoalSquareForm";
 	}
 	
 	// TopGoal 테이블에 user에 대한 데이터 입력
-	public void inputTopGoal(TopGoalVO tvo) {
+	/*public void inputTopGoal(TopGoalVO tvo) {
 		TopGoalVO vo = new TopGoalVO();
 		
 		vo.settGoalNum(tvo.gettGoalNum());
@@ -80,6 +86,6 @@ public class BoardController {
 		vo.setProgressNum(tvo.getProgressNum());
 		
 		service.inputTopGoal(tvo);
-	}
+	}*/
 		
 }

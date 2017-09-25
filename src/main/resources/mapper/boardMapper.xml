@@ -72,17 +72,19 @@
 	</insert>
 	
 	<!-- TopGoal 테이블에 user에 대한 데이터 입력 -->
-	<insert id="inputTopGoal" parameterType="MemberListVO">
+	<insert id="inputTopGoal" parameterType="TopGoalVO">
 		insert into TopGoal(tGoalNum, tGoalTitle, tStartDate, tEndDate, userid, progressNum)
 		values (TOPGOAL_SEQ.NEXTVAL, #{tGoalTitle}, #{tStartDate}, #{tEndDate}, #{userid}, #{progressNum})	
 	</insert>
 	
+	
+	
 	<!-- 현재 TopGoal에 대한 정보 -->
-	<select id="getTopGoal" resultType="TopGoalVO">
+	<!-- <select id="getTopGoal" resultType="TopGoalVO">
 		select b.userid, b.tGoalNum, t.tStartDate, t.tEndDate, t.progressNum
 		from Board b, TopGoal t
 		where t.tGoalNum = (select max(tGoalNum) from Board where userid = #{userid}) and t.userid = b.userid 
 		
-	</select>
+	</select> -->
 
 </mapper>

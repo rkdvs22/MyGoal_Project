@@ -62,14 +62,14 @@ public class BoardServiceImpl implements BoardService {
 
 	// MemberList 테이블에 user에 대한 데이터 입력
 	@Override
-	public void inputMemberList(MemberListVO lvo) {
-		dao.inputMemberList(lvo);
+	public MemberListVO inputMemberList(MemberListVO lvo) {
+		return dao.inputMemberList(lvo);
 	}
 
 	// TopGoal 테이블에 user에 대한 데이터 입력
 	@Override
-	public void inputTopGoal(TopGoalVO tvo) {
-		dao.inputTopGoal(tvo);
+	public TopGoalVO inputTopGoal(TopGoalVO tvo) {
+		return dao.inputTopGoal(tvo);
 	}
 
 

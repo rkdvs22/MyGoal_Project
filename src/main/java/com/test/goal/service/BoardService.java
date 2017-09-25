@@ -22,8 +22,8 @@ public interface BoardService {
 	
 	public MemberListVO getMemberProgressNum(); // TopGoal 테이블의 progressNum을 이용하여 MemberList 테이블의 progressNum 가져옴
 
-	public void inputMemberList(MemberListVO lvo); // MemberList 테이블에 user에 대한 데이터 입력
+	public MemberListVO inputMemberList(MemberListVO lvo); // MemberList 테이블에 user에 대한 데이터 입력
 
-	public void inputTopGoal(TopGoalVO tvo); // TopGoal 테이블에 user에 대한 데이터 입력
+	public TopGoalVO inputTopGoal(TopGoalVO tvo); // TopGoal 테이블에 user에 대한 데이터 입력
 	
 }
