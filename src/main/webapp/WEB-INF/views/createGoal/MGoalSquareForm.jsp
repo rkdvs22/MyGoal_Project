@@ -871,7 +871,7 @@ $(function() {
 		}
 		
 		$.ajax ({
-			url: "findIdinModal",
+			url: "/goal/createGoal/findIdinModal",
 			type: "post",
 			data: {"keyWord" : keyWord},
 			success: function(list) {
@@ -961,6 +961,8 @@ $(function() {
 			
 		}
 	});
+	
+	
 });
 	
 </script>
@@ -1013,10 +1015,12 @@ $(function() {
 			<td><pre>   </pre></td>
 			<c:choose>
 				<c:when test="${sessionScope.userid eq sessionScope.hostId}">
-					<td id="p1" class="player-id">${sessionScope.userid}</td>
+					<td id="p1" class="player-id">${sessionScope.hostId}</td>
 				</c:when>
-				<c:when test="${sessionScope.userid eq b_info.userid}">
-					<td id="p1" class="player-id">${sessionScope.userid}</td>
+				<c:when test="${sessionScope.userid != sessionScope.hostId}">
+					<c:forEach var="user" items="${tGoal_list}" begin="0" end="0">
+						<td id="p1" class="player-id">${user.userid}</td>
+					</c:forEach>
 				</c:when>
 				<c:otherwise>
 					<td id="p1" class="player-id">${host}</td>
@@ -1029,7 +1033,17 @@ $(function() {
 			<td></td>
 			<td class="player-color">Not yet</td>
 			<td></td>
-			<td id="p2" class="player-id">Empty</td>
+			<c:choose>
+				<c:when test="${null eq newUser.userId}">
+					<c:forEach var="user" items="${tGoal_list}" begin="1" end="1">
+						<td id="p2" class="player-id">${user.userid}</td>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<td id="p2" class="player-id">Empty</td>
+				</c:otherwise>
+			</c:choose>
+			
 		</tr>
 		<tr class="player3" id="p3-tr">
 			<td id="p3_empty"></td>

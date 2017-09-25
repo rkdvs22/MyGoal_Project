@@ -79,7 +79,7 @@ public interface CreateGoalMapper {
 
 	public String getReadyFlag(Map<String, String> map); // 준비를 누른 사람이 이전에 레디를 했는지에 대한 여부를 불러온다.
 
-	public BoardVO getBoardFromTree(Map<String, Object> map); // GoalTree에서 선택한 목표 게시글에 대한 정보를 받아온다
+	public BoardVO getBoardFromTree(int goalNum); // GoalTree에서 선택한 목표 게시글에 대한 정보를 받아온다
 
 	public MainProgressVO getMainProgress(int progressNum); // GoalTree에서 선택한 목표에 대한 MainProgress 테이블의 특정 데이터를 반환한다.
 

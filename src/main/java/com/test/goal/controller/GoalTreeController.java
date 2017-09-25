@@ -56,16 +56,12 @@ public class GoalTreeController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "treeToGoal", method = RequestMethod.GET)
 	public String treeToGoal(int goalNum, Model model, HttpSession session, Map<String, Object> map) {
-		map.put("goalNum", goalNum);
-		map.put("id", (String)session.getAttribute("userid"));
-		Map<String, Object> result_map = goal_dao.treeToGoal(map);
+		Map<String, Object> result_map = goal_dao.treeToGoal(goalNum);
 		model.addAttribute("b_info", (BoardVO)result_map.get("b_info"));
-		System.out.println((BoardVO)result_map.get("b_info"));
 		model.addAttribute("tGoal_list", (ArrayList<TopGoalVO>)result_map.get("tGoal_list"));
 		model.addAttribute("progress_info", (MainProgressVO)result_map.get("progress_info"));
 		model.addAttribute("member_list", (ArrayList<MemberListVO>)result_map.get("member_list"));
 		
 		return "/createGoal/MGoalSquareForm";
-//		return "redirect:/";
 	}
 }

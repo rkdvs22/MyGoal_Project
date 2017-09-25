@@ -1,12 +1,12 @@
 package com.test.goal.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.ui.Model;
 
 import com.test.goal.vo.BTMGoalVO;
 import com.test.goal.vo.BoardVO;
@@ -190,15 +190,16 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 
 	// GoalTree에서 목표를 선택할 시 그에 맞는 마방진으로 이동한다.
 	@Override
-	public Map<String, Object> treeToGoal(Map<String, Object> map) {
+	public Map<String, Object> treeToGoal(int goalNum) {
 		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
-		BoardVO board_vo = mapper.getBoardFromTree(map);
+		BoardVO board_vo = mapper.getBoardFromTree(goalNum);
 		System.out.println(board_vo);
-		int progressNum = mapper.getProgressNum((int)map.get("goalNum"));
+		int progressNum = mapper.getProgressNum(goalNum);
 		ArrayList<TopGoalVO> tGoal_list = mapper.getTopGoalFromTree(progressNum);
 		MainProgressVO progress_vo = mapper.getMainProgress(progressNum);
 		ArrayList<MemberListVO> member_list = mapper.getMemberList(progressNum);
 		
+		Map<String, Object> map = new HashMap<>();
 		map.put("b_info", board_vo);
 		map.put("tGoal_list", tGoal_list);
 		map.put("progress_info", progress_vo);

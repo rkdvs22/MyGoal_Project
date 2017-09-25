@@ -202,13 +202,11 @@
 	</select>
 	
 	<!-- GoalTree에서 선택한 목표 게시글에 대한 정보를 받아온다 -->
-	<select id="getBoardFromTree" parameterType="hashmap" resultType="BoardVO">
-		SELECT boardNum, b.userid, b.tGoalNum, t.tStartDate as startDate, t.tEndDate as endDate, t.tGoalTitle, m.maxmember
-		FROM board b, topgoal t, mainprogress m
-		WHERE t.tGoalNum = b.tGoalNum
-		AND t.progressnum = m.progressnum
+	<select id="getBoardFromTree" parameterType="int" resultType="BoardVO">
+		SELECT t.userid, t.tGoalNum, t.tStartDate as startDate, t.tEndDate as endDate, tGoalTitle, m.maxmember
+		FROM topgoal t, mainprogress m
+		WHERE t.progressnum = m.progressnum
 		AND t.tGoalNum = #{goalNum}
-		AND t.userid = #{id}
 	</select>
 	
 	<!-- GoalTree에서 선택한 목표에 대한 MainProgress 테이블의 데이터를 반환한다. -->
