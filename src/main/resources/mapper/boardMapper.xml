@@ -47,23 +47,23 @@
 	</update>
 	
 	<!-- Board 테이블에서 가장 최신화된 tGoalNum, userid을 가져옴 (Board의 userid는 host의 id) -->
-	<select id="getTopGoalNum" resultType="BoardVO">
+	<select id="getTopGoalNum" parameterType="string" resultType="BoardVO">
 		select userid, tGoalNum from Board 
 		where tGoalNum = (select max(tGoalNum) from board where userid = #{userid}) 
 	</select>
 	
 	<!-- TopGoal 테이블에서 tGoalNum을 이용 progressNum 가져옴 -->
-	<select id="getGoalProgressNum" resultType="TopGoalVO">
+	<select id="getGoalProgressNum" parameterType="BoardVO" resultType="TopGoalVO">
 		select t.progressNum from TopGoal t
-		where t.tGoalNum = (select max(tGoalNum) from board where userid = #{userid}) and t.userid = userid 
+		where t.tGoalNum = (select max(tGoalNum) from board where userid = #{userid})
 	</select>
 	
 	<!-- TopGoal 테이블의 progressNum을 이용하여 MemberList 테이블의 progressNum 가져옴 -->
-	<select id="getMemberProgressNum" resultType="MemberListVO">
+	<select id="getMemberProgressNum" parameterType="TopGoalVO" resultType="MemberListVO">
 		select l.progressNum from MemberList l inner join mainProgress m
-		on l.progressNum = m.progressNum inner join topGoal t
+		on l.progressNum = m.progressNum inner join TopGoal t
 		on m.progressNum = t.progressNum
-		where l.progressNum = (select max(progressNum) from topGoal where userid = #{userid})
+		where t.userid = #{userid} and t.tGoalNum = #{tGoalNum}
 	</select>
 	
 	<!-- MemberList 테이블에 user에 대한 데이터 입력 -->
@@ -74,17 +74,8 @@
 	<!-- TopGoal 테이블에 user에 대한 데이터 입력 -->
 	<insert id="inputTopGoal" parameterType="TopGoalVO">
 		insert into TopGoal(tGoalNum, tGoalTitle, tStartDate, tEndDate, userid, progressNum)
-		values (TOPGOAL_SEQ.NEXTVAL, #{tGoalTitle}, #{tStartDate}, #{tEndDate}, #{userid}, #{progressNum})	
+		values (TOPGOAL_SEQ.NEXTVAL, #{tGoalTitle}, #{tStartDate}, #{tEndDate}, 'N', 'N', 'Y', #{userid}, #{progressNum})	
 	</insert>
 	
 	
-	
-	<!-- 현재 TopGoal에 대한 정보 -->
-	<!-- <select id="getTopGoal" resultType="TopGoalVO">
-		select b.userid, b.tGoalNum, t.tStartDate, t.tEndDate, t.progressNum
-		from Board b, TopGoal t
-		where t.tGoalNum = (select max(tGoalNum) from Board where userid = #{userid}) and t.userid = b.userid 
-		
-	</select> -->
-
 </mapper>

@@ -139,7 +139,10 @@ public class CreateGoalController {
 	
 	
 	
-	
+	@RequestMapping(value = "openGoalSquare", method = RequestMethod.GET)
+	public String openGoalSquar() {
+		return "/createGoal/goalSquare";
+	}
 	
 	
 	

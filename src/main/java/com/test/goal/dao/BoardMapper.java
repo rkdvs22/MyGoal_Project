@@ -17,11 +17,11 @@ public interface BoardMapper {
 
 	public void addFavorite(int boardnum); // 좋아요
 
-	public BoardVO getTopGoalNum(); // Board 테이블에서 가장 최신화된 tGoalNum, userid을 가져옴
+	public BoardVO getTopGoalNum(String userid); // Board 테이블에서 가장 최신화된 tGoalNum, userid을 가져옴
 	
-	public TopGoalVO getGoalProgressNum(); // TopGoal 테이블에서 tGoalNum을 이용 progressNum 가져옴
+	public TopGoalVO getGoalProgressNum(BoardVO bvo); // TopGoal 테이블에서 tGoalNum을 이용 progressNum 가져옴
 	
-	public MemberListVO getMemberProgressNum(); // TopGoal 테이블의 progressNum을 이용하여 MemberList 테이블의 progressNum 가져옴
+	public MemberListVO getMemberProgressNum(TopGoalVO tvo); // TopGoal 테이블의 progressNum을 이용하여 MemberList 테이블의 progressNum 가져옴
 
 	public MemberListVO inputMemberList(MemberListVO lvo); // MemberList 테이블에 user에 대한 데이터 입력
 

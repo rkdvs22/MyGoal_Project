@@ -29,6 +29,9 @@
 	<link rel="stylesheet" href="/goal/resources/css/lib/font-awesome/font-awesome.min.css">
 	<link rel="stylesheet" href="/goal/resources/css/lib/bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" href="/goal/resources/css/main.css?version=3">
+  
+<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet" media="all">   -->
+	
 	
 	<script src="/goal/resources/js/lib/jquery/jquery.min.js"></script>
 	<script src="/goal/resources/js/lib/tether/tether.min.js"></script>
@@ -39,6 +42,15 @@
 	<script type="text/javascript" src="/goal/resources/js/lib/match-height/jquery.matchHeight.min.js"></script>
 	<script src="/goal/resources/js/app.js"></script>
 <!-- 	<script src="https://www.gstatic.com/charts/loader.js"></script> -->
+
+<style>
+	/* 메인 이미지 슬라이드 크기지정 */
+	.box{
+    width:100%;
+    height:300px;
+    background-color:rgb(41, 128, 185);
+}
+</style>
 
 </head>
 <body class="with-side-menu-compact dark-theme dark-theme-green">
@@ -154,11 +166,59 @@
     	  
       });
       
+      
+ /* 메인페이지 이미지 slider */
+	 $('.carousel').carousel({
+		interval: 3000
+	});
+      
     </script>
 
 
 <div class="page-content">
-	    <div class="container-fluid">
+    <div class="container-fluid">
+    	<!-- 메인 이미지 슬라이드 -->
+		<div id="carousel" class="carousel slide" data-ride="carousel" data-interval="true">
+		    <!-- Indicators -->
+		    <ol class="carousel-indicators">
+		        <li data-target="#carousel" data-slide-to="0" class="active"></li>
+		        <li data-target="#carousel" data-slide-to="1"></li>
+		        <!-- <li data-target="#carousel" data-slide-to="2"></li> -->
+		    </ol>
+		   <!-- Carousel items -->
+		    <div class="carousel-inner">
+		        <div class="item active">
+		        	<img class="box" src="/goal/resources/img/city.jpg">
+		          <div class="carousel-caption">
+		            <h2>みんなのゴール</h2>
+		            <p>Description</p>
+		          </div>
+		        </div>
+		        <div class="item">
+		        	<img class="/goal/resources/img/tree.jpg">
+	       		  <div class="box">
+		            <h2>Title</h2>
+		            <p>Description</p>
+		          </div>
+		        </div>
+		       <!--  <div class="item"><img class="img-responsive" src="https://images.unsplash.com/photo-1445462657202-a0893228a1e1?crop=entropy&fit=crop&fm=jpg&h=400&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1200">
+		          <div class="carousel-caption">
+		            <h2>Title</h2>
+		            <p>Description</p>
+		          </div>
+		        </div>  -->
+		    </div>
+		   <!-- Carousel nav -->
+		    <a class="left carousel-control" href="#carousel" data-slide="prev">
+		    	<span class="glyphicon glyphicon-chevron-left"></span>
+		    </a>
+		    <a class="right carousel-control" href="#carousel" data-slide="next">
+		    	<span class="glyphicon glyphicon-chevron-right"></span>
+		    </a>
+		</div>
+		    
+		    
+		    <!-- 차트 -->
 	        <div class="row">
 	            <div class="col-xl-6">
 	                <div class="chart-statistic-box">
@@ -229,7 +289,6 @@
 		                                <div class="percent">
 		                                </div>
 		                            </div>
-	                        
 	                        </article>
 	                    </div><!--.col-->
 	                
@@ -241,7 +300,6 @@
 		                                <div class="percent">
 		                                </div>
 		                            </div>
-	                        
 	                        </article>
 	                    </div><!--.col-->
 	                    
@@ -353,76 +411,6 @@
 							</c:if>
 	                    </div><!--.box-typical-body-->
 	                </section>
-				 <!-- 
-	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
-	                    <header class="box-typical-header panel-heading">
-	                        <h3 class="panel-title">Comments</h3>
-	                    </header>
-	                    <div class="box-typical-body panel-body">
-	                        <article class="comment-item">
-	                            <div class="user-card-row">
-	                                <div class="tbl-row">
-	                                    <div class="tbl-cell tbl-cell-photo">
-	                                        <a href="#">
-	                                            <img src="img/photo-64-1.jpg" alt="">
-	                                        </a>
-	                                    </div>
-	                                    <div class="tbl-cell">
-	                                        <span class="user-card-row-name"><a href="#">Matt McGill</a></span>
-	                                    </div>
-	                                    <div class="tbl-cell tbl-cell-date">
-	                                        <span class="semibold">Today</span>
-	                                        12:45
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="comment-item-txt">
-	                                <p>That’s a great idea! I’m sure we could start this project as soon as possible.</p>
-	                                <p>Let’s meet tomorow!</p>
-	                            </div>
-	                            <div class="comment-item-meta">
-	                                <a href="#" class="star">
-	                                    <i class="font-icon font-icon-star"></i>
-	                                </a>
-	                                <a href="#">
-	                                    <i class="font-icon font-icon-re"></i>
-	                                </a>
-	                            </div>
-	                        </article>
-	                        <article class="comment-item">
-	                            <div class="user-card-row">
-	                                <div class="tbl-row">
-	                                    <div class="tbl-cell tbl-cell-photo">
-	                                        <a href="#">
-	                                            <img src="img/photo-64-2.jpg" alt="">
-	                                        </a>
-	                                    </div>
-	                                    <div class="tbl-cell">
-	                                        <span class="user-card-row-name"><a href="#">Tim Collins</a></span>
-	                                    </div>
-	                                    <div class="tbl-cell tbl-cell-date">
-	                                        <span class="semibold">Today</span>
-	                                        12:45
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <div class="comment-item-txt">
-	                                <p>That’s a great idea! I’m sure we could start this project as soon as possible.</p>
-	                                <p>Let’s meet tomorow!</p>
-	                            </div>
-	                            <div class="comment-item-meta">
-	                                <a href="#" class="star active">
-	                                    <i class="font-icon font-icon-star"></i>
-	                                </a>
-	                                <a href="#">
-	                                    <i class="font-icon font-icon-re"></i>
-	                                </a>
-	                            </div>
-	                        </article>
-	                    </div>.box-typical-body
-	                </section>
-	                
-	                 -->
 	            </div><!--.col-->
 	            
 	            <div class="col-xl-6 dahsboard-column">
@@ -469,153 +457,9 @@
 							</c:if>
 	                    </div><!--.box-typical-body-->
 	                </section><!--.box-typical-dashboard-->
-	                
-	                <!-- 
-	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
-	                    <header class="box-typical-header panel-heading">
-	                        <h3 class="panel-title">Contacts</h3>
-	                    </header>
-	                    <div class="box-typical-body panel-body">
-	                        <div class="contact-row-list">
-	                            <article class="contact-row">
-	                                <div class="user-card-row">
-	                                    <div class="tbl-row">
-	                                        <div class="tbl-cell tbl-cell-photo">
-	                                            <a href="#">
-	                                                <img src="img/photo-64-2.jpg" alt="">
-	                                            </a>
-	                                        </div>
-	                                        <div class="tbl-cell">
-	                                            <p class="user-card-row-name"><a href="#">Tim Collins</a></p>
-	                                            <p class="user-card-row-mail"><a href="#">timcolins@mail.com</a></p>
-	                                        </div>
-	                                        <div class="tbl-cell tbl-cell-status">Director at Tony’s</div>
-	                                    </div>
-	                                </div>
-	                            </article>
-	                            <article class="contact-row">
-	                                <div class="user-card-row">
-	                                    <div class="tbl-row">
-	                                        <div class="tbl-cell tbl-cell-photo">
-	                                            <a href="#">
-	                                                <img src="img/photo-64-1.jpg" alt="">
-	                                            </a>
-	                                        </div>
-	                                        <div class="tbl-cell">
-	                                            <p class="user-card-row-name"><a href="#">Maggy Smith</a></p>
-	                                            <p class="user-card-row-mail"><a href="#">maggysmith@mail.com</a></p>
-	                                        </div>
-	                                        <div class="tbl-cell tbl-cell-status">PR Manager</div>
-	                                    </div>
-	                                </div>
-	                            </article>
-	                            <article class="contact-row">
-	                                <div class="user-card-row">
-	                                    <div class="tbl-row">
-	                                        <div class="tbl-cell tbl-cell-photo">
-	                                            <a href="#">
-	                                                <img src="img/photo-64-3.jpg" alt="">
-	                                            </a>
-	                                        </div>
-	                                        <div class="tbl-cell">
-	                                            <p class="user-card-row-name"><a href="#">Molly Bridjet</a></p>
-	                                            <p class="user-card-row-mail"><a href="#">mollybr@mail.com</a></p>
-	                                        </div>
-	                                        <div class="tbl-cell tbl-cell-status">Assistan</div>
-	                                    </div>
-	                                </div>
-	                            </article>
-	                            <article class="contact-row">
-	                                <div class="user-card-row">
-	                                    <div class="tbl-row">
-	                                        <div class="tbl-cell tbl-cell-photo">
-	                                            <a href="#">
-	                                                <img src="img/photo-64-4.jpg" alt="">
-	                                            </a>
-	                                        </div>
-	                                        <div class="tbl-cell">
-	                                            <p class="user-card-row-name"><a href="#">Maggy Smith</a></p>
-	                                            <p class="user-card-row-mail"><a href="#">maggysmith@mail.com</a></p>
-	                                        </div>
-	                                        <div class="tbl-cell tbl-cell-status">PR Manager</div>
-	                                    </div>
-	                                </div>
-	                            </article>
-	                            <article class="contact-row">
-	                                <div class="user-card-row">
-	                                    <div class="tbl-row">
-	                                        <div class="tbl-cell tbl-cell-photo">
-	                                            <a href="#">
-	                                                <img src="img/photo-64-2.jpg" alt="">
-	                                            </a>
-	                                        </div>
-	                                        <div class="tbl-cell">
-	                                            <p class="user-card-row-name"><a href="#">Tim Collins</a></p>
-	                                            <p class="user-card-row-mail"><a href="#">timcolins@mail.com</a></p>
-	                                        </div>
-	                                        <div class="tbl-cell tbl-cell-status">Director at Tony’s</div>
-	                                    </div>
-	                                </div>
-	                            </article>
-	                            <article class="contact-row">
-	                                <div class="user-card-row">
-	                                    <div class="tbl-row">
-	                                        <div class="tbl-cell tbl-cell-photo">
-	                                            <a href="#">
-	                                                <img src="img/photo-64-1.jpg" alt="">
-	                                            </a>
-	                                        </div>
-	                                        <div class="tbl-cell">
-	                                            <p class="user-card-row-name"><a href="#">Maggy Smith</a></p>
-	                                            <p class="user-card-row-mail"><a href="#">maggysmith@mail.com</a></p>
-	                                        </div>
-	                                        <div class="tbl-cell tbl-cell-status">PR Manager</div>
-	                                    </div>
-	                                </div>
-	                            </article>
-	                            <article class="contact-row">
-	                                <div class="user-card-row">
-	                                    <div class="tbl-row">
-	                                        <div class="tbl-cell tbl-cell-photo">
-	                                            <a href="#">
-	                                                <img src="img/photo-64-3.jpg" alt="">
-	                                            </a>
-	                                        </div>
-	                                        <div class="tbl-cell">
-	                                            <p class="user-card-row-name"><a href="#">Molly Bridjet</a></p>
-	                                            <p class="user-card-row-mail"><a href="#">mollybr@mail.com</a></p>
-	                                        </div>
-	                                        <div class="tbl-cell tbl-cell-status">Assistan</div>
-	                                    </div>
-	                                </div>
-	                            </article>
-	                            <article class="contact-row">
-	                                <div class="user-card-row">
-	                                    <div class="tbl-row">
-	                                        <div class="tbl-cell tbl-cell-photo">
-	                                            <a href="#">
-	                                                <img src="img/photo-64-4.jpg" alt="">
-	                                            </a>
-	                                        </div>
-	                                        <div class="tbl-cell">
-	                                            <p class="user-card-row-name"><a href="#">Maggy Smith</a></p>
-	                                            <p class="user-card-row-mail"><a href="#">maggysmith@mail.com</a></p>
-	                                        </div>
-	                                        <div class="tbl-cell tbl-cell-status">PR Manager</div>
-	                                    </div>
-	                                </div>
-	                            </article>
-	                        </div>
-	                    </div>.box-typical-body
-	                </section>.box-typical-dashboard
-	                
-	                 -->
 	            </div><!--.col-->
 	        </div>
 	    </div><!--.container-fluid-->
 	</div><!--.page-content-->
-
-	
-	 
 </body>
 </html>

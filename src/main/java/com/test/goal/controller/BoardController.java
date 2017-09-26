@@ -40,7 +40,7 @@ public class BoardController {
 		
 		map.put("searchKeyid", searchKeyid); // 검색 select 박스
 		map.put("searchSelect", searchSelect); // 검색어
-		
+		System.out.println();
 		PageNavigator navi = service.getNavi(currentPage, map);
 		model.addAttribute("goalList", service.boardList(map, navi));
 		model.addAttribute("navi", navi);
@@ -59,33 +59,23 @@ public class BoardController {
 	// 마방진페이지로 이동
 	@RequestMapping(value = "toMsquare", method = RequestMethod.GET)
 	public String toMsquare(BoardVO bvo, TopGoalVO tvo, MemberListVO lvo, Model model, HttpSession session) {
-		String userid = (String)session.getAttribute("userid");
-		session.setAttribute("userid", userid);
+		String userid = (String) session.getAttribute("userid");
+		model.addAttribute("userid", userid);
 		
-		int tGoalNum = service.getTopGoalNum().gettGoalNum();
+		int tGoalNum = service.getTopGoalNum(userid).gettGoalNum();
 		bvo.settGoalNum(tGoalNum);
 		
-		int progressNum = service.getGoalProgressNum().getProgressNum();
+		int progressNum = service.getGoalProgressNum(bvo).getProgressNum();
 		tvo.setProgressNum(progressNum);
 		
-		int memberProgressNum = service.getMemberProgressNum().getProgressNum();
+		int memberProgressNum = service.getMemberProgressNum(tvo).getProgressNum();
 		lvo.setProgressNum(memberProgressNum);
+		
 		model.addAttribute("inputMemberList", service.inputMemberList(lvo));
 		model.addAttribute("inputTopGoal", service.inputTopGoal(tvo));
-		//inputTopGoal(tvo);
 		
 		return "/createGoal/MGoalSquareForm";
+		
 	}
 	
-	// TopGoal 테이블에 user에 대한 데이터 입력
-	/*public void inputTopGoal(TopGoalVO tvo) {
-		TopGoalVO vo = new TopGoalVO();
-		
-		vo.settGoalNum(tvo.gettGoalNum());
-		vo.setUserid(tvo.getUserid());
-		vo.setProgressNum(tvo.getProgressNum());
-		
-		service.inputTopGoal(tvo);
-	}*/
-		
 }

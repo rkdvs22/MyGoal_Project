@@ -48,7 +48,7 @@
 					<div class="form-group row">
 						<div class="typeahead-container">
 							<div class="typeahead-field">
-								<select class="" name="searchSelect">
+								<select id = "searchSelect" class="" name="searchSelect">
 									<option value="ID">ID</option>
 									<option value="TITLE">Goal Title</option>
 								</select>
@@ -56,7 +56,7 @@
 									<input class="form-control" type="text" id="searchKeyid" name="searchKeyid" placeholder="Search">
 								</span>
 								<span class="typeahead-button">
-									<button type="submit"class="font-icon-search"></button>
+									<button  id = "findButton" type="submit"class="font-icon-search"></button>
 								</span>
 							</div>
 						</div>
@@ -148,6 +148,13 @@
 	<script>
 		$(function() {
 			$('.card-user').matchHeight();
+			$('#findButton').on("click",function(){
+				var a = $('#searchKeyid').val();
+				alert(a);
+				
+				var b = $('#searchSelect').val();
+				alert(b);
+			});
 		});
 
 		// 페이징
