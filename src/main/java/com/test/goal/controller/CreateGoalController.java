@@ -23,6 +23,7 @@ import com.test.goal.vo.BTMGoalVO;
 import com.test.goal.vo.BoardVO;
 import com.test.goal.vo.FindHostVO;
 import com.test.goal.vo.MainProgressVO;
+import com.test.goal.vo.MemberListVO;
 import com.test.goal.vo.MemberVO;
 import com.test.goal.vo.MessageVO;
 import com.test.goal.vo.MidGoalVO;
@@ -41,8 +42,6 @@ public class CreateGoalController {
 	private FriendDAO friend_dao;
 	@Autowired
 	private MessageDAO msg_dao;
-	
-	
 	
 	// 마방진 생성화면으로 이동
 	@RequestMapping(value = "MGoalSquareForm", method = RequestMethod.GET)
@@ -337,7 +336,6 @@ public class CreateGoalController {
 	@ResponseBody
 	public TopGoalVO findThatGoal(String senderId) {
 		TopGoalVO vo = dao.findThatGoal(senderId);
-		System.out.println("findThatGoal Controller result : " + vo);
 		return vo;
 	}
 	
@@ -434,5 +432,38 @@ public class CreateGoalController {
 	@ResponseBody
 	public void switchReady(@RequestBody Map<String, String> map) {
 		System.out.println(map);
+	}
+	
+	// 유저들의 색상지정 여부와 레디 여부를 불러온다.
+	@RequestMapping(value = "checkUsers", method = RequestMethod.POST)
+	@ResponseBody
+	public ArrayList<MemberListVO> checkUsers(int progressNum) {
+		System.out.println("아 왜!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		System.out.println("progressNum : " + progressNum);
+		ArrayList<MemberListVO> list = dao.checkUsers(progressNum);
+		for(MemberListVO vo:list) {
+			System.out.println(vo);
+		}
+		return list;
+	}
+	
+	// 준비를 누른 사람이 이전에 레디를 했는지에 대한 여부를 불러온다.
+	@RequestMapping(value = "startGoal", method = RequestMethod.GET)
+	public String startGoal(int sectionNum, String[] id_list, int progressNum, Model model) {
+		System.out.println(sectionNum);
+		System.out.println(id_list.length);
+		System.out.println(progressNum);
+		
+		HashMap<String, Integer> map = new HashMap<>();
+		
+		for(int i=0; i<id_list.length; i++) {
+			map.put(id_list[i], sectionNum);
+		}
+		
+		model.addAttribute("sectionNum", sectionNum);
+		model.addAttribute("mGoalNumList", map);
+		model.addAttribute("progressNum", progressNum);
+		
+		return "/mind/mindMap";
 	}
 }

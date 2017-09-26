@@ -206,4 +206,11 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 		map.put("member_list", member_list);
 		return map;
 	}
+
+	// 유저들의 색상지정 여부와 레디 여부를 불러온다.
+	@Override
+	public ArrayList<MemberListVO> checkUsers(int progressNum) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		return mapper.checkUsers(progressNum);
+	}
 }

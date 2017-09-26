@@ -53,6 +53,8 @@ public interface CreateGoalDAO {
 	public String getReadyFlag(Map<String, String> map); // 준비를 누른 사람이 이전에 레디를 했는지에 대한 여부를 불러온다.
 
 	public Map<String, Object> treeToGoal(int goalNum); // GoalTree에서 목표를 선택할 시 그에 맞는 마방진으로 이동한다.
+
+	public ArrayList<MemberListVO> checkUsers(int progressNum); // 유저들의 색상지정 여부와 레디 여부를 불러온다.
 	
 	
 	

@@ -150,6 +150,7 @@
 	.pickcolor {
 		width: 50px;
 		height: 50px;
+		border-radius: 50%;
 	}
 	
 	/* 친구목록 table 내에 선 긋기 */
@@ -360,6 +361,29 @@ $(function() {
 					}
 				}
 				
+				// 각 세부목표의 기간의 합이 중간목표의 일자와 동일해야 한다.
+				var m_eventDays = Number(progressDay);
+				var bDays_sum = 0;
+				for(var i=0; i<goalCount; i++) {
+					var b_eventDays = Number($("#b_progressday" + (i+1)).val());
+// 					if($("#b_progressday" + (i+1)).val() > m_eventDays) {
+// 						alert((i+1) + "번째 : 세부목표 진행일자는 중간목표 진행일자보다 많을 수 없습니다");
+// 						return false;
+// 					} else if($("#b_progressday" + (i+1)).val() < m_eventDays) {
+// 						alert((i+1) + "번째 : 세부목표 진행일자는 중간목표 진행일자보다 적을 수 없습니다");
+// 						return false;
+// 					}
+					bDays_sum += b_eventDays;
+					if(bDays_sum > m_eventDays) {
+						alert("세부목표 진행일자들의 합이 중간목표 진행일자보다 많습니다");
+						return false;
+					}
+				}
+				if(bDays_sum < m_eventDays) {
+					alert("세부목표 진행일자들의 합이 중간목표 진행일자보다 적습니다");
+					return false;
+				}
+				
 				// 사용자가 작성한 중간목표를 저장한다.
 				mGoal_modals = "";
 				mGoal_modals = {
@@ -368,19 +392,6 @@ $(function() {
 					eDate: $("#endMpicker").val()
 				};
 				
-				// 각 세부목표의 기간이 중간목표의 일자보다 많지 않도록 한다.
-				var m_eventDays = Number(progressDay);
-				for(var i=0; i<goalCount; i++) {
-					var temp = $("#b_progressday" + (i+1)).val();
-					var b_eventDays = Number($("#b_progressday" + (i+1)).val());
-					if($("#b_progressday" + (i+1)).val() > m_eventDays) {
-						alert((i+1) + "번째 : 세부목표 진행일자는 중간목표 진행일자보다 많을 수 없습니다");
-						return false;
-					} else if($("#b_progressday" + (i+1)).val() < m_eventDays) {
-						alert((i+1) + "번째 : 세부목표 진행일자는 중간목표 진행일자보다 적을 수 없습니다");
-						return false;
-					}
-				}
 				
 				// 사용자가 몇 번째 중간목표에서 몇 개의 세부목표를 지정했는지 저장한다.
 				bGoalCounts[catchNum-1] = {
@@ -728,7 +739,7 @@ $(function() {
 						break;
 					}
 				}
-				$(".pickcolor").css("border-radius", "50%");
+				
 				$(this).dialog("close");
 			},
 			
@@ -786,6 +797,24 @@ $(function() {
 		$(".invite-modal").dialog("open");
 	});
 	
+	// 현재 인원수와 최대 인원수를 계산하여 동일할 경우 방장에게 쪽지를 보낸다
+	var maxMember = '${b_info.maxMember}';
+	var currentMember = 1;
+	for(var i=0; i<4; i++) {
+		if($("#p"+(i+1)).text() != "Empty") {
+			currentMember += 1;
+			if(maxMember == currentMember) {
+				$.ajax ({
+					url: "",
+					method: "post",
+					data: {},
+					success: function() {}
+				});
+				break;
+			}
+		}
+	}
+	
 	// 친구초대를 위한 modal창 설정
 	$(".invite-modal").dialog({
 		autoOpen: false,
@@ -805,9 +834,7 @@ $(function() {
 				});
 				
 				// 인원수가 다 차있을 경우 초대메시지를 보낼 수 없다.
-				var maxMember = '${b_info.maxMember}';
 				var currentMembers = 1;
-				
 				for(var i=1; i<4; i++) {
 					if($("#p"+(i+1)).text() != "Empty") {
 						currentMembers += 1;
@@ -858,7 +885,7 @@ $(function() {
 					},
 				});
 			}
-			// else : HOST가 아니므로 ID, 지정색, 사진, 인원수만 원 상태로.
+			// else : HOST가 아니므로 나간 유저에 대한 데이터 삭제 (ajax 처리)
 		}
 	});
 	
@@ -949,24 +976,60 @@ $(function() {
 	
 	// 방장 이외에는 중간목표 및 세부목표 편집을 할 수 없다.
 	if('${sessionScope.userid}' !=  '${sessionScope.hostId}') {
-		$("#dialog > div").attr("readonly", true);
+		$("#dialog").attr("readonly", true);
 	}
 	
 	// 시작버튼 클릭 시 참가한 사용자들이 모든 준비를 마쳤는지 확인하고 목표를 시작한다.
 	$("#startBtn").click(function() {
 		
 		// 무결성 처리는 연동이 끝난 후에 진행 ============================================
+		// 색 지정 했는지, 레디 했는지..
 		var startConfirm = confirm("목표를 시작 하시겠습니까?");
 		if(startConfirm) {
-			
+			// 유저들의 색상지정 여부와 레디 여부를 확인한다
+			$.ajax ({
+				url: "/goal/createGoal/checkUsers",
+				method: "post",
+				data: {"progressNum":'${b_info.progressNum}'},
+				success: function(list) {
+// 					var idList = new Array();
+// 					var pNum = -1;
+					
+					console.log(list);
+					
+// 					$(list).each(function(index, item) {
+// 						if(item.ready == "N") {
+// 							alert("아직 준비하지 않은 유저가 있습니다");
+// 							return false;
+// 						}
+						
+// 						if(item.color == null) {
+// 							alert("아직 색상지정이 완료되지 않은 유저가 있습니다");
+// 							return false;
+// 						} else {
+// 							console.log(item.color);
+// 							alert("색상지정 체크 로.직.오.류~~~~~~~~~~~~~~~~~~~~~~");
+// 							return false;
+// 						}
+						
+// 						console.log("is There bBtn num ? : " + bBtn_num);
+						
+// 						idList[index] = item.userId;
+// 						pNum = item.progressNum;
+// 					});
+// 					console.log(idList);
+// 					console.log(pNum);
+// 					location.href = '/goal/createGoal/startGoal?sectionNum=' + 1 + '&id_list=' + idList + '&progressNum=' + pNum;
+				},
+				error: function() { alert("하 진짜 ㅡㅡ 시작에러"); }
+			});
 		}
 	});
-	
-	
 });
 	
 </script>
 
+<!-- 배경화면 -->
 <div id="background"></div>
 
 <!-- 최종목표, 중간목표 마방진 버튼 -->
@@ -1099,12 +1162,10 @@ $(function() {
 			<td><pre>   </pre></td>
 			<td><pre>   </pre></td>
 		</tr>
-		<tr>
-			<td colspan="6"><input type="button" value="진행상황" id="currentrank"></td>
-		</tr>
 	</table>
 </aside>
 
+<!-- 레디, 시작, 나가기 버튼 -->
 <footer>
 	<div>
 		<input type="button" value="레디" id="readyBtn">
@@ -1164,7 +1225,7 @@ $(function() {
 	<div class="color-result"></div>
 </div>
 
-<!-- alert창을 띄우기 위한 div -->
+<!-- alert창을 띄우기 위한 bootstrap div -->
 <div class="card mb-4">
 	<div class="card-header">
 		
