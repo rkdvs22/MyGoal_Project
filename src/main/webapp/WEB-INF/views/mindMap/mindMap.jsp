@@ -80,7 +80,7 @@
 	       	   // 여기서 지금 임의로 progressNum을 줬지만 웅희씨에게 넘겨 받아야 함.
 	       	   var progressNum = '${requestScope.progressNum}';
 		       	$.ajax({
-					url:"/goal/mind/getBTMRecord,
+					url:"/goal/mind/getBTMRecord",
 					type:"post",
 					data:{"progressNum":progressNum,"isClick":"","clickedNodeTitle":"","clickedNodeNum":0,"BTMSectionNum":0,"mGoalNumList":'${requestScope.mGoalNumList}'},
 					dataType:"json",
