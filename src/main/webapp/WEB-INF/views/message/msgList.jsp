@@ -12,6 +12,7 @@
 <script src="/goal/resources/js/lib/tether/tether.min.js"></script>
 <script src="/goal/resources/js/lib/bootstrap/bootstrap.min.js"></script>
 <script src="/goal/resources/js/plugins.js"></script>
+
 <script>
 	jQuery(document).ready(function() {
 	    jQuery('.tabs .tab-links a').on('click', function(e)  {
@@ -265,25 +266,29 @@
         <div id="tab1" class="tab active">
         <!-- 멤버별 정렬 -->
 			<!-- Sender & Receiver List -->
-			<div id="tab1_left">
+			<section class="box-typical-dashboard panel panel-default scrollable">
+			<div id="tab1_left" class="box-typical-body panel-body">
 				<table id="senderList" class="table-hover">
 					<c:forEach items="${slist}" var="slist">
 						<tr>
 						<!-- 프로필 사진 -->
-						<td class="profileImg">
 						<c:if test="${slist.image != null}">
+						<td class="profileImg isExist">
 						<img src="/goal/resources/img/profileImg/${slist.image}">
+						</td>
 						</c:if>
 						<c:if test="${slist.image == null}">
+						<td class="profileImg">
 						<img src="/goal/resources/img/avatar-2-48.png">
-						</c:if>
 						</td>
+						</c:if>
 						<!-- 발신자 이름 -->
 						<td class="senderName"><a href="#" onclick="memberMsgList('${slist.userid}')">${slist.userid}</a></td>
 						</tr>
 					</c:forEach>
 				</table>
 			</div>
+			</section>
 			<!-- Received Messages -->
 			<div id="tab1_right">
 				<div id="tab1_right_top">
@@ -296,6 +301,7 @@
 					<input class="btn btn-rounded btn-success" type="button" value="전송" onclick="writeMsg()">
 				</div>
 			</div>
+			
         </div>
         <!-- 쪽지 읽기 끝 -->
 
@@ -327,26 +333,30 @@
 			</div>
 			<!-- 쪽지 작성 폼 끝 -->
 			<!-- 메시지 주고 받은 사람 목록 -->
-			<div id="tab2_right">
-				<table id="senderList">
+			<section class="box-typical-dashboard panel panel-default scrollable">
+			<div id="tab2_right" class="box-typical-body panel-body">
+				<table id="senderList" class="table-hover">
 					<tr><th colspan="2">최근에 메시지를 주고 받은 사람</th></tr>
 					<c:forEach items="${slist}" var="slist">
 						<tr>
 						<!-- 프로필 사진 -->
-						<td class="profileImg">
 						<c:if test="${slist.image != null}">
+						<td class="profileImg isExist">
 						<img src="/goal/resources/img/profileImg/${slist.image}">
+						</td>
 						</c:if>
 						<c:if test="${slist.image == null}">
+						<td class="profileImg">
 						<img src="/goal/resources/img/avatar-2-48.png">
-						</c:if>
 						</td>
+						</c:if>
 						<!-- 발신자 이름 -->
 						<td class="senderName"><a href="#" onclick="addReceiver('${slist.userid}')">${slist.userid}</a></td>
 						</tr>
 					</c:forEach>
 				</table>
 			</div>
+			</section>
         </div>
         <!-- 쪽지 쓰기 끝 -->
     </div>

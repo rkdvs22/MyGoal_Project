@@ -266,7 +266,7 @@
 	
 	//해당 마방진으로 이동
 	function goSquare(goalNum) {
-		location.href = "/goal/goalTree/treeToGoal?goalNum=" + goalNum;
+		location.href = "/goal/goalTree/treeToGoal?tGoalNum=" + goalNum;
 	}
 	
 	//최상위 목표 타이틀 출력
