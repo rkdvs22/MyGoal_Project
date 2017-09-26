@@ -44,20 +44,20 @@ public class BoardServiceImpl implements BoardService {
 
 	// Board 테이블에서 가장 최신화된 tGoalNum, userid을 가져옴
 	@Override
-	public BoardVO getTopGoalNum() {
-		return dao.getTopGoalNum();
+	public BoardVO getTopGoalNum(String userid) {
+		return dao.getTopGoalNum(userid);
 	}
 
 	// TopGoal 테이블에서 tGoalNum을 이용 progressNum 가져옴
 	@Override
-	public TopGoalVO getGoalProgressNum() {
-		return dao.getGoalProgressNum();
+	public TopGoalVO getGoalProgressNum(BoardVO bvo) {
+		return dao.getGoalProgressNum(bvo);
 	}
 
 	//TopGoal 테이블의 progressNum을 이용하여 MemberList 테이블의 progressNum 가져옴
 	@Override
-	public MemberListVO getMemberProgressNum() {
-		return dao.getMemberProgressNum();
+	public MemberListVO getMemberProgressNum(TopGoalVO tvo) {
+		return dao.getMemberProgressNum(tvo);
 	}
 
 	// MemberList 테이블에 user에 대한 데이터 입력

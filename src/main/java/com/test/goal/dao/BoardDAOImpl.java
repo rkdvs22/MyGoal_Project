@@ -23,6 +23,7 @@ public class BoardDAOImpl implements BoardDAO {
 	public ArrayList<BoardVO> boardList(Map<String, String> map, int startRecord, int countPerPage) {
 		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
 		RowBounds rb = new RowBounds(startRecord, countPerPage);
+		System.out.println(map);
 		return mapper.boardList(map, rb);
 	}
 
@@ -42,23 +43,23 @@ public class BoardDAOImpl implements BoardDAO {
 	
 	// Board 테이블에서 가장 최신화된 tGoalNum, userid을 가져옴
 	@Override
-	public BoardVO getTopGoalNum() {
+	public BoardVO getTopGoalNum(String userid) {
 		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
-		return mapper.getTopGoalNum();
+		return mapper.getTopGoalNum(userid);
 	}
 
 	// TopGoal 테이블에서 tGoalNum을 이용 progressNum 가져옴
 	@Override
-	public TopGoalVO getGoalProgressNum() {
+	public TopGoalVO getGoalProgressNum(BoardVO bvo) {
 		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
-		return mapper.getGoalProgressNum();
+		return mapper.getGoalProgressNum(bvo);
 	}
 
 	//TopGoal 테이블의 progressNum을 이용하여 MemberList 테이블의 progressNum 가져옴
 	@Override
-	public MemberListVO getMemberProgressNum() {
+	public MemberListVO getMemberProgressNum(TopGoalVO tvo) {
 		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
-		return mapper.getMemberProgressNum();
+		return mapper.getMemberProgressNum(tvo);
 	}
 
 	// MemberList 테이블에 user에 대한 데이터 입력
