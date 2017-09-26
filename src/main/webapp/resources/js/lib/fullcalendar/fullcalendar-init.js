@@ -444,8 +444,6 @@ $(document).ready(function(){
             			sumAchieve = item.achieve;
             			btmRecordNum = item.btmRecordNum;
             			
-            			
-            			
             			// 클릭한 날짜에 직접적으로 속한다면 
             			if(splited == dateSplited){
             				dayRecordNum = item.dayRecordNum;

@@ -54,6 +54,7 @@
 	    	   $.ajax({
 					url:"/goal/mind/getBTMSection",
 					type:"post",
+					data:{"sectionNum":'${requestScope.sectionNum}',"loginUserMGoalNum":'${requestScope.loginUserMGoalNum}'},
 					dataType:"json",
 					success:startMindMap,
 					error: function(){
@@ -77,10 +78,11 @@
 		       }
 	       	   
 	       	   // 여기서 지금 임의로 progressNum을 줬지만 웅희씨에게 넘겨 받아야 함.
-	       	   var progressNum = 16;
+	       	   var progressNum = '${requestScope.progressNum}';
 		       	$.ajax({
-					url:"/goal/mind/getBTMRecord?progressNum="+progressNum+"&isClick="+""+"&clickedNodeTitle="+""+"&clickedNodeNum="+0+"&BTMSectionNum="+0,
-					type:"get",
+					url:"/goal/mind/getBTMRecord,
+					type:"post",
+					data:{"progressNum":progressNum,"isClick":"","clickedNodeTitle":"","clickedNodeNum":0,"BTMSectionNum":0,"mGoalNumList":'${requestScope.mGoalNumList}'},
 					dataType:"json",
 					success:function(resultMapping){
 					
@@ -101,7 +103,6 @@
 			       	      }
 					},
 					error: function(){
-						alert('다시 시도해 주세요');
 					}
 				});
 		       	     

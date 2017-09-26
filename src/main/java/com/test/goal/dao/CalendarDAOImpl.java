@@ -94,6 +94,7 @@ public class CalendarDAOImpl implements CalendarDAO{
 			if(vo.getGetToday().equals(vo.getStartDate())){
 				mapper.exInsertToDayRecord(vo);
 			}else{
+				//dayRecordNum을 35번을 찾음
 				mapper.exInsertDayRecord(vo);
 			}
 			mapper.insertDayPlan(vo);
