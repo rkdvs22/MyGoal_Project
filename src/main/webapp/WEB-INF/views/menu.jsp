@@ -71,7 +71,7 @@
 <!--헤더(상단메뉴)-->
 <header class="site-header">
 	<div class="container-fluid">
-		<a href="/goal" class="site-logo-text">みんなのゴール</a>
+		<a href="/goal" class="site-logo-text"><img src="/goal/resources/img/logo.png" style="width:200px"></a>
 		<button class="hamburger hamburger--htla">
 			<span>toggle menu</span>
 		</button>
@@ -102,7 +102,7 @@
 						</button>
 					</c:if>
 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
-							<a class="dropdown-item" href="/goal/member/updateMemberForm"><span class="font-icon glyphicon glyphicon-user"></span>My Page</a>
+							<a class="dropdown-item" href="/goal/member/updateMemberForm"><span class="font-icon glyphicon glyphicon-user"></span>회원정보수정</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href="/goal/member/logout"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
 						</div>
