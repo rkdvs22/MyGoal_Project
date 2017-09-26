@@ -34,8 +34,6 @@ public class MindMapController {
 	@RequestMapping(value = "mindMap", method = RequestMethod.GET)
 	public String home(Model model,HttpServletRequest request, int sectionNum, HashMap<String, Integer> mGoalNumList,int progressNum) {
 		
-		System.out.println(11122233);
-		System.out.println("sectionNum: "+sectionNum + "mGoalNumList: " + mGoalNumList  + "progressNum: " + progressNum);
 		//sectionNum, 
 		
 		// 넘어오자마자 클릭하거나 시작된 중간번호의 값을 받는다 (현재 로그인한 사람의 중간번호를 받음)

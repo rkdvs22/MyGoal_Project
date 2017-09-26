@@ -83,7 +83,7 @@
 		left: 1000px;
 	}
 	
-	/* modal in colorpicker 지정 */d
+	/* modal in colorpicker 지정 */
 	.box-typical.box-typical-padding {
 		z-index: 1100;
 		overflow-y: visible;

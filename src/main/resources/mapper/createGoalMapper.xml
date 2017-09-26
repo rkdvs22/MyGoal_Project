@@ -246,10 +246,7 @@
 	
 	
 	
-	<!-- 유저들의 색상지정 여부와 레디 여부를 확인한다. -->
-	<select id="checkUsers" parameterType="int" resultType="MemberListVO">
-		SELECT * FROM memberlist WHERE progressnum = #{progressNum}
-	</select>
+	
 	
 	
 	
