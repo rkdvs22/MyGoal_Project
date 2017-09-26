@@ -494,7 +494,18 @@ public class CreateGoalController {
 	
 	
 	
-	
+	// 유저들의 색상지정 여부와 레디 여부를 불러온다.
+	@RequestMapping(value = "checkUsers", method = RequestMethod.POST)
+	@ResponseBody
+	public ArrayList<MemberListVO> checkUsers(int progressNum) {
+		System.out.println("아 왜!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		System.out.println("progressNum : " + progressNum);
+		ArrayList<MemberListVO> list = dao.checkUsers(progressNum);
+		for(MemberListVO vo:list) {
+			System.out.println(vo);
+		}
+		return list;
+	}
 	
 	
 	
