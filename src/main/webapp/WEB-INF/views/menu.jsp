@@ -54,6 +54,7 @@
 			}
 		});
 		
+		//
 	})
 	
 	// 로그인 화면으로 이동
@@ -153,7 +154,7 @@
 				</a>
 			</li>
 			<li class="calendar">
-				<a href="/goal/createForm/createGoal">
+				<a href="/goal/createGoal/openGoalSquare">
 					<i class="font-icon font-icon-event"></i>
 					<span class="lbl">Calendar</span>
 				</a>
