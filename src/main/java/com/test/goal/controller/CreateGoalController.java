@@ -372,7 +372,7 @@ public class CreateGoalController {
 	@RequestMapping(value = "inputGoal", method = RequestMethod.POST 
 			, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public void inputGoal(@RequestBody Map<String, Object> map
+	public boolean inputGoal(@RequestBody Map<String, Object> map
 						, MidGoalVO mvo) {
 		
 		// 중간목표
@@ -395,13 +395,14 @@ public class CreateGoalController {
 		
 		// 세부목표
 		MidGoalVO current_vo = dao.selectNowMidGoal(mvo);
-		for(int i=0; i<((ArrayList<Object>)( (HashMap<Object, Object>)map.get("btmGoal") ).get("key2")).size(); i++) {
+		for(int i=0; i<Integer.parseInt(map.get("goalCount").toString()); i++) {
 			String bGoal = ( (HashMap<Object, Object>) ( (ArrayList<Object>)
 							( (HashMap<Object, Object>)map.get("btmGoal") ).get("key2")).get(i)).get("bGoal").toString();
 			String bGoalDay = ( (HashMap<Object, Object>) ( (ArrayList<Object>)
 							( (HashMap<Object, Object>)map.get("btmGoal") ).get("key2")).get(i)).get("bGoalDay").toString();
 			String[] bGoalDaySp = bGoalDay.split("-");
 			
+			System.out.println("어? 세부목표 다 읊어봐 : " + bGoal);
 			BTMGoalVO bvo_temp = new BTMGoalVO();
 			bvo_temp.setbGoalTitle(bGoal);
 			bvo_temp.setPeriod(Integer.parseInt(bGoalDaySp[2]));
@@ -409,6 +410,7 @@ public class CreateGoalController {
 			dao.inputBtmGoal(bvo_temp);
 		}
 		
+		return true;
 	}
 	
 	// 사용자가 선택한 색상의 hex값을 테이블에 갱신한다.

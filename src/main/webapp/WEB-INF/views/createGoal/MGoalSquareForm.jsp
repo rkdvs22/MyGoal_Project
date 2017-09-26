@@ -9,7 +9,9 @@
 	<link rel="stylesheet" href="/goal/resources/css/separate/vendor/lobipanel.min.css">
 	<link rel="stylesheet" href="/goal/resources/css/separate/pages/widgets.min.css">
 	<link rel="stylesheet" href="/goal/resources/css/lib/font-awesome/font-awesome.min.css">
-
+	
+	<link rel="stylesheet" href="/goal/resources/css/separate/vendor/select2.min.css">
+	<link rel="stylesheet" href="/goal/resources/css/separate/vendor/typeahead.min.css">
 	<link rel="stylesheet" href="/goal/resources/css/lib/bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" href="/goal/resources/css/main.css">
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
@@ -34,10 +36,11 @@
 	}
 	
 	/* 방제 표시 */
-	.subject {
+	#subject {
 		position: absolute;
-		top: 120px;
+		top: 80px;
 		left: 300px;
+		width: 540px;
 	}
 	
 	/* 각 마방진 버튼 크기 지정 */
@@ -79,7 +82,7 @@
 	/* 레디, 시작, 나가기 */
 	footer {
 		position: absolute;
-		top: 710px;
+		top: 655px;
 		left: 1000px;
 	}
 	
@@ -183,6 +186,11 @@
 		opacity: 0.2;
 		filter:alpha(opacity=40);
 	}
+	
+	/* 초대, 색상선택, 준비, 시작, 나가기 버튼 */
+	#invitation, #selectcolor, #readyBtn, #startBtn, #exitBtn {
+		width: 300px;
+	}
 </style>
 
 </head>
@@ -206,7 +214,6 @@ var b_sDate = new Array();
 var b_eDate = new Array();
 var progressDay = "";
 
-var bGoal_modals = new Array();
 var bGoalCounts = new Array();
 var btnsClickCount = new Array(8);
 var tGoal_days = "";
@@ -331,6 +338,7 @@ $(function() {
 	});
 	
 	// modal창 설정. modal 창에서 확인 및 취소를 눌렀을때의 로직도 진행.
+	var bGoal_modals = new Array();
 	$("#dialog").dialog({
 		autoOpen: false,
 		width: 320,
@@ -434,9 +442,15 @@ $(function() {
 					method: "post",
 					dataType: "json",
 					contentType: "application/json;charset=UTF-8",
-					data: JSON.stringify({"midGoal":{"key1":midGoal}, "btmGoal":{"key2":bGoal_modals}, "tGoalNum":'${b_info.tGoalNum}'}),
-					success: function() {
+					data: JSON.stringify({"midGoal":{"key1":midGoal}, "btmGoal":{"key2":bGoal_modals}, "tGoalNum":'${b_info.tGoalNum}', "goalCount":goalCount}),
+					success: function(result) {
+						alert("자바스크립트 ㅅㅂ놈아");
 						inputMbtnValue(bBtn_num);
+						console.log(bGoal_modals);
+						bGoal_modals = [];
+						bGoal_modals = new Array();
+						// === 초기화가 제대로 안됨 === === 초기화가 제대로 안됨 === === 초기화가 제대로 안됨 ===
+						console.log("result : " + bGoal_modals);
 						$("#m_eventdays > b").text("");
 						$(".midgoal > input").val("");
 						$("#bGoalcount").val("");
@@ -818,7 +832,7 @@ $(function() {
 	// 친구초대를 위한 modal창 설정
 	$(".invite-modal").dialog({
 		autoOpen: false,
-		width: 350,
+		width: 330,
 		height: 500,
 		maxHeight: 500,
 		position: [500, 200],
@@ -925,7 +939,7 @@ $(function() {
 	var tGoal_m = tGoal_s / 60;
 	var tGoal_h = tGoal_m / 60;
 	tGoal_days = (tGoal_h / 24) + 1;
-	$(".subject > p > b").html("Title : " + '${b_info.tGoalTitle}' + "  [ Period : " + tGoal_days + "days ]");
+	$("#subject > #title").html("Title : " + '${b_info.tGoalTitle}' + "  [ Period : " + tGoal_days + "days ]");
 	var sDate_sp = tStartDate.toString().split(' ');
 	var eDate_sp = tEndDate.toString().split(' ');
 	$("#tGoal_date").html(sDate_sp[3]+ "/" + sDate_sp[1] + "/" + sDate_sp[2] 
@@ -1034,11 +1048,17 @@ $(function() {
 
 <!-- 최종목표, 중간목표 마방진 버튼 -->
 <article>
-	<section>
-		<div class="subject">
-			<p><b></b></p>
-			<p id="tGoal_date"></p>
+	<section id="subject" class="card card-green mb-3">
+		<header class="card-header" id="title">테스트다</header>
+		<div class="card-block">
+			<p class="card-text" id="tGoal_date"></p>
 		</div>
+	</section>
+	<section>
+<!-- 		<div class="subject"> -->
+<!-- 			<p><b></b></p> -->
+<!-- 			<p id="tGoal_date"></p> -->
+<!-- 		</div> -->
 		<div class="squares">
 			<div class="btn-group">
 				<input type="button" value="1" id="mBtn1" name="1" class="btn btn-default-outline">
@@ -1065,17 +1085,17 @@ $(function() {
 		<tr>
 			<th></th>
 			<th></th>
-			<th><pre>   </pre></th>
-			<th><pre> 색상</pre></th>
-			<th><pre>   </pre></th>
-			<th><pre> 아이디</pre></th>
+			<th><pre>  </pre></th>
+			<th><pre>색상</pre></th>
+			<th><pre>  </pre></th>
+			<th><pre>아이디</pre></th>
 		</tr>
 		<tr class="host" id="p1-tr">
 			<td></td>
 			<td id="host_img"><img src="/goal/resources/img/avatar-2-64.png"></td>
-			<td><pre>   </pre></td>
+			<td><pre>  </pre></td>
 			<td class="player-color">Not yet</td>
-			<td><pre>   </pre></td>
+			<td><pre>  </pre></td>
 			<c:choose>
 				<c:when test="${sessionScope.userid eq sessionScope.hostId}">
 					<td id="p1" class="player-id">${sessionScope.hostId}</td>
@@ -1126,41 +1146,41 @@ $(function() {
 		</tr>
 		<tr>
 			<td></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
+			<td><pre>  </pre></td>
+			<td><pre>  </pre></td>
+			<td><pre>  </pre></td>
+			<td><pre>  </pre></td>
+			<td><pre>  </pre></td>
 		</tr>
 		<tr>
 			<td></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
+			<td><pre>  </pre></td>
+			<td><pre>  </pre></td>
+			<td><pre>  </pre></td>
+			<td><pre>  </pre></td>
+			<td><pre>  </pre></td>
 		</tr>
 		<tr>
-			<td colspan="6"><input type="button" value="초대" id="invitation"></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-		</tr>
-		<tr>
-			<td colspan="6"><input type="button" value="색상지정" id="selectcolor"></td>
+			<td colspan="6">
+				<input type="button" value="초대" id="invitation" class="btn btn-inline btn-success-outline"><br>
+				<input type="button" value="색상지정" id="selectcolor" class="btn btn-inline btn-success-outline">
+			</td>
 		</tr>
 		<tr>
 			<td></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
+			<td><pre>  </pre></td>
+			<td><pre>  </pre></td>
+			<td><pre>  </pre></td>
+			<td><pre>  </pre></td>
+			<td><pre>  </pre></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><pre>  </pre></td>
+			<td><pre>  </pre></td>
+			<td><pre>  </pre></td>
+			<td><pre>  </pre></td>
+			<td><pre>  </pre></td>
 		</tr>
 	</table>
 </aside>
@@ -1168,9 +1188,9 @@ $(function() {
 <!-- 레디, 시작, 나가기 버튼 -->
 <footer>
 	<div>
-		<input type="button" value="레디" id="readyBtn">
-		<input type="button" value="시작" id="startBtn">
-		<input type="button" value="나가기" id="exitBtn">
+		<input type="button" value="레디" id="readyBtn" class="btn btn-inline btn-primary">
+		<input type="button" value="시작" id="startBtn" class="btn btn-inline btn-danger"><br>
+		<input type="button" value="나가기" id="exitBtn" class="btn btn-inline btn-success">
 	</div>
 </footer>
 
@@ -1243,8 +1263,8 @@ $(function() {
 		<thead>
 			<tr>
 				<td colspan="3" class="search-form">
-					<input type="text" id="search-id">
-					<input type="button" value="ID검색" id="searchBtn"><br>
+						<input type="search" id="search-id" autocomplete="off">
+						<input type="button" id="searchBtn" value="검색">
 					<hr>
 				</td>
 			</tr>
