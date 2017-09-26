@@ -26,10 +26,15 @@
    <%@ include file="../menu.jsp" %>
    
 <script>
+
+	//친구 메시지
+	function mail(frd) {
+		location.href="/goal/friend/friendMessage?frdid=" + frd;
+	}
    
    // 친구삭제
    function test(frd) {
-      var result = confirm("정말로 삭제하시겠습니까?");
+      var result = confirm("정말로 " + frd + "님과 인연을 끊으시겠어요...?");
       if(result) {
          $.ajax({
             url:"/goal/friend/deleteFriend?frd="+frd,
@@ -37,14 +42,13 @@
             success:function(){
                location.href = "/goal/friend/openFriend";
             },
-            error: function(){
-               alert('실패');
-            }
+            error: function(e) {
+				console.log(e);
+				alert(e);
+			}
          });
       }
    }
-      
-
 
 </script>
    
@@ -57,7 +61,7 @@
                      <h3>My Friends <small class="text-muted">${userid}</small></h3>
                   </div>
                   <div class="tbl-cell tbl-cell-action">
-                     <a href="/goal/friend/searchFriendForm" class="btn btn-rounded btn-success">Add friend</a>
+                     <a href="/goal/friend/searchFriendForm" class="btn btn-rounded btn-success">Search friend</a>
                   </div>
                </div>
             </div>

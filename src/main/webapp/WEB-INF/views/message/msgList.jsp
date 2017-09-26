@@ -22,15 +22,19 @@
 	    });
 	    
 	    $("#tab1_right_bottom").hide();
+	    
+	    if ("${requestScope.applyResult}") alert("친구 신청이 완료되었습니다.");
 	});
 	
 	function scrollBottom() {
 		var scroll = document.getElementById("tab1_right_top");
 		scroll.scrollTop = scroll.scrollHeight;
 	}
-	var senders = new Array();
+	
 	//받은 메시지 출력
 	function memberMsgList(id) {
+		var senders = new Array();
+		
 		$.ajax({
 			url: "/goal/message/msgList",
 			type: "post",
@@ -57,6 +61,10 @@
 						senders[index] = item.sender;
 						item.msgContent += '<br><input type="button" value="승인" id="join-btn' + index + '" class="join-btn" onclick="joinGoal('+ index +')">';
 						item.msgContent += ' <input type="button" value="거절" id="notJoin-btn'+ index +'" class="notJoin-btn" onclick="notJoinGoal('+ index +')">';
+					}
+					if (item.msgTitle == "[SYSTEM] 친구 신청이 도착하였습니다." && receivedMsg != '${sessionScope.userid}') {
+						item.msgContent += '<br><input type="button" class="btnFriend" value="승인" onclick=addFriend("' + receivedMsg + '")>&nbsp';
+						item.msgContent += '<input type="button" class="btnFriend" value="거절" onclick=rejectFriend("' + receivedMsg + '")>';
 					}
 					str += item.msgContent;
 					str += "</td></tr>";
@@ -139,6 +147,26 @@
 		}
 	}
 	
+	//친구 승인 메시지 작성
+	function friendMsg(frdid) {
+		var userid = "${sessionScope.userid}";
+		var msgTitle = "[SYSTEM] " + userid + "님이 친구 신청을 수락하셨습니다.";
+		var msgContent = userid + "님과 친구가 되셨습니다.<br>좋은 인연 이어나가세요.";
+		
+		$.ajax({
+			url: "/goal/message/writeMsg",
+			type: "post",
+			data: {"receiver":frdid, "msgTitle": msgTitle, "msgContent":msgContent},
+			success: function(result) {
+					memberMsgList(frdid);
+			},
+			error: function(e) {
+				console.log(e);
+				alert(e);
+			}
+		});
+	}
+	
 	//목록에서 아이디 클릭 시 수신자에 추가
 	function addReceiver(id) {
 		var receiverList = document.getElementById("receiver2");
@@ -171,6 +199,42 @@
 			}
 		}
 	}
+	
+	function addFriend(senderId) {	//친구 신청 승인
+		$.ajax({
+			url: "/goal/friend/addFriend",
+			type: "post",
+			data: {"frdid":senderId},
+			success: function() {
+				$(".btnFriend").remove();
+				friendMsg(senderId);
+			},
+			error: function(e) {
+				console.log(e);
+				alert(e);
+			}
+		});
+	}
+	
+	function rejectFriend(senderId) { //친구 신청 거절
+		var userid = "${sessionScope.userid}";
+		var msgTitle = "[SYSTEM] " + userid + "님이 친구 신청을 거절하셨습니다.";
+		var msgContent = userid + "님이 친구가 되길 원하지 않으십니다.<br>다음 기회를 노려보세요.";
+		
+		$.ajax({
+			url: "/goal/message/writeMsg",
+			type: "post",
+			data: {"receiver":senderId, "msgTitle":msgTitle, "msgContent":msgContent},
+			success: function(result) {
+					$(".btnFriend").remove();
+					memberMsgList(senderId);
+			},
+			error: function(e) {
+				console.log(e);
+				alert(e);
+			}
+		});
+	}
 </script>
 <link rel="stylesheet" href="/goal/resources/css/main.css?version=1">
 <link rel="stylesheet" href="/goal/resources/css/message/message.css?version=1">
@@ -202,7 +266,7 @@
         <!-- 멤버별 정렬 -->
 			<!-- Sender & Receiver List -->
 			<div id="tab1_left">
-				<table id="senderList">
+				<table id="senderList" class="table-hover">
 					<c:forEach items="${slist}" var="slist">
 						<tr>
 						<!-- 프로필 사진 -->

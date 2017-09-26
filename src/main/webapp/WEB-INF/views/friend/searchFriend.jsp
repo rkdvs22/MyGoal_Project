@@ -29,18 +29,28 @@
 	<%@ include file="../menu.jsp" %>
 
 <script>
-
-	function addFriend(listUserid) {
-		var result = confirm("친구등록 하시겠습니까?");
-		
-		if(result) {
-			$.ajax({
-				url: "/goal/friend/addFriend",
-				type: "post",
-				data: {"userid":listUserid},
-				success: $("#addFriend").attr("disabled", "disabled")
-			});
+	$(function() {
+		if ("${requestScope.result}" == "isFriend") {
+			alert("이미 친구로 등록된 회원입니다.");
 		}
+	})
+	
+	function applyFriend() {
+		$.ajax ({
+			url: "/goal/friend/applyFriend",
+			type: "post",
+			data: {"frdid":$("#frdid").val()},
+			success: function(result) {
+				if (result) {	//친구로 등록되지 않았을 때 친구 신청폼으로 연결
+					location.href = "/goal/friend/applyFriendForm?frdid=" + $("#frdid").val();
+				} else {
+					alert("이미 친구로 등록된 회원입니다.");
+					$(".btn").attr("disabled", "disabled");
+				}
+			},
+			error: function() {	}
+		});
+		
 	}
 	
 </script>
@@ -51,7 +61,7 @@
 			<div class="tbl">
 				<div class="tbl-row">
 					<div class="tbl-cell">
-						<h3>Add Friends <small class="text-muted">${userid}</small></h3>
+						<h3>Search Friend <small class="text-muted">${userid}</small></h3>
 					</div>
 					
 				<!-- 검색 텍스트박스 -->
@@ -89,7 +99,8 @@
 							<img src="/goal/resources/img/photo-184-1.jpg" alt="">
 						</div>
 						<div class="card-user-name">${list.userid}</div>
-						<input type="button" class="btn btn-rounded btn-success" id="addFriend" value="Add" onclick="addFriend('${list.userid}')">
+						<input type="hidden" id="frdid" name="frdid" value="${list.userid}">
+						<input type="submit" class="btn btn-rounded btn-success" id="applyFriend" value="Add" onclick="applyFriend()">
 					</article><!--.card-user-->
 				</div>
 			</c:forEach>

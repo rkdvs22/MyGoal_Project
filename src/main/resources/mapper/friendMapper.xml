@@ -29,12 +29,12 @@
 	<!-- 친구여부 : null이 아닐 때 친구 추가 버튼 비활성화 -->
 	<select id="isFriend" parameterType="string" resultType="MyFriendVO">
 		select * from Myfriend
-		where userid = #{userid} and frdid = #{id}
+		where userid = #{0} and frdid = #{1}
 	</select>
 	
 	<!-- 친구등록 -->
 	<insert id="addFriend" parameterType="MyFriendVO">
-		insert into Myfriend values(#{userid}, #{frdid})
+		insert into Myfriend values(#{0}, #{1})
 	</insert>
 	
 </mapper>

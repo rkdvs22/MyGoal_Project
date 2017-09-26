@@ -22,7 +22,7 @@ public class MessageController {
 	// 메시지 보내기
 	@RequestMapping(value = "writeMsg", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean writeMsg(MessageVO vo, HttpSession session, RedirectAttributes attr) {
+	public boolean writeMsg(MessageVO vo, HttpSession session) {
 		String userid = (String) session.getAttribute("userid");
 		
 		//sender

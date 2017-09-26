@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.test.goal.vo.MemberVO;
+import com.test.goal.vo.MessageVO;
 import com.test.goal.vo.MyFriendVO;
 
 @Repository
@@ -43,7 +44,7 @@ public class FriendDAOImpl implements FriendDAO {
 		FriendMapper mapper = sqlsession.getMapper(FriendMapper.class);
 		return mapper.searchFriend(map);
 	}
-
+	
 	// 친구등록
 	@Override
 	public void addFriend(String userid, String frdid) {
@@ -53,11 +54,9 @@ public class FriendDAOImpl implements FriendDAO {
 
 	// 친구여부 : null이 아닐 때 친구 추가 버튼 비활성화
 	@Override
-	public ArrayList<MyFriendVO> isFriend(String userid, String id) {
+	public MyFriendVO isFriend(String userid, String id) {
 		FriendMapper mapper = sqlsession.getMapper(FriendMapper.class);
 		return mapper.isFriend(userid, id);
 	}
-
-	
 	
 }
