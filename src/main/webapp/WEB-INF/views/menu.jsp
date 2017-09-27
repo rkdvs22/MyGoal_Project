@@ -154,7 +154,7 @@
 				</a>
 			</li>
 			<li class="calendar">
-				<a href="/goal/createGoal/openGoalSquare">
+				<a href="/goal/calendar/calendar">
 					<i class="font-icon font-icon-event"></i>
 					<span class="lbl">Calendar</span>
 				</a>

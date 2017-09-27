@@ -33,10 +33,6 @@
 		INSERT INTO BOARD(BOARDNUM, USERID, TGOALNUM) VALUES(BOARD_SEQ.NEXTVAL, #{userid}, #{tGoalNum})
 	</insert>
 	
-	
-	
-	
-	
 	<!-- modal 창 안에서 사용자가 검색한 키워드를 이용해 ID를 찾는다 -->
 	<select id="findIdinModal" parameterType="string" resultType="MemberVO">
 		SELECT userid FROM member WHERE userid LIKE '%'||#{keyWord}||'%'
@@ -234,37 +230,5 @@
 	<select id="checkUsers" parameterType="int" resultType="MemberListVO">
 		SELECT * FROM memberlist WHERE progressnum = #{progressNum}
 	</select>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
 	
 </mapper>
