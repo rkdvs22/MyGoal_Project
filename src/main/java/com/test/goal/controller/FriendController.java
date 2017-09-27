@@ -115,5 +115,6 @@ public class FriendController {
 	public void addFriend(String frdid, HttpSession session) {
 		String userid = (String) session.getAttribute("userid");
 		dao.addFriend(userid, frdid);
+		dao.addFriend(frdid, userid);
 	}
 }
