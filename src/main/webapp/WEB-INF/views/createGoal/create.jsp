@@ -54,7 +54,7 @@
 		</header>
 		
 		<div class="box-typical box-typical-padding">
-			<form action="create" method="post" id="fm">
+			<form action="/goal/createGoal/createNewGoal" method="post" id="fm">
 			<table class="create01">
 				<tr>
 					<th>Goal Title</th>
@@ -214,19 +214,19 @@
 		$(".text-hidden > td").hide();
 		
 		// 생성하기 버튼 클릭 시 체크 및 전송
-		$(".btnTr > td").click(function() {
+		$(".createBtn > button").click(function() {
 			var maxMember = $("#maxMember").val();
+			alert("maxMember : " + maxMember);
 			if(maxMember.value == "1") {
 				$("#type").val("S");
 			} else $("#type").val("M");
 			
 			$.ajax({
-				url: "create2",
+				url: "/goal/createGoal/create2",
 				type: "post",
 				data: {"progressNum":0 , "type":$("#type").val(), "mStart":"N", "maxMember":maxMember},
 				success: function(result_vo) {
 					$("#progressNum").val(result_vo.progressNum);
-// 					location.href = '/goal/createGoal/create?progressNum=' + result_vo.progressNum + '&type=' + result_vo.type + '&maxMember=' + result_vo.maxMember;
 					$("#fm").submit();
 				}
 			});

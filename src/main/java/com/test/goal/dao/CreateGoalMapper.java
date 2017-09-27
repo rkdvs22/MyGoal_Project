@@ -59,7 +59,7 @@ public interface CreateGoalMapper {
 
 	public int inputUserMemberList(TopGoalVO vo); // 초대받은 목표 (MEMBERLIST 테이블) 에 초대받은 사람의 ID를 입력한다.
 
-	public MemberListVO findUserNowInput(TopGoalVO vo); // 초대에 수락한 사용자에 대한 정보를 받아온다.
+	public ArrayList<MemberListVO> getJoinUserList(TopGoalVO vo); // 모든 맴버에 대한 정보를 가져온다.
 
 	public int inputMidGoal(MidGoalVO mvo); // 작성한 중간목표를 입력한다.
 

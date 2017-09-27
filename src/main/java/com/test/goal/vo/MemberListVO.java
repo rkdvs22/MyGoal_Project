@@ -5,22 +5,12 @@ public class MemberListVO {
 	private int listNum;
 	private String ready;
 	private String playerType;
-	private String userId;
+	private String userid;
 	private String color;
 	private int progressNum;
+	private String image;
 	
 	public MemberListVO() {}
-
-	public MemberListVO(int listNum, String ready, String playerType, String userId, String color, int progressNum) {
-		this.listNum = listNum;
-		this.ready = ready;
-		this.playerType = playerType;
-		this.userId = userId;
-		this.color = color;
-		this.progressNum = progressNum;
-	}
-
-
 
 	public int getListNum() {
 		return listNum;
@@ -46,12 +36,12 @@ public class MemberListVO {
 		this.playerType = playerType;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getUserid() {
+		return userid;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 
 	public String getColor() {
@@ -70,9 +60,17 @@ public class MemberListVO {
 		this.progressNum = progressNum;
 	}
 
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	@Override
 	public String toString() {
-		return "MemberListVO [listNum=" + listNum + ", ready=" + ready + ", playerType=" + playerType + ", userId="
-				+ userId + ", color=" + color + ", progressNum=" + progressNum + "]";
+		return "MemberListVO [listNum=" + listNum + ", ready=" + ready + ", playerType=" + playerType + ", userid="
+				+ userid + ", color=" + color + ", progressNum=" + progressNum + ", image=" + image + "]";
 	}
 }

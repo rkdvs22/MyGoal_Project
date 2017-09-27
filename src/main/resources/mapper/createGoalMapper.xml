@@ -8,7 +8,7 @@
 	
 	<!-- 목표大 작성 -->
 	<insert id="create1" parameterType="TopGoalVO">
-		insert into TopGoal values (TOPGOAL_SEQ.NEXTVAL, #{tGoalTitle}, #{tStartDate}, #{tEndDate}, #{tClear}, #{tStartStatus}, #{openStatus}, #{userid}, #{progressNum})	
+		insert into TopGoal values (TOPGOAL_SEQ.NEXTVAL, #{tGoalTitle}, #{tStartDate}, #{tEndDate}, #{tClear}, #{tStartStatus}, #{openStatus}, #{userid}, #{progressNum})
 	</insert>
 	
 	<!-- 가장 최신의 목표大 번호를 가져온다 -->
@@ -129,10 +129,10 @@
 	</insert>
 	
 	<!-- 초대에 수락한 사용자에 대한 정보를 받아온다. -->
-	<select id="findUserNowInput" parameterType="TopGoalVO" resultType="MemberListVO">
-		SELECT * FROM memberlist
-		WHERE userid = #{userid}
-		AND progressnum = #{progressNum}
+	<select id="getJoinUserList" parameterType="TopGoalVO" resultType="MemberListVO">
+		SELECT m.userid as userid, m.ready as ready, m.playertype as playerType, m.color as color FROM memberlist m INNER JOIN member b
+		ON m.userid = b.userid
+		WHERE m.progressnum = #{progressNum} 
 	</select>
 	
 	<!-- 작성한 중간목표를 입력한다 -->

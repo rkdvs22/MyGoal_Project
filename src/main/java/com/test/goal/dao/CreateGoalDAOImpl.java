@@ -116,13 +116,13 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 
 	// TOPGOAL, MEMBERLIST 테이블에 사용자를 등록한 뒤 초대한 목표로 이동한다.
 	@Override
-	public MemberListVO joinThatGoal(TopGoalVO vo) {
+	public ArrayList<MemberListVO> joinThatGoal(TopGoalVO vo) {
 		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
 		int goalNum = mapper.findNewTgoalNum();
 		vo.settGoalNum(goalNum);
 		mapper.inputUserTgoal(vo);
 		mapper.inputUserMemberList(vo);
-		return mapper.findUserNowInput(vo);
+		return mapper.getJoinUserList(vo);
 	}
 
 	// 작성한 중간목표를 입력한다.

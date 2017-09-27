@@ -197,6 +197,70 @@
 
 <body>
 <script>
+// 페이지를 시작함과 동시에 열리는 모든 함수들이 있는 jqeury
+$(function() {
+	var id = '${sessionScope.userid}'
+	$.ajax({
+		url:"/goal/createGoal/getMemberList",
+		type:"post",
+		data:{"id":id},
+		dataType:"json",
+		success:function(result){
+			
+			$("#userList").html("");
+			
+			$("#userList").append(
+					'<tr>'+
+					'<th></th>'+
+					'<th></th>'+
+					'<th><pre>  </pre></th>'+
+					'<th><pre>색상</pre></th>'+
+					'<th><pre>  </pre></th>'+
+					'<th><pre>아이디</pre></th>'+
+				'</tr>'+
+				'<tr class="host" id="p1-tr">'+
+					'<td></td>'+
+					'<td id="host_img"><img src="/goal/resources/img/avatar-2-64.png"></td>'+
+					'<td><pre>  </pre></td>'+
+					'<td class="player-color" id="host-color"></td>'+
+					'<td><pre>  </pre></td>'+
+					'<td id="p1" class="player-id"></td>'+
+				'</tr>');
+			
+			if('${createKey}' == 1) {
+				$("#p1-tr > #p1").text('${hostId}');
+				$("#p1-tr > #host-color").text("Not yet");
+			} else if('${newUser}' != null) {
+				alert("NULL?");
+				
+				$(result).each(function(index, item) {
+						console.log(item);
+					 if(item.playerType == "HOST") {
+						$("#p1-tr > #p1").val(item.userid);
+						if(item.color == null) {
+							$("#p1-tr > #host-color").text("Not yet");
+						} else {
+							$("#p1-tr > #host-color").style("background-color", item.color);
+						}
+					} else {
+						var row = '<tr class="player'+ (index+2) +'" id="p'+ (index+2) +'"-tr">';
+						row += '<td id="p'+ (index+2) +'"_empty"></td>';
+						row += '<td id="p'+ (index+2) +'"_img"><img src="/goal/resources/img/avatar-2-64.png"></td>';
+						row += '<td></td>';
+						row += '<td class="player-color">Not yet</td>';
+						row += '<td></td>';
+						row += '<td id="p'+ (index+2) +'" class="player-id">Empty</td>';
+						row += '</tr>';
+						$("#userList").append(row);
+					} 
+				});
+			}
+			
+		}
+	});
+	
+});
+
 // 새로고침 시 같은 목표 중복 생성 방지
 function noEvent() {
 	if (event.keyCode == 116) {
@@ -338,7 +402,6 @@ $(function() {
 	});
 	
 	// modal창 설정. modal 창에서 확인 및 취소를 눌렀을때의 로직도 진행.
-	var bGoal_modals = new Array();
 	$("#dialog").dialog({
 		autoOpen: false,
 		width: 320,
@@ -349,6 +412,12 @@ $(function() {
 		resizable: false,
 		buttons:{
 			"확인":function () {
+// 				$.ajax({
+					
+// 				});
+				
+				var bGoal_modals = [];
+				bGoal_modals = new Array();
 				var goalCount = $("#bGoalcount option:selected").val();
 				
 				// 사용자가 입력하지 않은 중간목표 항목에 대해 체크한다.
@@ -374,13 +443,7 @@ $(function() {
 				var bDays_sum = 0;
 				for(var i=0; i<goalCount; i++) {
 					var b_eventDays = Number($("#b_progressday" + (i+1)).val());
-// 					if($("#b_progressday" + (i+1)).val() > m_eventDays) {
-// 						alert((i+1) + "번째 : 세부목표 진행일자는 중간목표 진행일자보다 많을 수 없습니다");
-// 						return false;
-// 					} else if($("#b_progressday" + (i+1)).val() < m_eventDays) {
-// 						alert((i+1) + "번째 : 세부목표 진행일자는 중간목표 진행일자보다 적을 수 없습니다");
-// 						return false;
-// 					}
+
 					bDays_sum += b_eventDays;
 					if(bDays_sum > m_eventDays) {
 						alert("세부목표 진행일자들의 합이 중간목표 진행일자보다 많습니다");
@@ -406,28 +469,15 @@ $(function() {
 					bGoalCount: catchNum + "-" +goalCount
 				}
 				
-				var bGTotalLength = Number(goalCount) + Number(bGoal_modals.length);
+				var bGoalLength = Number(goalCount);
 				
-				var bGoalNum = 0;
 				// 사용자가 작성한 세부목표를 저장한다.
-				for(var i=0; i<bGTotalLength; i++) {
-					bGoalNum += 1;
-					if(catchNum == 1) {
+				for(var i=0; i<bGoalLength; i++) {
 						bGoal_modals[i] = {
 							m_b_GoalNum: catchNum + "-" + (i+1),
 							bGoal: $("#b_goal"+(i+1)).val(),
 							bGoalDay: catchNum + "-" + (i+1) + "-" +$("#b_progressday"+(i+1)).val()
 						};
-					} else {
-						bGoalNum = 0;
-						for(var j=bGoal_modals.length; j<bGTotalLength; j++) {
-							bGoalNum += 1;
-							bGoal_modals[j] = {
-								m_b_GoalNum: catchNum + "-" + bGoalNum,
-								bGoal: $("#b_goal"+(i+1)).val()
-							};
-						}
-					}
 				}
 				
 				// 사용자가 입력한 각 중간목표와 각 세부목표를 데이터베이스에 추가한다.
@@ -447,10 +497,9 @@ $(function() {
 						alert("자바스크립트 ㅅㅂ놈아");
 						inputMbtnValue(bBtn_num);
 						console.log(bGoal_modals);
-						bGoal_modals = [];
-						bGoal_modals = new Array();
+// 						bGoal_modals = [];
+// 						bGoal_modals = new Array();
 						// === 초기화가 제대로 안됨 === === 초기화가 제대로 안됨 === === 초기화가 제대로 안됨 ===
-						console.log("result : " + bGoal_modals);
 						$("#m_eventdays > b").text("");
 						$(".midgoal > input").val("");
 						$("#bGoalcount").val("");
@@ -458,11 +507,12 @@ $(function() {
 					}
 				});
 				
-				if(click_flag == true) {
-					inputMbtnValue(bBtn_num);
-				} else {
-					updateMbtnValue(bBtn_num);
-				}
+				// 각 버튼에 중간목표를 넣는 부분============= (향후 활용 예정)
+// 				if(click_flag == true) {
+// 					inputMbtnValue(bBtn_num);
+// 				} else {
+// 					updateMbtnValue(bBtn_num);
+// 				}
 				
 				$(this).dialog("close");
 			},
@@ -848,29 +898,20 @@ $(function() {
 				});
 				
 				// 인원수가 다 차있을 경우 초대메시지를 보낼 수 없다.
-				var currentMembers = 1;
-				for(var i=1; i<4; i++) {
-					if($("#p"+(i+1)).text() != "Empty") {
-						currentMembers += 1;
+				
+				// 사용자가 체크박스에서 선택한 사람에게 초대 메시지를 보낸다.
+				jQuery.ajaxSettings.traditional = true;
+				$.ajax ({
+					url: "/goal/createGoal/writeInviteMsg",
+					type: "post",
+					data: {"nameList":nameList},
+					success: function(result) {
+						alert("초대 메시지를 전송하였습니다");
 					}
+				});
+				
 					
-					if(currentMembers >= maxMember) {
-						alert("빈 자리가 없어 초대장을 보낼 수 없습니다");
-						return false;
-					} else {
-						// 사용자가 체크박스에서 선택한 사람에게 초대 메시지를 보낸다.
-						jQuery.ajaxSettings.traditional = true;
-						$.ajax ({
-							url: "/goal/createGoal/writeInviteMsg",
-							type: "post",
-							data: {"nameList":nameList},
-							success: function(result) {
-								alert("초대 메시지를 전송하였습니다");
-							}
-						});
-						break;
-					}
-				}
+					
 				
 				$(".friendList").html("");
 				$(this).dialog("close");
@@ -979,14 +1020,6 @@ $(function() {
 	}
 	
 	// 초대받은 유저가 방에 입장했을 경우 그 유저의 ID를 추가한다.
-	if('${newUser.userId}' != "") {
-		for(var i=1; i<4; i++) {
-			if($("#p" + (i+1)).text() == "Empty") {
-				$("#p" + (i+1)).text('${newUser.userId}');
-				break;
-			}
-		}
-	}
 	
 	// 방장 이외에는 중간목표 및 세부목표 편집을 할 수 없다.
 	if('${sessionScope.userid}' !=  '${sessionScope.hostId}') {
@@ -1055,10 +1088,6 @@ $(function() {
 		</div>
 	</section>
 	<section>
-<!-- 		<div class="subject"> -->
-<!-- 			<p><b></b></p> -->
-<!-- 			<p id="tGoal_date"></p> -->
-<!-- 		</div> -->
 		<div class="squares">
 			<div class="btn-group">
 				<input type="button" value="1" id="mBtn1" name="1" class="btn btn-default-outline">
@@ -1081,113 +1110,17 @@ $(function() {
 
 <!-- 플레이 할 유저 목록, 초대, 색상지정, 진행상황을 표시한다. -->
 <aside>
-	<table>
-		<tr>
-			<th></th>
-			<th></th>
-			<th><pre>  </pre></th>
-			<th><pre>색상</pre></th>
-			<th><pre>  </pre></th>
-			<th><pre>아이디</pre></th>
-		</tr>
-		<tr class="host" id="p1-tr">
-			<td></td>
-			<td id="host_img"><img src="/goal/resources/img/avatar-2-64.png"></td>
-			<td><pre>  </pre></td>
-			<td class="player-color">Not yet</td>
-			<td><pre>  </pre></td>
-			<c:choose>
-				<c:when test="${sessionScope.userid eq sessionScope.hostId}">
-					<td id="p1" class="player-id">${sessionScope.hostId}</td>
-				</c:when>
-				<c:when test="${sessionScope.userid != sessionScope.hostId}">
-					<c:forEach var="user" items="${tGoal_list}" begin="0" end="0">
-						<td id="p1" class="player-id">${user.userid}</td>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-					<td id="p1" class="player-id">${host}</td>
-				</c:otherwise>
-			</c:choose>
-		</tr>
-		<tr class="player2" id="p2-tr">
-			<td id="p2_empty"></td>
-			<td id="p2_img"><img src="/goal/resources/img/avatar-2-64.png"></td>
-			<td></td>
-			<td class="player-color">Not yet</td>
-			<td></td>
-			<c:choose>
-				<c:when test="${null eq newUser.userId}">
-					<c:forEach var="user" items="${tGoal_list}" begin="1" end="1">
-						<td id="p2" class="player-id">${user.userid}</td>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-					<td id="p2" class="player-id">Empty</td>
-				</c:otherwise>
-			</c:choose>
-			
-		</tr>
-		<tr class="player3" id="p3-tr">
-			<td id="p3_empty"></td>
-			<td id="p3_img"><img src="/goal/resources/img/avatar-2-64.png"></td>
-			<td></td>
-			<td class="player-color">Not yet</td>
-			<td></td>
-			<td id="p3" class="player-id">Empty</td>
-		</tr>
-		<tr class="player4" id="p4-tr">
-			<td id="p4_empty"></td>
-			<td id="p4_img"><img src="/goal/resources/img/avatar-2-64.png"></td>
-			<td></td>
-			<td class="player-color">Not yet</td>
-			<td></td>
-			<td id="p4" class="player-id">Empty</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><pre>  </pre></td>
-			<td><pre>  </pre></td>
-			<td><pre>  </pre></td>
-			<td><pre>  </pre></td>
-			<td><pre>  </pre></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><pre>  </pre></td>
-			<td><pre>  </pre></td>
-			<td><pre>  </pre></td>
-			<td><pre>  </pre></td>
-			<td><pre>  </pre></td>
-		</tr>
-		<tr>
-			<td colspan="6">
-				<input type="button" value="초대" id="invitation" class="btn btn-inline btn-success-outline"><br>
-				<input type="button" value="색상지정" id="selectcolor" class="btn btn-inline btn-success-outline">
-			</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><pre>  </pre></td>
-			<td><pre>  </pre></td>
-			<td><pre>  </pre></td>
-			<td><pre>  </pre></td>
-			<td><pre>  </pre></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><pre>  </pre></td>
-			<td><pre>  </pre></td>
-			<td><pre>  </pre></td>
-			<td><pre>  </pre></td>
-			<td><pre>  </pre></td>
-		</tr>
+	<table id="userList">
+	
+		<!-- 사용자가 추가되는 곳 -->
 	</table>
 </aside>
 
-<!-- 레디, 시작, 나가기 버튼 -->
+<!-- 초대, 색상지정, 레디, 시작, 나가기 버튼 -->
 <footer>
 	<div>
+		<input type="button" value="초대" id="invitation" class="btn btn-inline btn-success-outline"><br>
+		<input type="button" value="색상지정" id="selectcolor" class="btn btn-inline btn-success-outline"><br>
 		<input type="button" value="레디" id="readyBtn" class="btn btn-inline btn-primary">
 		<input type="button" value="시작" id="startBtn" class="btn btn-inline btn-danger"><br>
 		<input type="button" value="나가기" id="exitBtn" class="btn btn-inline btn-success">

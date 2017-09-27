@@ -2,6 +2,7 @@ package com.test.goal.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -43,14 +44,6 @@ public class CreateGoalController {
 	@Autowired
 	private MessageDAO msg_dao;
 	
-	// 마방진 생성화면으로 이동
-	@RequestMapping(value = "MGoalSquareForm", method = RequestMethod.GET)
-	public String MGoalSquareForm(HttpSession session) {
-		String hostId = (String)session.getAttribute("userid");
-		session.setAttribute("hostId", hostId);
-		return "/createGoal/MGoalSquareForm";
-	}
-	
 	// 목표大작성화면 이동
 	@RequestMapping(value = "createForm", method = RequestMethod.GET)
 	public String createForm() {
@@ -58,16 +51,23 @@ public class CreateGoalController {
 	}
 	
 	// 목표大작성 기능
-	@RequestMapping(value = "create", method = RequestMethod.POST)
-	public String create(TopGoalVO tvo, MainProgressVO mvo, Model model, int progressNum, HttpSession session) {
-		String hostId = (String)session.getAttribute("userid");
-		session.setAttribute("hostId", hostId);
-		mvo.setProgressNum(progressNum);
-		model.addAttribute("topGoal", dao.create1(tvo));
-		int topGoalNum = dao.getTgoalNum().gettGoalNum();
-		tvo.settGoalNum(topGoalNum);
-		writeBoard(tvo);
-		model.addAttribute("b_info", dao.getBoardInfo());
+	@RequestMapping(value = "createNewGoal", method = RequestMethod.POST)
+	public String create(TopGoalVO tvo, MainProgressVO mvo, Model model, String progressNum, HttpSession session) {
+		System.out.println(tvo);
+		if(progressNum != null){
+			String hostId = (String)session.getAttribute("userid");
+			session.setAttribute("hostId", hostId);
+			mvo.setProgressNum(Integer.parseInt(progressNum));
+			int create1 = dao.create1(tvo);
+			model.addAttribute("topGoal", create1);	//topGoal 생성
+			int topGoalNum = dao.getTgoalNum().gettGoalNum();
+			tvo.settGoalNum(topGoalNum);
+			writeBoard(tvo);
+			int createKey = 1;
+			model.addAttribute("createKey", createKey);
+			model.addAttribute("hostId", hostId);
+			model.addAttribute("b_info", dao.getBoardInfo());
+		}
 		return "/createGoal/MGoalSquareForm";
 	}
 	
@@ -147,8 +147,8 @@ public class CreateGoalController {
 	}
 	
 	// 초대한 목표로 이동한다.
-	@RequestMapping(value = "joinThatGoal", method = RequestMethod.GET)
-	public String joinThatGoal(String id, Model model, HttpSession session, FindHostVO host_vo) {
+	@RequestMapping(value = "joinThatGoal")
+	public String joinThatGoal(String id, Model model, HttpSession session) {
 		TopGoalVO vo = findThatGoal(id);
 		String invitedId = (String) session.getAttribute("userid");
 		vo.setUserid(invitedId);
@@ -158,11 +158,12 @@ public class CreateGoalController {
 		String[] eDate = eDate_temp[0].split("-");
 		vo.settStartDate(sDate[0] + "/" + sDate[1] + "/" + sDate[2]);
 		vo.settEndDate(eDate[0] + "/" + eDate[1] + "/" + eDate[2]);
+		
 		model.addAttribute("newUser", dao.joinThatGoal(vo));
 		model.addAttribute("b_info", dao.getBoardInfo());
-		
+		FindHostVO host_vo = new FindHostVO();
 		host_vo.setMyId(invitedId);
-		model.addAttribute("host", dao.findThisGoalHost(host_vo));
+//		model.addAttribute("host", dao.findThisGoalHost(host_vo));
 		
 		return "/createGoal/MGoalSquareForm";
 	}
@@ -209,7 +210,6 @@ public class CreateGoalController {
 							( (HashMap<Object, Object>)map.get("btmGoal") ).get("key2")).get(i)).get("bGoalDay").toString();
 			String[] bGoalDaySp = bGoalDay.split("-");
 			
-			System.out.println("어? 세부목표 다 읊어봐 : " + bGoal);
 			BTMGoalVO bvo_temp = new BTMGoalVO();
 			bvo_temp.setbGoalTitle(bGoal);
 			bvo_temp.setPeriod(Integer.parseInt(bGoalDaySp[2]));
@@ -236,7 +236,7 @@ public class CreateGoalController {
 		else return false;
 	}
 	
-	// 준비를 누른 사람이 이전에 레디를 했는지에 대한 여부를 불러온다.
+	// 준비하지 않았을 경우 준비, 한 상태일 경우 취소
 	@RequestMapping(value = "switchReady", method = RequestMethod.POST)
 	@ResponseBody
 	public void switchReady(@RequestBody Map<String, String> map) {
@@ -246,9 +246,6 @@ public class CreateGoalController {
 	// 준비를 누른 사람이 이전에 레디를 했는지에 대한 여부를 불러온다.
 	@RequestMapping(value = "startGoal", method = RequestMethod.GET)
 	public String startGoal(int sectionNum, String[] id_list, int progressNum, Model model) {
-		System.out.println(sectionNum);
-		System.out.println(id_list.length);
-		System.out.println(progressNum);
 		
 		HashMap<String, Integer> map = new HashMap<>();
 		
@@ -268,12 +265,34 @@ public class CreateGoalController {
 	@RequestMapping(value = "checkUsers", method = RequestMethod.POST)
 	@ResponseBody
 	public ArrayList<MemberListVO> checkUsers(int progressNum) {
-		System.out.println("아 왜!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		System.out.println("progressNum : " + progressNum);
 		ArrayList<MemberListVO> list = dao.checkUsers(progressNum);
 		for(MemberListVO vo:list) {
 			System.out.println(vo);
 		}
+		return list;
+	}
+	
+	
+	@RequestMapping(value = "getMemberList", method = RequestMethod.POST)
+	@ResponseBody
+	public ArrayList<MemberListVO> getMemberList(String id) {
+		
+		TopGoalVO vo = findThatGoal(id);
+		String[] sDate_temp = vo.gettStartDate().split(" ");
+		String[] eDate_temp = vo.gettEndDate().split(" ");
+		String[] sDate = sDate_temp[0].split("-");
+		String[] eDate = eDate_temp[0].split("-");
+		vo.settStartDate(sDate[0] + "/" + sDate[1] + "/" + sDate[2]);
+		vo.settEndDate(eDate[0] + "/" + eDate[1] + "/" + eDate[2]);
+		
+		ArrayList<MemberListVO> list = dao.joinThatGoal(vo);
+//		HashSet hs = new HashSet<>(temp);
+//		ArrayList<MemberListVO> list = new ArrayList<>(hs);
+		
+		for(MemberListVO m:list) {
+			System.out.println(m);
+		}
+		
 		return list;
 	}
 	

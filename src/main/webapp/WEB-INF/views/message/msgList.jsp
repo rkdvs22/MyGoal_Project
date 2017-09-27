@@ -24,9 +24,9 @@
 	    
 	    $("#tab1_right_bottom").hide();
 	    
-	    if ("${requestScope.applyResult}") alert("친구 신청이 완료되었습니다.");
 	});
-	
+
+	var senders = new Array();
 	function scrollBottom() {
 		var scroll = document.getElementById("tab1_right_top");
 		scroll.scrollTop = scroll.scrollHeight;
@@ -34,7 +34,6 @@
 	
 	//받은 메시지 출력
 	function memberMsgList(id) {
-		var senders = new Array();
 		
 		$.ajax({
 			url: "/goal/message/msgList",
@@ -186,13 +185,13 @@
 	// 초대 메시지에 승인을 누를 시 해당하는 목표의 방으로 입장.
 	function joinGoal(index) {
 		for(var i=0; i<=index; i++) {
+			
 			if(senders[i] == senders[index]) {
 				$.ajax ({
 					url: "/goal/createGoal/findThatGoal",
 					type: "post",
 					data: {"senderId":senders[i]},
 					success: function(vo){
-						console.log(vo.userid);
 						location.href='/goal/createGoal/joinThatGoal?&id=' + vo.userid;
 					}
 				});
