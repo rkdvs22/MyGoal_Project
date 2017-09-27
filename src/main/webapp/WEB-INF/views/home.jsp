@@ -29,28 +29,27 @@
 	<link rel="stylesheet" href="/goal/resources/css/lib/font-awesome/font-awesome.min.css">
 	<link rel="stylesheet" href="/goal/resources/css/lib/bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" href="/goal/resources/css/main.css?version=3">
-  
-<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet" media="all">   -->
-	
+  <link rel="stylesheet" href="/goal/resources/css/flexslider.css" type="text/css">
 	
 	<script src="/goal/resources/js/lib/jquery/jquery.min.js"></script>
 	<script src="/goal/resources/js/lib/tether/tether.min.js"></script>
 	<script src="/goal/resources/js/lib/bootstrap/bootstrap.min.js"></script>
 	<script src="/goal/resources/js/plugins.js"></script>
+<script src="/goal/resources/js/jquery.flexslider-min.js"></script>
+	
 	<script type="text/javascript" src="/goal/resources/js/lib/jqueryui/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="/goal/resources/js/lib/lobipanel/lobipanel.min.js"></script>
 	<script type="text/javascript" src="/goal/resources/js/lib/match-height/jquery.matchHeight.min.js"></script>
 	<script src="/goal/resources/js/app.js"></script>
 <!-- 	<script src="https://www.gstatic.com/charts/loader.js"></script> -->
 
-<style>
-	/* 메인 이미지 슬라이드 크기지정 */
-	.box{
-    width:100%;
-    height:300px;
-    background-color:rgb(41, 128, 185);
-}
-</style>
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+	    $('.flexslider').flexslider({
+	    	animation: "slide"
+	    });
+  });
+</script>
 
 </head>
 <body class="with-side-menu-compact dark-theme dark-theme-green">
@@ -167,25 +166,34 @@
       });
       
       
- /* 메인페이지 이미지 slider */
-	 $('.carousel').carousel({
-		interval: 3000
-	});
-      
     </script>
 
 
 <div class="page-content">
     <div class="container-fluid">
     	<!-- 메인 이미지 슬라이드 -->
-		<div id="carousel" class="carousel slide" data-ride="carousel" data-interval="true">
-		    <!-- Indicators -->
+    	<div class="flexslider">
+			<ul class="slides">
+		    	<li>
+		      		<img src="/goal/resources/img/city.jpg" />
+		    	</li>
+		    	<li>
+		      		<img src="/goal/resources/img/tree.jpg" />
+		    	</li>
+		    	<!-- <li>
+		      		<img src="slide3.jpg" />
+		    	</li> -->
+		  	</ul>
+		</div>
+    	
+		<!-- <div id="carousel" class="carousel slide" data-ride="carousel" data-interval="true">
+		    Indicators
 		    <ol class="carousel-indicators">
 		        <li data-target="#carousel" data-slide-to="0" class="active"></li>
 		        <li data-target="#carousel" data-slide-to="1"></li>
-		        <!-- <li data-target="#carousel" data-slide-to="2"></li> -->
+		        <li data-target="#carousel" data-slide-to="2"></li>
 		    </ol>
-		   <!-- Carousel items -->
+		   Carousel items
 		    <div class="carousel-inner">
 		        <div class="item active">
 		        	<img class="box" src="/goal/resources/img/city.jpg">
@@ -201,21 +209,21 @@
 		            <p>Description</p>
 		          </div>
 		        </div>
-		       <!--  <div class="item"><img class="img-responsive" src="https://images.unsplash.com/photo-1445462657202-a0893228a1e1?crop=entropy&fit=crop&fm=jpg&h=400&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1200">
+		        <div class="item"><img class="img-responsive" src="https://images.unsplash.com/photo-1445462657202-a0893228a1e1?crop=entropy&fit=crop&fm=jpg&h=400&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1200">
 		          <div class="carousel-caption">
 		            <h2>Title</h2>
 		            <p>Description</p>
 		          </div>
-		        </div>  -->
+		        </div> 
 		    </div>
-		   <!-- Carousel nav -->
+		   Carousel nav
 		    <a class="left carousel-control" href="#carousel" data-slide="prev">
 		    	<span class="glyphicon glyphicon-chevron-left"></span>
 		    </a>
 		    <a class="right carousel-control" href="#carousel" data-slide="next">
 		    	<span class="glyphicon glyphicon-chevron-right"></span>
 		    </a>
-		</div>
+		</div> -->
 		    
 		    
 		    <!-- 차트 -->

@@ -71,4 +71,6 @@
 		where b.mGoalNum = #{mGoalNum}
 	</select>
 	
+	
+	
 </mapper>

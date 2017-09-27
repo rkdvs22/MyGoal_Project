@@ -104,5 +104,6 @@ public class MemberDAOImpl implements MemberDAO {
 		MemberMapper mapper = sqlsession.getMapper(MemberMapper.class);
 		return mapper.getBTMGoalList(mGoalNum);
 	}
+
 	
 }

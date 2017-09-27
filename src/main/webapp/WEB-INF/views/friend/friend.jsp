@@ -76,7 +76,12 @@
                   <div class="col-sm-6 col-md-4 col-xl-3">
                      <article class="card-user box-typical">
                         <div class="card-user-photo">
-                           <img src="/goal/resources/img/photo-184-1.jpg" alt="">
+	                        <c:if test="${frd.image == null}">
+	                           <img src="/goal/resources/img/avatar-2-64.png" alt="">
+	                        </c:if>
+	                        <c:if test="${frd.image != null}">
+	                           <img src="/goal/resources/img/profileImg/${frd.image}" alt="">
+	                        </c:if>
                         </div>
                         <div class="card-user-name">${frd.frdid}</div>
                         <a href="#" onclick="mail('${frd.frdid}')"><i class="font-icon font-icon-mail"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

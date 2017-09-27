@@ -197,4 +197,6 @@ public class MemberController {
 	public ArrayList<BTMGoalVO> getBTMGoalList(int mGoalNum) {
 		return dao.getBTMGoalList(mGoalNum);
 	}
+	
+	
 }

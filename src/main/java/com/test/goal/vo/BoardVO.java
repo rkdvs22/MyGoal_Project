@@ -12,11 +12,14 @@ public class BoardVO {
 	private String tGoalTitle;
 	private String openStatus;
 	private int progressNum;
+	private String image;
 	
 	public BoardVO() {	}
 
 	public BoardVO(int boardnum, String userid, int favorite, int tGoalNum, String startDate, String endDate,
-			int currentMemberNumber, int maxMember, String tGoalTitle, String openStatus, int progressNum) {
+			int currentMemberNumber, int maxMember, String tGoalTitle, String openStatus, int progressNum,
+			String image) {
+		super();
 		this.boardnum = boardnum;
 		this.userid = userid;
 		this.favorite = favorite;
@@ -28,6 +31,7 @@ public class BoardVO {
 		this.tGoalTitle = tGoalTitle;
 		this.openStatus = openStatus;
 		this.progressNum = progressNum;
+		this.image = image;
 	}
 
 	public int getBoardnum() {
@@ -118,13 +122,23 @@ public class BoardVO {
 		this.progressNum = progressNum;
 	}
 
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardVO [boardnum=" + boardnum + ", userid=" + userid + ", favorite=" + favorite + ", tGoalNum="
 				+ tGoalNum + ", startDate=" + startDate + ", endDate=" + endDate + ", currentMemberNumber="
 				+ currentMemberNumber + ", maxMember=" + maxMember + ", tGoalTitle=" + tGoalTitle + ", openStatus="
-				+ openStatus + ", progressNum=" + progressNum + "]";
+				+ openStatus + ", progressNum=" + progressNum + ", image=" + image + "]";
 	}
+
+	
 
 	
 }

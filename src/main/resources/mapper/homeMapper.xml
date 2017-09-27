@@ -24,5 +24,9 @@
 		order by msgDate desc) where rownum &lt; 6
 	</select>
 	
+	<!-- 자기정보 -->
+	<select id="getMyInfo" parameterType="string" resultType="MemberVO">
+		select * from Member where userid = #{userid}
+	</select>
 	
 </mapper>

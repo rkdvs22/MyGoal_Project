@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.test.goal.vo.BoardVO;
+import com.test.goal.vo.MemberVO;
 import com.test.goal.vo.MessageVO;
 
 @Repository
@@ -25,6 +26,13 @@ public class HomeDAOImpl implements HomeDAO {
 	public ArrayList<MessageVO> homeMessage(String userid) {
 		HomeMapper mapper = sqlsession.getMapper(HomeMapper.class);
 		return mapper.homeMessage(userid);
+	}
+
+	// 자기정보
+	@Override
+	public MemberVO getMyInfo(String userid) {
+		HomeMapper mapper = sqlsession.getMapper(HomeMapper.class);
+		return mapper.getMyInfo(userid);
 	}
 
 }

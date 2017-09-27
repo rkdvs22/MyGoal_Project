@@ -20,10 +20,12 @@ public class HomeController {
 	private HomeDAO dao;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model, HttpSession session) {
+	public String home(Model model, HttpSession session) {
 		String userid = (String) session.getAttribute("userid");
 		
-		if (userid != null) {		
+		
+		if (userid != null) { // 로그인 상태
+			session.setAttribute("image", dao.getMyInfo(userid).getImage());
 			model.addAttribute("homeBoard", dao.homeBoard());
 			model.addAttribute("homeMessage", dao.homeMessage(userid));
 		}

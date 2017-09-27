@@ -96,7 +96,13 @@
 				<div class="col-sm-6 col-md-4 col-xl-3">
 					<article class="card-user box-typical">
 						<div class="card-user-photo">
-							<img src="/goal/resources/img/photo-184-1.jpg" alt="">
+							<c:if test="${list.image == null}">
+								<img src="/goal/resources/img/avatar-2-64.png" alt="">
+							</c:if>
+							<c:if test="${list.image != null}">
+								<img src="/goal/resources/img/profileImg/${list.image}" alt="">
+							</c:if>
+							
 						</div>
 						<div class="card-user-name">${list.userid}</div>
 						<input type="hidden" id="frdid" name="frdid" value="${list.userid}">

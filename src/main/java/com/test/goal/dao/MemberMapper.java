@@ -36,7 +36,6 @@ public interface MemberMapper {
 	public ArrayList<BTMGoalVO> getBTMGoalList(int mGoalNum);
 
 
-
 	
 
 

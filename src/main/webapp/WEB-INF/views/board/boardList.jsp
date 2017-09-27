@@ -76,7 +76,12 @@
 						<div class="user-card-row">
 							<div class="tbl-row">
 								<div class="tbl-cell tbl-cell-photo">
-									<a href="#"><img src="/goal/resources/img/photo-64-2.jpg" alt=""></a>
+									<c:if test="${list.image == null}">
+										<a><img src="/goal/resources/img/avatar-2-64.png" alt=""></a>
+									</c:if>
+									<c:if test="${list.image != null}">
+										<a><img src="/goal/resources/img/profileImg/${list.image}" alt=""></a>
+									</c:if>
 								</div>
 								<div class="tbl-cell">
 									<p class="user-card-row-name">${list.userid}</a></p>

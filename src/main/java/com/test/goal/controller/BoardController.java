@@ -1,5 +1,6 @@
 package com.test.goal.controller;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.test.goal.dao.BoardDAO;
+import com.test.goal.dao.GoalTreeDAO;
+import com.test.goal.dao.MemberDAO;
 import com.test.goal.service.BoardService;
 import com.test.goal.util.PageNavigator;
 import com.test.goal.vo.BoardVO;
@@ -31,6 +34,8 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService service;
+	@Autowired
+	private GoalTreeDAO tree_dao;
 	
 	// 게시글 목록, 검색, 페이징
 	@RequestMapping(value = "boardList", method = RequestMethod.GET)
@@ -40,7 +45,7 @@ public class BoardController {
 		
 		map.put("searchKeyid", searchKeyid); // 검색 select 박스
 		map.put("searchSelect", searchSelect); // 검색어
-		System.out.println();
+
 		PageNavigator navi = service.getNavi(currentPage, map);
 		model.addAttribute("goalList", service.boardList(map, navi));
 		model.addAttribute("navi", navi);
@@ -56,26 +61,25 @@ public class BoardController {
 		service.addFavorite(boardnum);
 	}
 	
-	// 마방진페이지로 이동
+	// 완료된 마방진페이지로 이동
 	@RequestMapping(value = "toMsquare", method = RequestMethod.GET)
-	public String toMsquare(BoardVO bvo, TopGoalVO tvo, MemberListVO lvo, Model model, HttpSession session) {
-		String userid = (String) session.getAttribute("userid");
-		model.addAttribute("userid", userid);
+	public String toMsquare(int tGoalNum, Model model) {
 		
-		int tGoalNum = service.getTopGoalNum(userid).gettGoalNum();
-		bvo.settGoalNum(tGoalNum);
+		model.addAttribute("topGoal", tree_dao.topGoalList(tGoalNum));
+		model.addAttribute("midGoal", tree_dao.midGoalList(tGoalNum));
 		
-		int progressNum = service.getGoalProgressNum(bvo).getProgressNum();
-		tvo.setProgressNum(progressNum);
+		ArrayList<MemberListVO> memberList = tree_dao.memberList(tGoalNum);
+		for (MemberListVO mvo : memberList) {
+			if (mvo.getColor() == null) {
+				mvo.setColor("black"); //색상 미지정시 검정색으로 전달
+			}
+		}
 		
-		int memberProgressNum = service.getMemberProgressNum(tvo).getProgressNum();
-		lvo.setProgressNum(memberProgressNum);
+		model.addAttribute("memberList", memberList); //참여 멤버 정보 전달
 		
-		model.addAttribute("inputMemberList", service.inputMemberList(lvo));
-		model.addAttribute("inputTopGoal", service.inputTopGoal(tvo));
-		
-		return "/createGoal/MGoalSquareForm";
+		return "/createGoal/MGoalSquareForm2";
 		
 	}
+	
 	
 }

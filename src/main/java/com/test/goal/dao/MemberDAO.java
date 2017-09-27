@@ -37,5 +37,6 @@ public interface MemberDAO {
 
 	public ArrayList<BTMGoalVO> getBTMGoalList(int mGoalNum);
 
+
 	
 }

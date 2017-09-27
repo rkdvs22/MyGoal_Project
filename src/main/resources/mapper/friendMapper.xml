@@ -8,7 +8,7 @@
 
 	<!-- 친구목록 -->
 	<select id="openFriend" parameterType="MyFriendVO" resultType="MyFriendVO">
-		select * from Myfriend
+		select f.userid, f.frdid, u.image from Myfriend f, Member u where f.frdid = u.userid
 	</select>                            
 	
 	<!-- 친구삭제 (내 입장) -->
