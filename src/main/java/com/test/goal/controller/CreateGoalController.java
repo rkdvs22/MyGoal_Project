@@ -118,7 +118,7 @@ public class CreateGoalController {
 		mvo.setMsgTitle("[SYSTEM] 목표 달성 프로그램 초대장이 도착하였습니다.");
 		
 		//content
-		mvo.setMsgContent(userid + "님이 <" + tvo.gettGoalTitle() + "> 프로그램에 초대하셨습니다.<br>목표에 참가하시겠습니까?/" + str);
+		mvo.setMsgContent(userid + "님이 <" + tvo.gettGoalTitle() + "> 프로그램에 초대하셨습니다.<br>목표에 참가하시겠습니까?" + str);
 
 		//receiver : 콤마(,)를 기준으로 복수의 수신자 구분
 		for (int i = 0; i < nameList.length; i++) {
