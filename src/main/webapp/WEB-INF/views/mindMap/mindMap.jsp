@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html> 
      <head> 
-        <link rel="stylesheet" href="/goal/resources/css/lib/mindMap/mindMap.css?version=7">
+        <link rel="stylesheet" href="/goal/resources/css/lib/mindMap/mindMap.css?version=9">
      </head> 
      <body> 
      	
@@ -11,7 +11,7 @@
         <script language="javascript" type="text/javascript" src="/goal/resources/js/lib/mindMap/arbor.js"></script> 
         <script language="javascript" type="text/javascript" src="/goal/resources/js/lib/mindMap/graphics.js"></script> 
         <script language="javascript" type="text/javascript" src="/goal/resources/js/lib/mindMap/renderer.js"></script> 
-       	<canvas id="viewport" width="1100" height="600"></canvas> 
+       	<canvas id="viewport" width="1250" height="600"></canvas> 
        	
      	<div id = "playingGoal">
 			${sessionScope.userid}님은
@@ -83,8 +83,6 @@
 					type:"get",
 					dataType:"json",
 					success:function(resultMapping){
-						console.log("시작resultMapping: "+resultMapping);
-						alert(3);
 			       	   for(var i =0; i < resultMapping.memberId.length; i++){
 			       		  sys.addNode(resultMapping.memberId[i],{'color':resultMapping.memberColor[i],'label':resultMapping.memberId[i],
 				     	  'shape':'dot'});   
@@ -96,10 +94,8 @@
 					      }
 				       }  
 			       	      if(resultMapping.memberId.length !=0){
-			       	    	  alert(1);
 					      	$("#playingGoal").append(" "+str+" 목표를 진행중입니다..");
 			       	      }else{
-			       	    	alert(2);
 			       	    	$("#playingGoal").append(" 현재 진행중인 목표가 없습니다 설정해 주세요..");  
 			       	      }
 					},
@@ -123,8 +119,6 @@
 					type:"get",
 					dataType:"json",
 					success:function(resultMapping){
-						console.log(resultMapping);
-						alert(4);
 			       	   for(var i =0; i < resultMapping.memberId.length; i++){
 			       		  $("#playingGoal").empty();
 			       		  str = '${sessionScope.userid}'+'님은';
@@ -151,7 +145,6 @@
 					},
 					error: function(){
 						$('#danger').modal("show");
-						closeSnoAlertBox();
 					}
 				});
  			 
@@ -190,7 +183,7 @@
 				
 				 <!-- Modal -->
 				<div id = "recordModal">
-				    <a class="btn btn-warning" href="#warning" data-toggle="modal"><h4>세부 기록확인</h4></a>
+				    <div id = "RecordCheck"><a class="btn btn-warning" href="#warning" data-toggle="modal">세부 기록확인</a></div>
 				    <!-- Modal -->
 				    <div class="modal fade" id="warning" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				        <div class="modal-dialog">
