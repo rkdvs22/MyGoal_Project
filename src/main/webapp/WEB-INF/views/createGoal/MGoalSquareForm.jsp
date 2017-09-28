@@ -412,9 +412,6 @@ $(function() {
 		resizable: false,
 		buttons:{
 			"확인":function () {
-// 				$.ajax({
-					
-// 				});
 				
 				var bGoal_modals = [];
 				bGoal_modals = new Array();
@@ -473,11 +470,11 @@ $(function() {
 				
 				// 사용자가 작성한 세부목표를 저장한다.
 				for(var i=0; i<bGoalLength; i++) {
-						bGoal_modals[i] = {
-							m_b_GoalNum: catchNum + "-" + (i+1),
-							bGoal: $("#b_goal"+(i+1)).val(),
-							bGoalDay: catchNum + "-" + (i+1) + "-" +$("#b_progressday"+(i+1)).val()
-						};
+					bGoal_modals[i] = {
+						m_b_GoalNum: catchNum + "-" + (i+1),
+						bGoal: $("#b_goal"+(i+1)).val(),
+						bGoalDay: catchNum + "-" + (i+1) + "-" +$("#b_progressday"+(i+1)).val()
+					};
 				}
 				
 				// 사용자가 입력한 각 중간목표와 각 세부목표를 데이터베이스에 추가한다.
@@ -936,7 +933,7 @@ $(function() {
 					success: function() {
 						alert("메인화면으로 이동합니다");
 						window.location.replace("/goal");
-					},
+					}
 				});
 			}
 			// else : HOST가 아니므로 나간 유저에 대한 데이터 삭제 (ajax 처리)
@@ -988,34 +985,8 @@ $(function() {
 	// 목표를 만든 사람일 경우 시작버튼, 참가한 사람일 경우 준비 버튼이 보이도록 한다.
 	if($("#p1").text() == '${sessionScope.userid}') {
 		$("#readyBtn").hide();
-	} else $("#startBtn").hide();
-	
-	// 사용자가 설정한 인원수를 벗어날 경우 그 만큼 슬롯을 가린다.
-	var maxMember = '${b_info.maxMember}';
-	switch (maxMember) {
-	case "1":
-		$(".player2 > td").remove();
-		$(".player3 > td").remove();
-		$(".player4 > td").remove();
-		$(".player2").prepend('<td colspan="6" id="p2_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user_close.png"></td>');
-		$(".player3").prepend('<td colspan="6" id="p3_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user_close.png"></td>');
-		$(".player4").prepend('<td colspan="6" id="p4_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user_close.png"></td>');
-		break;
-	case "2":
-		$(".player3 > td").remove();
-		$(".player4 > td").remove();
-		$(".player3").prepend('<td colspan="6" id="p3_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user_close.png"></td>');
-		$(".player4").prepend('<td colspan="6" id="p4_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user_close.png"></td>');
-		break;
-	case "3":
-		$(".player4 > td").remove();
-		$(".player4").prepend('<td colspan="6" id="p4_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user_close.png"></td>');
-		break;
-	case "4":
-		break;
-	default:
-		console.log("swicth error");
-		break;
+	} else {
+		$("#startBtn").hide();
 	}
 	
 	// 초대받은 유저가 방에 입장했을 경우 그 유저의 ID를 추가한다.
@@ -1066,8 +1037,7 @@ $(function() {
 // 					console.log(idList);
 // 					console.log(pNum);
 // 					location.href = '/goal/createGoal/startGoal?sectionNum=' + 1 + '&id_list=' + idList + '&progressNum=' + pNum;
-				},
-				error: function() { alert("하 진짜 ㅡㅡ 시작에러"); }
+				}
 			});
 		}
 	});

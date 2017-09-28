@@ -75,6 +75,7 @@ public class CreateGoalController {
 		
 		int tGoalNum = tvo.gettGoalNum();
 		bvo.settGoalNum(tGoalNum);
+		bvo.setProgressNum(progressSeq);
 		dao.writeBoard(bvo); //board 생성
 		
 		System.out.println(mvo.toString());
@@ -110,6 +111,9 @@ public class CreateGoalController {
 		String userid = (String) session.getAttribute("userid");
 		TopGoalVO tvo = dao.getInvitedProgress(progressNum); //초대하려는 목표 정보
 		String str = "<input type='hidden' id='progressNum' name='" + progressNum + "' value=" + progressNum + ">";
+		
+		System.out.println("pnum:" + progressNum);
+		System.out.println("tgoal:" + tvo.toString());
 		
 		//sender
 		mvo.setSender(userid);

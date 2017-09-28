@@ -844,6 +844,8 @@ $(function() {
 				var totalMembers = currentMembers + nameList.length;
 				
 				if(totalMembers > maxMember) {
+					alert("totalMembers : " + totalMembers);
+					alert("maxMember : " + maxMember);
 					alert("빈 자리가 없어 초대장을 보낼 수 없습니다");
 					return false;
 				} else {
@@ -1029,6 +1031,7 @@ $(function() {
 			});
 		}
 	});*/
+	}
 });
 </script>
 
