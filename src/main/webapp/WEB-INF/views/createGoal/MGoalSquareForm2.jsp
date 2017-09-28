@@ -171,7 +171,7 @@
 	}
 	
 	/* 배경 이미지 */
-	#background {
+	/* #background {
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -183,7 +183,7 @@
 		background-size: 100%;
 		opacity: 0.2;
 		filter:alpha(opacity=40);
-	}
+	} */
 </style>
 
 </head>
@@ -199,14 +199,14 @@ function mGoalTitle() {
 }
 
 // 새로고침 시 같은 목표 중복 생성 방지
-function noEvent() {
+/* function noEvent() {
 	if (event.keyCode == 116) {
 		event.keyCode= 2;
 		return false;
 	} else if(event.ctrlKey && (event.keyCode==78 || event.keyCode == 82)) {
 		return false;
 	}
-}
+} */
 document.onkeydown = noEvent;
 
 var m_eDate = "";
@@ -958,7 +958,8 @@ $(function() {
 		$("#dialog").attr("readonly", true);
 	}
 	
-	}
+	
+	});
 });
 </script>
 
@@ -1012,11 +1013,12 @@ $(function() {
 		</tr>
 	</c:forEach>
 </table>
-
+	<br>
 		<div id = "footButtonLine">
-			<div><input type="button" value="초대" id="invitation"></div>
-			<div><input type="button" value="색상지정" id="selectcolor"></div>
+			<div><input type="button" class="btn btn-rounded btn-success" value="초대" id="invitation"></div><br>
+			<div><input type="button" class="btn btn-rounded btn-success" value="색상지정" id="selectcolor"></div>
 		</div>
+	
 </aside>
 
 
