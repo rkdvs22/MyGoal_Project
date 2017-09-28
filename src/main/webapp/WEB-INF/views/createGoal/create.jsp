@@ -54,7 +54,7 @@
 		</header>
 		
 		<div class="box-typical box-typical-padding">
-			<form action="/goal/createGoal/createNewGoal" method="post" id="fm">
+			<form action="createNewGoal" method="post" id="fm" >
 			<table class="create01">
 				<tr>
 					<th>Goal Title</th>
@@ -71,7 +71,7 @@
 				<tr>
 					<th>인원</th>
 					<td colspan="3">
-						<select name="maxMember" id="maxMember">
+						<select name="maxMemberS" id="maxMember">
 							<option value = "1" selected="selected">1</option>
 							<option value = "2">2</option>
 							<option value = "3">3</option>
@@ -112,20 +112,19 @@
 				</tr>
 				<tr class="text-hidden">
 					<td>
-						<input type="text" name="tClear" value="N">
-						<input type="text" name="tStartStatus" value="N">
+						<input type="text" id="tClear" name="tClear" value="N">
+						<input type="text" id="tStartStatus" name="tStartStatus" value="N">
 						<input type="text" name="type" id="type">
-				       	<input type="text" id="progressNum" name="progressNum">
+				       	<input type="text" id="progressNum" name="progressNumS">
 					</td>
 				</tr>
-				<tr class="btnTr">
-					<td class="createBtn" colspan="4">
+ 				<tr class="btnTr"> 
+ 					<td class="createBtn" colspan="4">
 						<button type="button" class="btn btn-rounded btn-success" id="createBtn">CREATE</button>
-					</td>
-				</tr>
+ 					</td> 
+ 				</tr> 
 			</table>
 			</form>
-				<input type="hidden" name="tGoalNum" value="${tGoalNum}">
 		</div>
 		
 	</div><!--.container-fluid-->
@@ -214,18 +213,23 @@
 		$(".text-hidden > td").hide();
 		
 		// 생성하기 버튼 클릭 시 체크 및 전송
-		$(".createBtn > button").click(function() {
+		$("#createBtn").click(function(event) {
+			event.preventDefault();
+			event.stopPropagation();
 			var maxMember = $("#maxMember").val();
-			alert("maxMember : " + maxMember);
 			if(maxMember.value == "1") {
 				$("#type").val("S");
-			} else $("#type").val("M");
+			} else {
+				$("#type").val("M");
+			}
 			
 			$.ajax({
 				url: "/goal/createGoal/create2",
 				type: "post",
 				data: {"progressNum":0 , "type":$("#type").val(), "mStart":"N", "maxMember":maxMember},
 				success: function(result_vo) {
+					event.preventDefault();
+					event.stopPropagation();
 					$("#progressNum").val(result_vo.progressNum);
 					$("#fm").submit();
 				}

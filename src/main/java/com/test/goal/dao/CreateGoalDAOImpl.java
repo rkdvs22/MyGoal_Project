@@ -41,11 +41,10 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 	@Override
 	public MainProgressVO create2(MainProgressVO mvo) {
 		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
-		int result = mapper.create2(mvo);
-		if(result == 1) {
-			mvo = findProgressNum();
-		}
-		return mvo;
+		mapper.create2(mvo);
+		MainProgressVO new_mvo = new MainProgressVO();
+		new_mvo = findProgressNum();
+		return new_mvo;
 	}
 
 	// 현재 progressNum의 데이터를 알기 위한 메서드
@@ -63,7 +62,17 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 		// 목표 생성시 MemberList 테이블에 데이터 추가
 		MainProgressVO mvo = mapper.findProgressNum();
 		vo.setProgressNum(mvo.getProgressNum());
+		createMemberList(vo);
+	}
+	
+	public void createMemberList(BoardVO vo) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
 		mapper.createMemberList(vo);
+		realWriteBoard(vo);
+	}
+	
+	public void realWriteBoard(BoardVO vo) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
 		mapper.writeBoard(vo);
 	}
 	

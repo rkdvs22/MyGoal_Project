@@ -2,7 +2,6 @@ package com.test.goal.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -52,22 +51,31 @@ public class CreateGoalController {
 	
 	// 목표大작성 기능
 	@RequestMapping(value = "createNewGoal", method = RequestMethod.POST)
-	public String create(TopGoalVO tvo, MainProgressVO mvo, Model model, String progressNum, HttpSession session) {
-		System.out.println(tvo);
-		if(progressNum != null){
+	public String create(TopGoalVO tvo, Model model, HttpSession session) {
+		
+//		if(tvo.getProgressNumS() != null){
+			MainProgressVO m = new MainProgressVO();
+			m.setMaxMember(Integer.parseInt(tvo.getMaxMemberS()));
+			m.setProgressNum(0);
+			m.setType(tvo.getType());
+			m.setmStart("N");
+			
+			MainProgressVO result_vo = dao.create2(m);
+			tvo.setProgressNum(result_vo.getProgressNum());
+			
 			String hostId = (String)session.getAttribute("userid");
 			session.setAttribute("hostId", hostId);
-			mvo.setProgressNum(Integer.parseInt(progressNum));
-			int create1 = dao.create1(tvo);
-			model.addAttribute("topGoal", create1);	//topGoal 생성
 			int topGoalNum = dao.getTgoalNum().gettGoalNum();
 			tvo.settGoalNum(topGoalNum);
+			
+			int create1 = dao.create1(tvo);
+			model.addAttribute("topGoal", create1);	//topGoal 생성
 			writeBoard(tvo);
 			int createKey = 1;
 			model.addAttribute("createKey", createKey);
 			model.addAttribute("hostId", hostId);
 			model.addAttribute("b_info", dao.getBoardInfo());
-		}
+//		}
 		return "/createGoal/MGoalSquareForm";
 	}
 	
@@ -240,7 +248,7 @@ public class CreateGoalController {
 	@RequestMapping(value = "switchReady", method = RequestMethod.POST)
 	@ResponseBody
 	public void switchReady(@RequestBody Map<String, String> map) {
-		System.out.println(map);
+//		System.out.println(map);
 	}
 	
 	// 준비를 누른 사람이 이전에 레디를 했는지에 대한 여부를 불러온다.
@@ -266,9 +274,9 @@ public class CreateGoalController {
 	@ResponseBody
 	public ArrayList<MemberListVO> checkUsers(int progressNum) {
 		ArrayList<MemberListVO> list = dao.checkUsers(progressNum);
-		for(MemberListVO vo:list) {
-			System.out.println(vo);
-		}
+//		for(MemberListVO vo:list) {
+//			System.out.println(vo);
+//		}
 		return list;
 	}
 	
@@ -289,12 +297,16 @@ public class CreateGoalController {
 //		HashSet hs = new HashSet<>(temp);
 //		ArrayList<MemberListVO> list = new ArrayList<>(hs);
 		
-		for(MemberListVO m:list) {
-			System.out.println(m);
-		}
+//		for(MemberListVO m:list) {
+//			System.out.println(m);
+//		}
 		
 		return list;
 	}
 	
-	
+	// 유저들의 색상지정 여부와 레디 여부를 불러온다.
+	@RequestMapping(value = "MidGoalForm1", method = RequestMethod.GET)
+	public String checkUsers() {
+		return "/createGoal/MidGoalForm1";
+	}
 }

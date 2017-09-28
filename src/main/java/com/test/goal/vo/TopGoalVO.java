@@ -17,22 +17,12 @@ public class TopGoalVO {
 	private String userid;
 	private int progressNum;
 	private String color;
+	private int maxMember;
+	private String type;
+	private String progressNumS;
+	private String maxMemberS;
 	
 	public TopGoalVO() {}
-
-	public TopGoalVO(int tGoalNum, String tGoalTitle, String tStartDate, String tEndDate, String tClear,
-			String tStartStatus, String openStatus, String userid, int progressNum, String color) {
-		this.tGoalNum = tGoalNum;
-		this.tGoalTitle = tGoalTitle;
-		this.tStartDate = tStartDate;
-		this.tEndDate = tEndDate;
-		this.tClear = tClear;
-		this.tStartStatus = tStartStatus;
-		this.openStatus = openStatus;
-		this.userid = userid;
-		this.progressNum = progressNum;
-		this.color = color;
-	}
 
 	public int gettGoalNum() {
 		return tGoalNum;
@@ -114,10 +104,44 @@ public class TopGoalVO {
 		this.color = color;
 	}
 
+	public int getMaxMember() {
+		return maxMember;
+	}
+
+	public void setMaxMember(int maxMember) {
+		this.maxMember = maxMember;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getProgressNumS() {
+		return progressNumS;
+	}
+
+	public void setProgressNumS(String progressNumS) {
+		this.progressNumS = progressNumS;
+	}
+
+	public String getMaxMemberS() {
+		return maxMemberS;
+	}
+
+	public void setMaxMemberS(String maxMemberS) {
+		this.maxMemberS = maxMemberS;
+	}
+
 	@Override
 	public String toString() {
 		return "TopGoalVO [tGoalNum=" + tGoalNum + ", tGoalTitle=" + tGoalTitle + ", tStartDate=" + tStartDate
 				+ ", tEndDate=" + tEndDate + ", tClear=" + tClear + ", tStartStatus=" + tStartStatus + ", openStatus="
-				+ openStatus + ", userid=" + userid + ", progressNum=" + progressNum + ", color=" + color + "]";
+				+ openStatus + ", userid=" + userid + ", progressNum=" + progressNum + ", color=" + color
+				+ ", maxMember=" + maxMember + ", type=" + type + ", progressNumS=" + progressNumS + ", maxMemberS="
+				+ maxMemberS + "]";
 	}
 }

@@ -374,8 +374,8 @@ function createGoalModals() {
 	});
 }
 
-var catchNum = "";
 // 마방진 버튼 번호를 받는 함수.
+var catchNum = "";
 function catchbBtnNum(bBtn_num) {
 	catchNum = "";
 	catchNum = bBtn_num;
@@ -494,7 +494,6 @@ $(function() {
 					contentType: "application/json;charset=UTF-8",
 					data: JSON.stringify({"midGoal":{"key1":midGoal}, "btmGoal":{"key2":bGoal_modals}, "tGoalNum":'${b_info.tGoalNum}', "goalCount":goalCount}),
 					success: function(result) {
-						alert("자바스크립트 ㅅㅂ놈아");
 						inputMbtnValue(bBtn_num);
 						console.log(bGoal_modals);
 // 						bGoal_modals = [];

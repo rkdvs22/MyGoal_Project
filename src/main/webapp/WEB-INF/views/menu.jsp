@@ -170,7 +170,7 @@
 				</a>
 			</li>
 			<li class="green">
-				<a href="/goal/createGoal/MGoalSquareForm">
+				<a href="/goal/createGoal/MidGoalForm1">
 					<i class="font-icon font-icon-cart"></i>
 					<span class="lbl">My Goal List</span>
 				</a>
