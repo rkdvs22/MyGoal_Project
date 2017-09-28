@@ -429,4 +429,11 @@ public class CreateGoalController {
 		return "/createGoal/MidGoalForm1";
 	}
 	*/
+	
+	// 사용자가 선택한 색상의 hex값을 테이블에 갱신한다.
+	@RequestMapping(value = "updateColor", method = RequestMethod.POST)
+	@ResponseBody
+	public void updateColor(@RequestBody Map<String, String> map) {
+		dao.updateColor(map);
+	}
 }
