@@ -51,7 +51,7 @@ public class BoardController {
 		model.addAttribute("navi", navi);
 		model.addAttribute("searchKeyid", searchKeyid);
 		model.addAttribute("searchSelect", searchSelect);
-		System.out.println("빡치게 하지 말자:" + map);
+		
 		return "/board/boardList";
 	}
 	

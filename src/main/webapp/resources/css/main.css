@@ -1,8 +1,8 @@
 @charset "UTF-8"; 
 
-/* main페이지 */
-/* 메인페이지 이미지 */
-	
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url(//fonts.googleapis.com/earlyaccess/hanna.css);
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
 
 .label {
 	display: inline-block;
@@ -5343,7 +5343,7 @@ audio, canvas, img, video {
 
 body, button, html, input, select, textarea {
 	color: #343434;
-	font-family: 'Proxima Nova', sans-serif;
+	font-family: 'Montserrat', 'Hanna';
 	line-height: 1.4;
 	text-rendering: optimizeLegibility;
 	-moz-osx-font-smoothing: grayscale;

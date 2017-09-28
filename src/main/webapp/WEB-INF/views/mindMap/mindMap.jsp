@@ -14,7 +14,7 @@
        	<canvas id="viewport" width="1250" height="600"></canvas> 
        	
      	<div id = "playingGoal">
-			${sessionScope.userid}님은
+			<p style="color:orange; font-size:30px; margin-bottom:-5px;">${sessionScope.userid}님,</p>
 		</div>	
 		
       	<script language="javascript" type="text/javascript">
@@ -183,7 +183,7 @@
 				
 				 <!-- Modal -->
 				<div id = "recordModal">
-				    <div id = "RecordCheck"><a class="btn btn-warning" href="#warning" data-toggle="modal">세부 기록확인</a></div>
+				    <div id = "RecordCheck"><a class="btn btn-warning" href="#warning" data-toggle="modal"><font size="5px">세부 기록확인</font></a></div>
 				    <!-- Modal -->
 				    <div class="modal fade" id="warning" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				        <div class="modal-dialog">

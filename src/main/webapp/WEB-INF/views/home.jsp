@@ -43,7 +43,7 @@
 	<script src="/goal/resources/js/app.js"></script>
 <!-- 	<script src="https://www.gstatic.com/charts/loader.js"></script> -->
 
-
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
 </head>
 <body class="with-side-menu-compact dark-theme dark-theme-green">

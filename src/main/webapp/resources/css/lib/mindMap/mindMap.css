@@ -4,13 +4,13 @@
         		left:180px;
         		border-style: solid;
         		border-width: 5px;
-        		border-color: pink;
+        		border-color: #D8D8D8;
         	}
 						
 			#playingGoal{
 				position: absolute;
 				left:180px;
-				top:100px;
+				top:70px;
 				font-size: 20px;
 			}
 			
@@ -67,10 +67,11 @@
 			
 			#RecordCheck{
 				position: absolute;
-				top:-290px;
-				letf: -200px;
+				top:-300px;
+				left: -20px;
 				font-size: 20px;
 			}
+			
 			
 			#recordATeg{
 				position: absolute;
