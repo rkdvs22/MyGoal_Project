@@ -743,7 +743,7 @@ $(function() {
 							data: JSON.stringify({"id":'${sessionScope.userid}', "hex":hex}),
 							success: function() {}
 						});
-						$("userColor"+(i+1)).html('<div class="pickcolor" style="background-color: '+hex+';"></div>');
+						$("#userColor"+(i+1)).html('<div class="pickcolor" style="background-color: '+hex+';"></div>');
 						break;
 					}
 				}
