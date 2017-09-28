@@ -43,7 +43,7 @@
 	</select>
 	
 	<select id = "findTopGoal" parameterType="TopGoalVO" resultType="TopGoalVO">
-		select * from TopGoal where tGoalNum = ${tGoalNum}
+		select * from TopGoal where tGoalNum = ${tGoalNum} 
 	</select>
 	
 	<insert id="insertJoinTopGoal" parameterType="TopGoalVO">
@@ -63,6 +63,9 @@
 		insert into Board values(BOARD_SEQ.NEXTVAL,#{userid},0,#{tGoalNum})
 	</insert>
 	
+	<select id = "findTopGoalSendProgressNum" parameterType="TopGoalVO" resultType="TopGoalVO">
+		select * from TopGoal where progressNum = #{progressNum} 
+	</select>
 	
 	
 	<!-- modal 창 안에서 사용자가 검색한 키워드를 이용해 ID를 찾는다 -->

@@ -265,4 +265,10 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 		
 	}
 
+	@Override
+	public ArrayList<TopGoalVO> findTopGoalSendProgressNum(TopGoalVO vo) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		return mapper.findTopGoalSendProgressNum(vo);
+	}
+
 }

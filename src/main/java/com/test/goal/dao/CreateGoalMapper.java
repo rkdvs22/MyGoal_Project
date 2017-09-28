@@ -106,5 +106,7 @@ public interface CreateGoalMapper {
 	public MainProgressVO findMainProgress(int progressNum);
 	
 	public void insertBoard(TopGoalVO tvo);
+	
+	public ArrayList<TopGoalVO> findTopGoalSendProgressNum(TopGoalVO vo);
 
 }

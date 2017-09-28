@@ -134,19 +134,17 @@ public class CreateGoalController {
 		//findTopGoal
 		TopGoalVO vo = new TopGoalVO();
 		vo.setProgressNum(progressNum);
-		
-		TopGoalVO tVO =  dao.findTopGoal(vo);
-		vo.settGoalTitle(tVO.gettGoalTitle());
-		vo.settStartDate(tVO.gettStartDate());
-		vo.settEndDate(tVO.gettEndDate());
-		vo.settClear(tVO.gettClear());
-		vo.settStartStatus(tVO.gettStartStatus());
-		vo.setOpenStatus(tVO.getOpenStatus());
+		ArrayList<TopGoalVO> tVO =  dao.findTopGoalSendProgressNum(vo);
+		vo.settGoalTitle(tVO.get(0).gettGoalTitle());
+		vo.settStartDate(tVO.get(0).gettStartDate());
+		vo.settEndDate(tVO.get(0).gettEndDate());
+		vo.settClear(tVO.get(0).gettClear());
+		vo.settStartStatus(tVO.get(0).gettStartStatus());
+		vo.setOpenStatus(tVO.get(0).getOpenStatus());
 		vo.setUserid(userid);
 		vo.setProgressNum(progressNum);
-		
 		//insert 작성(TopGoal)
-		dao.insertJoinTopGoal(tVO);
+		dao.insertJoinTopGoal(vo);
 		MemberListVO mlvo = new MemberListVO();
 		mlvo.setProgressNum(progressNum);
 		mlvo.setUserid(userid);
@@ -154,11 +152,11 @@ public class CreateGoalController {
 		
 		// progressNum을 통해 tGoalNum을 찾아서 
 		// 맴버리스트를 찾아오고(size도 알수있음), TopGoal도 찾아오고,
-		ArrayList<MemberListVO> memberList = gdao.memberList(tVO.gettGoalNum());
+		ArrayList<MemberListVO> memberList = gdao.memberList(tVO.get(0).gettGoalNum());
 		MainProgressVO mvo = dao.findMainProgress(progressNum);
 		model.addAttribute("mainProgress", mvo); //mainProgress
 		model.addAttribute("currentMembers", memberList.size()); //현재 인원수
-		model.addAttribute("topGoal", gdao.topGoalList(tVO.gettGoalNum()));
+		model.addAttribute("topGoal", gdao.topGoalList(tVO.get(0).gettGoalNum()));
 		model.addAttribute("memberList", memberList);
 		
 		return "/createGoal/MGoalSquareForm2";

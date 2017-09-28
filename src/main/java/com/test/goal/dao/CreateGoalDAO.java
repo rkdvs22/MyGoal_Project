@@ -76,5 +76,7 @@ public interface CreateGoalDAO {
 	
 	public void insertBoard(TopGoalVO tvo);
 	
+	public ArrayList<TopGoalVO> findTopGoalSendProgressNum(TopGoalVO vo);
+	
 
 }
