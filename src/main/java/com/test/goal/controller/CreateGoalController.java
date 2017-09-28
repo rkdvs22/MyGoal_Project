@@ -130,7 +130,6 @@ public class CreateGoalController {
 	
 	@RequestMapping(value = "joinGoal", method = RequestMethod.GET)
 	public String joinGoal (int progressNum, String userid, Model model) {
-		System.out.println(1);
 		//findTopGoal
 		TopGoalVO vo = new TopGoalVO();
 		vo.setProgressNum(progressNum);
@@ -160,6 +159,8 @@ public class CreateGoalController {
 		model.addAttribute("currentMembers", memberList.size()); //현재 인원수
 		model.addAttribute("topGoal", gdao.topGoalList(tVO.gettGoalNum()));
 		model.addAttribute("memberList", memberList);
+		
+		System.out.println("PROGRESS NUM? : " + mvo.getProgressNum());
 		
 		return "/createGoal/MGoalSquareForm2";
 	}

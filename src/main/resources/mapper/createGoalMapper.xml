@@ -155,7 +155,8 @@
 	<select id="getJoinUserList" parameterType="TopGoalVO" resultType="MemberListVO">
 		SELECT m.userid as userid, m.ready as ready, m.playertype as playerType, m.color as color FROM memberlist m INNER JOIN member b
 		ON m.userid = b.userid
-		WHERE m.progressnum = #{progressNum} 
+		WHERE m.progressnum = #{progressNum}
+		ORDER BY m.listnum
 	</select>
 	
 	<!-- 작성한 중간목표를 입력한다 -->
