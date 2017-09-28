@@ -1083,7 +1083,7 @@ $(function() {
 	<c:forEach items="${memberList}" var="memberList">
 		<tr>
 			<td><img src="/goal/resources/img/avatar-2-48.png"></td>
-			<td>${memberList.userId}</td>
+			<td>${memberList.userid}</td>
 			<td><div class="pickcolor" style="background-color:${memberList.color};"></div></td>
 		</tr>
 	</c:forEach>

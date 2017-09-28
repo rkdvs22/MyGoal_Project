@@ -16,17 +16,27 @@ import com.test.goal.vo.TopGoalVO;
 
 public interface CreateGoalDAO {
 	
-	public int create1(TopGoalVO tvo); // 목표大작성
-
-	public MainProgressVO create2(MainProgressVO mvo); // 목표大작성 전 MainProgress 테이블에 사용자가 작성한 값을 입력한다.
+	public void create1(MainProgressVO mvo); // 목표大작성 전 MainProgress 테이블에 사용자가 작성한 값을 입력한다.
+	public MainProgressVO findProgressNum(); // 현재 progressNum의 데이터를 알기 위한 메서드
+	
+	public int create2(TopGoalVO tvo); // 목표大작성
+	
+	public void create3(MemberListVO mlvo); // 멤버리스트 작성
+	
+	public TopGoalVO findTGoalNum(); // 현재 최종목표의 시퀀스 번호를 얻는다(); // 현재 최종목표의 시퀀스 번호를 얻는다
+	public void writeBoard(BoardVO bvo); // 목표大작성 기능에서 작성했던 내용들을 이용하여 Board 테이블에 값을 입력한다.
+	
+	
+	
+	
+	
 	
 	public ArrayList<MemberVO> findIdinModal(String keyWord); // modal 창 안에서 사용자의 ID를 검색한다
 
-	public void writeBoard(BoardVO vo); // 목표大작성 기능에서 작성했던 내용들을 이용하여 Board 테이블에 값을 입력한다.
 	
-	public MainProgressVO findProgressNum(); // 현재 progressNum의 데이터를 알기 위한 메서드
+	
 
-	public TopGoalVO getTgoalNum(); // 현재 최종목표의 시퀀스 번호를 얻는다
+	
 
 	public BoardVO getBoardInfo(); // 현재 게시글의 정보를 얻는다
 

@@ -54,7 +54,7 @@
 		</header>
 		
 		<div class="box-typical box-typical-padding">
-			<form action="createNewGoal" method="post" id="fm" >
+			<form action="/goal/createGoal/createSquare" method="post" id="fm" >
 			<table class="create01">
 				<tr>
 					<th>Goal Title</th>
@@ -115,7 +115,6 @@
 						<input type="text" id="tClear" name="tClear" value="N">
 						<input type="text" id="tStartStatus" name="tStartStatus" value="N">
 						<input type="text" name="type" id="type">
-				       	<input type="text" id="progressNum" name="progressNumS">
 					</td>
 				</tr>
  				<tr class="btnTr"> 
@@ -223,6 +222,8 @@
 				$("#type").val("M");
 			}
 			
+			$("#fm").submit();
+			/* 
 			$.ajax({
 				url: "/goal/createGoal/create2",
 				type: "post",
@@ -231,10 +232,10 @@
 					event.preventDefault();
 					event.stopPropagation();
 					$("#progressNum").val(result_vo.progressNum);
-					$("#fm").submit();
+					
 				}
 			});
-			
+			 */
 		});
 	</script>
 
