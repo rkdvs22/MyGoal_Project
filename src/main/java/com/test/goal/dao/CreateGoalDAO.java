@@ -66,5 +66,13 @@ public interface CreateGoalDAO {
 
 	public ArrayList<MemberListVO> checkUsers(int progressNum); // 유저들의 색상지정 여부와 레디 여부를 불러온다.
 	
+	public TopGoalVO findTopGoal(TopGoalVO vo);
+	
+	public void insertJoinTopGoal(TopGoalVO tVO);
+	
+	public void messageJoin(MemberListVO mlvo);
+	
+	public MainProgressVO findMainProgress(int progressNum);
+	
 
 }

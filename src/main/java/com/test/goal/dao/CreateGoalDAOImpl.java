@@ -68,9 +68,10 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 
 	@Override
 	public TopGoalVO getInvitedProgress(int progressNum) {
-		System.out.println("DAO : " + progressNum);
+		TopGoalVO vo = new TopGoalVO();
+		vo.setProgressNum(progressNum);
 		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
-		return mapper.getInvitedProgress(progressNum);
+		return mapper.getInvitedProgress(vo);
 	}
 
 	
@@ -230,6 +231,31 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 	public ArrayList<MemberListVO> checkUsers(int progressNum) {
 		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
 		return mapper.checkUsers(progressNum);
+	}
+
+	@Override
+	public TopGoalVO findTopGoal(TopGoalVO vo) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		return mapper.findTopGoal(vo);
+	}
+
+	@Override
+	public void insertJoinTopGoal(TopGoalVO tVO) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		mapper.insertJoinTopGoal(tVO);
+	}
+
+	@Override
+	public void messageJoin(MemberListVO mlvo) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		mapper.messageJoin(mlvo);
+		
+	}
+
+	@Override
+	public MainProgressVO findMainProgress(int progressNum) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		return mapper.findMainProgress(progressNum);
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.test.goal.controller;
 
+import java.lang.ProcessBuilder.Redirect;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -76,12 +77,7 @@ public class CreateGoalController {
 		int tGoalNum = tvo.gettGoalNum();
 		bvo.settGoalNum(tGoalNum);
 		bvo.setProgressNum(progressSeq);
-		dao.writeBoard(bvo); //board 생성
 		
-		System.out.println(mvo.toString());
-		System.out.println(tvo.toString());
-		System.out.println(mlvo.toString());
-		System.out.println(bvo.toString());
 		
 		ArrayList<MemberListVO> memberList = gdao.memberList(tGoalNum);
 		
@@ -107,15 +103,12 @@ public class CreateGoalController {
 	@RequestMapping(value = "writeInviteMsg", method = RequestMethod.GET)
 	@ResponseBody
 	public boolean writeInviteMsg(String[] nameList, int progressNum, HttpSession session) {
-		System.out.println("CON : " + progressNum);
 		
 		MessageVO mvo = new MessageVO();
 		String userid = (String) session.getAttribute("userid");
 		TopGoalVO tvo = dao.getInvitedProgress(progressNum); //초대하려는 목표 정보
 		String str = "<input type='hidden' id='progressNum' name='" + progressNum + "' value=" + progressNum + ">";
 		
-		System.out.println("pnum:" + progressNum);
-		System.out.println("tgoal:" + tvo.toString());
 		
 		//sender
 		mvo.setSender(userid);
@@ -134,6 +127,43 @@ public class CreateGoalController {
 		
 		return true;
 	}
+	
+	@RequestMapping(value = "joinGoal", method = RequestMethod.GET)
+	public String joinGoal (int progressNum, String userid, Model model) {
+		System.out.println(1);
+		//findTopGoal
+		TopGoalVO vo = new TopGoalVO();
+		vo.setProgressNum(progressNum);
+		
+		TopGoalVO tVO =  dao.findTopGoal(vo);
+		vo.settGoalTitle(tVO.gettGoalTitle());
+		vo.settStartDate(tVO.gettStartDate());
+		vo.settEndDate(tVO.gettEndDate());
+		vo.settClear(tVO.gettClear());
+		vo.settStartStatus(tVO.gettStartStatus());
+		vo.setOpenStatus(tVO.getOpenStatus());
+		vo.setUserid(userid);
+		vo.setProgressNum(progressNum);
+		
+		//insert 작성(TopGoal)
+		dao.insertJoinTopGoal(tVO);
+		MemberListVO mlvo = new MemberListVO();
+		mlvo.setProgressNum(progressNum);
+		mlvo.setUserid(userid);
+		dao.messageJoin(mlvo); //memberList 생성
+		
+		// progressNum을 통해 tGoalNum을 찾아서 
+		// 맴버리스트를 찾아오고(size도 알수있음), TopGoal도 찾아오고,
+		ArrayList<MemberListVO> memberList = gdao.memberList(tVO.gettGoalNum());
+		MainProgressVO mvo = dao.findMainProgress(progressNum);
+		model.addAttribute("mainProgress", mvo); //mainProgress
+		model.addAttribute("currentMembers", memberList.size()); //현재 인원수
+		model.addAttribute("topGoal", gdao.topGoalList(tVO.gettGoalNum()));
+		model.addAttribute("memberList", memberList);
+		
+		return "/createGoal/MGoalSquareForm2";
+	}
+	
 	
 	
 	

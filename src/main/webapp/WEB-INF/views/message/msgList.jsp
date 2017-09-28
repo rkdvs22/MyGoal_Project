@@ -41,9 +41,17 @@
 			data: {"id": id},
 			dataType: "json",
 			success: function(msgList) {
+				
 				$("#tab1_right_bottom").show();
 				$("#tab1_right_top").empty();
 				$(msgList).each(function(index, item) {
+					var progressNum = 0;
+					if(item.msgContent.includes("input") == true){
+						firstSplit = item.msgContent.split("value=");
+						sencondSplit = firstSplit[1].split(">");
+						progressNum = parseInt(sencondSplit[0]);
+					}
+					
 					var receivedMsg = item.sender;
 					var str = "";
 					
@@ -59,7 +67,7 @@
 					str += "<tr><td colspan='2' class='msgContent'>";
 					if(item.msgTitle == "[SYSTEM] 목표 달성 프로그램 초대장이 도착하였습니다." && receivedMsg != '${sessionScope.userid}') {
 						senders[index] = item.sender;
-						item.msgContent += '<br><input type="button" value="승인" id="join-btn" class="join-btn" onclick="joinGoal()">';
+						item.msgContent += '<br><input type="button" value="승인" id="join-btn" class="join-btn" onclick="joinGoal('+progressNum+')">';
 						item.msgContent += ' <input type="button" value="거절" id="notJoin-btn" class="notJoin-btn" onclick="notJoinGoal()">';
 					}
 					if (item.msgTitle == "[SYSTEM] 친구 신청이 도착하였습니다." && receivedMsg != '${sessionScope.userid}') {
@@ -70,7 +78,6 @@
 					str += "</td></tr>";
 					str += "</table>";
 					str += "</div><br>";
-					console.log(str);
 					
 					$("#tab1_right_top").append(str);
 				});
@@ -183,23 +190,9 @@
 	
 	
 	// 초대 메시지에 승인을 누를 시 해당하는 목표의 방으로 입장.
-	function joinGoal(index) {
-		//
+	function joinGoal(progressNum) {
 		
-		for(var i=0; i<=index; i++) {
-			
-			if(senders[i] == senders[index]) {
-				$.ajax ({
-					url: "/goal/createGoal/findThatGoal",
-					type: "post",
-					data: {"senderId":senders[i]},
-					success: function(vo){
-						location.href='/goal/createGoal/joinThatGoal?&id=' + vo.userid;
-					}
-				});
-				break;
-			}
-		}
+			location.href = "/goal/createGoal/joinGoal?progressNum="+progressNum+"&userid="+'${sessionScope.userid}';
 	}
 	
 	function addFriend(senderId) {	//친구 신청 승인

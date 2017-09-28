@@ -38,13 +38,26 @@
 	</insert>
 	
 	<!-- progressNum으로 mainProgress 정보 받아오기 -->
-	<select id="getInvitedProgress" parameterType="int" resultType="TopGoalVO">
-		select * from topgoal where progressNum = ${test}
+	<select id="getInvitedProgress" parameterType="TopGoalVO" resultType="TopGoalVO">
+		select * from TopGoal where progressNum = ${progressNum}
 	</select>
 	
+	<select id = "findTopGoal" parameterType="TopGoalVO" resultType="TopGoalVO">
+		select * from TopGoal where progressNum = ${progressNum}
+	</select>
 	
+	<insert id="insertJoinTopGoal" parameterType="TopGoalVO">
+		insert into TopGoal values(TOPGOAL_SEQ.NEXTVAL,#{tGoalTitle}, to_date(#{tStartDate},'yyyy/mm/dd hh24:mi:ss'), to_date(#{tEndDate},'yyyy/mm/dd hh24:mi:ss'), #{tClear}, #{tStartStatus}, #{openStatus}, #{userid}, #{progressNum})
+	</insert>
 	
+	<insert id="messageJoin" parameterType="MemberListVO">
+		INSERT INTO MEMBERLIST(LISTNUM, READY, PLAYERTYPE, USERID, PROGRESSNUM)
+		VALUES(MEMBERLIST_SEQ.NEXTVAL, 'N', 'NORMAL', #{userid}, #{progressNum})
+	</insert>
 	
+	<select id = "findMainProgress" parameterType="int" resultType="MainProgressVO">
+		select * from MainProgress where progressNum = #{progressNum}
+	</select>
 	
 	
 	

@@ -25,7 +25,7 @@ public interface CreateGoalMapper {
 	public TopGoalVO findTGoalNum(); // 현재 TopGoalNum칼럼값을 알기 위한 메서드
 	public void writeBoard(BoardVO bvo); // 목표大작성 기능에서 작성했던 내용들을 이용하여 Board 테이블에 값을 입력한다.
 	
-	public TopGoalVO getInvitedProgress(int test); //초대장에 목표 정보 전송 위함
+	public TopGoalVO getInvitedProgress(TopGoalVO vo); //초대장에 목표 정보 전송 위함
 	
 	
 	
@@ -96,5 +96,13 @@ public interface CreateGoalMapper {
 	public ArrayList<MemberListVO> getMemberList(int progressNum); // GoalTree에서 선택한 목표에 따라 MemberList 테이블의 데이터들을 반환한다.
 
 	public ArrayList<MemberListVO> checkUsers(int progressNum); // 유저들의 색상지정 여부와 레디 여부를 불러온다.
+	
+	public TopGoalVO findTopGoal(TopGoalVO vo);
+	
+	public void insertJoinTopGoal(TopGoalVO tVO);
+	
+	public void messageJoin(MemberListVO mlvo);
+	
+	public MainProgressVO findMainProgress(int progressNum);
 
 }
