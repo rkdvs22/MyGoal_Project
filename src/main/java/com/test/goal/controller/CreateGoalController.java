@@ -163,6 +163,36 @@ public class CreateGoalController {
 		return "/createGoal/MGoalSquareForm2";
 	}
 	
+	@RequestMapping(value = "", method = RequestMethod.GET)
+	public String  () {
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		return "/createGoal/MGoalSquareForm2";
+	}
+	
 	
 	
 	

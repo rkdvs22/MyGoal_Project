@@ -35,7 +35,9 @@
 	
 	<!-- 참여 멤버 정보 마방진으로 전달하기 -->
 	<select id="memberList" parameterType="int" resultType="MemberListVO">
-		select * from memberList
-		where progressNum = (select progressNum from topGoal where tGoalNum = #{tGoalNum})
+		select l.listnum as "listNum", l.ready as "ready", l.playertype as "playerType", l.userid as "userid", l.color as "color", m.image as "image"
+		from memberList l, member m
+		where l.userid = m.userid
+		and progressNum = (select progressNum from topGoal where tGoalNum = #{tGoalNum})
 	</select>
 </mapper>

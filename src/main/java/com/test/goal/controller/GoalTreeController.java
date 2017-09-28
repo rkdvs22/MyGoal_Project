@@ -69,17 +69,16 @@ public class GoalTreeController {
 	// 마방진 이동 (이유정)
 	@RequestMapping(value = "treeToGoal", method = RequestMethod.GET)
 	public String treeToGoal(int tGoalNum, Model model) {
-		model.addAttribute("topGoal", dao.topGoalList(tGoalNum)); //최상위 목표 정보 전달
+		TopGoalVO vo = dao.topGoalList(tGoalNum);
+		model.addAttribute("topGoal", vo); //최상위 목표 정보 전달
 		model.addAttribute("midGoal", dao.midGoalList(tGoalNum)); //중간 목표 정보 전달
-		
 		ArrayList<MemberListVO> memberList = dao.memberList(tGoalNum);
 		for (MemberListVO mvo : memberList) {
 			if (mvo.getColor() == null) {
 				mvo.setColor("black"); //색상 미지정시 검정색으로 전달
 			}
 		}
-		
 		model.addAttribute("memberList", memberList); //참여 멤버 정보 전달
-		return "/createGoal/MGoalSquareForm2";
+		return "/createGoal/MGoalSquareForm3";
 	}
 }
