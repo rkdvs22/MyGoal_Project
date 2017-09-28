@@ -297,7 +297,14 @@
 	                    <div class="col-sm-6">
 	                        <article class="statistic-box red">
 		                            <div>
-		                                <div class="number">${sessionScope.failNum-1}</div>
+		                                <div class="number">
+		                                	<c:if test="${sessionScope.totalNum != 0 }">
+		                                		${sessionScope.failNum-1}
+		                                	</c:if>
+		                                	<c:if test="${sessionScope.totalNum == 0 }">
+		                                		0
+		                                	</c:if>
+		                                </div>
 		                                <div class="caption"><div>Fail</div></div>
 		                                <div class="percent">
 		                                </div>
