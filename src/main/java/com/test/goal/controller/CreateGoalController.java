@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.javassist.compiler.ast.NewExpr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,9 +82,12 @@ public class CreateGoalController {
 		System.out.println(mlvo.toString());
 		System.out.println(bvo.toString());
 		
-		model.addAttribute("progressNum", progressSeq);
+		ArrayList<MemberListVO> memberList = gdao.memberList(tGoalNum);
+		
+		model.addAttribute("mainProgress", mvo); //mainProgress
+		model.addAttribute("currentMembers", memberList.size()); //현재 인원수
 		model.addAttribute("topGoal", gdao.topGoalList(tGoalNum));
-		model.addAttribute("memberList", gdao.memberList(tGoalNum));
+		model.addAttribute("memberList", memberList);
 		
 		return "/createGoal/MGoalSquareForm2";
 	}
@@ -101,7 +105,8 @@ public class CreateGoalController {
 	//초대 메시지 전송
 	@RequestMapping(value = "writeInviteMsg", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean writeInviteMsg(String[] nameList, int progressNum, MessageVO mvo, HttpSession session) {
+	public boolean writeInviteMsg(String[] nameList, int progressNum, HttpSession session) {
+		MessageVO mvo = new MessageVO();
 		String userid = (String) session.getAttribute("userid");
 		TopGoalVO tvo = dao.getInvitedProgress(progressNum); //초대하려는 목표 정보
 		String str = "<input type='hidden' id='progressNum' name='" + progressNum + "' value=" + progressNum + ">";

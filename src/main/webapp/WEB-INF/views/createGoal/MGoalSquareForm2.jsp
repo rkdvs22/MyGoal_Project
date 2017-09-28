@@ -190,10 +190,6 @@
 <body>
 <script>
 
-	$(function() {
-		mGoalTitle();	//중간 목표 타이틀 출력
-	});
-
 // 처음 페이지 이동 시 중간목표 타이틀 출력
 function mGoalTitle() {
 	<c:forEach items="${midGoal}" var="midGoal" varStatus="status">
@@ -328,6 +324,7 @@ var cancel_flag = false;
 var mGoal_modals = "";
 
 $(function() {
+	mGoalTitle();	//중간 목표 타이틀 출력
 	
 	// datepicker의 날짜 형식을 지정한다.
 	$.datepicker.setDefaults({
@@ -680,16 +677,12 @@ $(function() {
 					}
 				}
 			})
-			
-			
-			
 		});
 		
 		// option 태그의 숫자가 달라질 때 마다 세부목표 개수를 조정한다.
 		$("#bGoalcount").change(function() {
 			createGoalModals();
 		});
-	}
 	
 	// 해당하는 버튼의 value값을 사용자가 입력한 중간목표로 수정하는 함수.
 	function updateMbtnValue(bBtn_num) {
@@ -793,7 +786,6 @@ $(function() {
 		$.ajax ({
 			url: "/goal/createGoal/getFriendList",
 			type: "get",
-			data: {},
 			success: function(friendList) {
 				$(friendList).each(function(index, item) {
 					if('${sessionScope.userid}' == item.userid) {
@@ -840,36 +832,34 @@ $(function() {
 			"확인":function () {
 				var nameList = new Array();
 				var count = 0;
-				var progressNum = ${progressNum};
+				var progressNum = ${mainProgress.progressNum};
 				
 				$("input[name=checkList]:checked").each(function() {
 					nameList[count] = $(this).val();
 					count += 1;
 				});
+
+				var currentMembers = ${currentMembers};
+				var maxMember = ${mainProgress.maxMember};
+				var totalMembers = currentMembers + nameList.length;
 				
-				// 인원수가 다 차있을 경우 초대메시지를 보낼 수 없다.
-				var currentMembers = 1;
-				for(var i=1; i<4; i++) {
-					if($("#p"+(i+1)).text() != "Empty") {
-						currentMembers += 1;
-					}
-					
-					if(currentMembers >= maxMember) {
-						alert("빈 자리가 없어 초대장을 보낼 수 없습니다");
-						return false;
-					} else {
-						// 사용자가 체크박스에서 선택한 사람에게 초대 메시지를 보낸다.
-						jQuery.ajaxSettings.traditional = true;
-						$.ajax ({
-							url: "/goal/createGoal/writeInviteMsg",
-							type: "post",
-							data: {"nameList":nameList, "progressNum":progressNum},
-							success: function(result) {
-								alert("초대 메시지를 전송하였습니다");
-							}
-						});
-						break;
-					}
+				if(totalMembers > maxMember) {
+					alert("빈 자리가 없어 초대장을 보낼 수 없습니다");
+					return false;
+				} else {
+					// 사용자가 체크박스에서 선택한 사람에게 초대 메시지를 보낸다.
+					jQuery.ajaxSettings.traditional = true;
+					$.ajax ({
+						url: "/goal/createGoal/writeInviteMsg",
+						type: "post",
+						data: {"nameList":nameList, "progressNum":progressNum},
+						success: function(result) {
+							alert("초대 메시지를 전송하였습니다");
+						},
+						error: function() {
+							alert("실패");
+						}
+					});
 				}
 				
 				$(".friendList").html("");
@@ -992,6 +982,7 @@ $(function() {
 		$("#dialog").attr("readonly", true);
 	}
 	
+	/* 
 	// 시작버튼 클릭 시 참가한 사용자들이 모든 준비를 마쳤는지 확인하고 목표를 시작한다.
 	$("#startBtn").click(function() {
 		
@@ -1037,9 +1028,8 @@ $(function() {
 				error: function() { alert("하 진짜 ㅡㅡ 시작에러"); }
 			});
 		}
-	});
+	});*/
 });
-	
 </script>
 
 <!-- 배경화면 -->
