@@ -14,7 +14,7 @@
        	<canvas id="viewport" width="1250" height="600"></canvas> 
        	
      	<div id = "playingGoal">
-			<p style="color:orange; font-size:30px; margin-bottom:-5px;">${sessionScope.userid}님,</p>
+			<p style="color:orange; font-size:30px; margin-bottom:-5px;">${sessionScope.userid} 님,</p>
 		</div>	
 		
       	<script language="javascript" type="text/javascript">
@@ -94,7 +94,7 @@
 					      }
 				       }  
 			       	      if(resultMapping.memberId.length !=0){
-					      	$("#playingGoal").append(" "+str+" 목표를 진행중입니다..");
+					      	$("#playingGoal").append(" "+str+" 목표를 진행중입니다.");
 			       	      }else{
 			       	    	$("#playingGoal").append(" 현재 진행중인 목표가 없습니다 설정해 주세요..");  
 			       	      }
