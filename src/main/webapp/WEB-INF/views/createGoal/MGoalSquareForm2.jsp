@@ -853,7 +853,7 @@ $(function() {
 					jQuery.ajaxSettings.traditional = true;
 					$.ajax ({
 						url: "/goal/createGoal/writeInviteMsg",
-						type: "post",
+						type: "get",
 						data: {"nameList":nameList, "progressNum":progressNum},
 						success: function(result) {
 							alert("초대 메시지를 전송하였습니다");

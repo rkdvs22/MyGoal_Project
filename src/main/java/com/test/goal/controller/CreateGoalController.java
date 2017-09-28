@@ -104,9 +104,11 @@ public class CreateGoalController {
 	}
 
 	//초대 메시지 전송
-	@RequestMapping(value = "writeInviteMsg", method = RequestMethod.POST)
+	@RequestMapping(value = "writeInviteMsg", method = RequestMethod.GET)
 	@ResponseBody
 	public boolean writeInviteMsg(String[] nameList, int progressNum, HttpSession session) {
+		System.out.println("CON : " + progressNum);
+		
 		MessageVO mvo = new MessageVO();
 		String userid = (String) session.getAttribute("userid");
 		TopGoalVO tvo = dao.getInvitedProgress(progressNum); //초대하려는 목표 정보

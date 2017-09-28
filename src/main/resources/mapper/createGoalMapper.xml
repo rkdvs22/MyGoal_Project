@@ -39,7 +39,7 @@
 	
 	<!-- progressNum으로 mainProgress 정보 받아오기 -->
 	<select id="getInvitedProgress" parameterType="int" resultType="TopGoalVO">
-		select * from topgoal where progressNum = ${progressNum}
+		select * from topgoal where progressNum = ${test}
 	</select>
 	
 	
