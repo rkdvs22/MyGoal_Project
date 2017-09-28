@@ -11,15 +11,17 @@ public class MainProgressVO {
 	private String type;
 	private String mStart;
 	private int maxMember;
+	private String tGoalTitle;
 	
 	public MainProgressVO() { }
 
-	public MainProgressVO(int progressNum, String type, String mStart, int maxMember) {
+	public MainProgressVO(int progressNum, String type, String mStart, int maxMember, String tGoalTitle) {
 		super();
 		this.progressNum = progressNum;
 		this.type = type;
 		this.mStart = mStart;
 		this.maxMember = maxMember;
+		this.tGoalTitle = tGoalTitle;
 	}
 
 	public int getProgressNum() {
@@ -54,13 +56,17 @@ public class MainProgressVO {
 		this.maxMember = maxMember;
 	}
 
+	public String gettGoalTitle() {
+		return tGoalTitle;
+	}
+
+	public void settGoalTitle(String tGoalTitle) {
+		this.tGoalTitle = tGoalTitle;
+	}
+
 	@Override
 	public String toString() {
 		return "MainProgressVO [progressNum=" + progressNum + ", type=" + type + ", mStart=" + mStart + ", maxMember="
-				+ maxMember + "]";
+				+ maxMember + ", tGoalTitle=" + tGoalTitle + "]";
 	}
-	
-	
-	
-	
 }

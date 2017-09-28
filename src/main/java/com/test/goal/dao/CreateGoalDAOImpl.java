@@ -66,6 +66,12 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 	}
 	
 
+	@Override
+	public TopGoalVO getInvitedProgress(int progressNum) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		return mapper.getInvitedProgress(progressNum);
+	}
+
 	
 	
 	

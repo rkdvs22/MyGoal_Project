@@ -37,11 +37,10 @@
 		INSERT INTO BOARD(BOARDNUM, USERID, TGOALNUM) VALUES(BOARD_SEQ.NEXTVAL, #{userid}, #{tGoalNum})
 	</insert>
 	
-	<!-- 마방진에 전달할 값들 불러오기 -->
-	
-	
-	
-	
+	<!-- progressNum으로 mainProgress 정보 받아오기 -->
+	<select id="getInvitedProgress" parameterType="int" resultType="TopGoalVO">
+		select * from topgoal where progressNum = ${progressNum}
+	</select>
 	
 	
 	

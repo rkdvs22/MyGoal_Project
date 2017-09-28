@@ -840,6 +840,8 @@ $(function() {
 			"확인":function () {
 				var nameList = new Array();
 				var count = 0;
+				var progressNum = ${progressNum};
+				
 				$("input[name=checkList]:checked").each(function() {
 					nameList[count] = $(this).val();
 					count += 1;
@@ -861,7 +863,7 @@ $(function() {
 						$.ajax ({
 							url: "/goal/createGoal/writeInviteMsg",
 							type: "post",
-							data: {"nameList":nameList},
+							data: {"nameList":nameList, "progressNum":progressNum},
 							success: function(result) {
 								alert("초대 메시지를 전송하였습니다");
 							}
@@ -1088,110 +1090,11 @@ $(function() {
 		</tr>
 	</c:forEach>
 </table>
-<%-- 
-	<table>
-		<tr>
-			<th></th>
-			<th></th>
-			<th><pre>   </pre></th>
-			<th><pre> 색상</pre></th>
-			<th><pre>   </pre></th>
-			<th><pre> 아이디</pre></th>
-		</tr>
-		<tr class="host" id="p1-tr">
-			<td></td>
-			<td id="host_img"><img src="/goal/resources/img/avatar-2-64.png"></td>
-			<td><pre>   </pre></td>
-			<td class="player-color">Not yet</td>
-			<td><pre>   </pre></td>
-			<c:choose>
-				<c:when test="${sessionScope.userid eq sessionScope.hostId}">
-					<td id="p1" class="player-id">${sessionScope.hostId}</td>
-				</c:when>
-				<c:when test="${sessionScope.userid != sessionScope.hostId}">
-					<c:forEach var="user" items="${tGoal_list}" begin="0" end="0">
-						<td id="p1" class="player-id">${user.userid}</td>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-					<td id="p1" class="player-id">${host}</td>
-				</c:otherwise>
-			</c:choose>
-		</tr>
-		<tr class="player2" id="p2-tr">
-			<td id="p2_empty"></td>
-			<td id="p2_img"><img src="/goal/resources/img/avatar-2-64.png"></td>
-			<td></td>
-			<td class="player-color">Not yet</td>
-			<td></td>
-			<c:choose>
-				<c:when test="${null eq newUser.userId}">
-					<c:forEach var="user" items="${tGoal_list}" begin="1" end="1">
-						<td id="p2" class="player-id">${user.userid}</td>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-					<td id="p2" class="player-id">Empty</td>
-				</c:otherwise>
-			</c:choose>
-			
-		</tr>
-		<tr class="player3" id="p3-tr">
-			<td id="p3_empty"></td>
-			<td id="p3_img"><img src="/goal/resources/img/avatar-2-64.png"></td>
-			<td></td>
-			<td class="player-color">Not yet</td>
-			<td></td>
-			<td id="p3" class="player-id">Empty</td>
-		</tr>
-		<tr class="player4" id="p4-tr">
-			<td id="p4_empty"></td>
-			<td id="p4_img"><img src="/goal/resources/img/avatar-2-64.png"></td>
-			<td></td>
-			<td class="player-color">Not yet</td>
-			<td></td>
-			<td id="p4" class="player-id">Empty</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-		</tr>
-		<tr>
-			<td colspan="6"><input type="button" value="초대" id="invitation"></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-		</tr>
-		<tr>
-			<td colspan="6"><input type="button" value="색상지정" id="selectcolor"></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-			<td><pre>   </pre></td>
-		</tr>
-	</table>
---%>
+
+		<div id = "footButtonLine">
+			<div><input type="button" value="초대" id="invitation"></div>
+			<div><input type="button" value="색상지정" id="selectcolor"></div>
+		</div>
 </aside>
 
 

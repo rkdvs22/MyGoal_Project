@@ -26,7 +26,7 @@ public interface CreateGoalDAO {
 	public TopGoalVO findTGoalNum(); // 현재 최종목표의 시퀀스 번호를 얻는다(); // 현재 최종목표의 시퀀스 번호를 얻는다
 	public void writeBoard(BoardVO bvo); // 목표大작성 기능에서 작성했던 내용들을 이용하여 Board 테이블에 값을 입력한다.
 	
-	
+	public TopGoalVO getInvitedProgress(int progressNum); //초대장에 목표 정보 전송 위함
 	
 	
 	

@@ -57,10 +57,10 @@
 					str += "<td> 날짜 : " + item.msgDate;
 					str += "</td></tr>";
 					str += "<tr><td colspan='2' class='msgContent'>";
-					if(item.msgContent == "초대하신 목표에 참가하시겠습니까?" && receivedMsg != '${sessionScope.userid}') {
+					if(item.msgTitle == "[SYSTEM] 목표 달성 프로그램 초대장이 도착하였습니다." && receivedMsg != '${sessionScope.userid}') {
 						senders[index] = item.sender;
-						item.msgContent += '<br><input type="button" value="승인" id="join-btn' + index + '" class="join-btn" onclick="joinGoal('+ index +')">';
-						item.msgContent += ' <input type="button" value="거절" id="notJoin-btn'+ index +'" class="notJoin-btn" onclick="notJoinGoal('+ index +')">';
+						item.msgContent += '<br><input type="button" value="승인" id="join-btn" class="join-btn" onclick="joinGoal()">';
+						item.msgContent += ' <input type="button" value="거절" id="notJoin-btn" class="notJoin-btn" onclick="notJoinGoal()">';
 					}
 					if (item.msgTitle == "[SYSTEM] 친구 신청이 도착하였습니다." && receivedMsg != '${sessionScope.userid}') {
 						item.msgContent += '<br><input type="button" class="btnFriend" value="승인" onclick=addFriend("' + receivedMsg + '")>&nbsp';
@@ -184,6 +184,8 @@
 	
 	// 초대 메시지에 승인을 누를 시 해당하는 목표의 방으로 입장.
 	function joinGoal(index) {
+		//
+		
 		for(var i=0; i<=index; i++) {
 			
 			if(senders[i] == senders[index]) {

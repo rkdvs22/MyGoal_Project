@@ -42,9 +42,10 @@ public class CreateGoalController {
 	@Autowired
 	private FriendDAO friend_dao;
 	@Autowired
-	private MessageDAO msg_dao;
+	private MessageDAO mdao;
 	@Autowired
 	private GoalTreeDAO gdao;
+	@Autowired
 	
 	// 목표大작성화면 이동
 	@RequestMapping(value = "createForm", method = RequestMethod.GET)
@@ -52,7 +53,7 @@ public class CreateGoalController {
 		return "/createGoal/create";
 	}
 	
-	//목표 생성
+	//목표 생성 후 마방진으로 이동
 	@RequestMapping(value = "createSquare", method = RequestMethod.POST)
 	public String create2(MainProgressVO mvo, TopGoalVO tvo, BoardVO bvo, Model model) {
 		mvo.setMaxMember(Integer.parseInt(tvo.getMaxMemberS())); //인원수 타입 변환
@@ -80,11 +81,54 @@ public class CreateGoalController {
 		System.out.println(mlvo.toString());
 		System.out.println(bvo.toString());
 		
+		model.addAttribute("progressNum", progressSeq);
 		model.addAttribute("topGoal", gdao.topGoalList(tGoalNum));
 		model.addAttribute("memberList", gdao.memberList(tGoalNum));
 		
 		return "/createGoal/MGoalSquareForm2";
 	}
+	
+	// 친구초대를 위한 친구목록 불러오기
+	@RequestMapping(value = "getFriendList", method = RequestMethod.GET)
+	@ResponseBody
+	public ArrayList<MyFriendVO> getFriendList(HttpSession session, MyFriendVO fvo) {
+		String myId = (String) session.getAttribute("userid");
+		fvo.setUserid(myId);
+		ArrayList<MyFriendVO> friendList = friend_dao.openFriend(fvo);
+		return friendList;
+	}
+
+	//초대 메시지 전송
+	@RequestMapping(value = "writeInviteMsg", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean writeInviteMsg(String[] nameList, int progressNum, MessageVO mvo, HttpSession session) {
+		String userid = (String) session.getAttribute("userid");
+		TopGoalVO tvo = dao.getInvitedProgress(progressNum); //초대하려는 목표 정보
+		String str = "<input type='hidden' id='progressNum' name='" + progressNum + "' value=" + progressNum + ">";
+		
+		//sender
+		mvo.setSender(userid);
+		
+		//title
+		mvo.setMsgTitle("[SYSTEM] 목표 달성 프로그램 초대장이 도착하였습니다.");
+		
+		//content
+		mvo.setMsgContent(userid + "님이 <" + tvo.gettGoalTitle() + "> 프로그램에 초대하셨습니다.<br>목표에 참가하시겠습니까?/" + str);
+
+		//receiver : 콤마(,)를 기준으로 복수의 수신자 구분
+		for (int i = 0; i < nameList.length; i++) {
+			mvo.setReceiver(nameList[i]);
+			mdao.writeMsg(mvo);
+		}
+		
+		return true;
+	}
+	
+	
+	
+	//초대 승인 시 마방진으로 이동
+	
+	
 	
 	/*
 	// 목표大작성 기능
@@ -145,17 +189,6 @@ public class CreateGoalController {
 	@RequestMapping(value = "openGoalSquare", method = RequestMethod.GET)
 	public String openGoalSquar() {
 		return "/createGoal/goalSquare";
-	}
-	
-	
-	// 친구초대를 위한 친구목록 불러오기
-	@RequestMapping(value = "getFriendList", method = RequestMethod.GET)
-	@ResponseBody
-	public ArrayList<MyFriendVO> getFriendList(HttpSession session, MyFriendVO fvo) {
-		String myId = (String) session.getAttribute("userid");
-		fvo.setUserid(myId);
-		ArrayList<MyFriendVO> friendList = friend_dao.openFriend(fvo);
-		return friendList;
 	}
 	
 	// 선택한 친구들에게 초대장 보내기
