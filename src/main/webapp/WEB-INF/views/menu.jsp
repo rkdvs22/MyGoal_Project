@@ -152,7 +152,7 @@
 				</a>
 			</li>
 			<li class="calendar">
-				<a href="/goal/calendar/calendar">
+				<a href="/goal/mind/mindMap">
 					<i class="font-icon font-icon-event"></i>
 					<span class="lbl">Calendar</span>
 				</a>

@@ -54,7 +54,6 @@
 	    	   $.ajax({
 					url:"/goal/mind/getBTMSection",
 					type:"post",
-					data:{"sectionNum":'${requestScope.sectionNum}',"loginUserMGoalNum":'${requestScope.loginUserMGoalNum}'},
 					dataType:"json",
 					success:startMindMap,
 					error: function(){
@@ -78,14 +77,14 @@
 		       }
 	       	   
 	       	   // 여기서 지금 임의로 progressNum을 줬지만 웅희씨에게 넘겨 받아야 함.
-	       	   var progressNum = '${requestScope.progressNum}';
+	       	   var progressNum = 16;
 		       	$.ajax({
-					url:"/goal/mind/getBTMRecord",
-					type:"post",
-					data:{"progressNum":progressNum,"isClick":"","clickedNodeTitle":"","clickedNodeNum":0,"BTMSectionNum":0,"mGoalNumList":'${requestScope.mGoalNumList}'},
+					url:"/goal/mind/getBTMRecord?progressNum="+progressNum+"&isClick="+""+"&clickedNodeTitle="+""+"&clickedNodeNum="+0+"&BTMSectionNum="+0,
+					type:"get",
 					dataType:"json",
 					success:function(resultMapping){
-					
+						console.log("시작resultMapping: "+resultMapping);
+						alert(3);
 			       	   for(var i =0; i < resultMapping.memberId.length; i++){
 			       		  sys.addNode(resultMapping.memberId[i],{'color':resultMapping.memberColor[i],'label':resultMapping.memberId[i],
 				     	  'shape':'dot'});   
@@ -97,12 +96,15 @@
 					      }
 				       }  
 			       	      if(resultMapping.memberId.length !=0){
+			       	    	  alert(1);
 					      	$("#playingGoal").append(" "+str+" 목표를 진행중입니다..");
 			       	      }else{
+			       	    	alert(2);
 			       	    	$("#playingGoal").append(" 현재 진행중인 목표가 없습니다 설정해 주세요..");  
 			       	      }
 					},
 					error: function(){
+						alert('다시 시도해 주세요');
 					}
 				});
 		       	     
@@ -121,6 +123,8 @@
 					type:"get",
 					dataType:"json",
 					success:function(resultMapping){
+						console.log(resultMapping);
+						alert(4);
 			       	   for(var i =0; i < resultMapping.memberId.length; i++){
 			       		  $("#playingGoal").empty();
 			       		  str = '${sessionScope.userid}'+'님은';

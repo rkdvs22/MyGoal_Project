@@ -32,53 +32,49 @@ public class MindMapController {
 	private MindMapService service;
 	
 	@RequestMapping(value = "mindMap", method = RequestMethod.GET)
-	public String home(Model model,HttpServletRequest request, int sectionNum, HashMap<String, Integer> mGoalNumList,int progressNum) {
+	public String home(Model model,HttpServletRequest request) {
 		
-		//sectionNum, 
-		
-		// 넘어오자마자 클릭하거나 시작된 중간번호의 값을 받는다 (현재 로그인한 사람의 중간번호를 받음)
-		int loginUserMGoalNum = mGoalNumList.get((String)request.getSession().getAttribute("userid"));
-		
-		MidGoalVO midGoalVO = service.findMidGoal(loginUserMGoalNum);
+		MidGoalVO midGoalVO = service.findMidGoal(93);
 		model.addAttribute("midGoalVO", midGoalVO);
 		model.addAttribute("btmGoalList", service.getBtmGoalList(midGoalVO));
+		HashMap<String, Integer> MemberGoalNum = new HashMap<>();
 		
-		// 현재 클릭한 섹션의 넘버를 모델에 담아 페이지 이동(웅희씨에게 받아야함)
-		model.addAttribute("sectionNum", sectionNum);
-		model.addAttribute("loginUserMGoalNum", loginUserMGoalNum);
-		
+		MemberGoalNum.put("슈퍼맨", 93);
+		MemberGoalNum.put("아이언맨", 94);
+		MemberGoalNum.put("엔트맨", 95);
+		MemberGoalNum.put("승무쌤", 96);
 		ArrayList<MemberRecord> recordList = new ArrayList<>();
-		recordList = service.getRecordList(mGoalNumList);
+		recordList = service.getRecordList(MemberGoalNum);
 		model.addAttribute("recordList", recordList);
-		model.addAttribute("mGoalNumList", mGoalNumList);
-		model.addAttribute("progressNum",progressNum);
+		request.getSession().setAttribute("loginUser", "승무쌤");
 		
 		return "/mindMap/mindMap";
 	}
 	
-	
 	@RequestMapping(value = "getBTMSection", method = RequestMethod.POST)
 	@ResponseBody
-	public HashMap<String, ArrayList> getBTMSection(int sectionNum, int loginUserMGoalNum) {
+	public HashMap<String, ArrayList> getBTMSection() {
 		
 		HashMap<String, ArrayList> sendInfoMap = new HashMap<>();
 		
-		//클릭하거나 시작된 마방진의 섹션 넘버를 받는다.
-		sendInfoMap.put("BTMSectionList", service.findBTMSection(sectionNum));
-		//로그인한 맴버의 중간목표 넘버
-		sendInfoMap.put("BTMGoalList", service.findBTMGoal(loginUserMGoalNum));
+		sendInfoMap.put("BTMSectionList", service.findBTMSection(24));
+		sendInfoMap.put("BTMGoalList", service.findBTMGoal(96));
 			
 		return sendInfoMap;
 	}
 	
-	@RequestMapping(value = "getBTMRecord", method = RequestMethod.POST)
+	@RequestMapping(value = "getBTMRecord", method = RequestMethod.GET)
 	@ResponseBody
-	public HashMap<String, ArrayList> getBTMRecord(
-			int progressNum,String isClick,HttpServletRequest request,String clickedNodeTitle,int clickedNodeNum,int BTMSectionNum,
-			HashMap<String, Integer> mGoalNumList) {
+	public HashMap<String, ArrayList> getBTMRecord(int progressNum,String isClick,HttpServletRequest request,String clickedNodeTitle,int clickedNodeNum,int BTMSectionNum) {
+		
+		HashMap<String, Integer> MemberGoalNum = new HashMap<>();
+		MemberGoalNum.put("슈퍼맨", 93);
+		MemberGoalNum.put("아이언맨", 94);
+		MemberGoalNum.put("엔트맨", 95);
+		MemberGoalNum.put("승무쌤", 96);
 		
 		//준소쿠수 - 명예부원 (제5의 부원 조준석)
-		return service.randomAllocate(mGoalNumList,progressNum,isClick,request,clickedNodeTitle,clickedNodeNum,BTMSectionNum);
+		return service.randomAllocate(MemberGoalNum,progressNum,isClick,request,clickedNodeTitle,clickedNodeNum,BTMSectionNum);
 	}
 	
 }
