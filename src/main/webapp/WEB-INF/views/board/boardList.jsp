@@ -46,14 +46,14 @@
 				<!-- 검색 -->
 					<form action="boardList" method="get">
 					<div class="form-group row">
-						<div class="typeahead-container">
+						<div class="typeahead-container" style="margin-left:220px;">
 							<div class="typeahead-field">
-								<select id = "searchSelect" class="" name="searchSelect">
+								<select id = "searchSelect" class="" name="searchSelect" style="margin-top:8px">
 									<option value="ID">ID</option>
 									<option value="TITLE">Goal Title</option>
 								</select>
 								<span class="typeahead-query">
-									<input class="form-control" type="text" id="searchKeyid" name="searchKeyid" placeholder="Search">
+									<input class="form-control" type="text" id="searchKeyid" name="searchKeyid" placeholder="Search" style="width:450px">
 								</span>
 								<span class="typeahead-button">
 									<button  id = "findButton" type="submit"class="font-icon-search"></button>
