@@ -1,7 +1,7 @@
 			#viewport{
         		position: absolute;
-        		top:130px;
-        		left:170px;
+        		top:140px;
+        		left:180px;
         		border-style: solid;
         		border-width: 5px;
         		border-color: pink;
@@ -63,6 +63,13 @@
 			    -moz-border-radius-topright: 5px;
 			     border-top-left-radius: 5px;
 			     border-top-right-radius: 5px;
+			}
+			
+			#RecordCheck{
+				position: absolute;
+				top:-290px;
+				letf: -200px;
+				font-size: 20px;
 			}
 			
 			#recordATeg{
