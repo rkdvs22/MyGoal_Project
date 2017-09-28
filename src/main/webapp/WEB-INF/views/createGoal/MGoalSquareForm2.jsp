@@ -726,6 +726,7 @@ $(function() {
 		resizable: false,
 		buttons:{
 			"확인":function () {
+				console.log('${memberList}');
 				// 사용자가 선택한 색상의 hex값을 테이블에 갱신한다.
 				var id = '${sessionScope.userid}';
 				for(var i=0; i<4; i++) {
@@ -940,49 +941,6 @@ $(function() {
 	if($("#p1").text() == '${sessionScope.userid}') {
 		$("#readyBtn").hide();
 	} else $("#startBtn").hide();
-	
-	// 사용자가 설정한 인원수를 벗어날 경우 그 만큼 슬롯을 가린다.
-	var maxMember = '${b_info.maxMember}';
-	switch (maxMember) {
-	case "1":
-		$(".player2 > td").remove();
-		$(".player3 > td").remove();
-		$(".player4 > td").remove();
-		$(".player2").prepend('<td colspan="6" id="p2_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user_close.png"></td>');
-		$(".player3").prepend('<td colspan="6" id="p3_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user_close.png"></td>');
-		$(".player4").prepend('<td colspan="6" id="p4_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user_close.png"></td>');
-		break;
-	case "2":
-		$(".player3 > td").remove();
-		$(".player4 > td").remove();
-		$(".player3").prepend('<td colspan="6" id="p3_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user_close.png"></td>');
-		$(".player4").prepend('<td colspan="6" id="p4_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user_close.png"></td>');
-		break;
-	case "3":
-		$(".player4 > td").remove();
-		$(".player4").prepend('<td colspan="6" id="p4_empty" class="user_empty"><img class="empty-user" src="/goal/resources/img/user_close.png"></td>');
-		break;
-	case "4":
-		break;
-	default:
-		console.log("swicth error");
-		break;
-	}
-	
-	// 초대받은 유저가 방에 입장했을 경우 그 유저의 ID를 추가한다.
-	if('${newUser.userId}' != "") {
-		for(var i=1; i<4; i++) {
-			if($("#p" + (i+1)).text() == "Empty") {
-				$("#p" + (i+1)).text('${newUser.userId}');
-				break;
-			}
-		}
-	}
-	
-	// 방장 이외에는 중간목표 및 세부목표 편집을 할 수 없다.
-	if('${sessionScope.userid}' !=  '${sessionScope.hostId}') {
-		$("#dialog").attr("readonly", true);
-	}
 	
 	/* 
 	// 시작버튼 클릭 시 참가한 사용자들이 모든 준비를 마쳤는지 확인하고 목표를 시작한다.
