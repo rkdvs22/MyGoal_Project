@@ -43,7 +43,7 @@
 	</select>
 	
 	<select id = "findTopGoal" parameterType="TopGoalVO" resultType="TopGoalVO">
-		select * from TopGoal where progressNum = ${progressNum}
+		select * from TopGoal where tGoalNum = ${tGoalNum}
 	</select>
 	
 	<insert id="insertJoinTopGoal" parameterType="TopGoalVO">
