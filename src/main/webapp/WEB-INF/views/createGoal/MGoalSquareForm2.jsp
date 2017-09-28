@@ -731,8 +731,9 @@ $(function() {
 				// 사용자가 선택한 색상의 hex값을 테이블에 갱신한다.
 				var id = '${sessionScope.userid}';
 				for(var i=0; i<memberLength; i++) {
-					if(id == $("#p"+(i+1)).text()) {
-						$("#p"+(i+1)+ "-tr > .player-color").text("");
+					if(id == $("#userid"+(i+1)).text()) {
+						alert("당첨!");
+						$("#userColor"+(i+1)).text("");
 						
 						$.ajax({
 							url: "/goal/createGoal/updateColor",
@@ -742,7 +743,7 @@ $(function() {
 							data: JSON.stringify({"id":'${sessionScope.userid}', "hex":hex}),
 							success: function() {}
 						});
-						$("#p"+(i+1)+ "-tr > .player-color").html('<div class="pickcolor" style="background-color: '+hex+';"></div>');
+						$("userColor"+(i+1)).html('<div class="pickcolor" style="background-color: '+hex+';"></div>');
 						break;
 					}
 				}
@@ -1049,11 +1050,13 @@ $(function() {
 		<th colspan="2" align="center">참여자</th>
 		<th align="center">색상</th>
 	</tr>
-	<c:forEach items="${memberList}" var="memberList">
+	<c:set var="id" value="1"></c:set>
+	<c:forEach items="${memberList}" var="memberList" begin="0" end="${fn:length(memberList)}">
 		<tr>
 			<td><img src="/goal/resources/img/avatar-2-48.png"></td>
-			<td>${memberList.userid}</td>
-			<td><div class="pickcolor" style="background-color:${memberList.color};"></div></td>
+			<td id="userid${id}">${memberList.userid}</td>
+			<td><div id="userColor${id}" class="pickcolor" style="background-color:${memberList.color};"></div></td>
+			<c:set var="id" value="${id +1}"></c:set>
 		</tr>
 	</c:forEach>
 </table>

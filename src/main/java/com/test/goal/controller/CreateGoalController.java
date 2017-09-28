@@ -160,8 +160,6 @@ public class CreateGoalController {
 		model.addAttribute("topGoal", gdao.topGoalList(tVO.gettGoalNum()));
 		model.addAttribute("memberList", memberList);
 		
-		System.out.println("PROGRESS NUM? : " + mvo.getProgressNum());
-		
 		return "/createGoal/MGoalSquareForm2";
 	}
 	
