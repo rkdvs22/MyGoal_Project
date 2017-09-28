@@ -43,7 +43,7 @@
                    <div class="form-group row">
                     <button type="submit" class="btn btn-rounded btn-success" id="btnLogin">LOGIN</button>
                     </div>
-                    <p class="sign-note"><a href="/goal/member/findForm">ID/Password 찾기</a> / <a href="/goal">돌아가기</a></p>
+                    <p class="sign-note"><a href="/goal/member/findForm">ID/Password 찾기</a> / <a href="/goal">Main Page</a></p>
                 	
                 </form>
             </div>
