@@ -23,20 +23,61 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 	@Autowired
 	private SqlSession sqlsession;
 	
+	// 목표 생성시 mainprogress 생성
+	@Override
+	public void create1(MainProgressVO mvo) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		mapper.create1(mvo);
+	}
+
+	// 현재 progressNum의 데이터를 알기 위한 메서드
+	@Override
+	public MainProgressVO findProgressNum() {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		return mapper.findProgressNum();
+	}
+	
 	// 목표大작성
 	@Override
-	public int create1(TopGoalVO tvo) {
+	public int create2(TopGoalVO tvo) {
 		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
-		return mapper.create1(tvo);
+		return mapper.create2(tvo);
+	}
+
+	// 멤버리스트 생성
+	public void create3(MemberListVO mlvo) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		mapper.create3(mlvo);
+		//realWriteBoard(bvo);
 	}
 	
 	// TopGoal 테이블의 현재 TopGoalNum 값을 받아온다.
 	@Override
-	public TopGoalVO getTgoalNum() {
+	public TopGoalVO findTGoalNum() {
 		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
-		return mapper.getTgoalNum();
+		return mapper.findTGoalNum();
 	}
+	
+	// 목표大작성 기능에서 작성했던 내용들을 이용하여 Board 테이블에 값을 입력한다.
+	@Override
+	public void writeBoard(BoardVO bvo) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		mapper.writeBoard(bvo);
+	}
+	
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	/*
 	// 목표大작성 전 MainProgress 테이블에 사용자가 작성한 값을 입력한다.
 	@Override
 	public MainProgressVO create2(MainProgressVO mvo) {
@@ -46,30 +87,7 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 		new_mvo = findProgressNum();
 		return new_mvo;
 	}
-
-	// 현재 progressNum의 데이터를 알기 위한 메서드
-	@Override
-	public MainProgressVO findProgressNum() {
-		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
-		MainProgressVO mvo = mapper.findProgressNum();
-		return mvo;
-	}
-	
-	// 목표大작성 기능에서 작성했던 내용들을 이용하여 Board 테이블에 값을 입력한다.
-	@Override
-	public void writeBoard(BoardVO vo) {
-		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
-		// 목표 생성시 MemberList 테이블에 데이터 추가
-		MainProgressVO mvo = mapper.findProgressNum();
-		vo.setProgressNum(mvo.getProgressNum());
-		createMemberList(vo);
-	}
-	
-	public void createMemberList(BoardVO vo) {
-		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
-		mapper.createMemberList(vo);
-		realWriteBoard(vo);
-	}
+	*/
 	
 	public void realWriteBoard(BoardVO vo) {
 		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
@@ -206,5 +224,5 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
 		return mapper.checkUsers(progressNum);
 	}
-	
+
 }

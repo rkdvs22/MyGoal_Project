@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.test.goal.dao.CreateGoalDAO;
 import com.test.goal.dao.FriendDAO;
+import com.test.goal.dao.GoalTreeDAO;
 import com.test.goal.dao.MessageDAO;
 import com.test.goal.vo.BTMGoalVO;
 import com.test.goal.vo.BoardVO;
@@ -42,6 +43,8 @@ public class CreateGoalController {
 	private FriendDAO friend_dao;
 	@Autowired
 	private MessageDAO msg_dao;
+	@Autowired
+	private GoalTreeDAO gdao;
 	
 	// 목표大작성화면 이동
 	@RequestMapping(value = "createForm", method = RequestMethod.GET)
@@ -49,6 +52,41 @@ public class CreateGoalController {
 		return "/createGoal/create";
 	}
 	
+	//목표 생성
+	@RequestMapping(value = "createSquare", method = RequestMethod.POST)
+	public String create2(MainProgressVO mvo, TopGoalVO tvo, BoardVO bvo, Model model) {
+		mvo.setMaxMember(Integer.parseInt(tvo.getMaxMemberS())); //인원수 타입 변환
+		dao.create1(mvo); //mainprogress 생성
+		mvo = dao.findProgressNum(); //생성된 mainprogress 불러오기
+		
+		String userid = tvo.getUserid(); // 생성한 사람의 아이디 불러오기
+		int progressSeq = mvo.getProgressNum(); //생성된 mainprogress의 시퀀스 불러오기
+		
+		tvo.setProgressNum(progressSeq); //mainprogress 시퀀스를 TopGoal의 매개변수로 넘김
+		dao.create2(tvo); //topGoal 생성
+		tvo = dao.findTGoalNum(); //생성된 topGoal 불러오기
+		
+		MemberListVO mlvo = new MemberListVO();
+		mlvo.setProgressNum(progressSeq);
+		mlvo.setUserid(userid);
+		dao.create3(mlvo); //memberList 생성
+		
+		int tGoalNum = tvo.gettGoalNum();
+		bvo.settGoalNum(tGoalNum);
+		dao.writeBoard(bvo); //board 생성
+		
+		System.out.println(mvo.toString());
+		System.out.println(tvo.toString());
+		System.out.println(mlvo.toString());
+		System.out.println(bvo.toString());
+		
+		model.addAttribute("topGoal", gdao.topGoalList(tGoalNum));
+		model.addAttribute("memberList", gdao.memberList(tGoalNum));
+		
+		return "/createGoal/MGoalSquareForm2";
+	}
+	
+	/*
 	// 목표大작성 기능
 	@RequestMapping(value = "createNewGoal", method = RequestMethod.POST)
 	public String create(TopGoalVO tvo, Model model, HttpSession session) {
@@ -68,8 +106,7 @@ public class CreateGoalController {
 			int topGoalNum = dao.getTgoalNum().gettGoalNum();
 			tvo.settGoalNum(topGoalNum);
 			
-			int create1 = dao.create1(tvo);
-			model.addAttribute("topGoal", create1);	//topGoal 생성
+			
 			writeBoard(tvo);
 			int createKey = 1;
 			model.addAttribute("createKey", createKey);
@@ -78,15 +115,22 @@ public class CreateGoalController {
 //		}
 		return "/createGoal/MGoalSquareForm";
 	}
-	
+	*/
+	/*
 	// 목표大작성 전 MainProgress 테이블에 사용자가 작성한 값을 입력한다.
 	@RequestMapping(value = "create2", method = RequestMethod.POST)
 	@ResponseBody
 	public MainProgressVO create2(MainProgressVO mvo, Model model) {
 		MainProgressVO result_vo = dao.create2(mvo);
+		dao.create1(tvo);
+		
+		model.addAttribute("topGoal", create1);	//topGoal 생성
+		
 		return result_vo;
 	}
+	*/
 	
+	/*
 	// 목표大작성 기능에서 작성했던 내용들을 이용하여 Board 테이블에 값을 입력한다.
 	public void writeBoard(TopGoalVO tvo) {
 		
@@ -95,7 +139,9 @@ public class CreateGoalController {
 		vo.setUserid(tvo.getUserid());
 		dao.writeBoard(vo);
 	}
-		
+	*/
+	
+	/*
 	@RequestMapping(value = "openGoalSquare", method = RequestMethod.GET)
 	public String openGoalSquar() {
 		return "/createGoal/goalSquare";
@@ -309,4 +355,5 @@ public class CreateGoalController {
 	public String checkUsers() {
 		return "/createGoal/MidGoalForm1";
 	}
+	*/
 }
