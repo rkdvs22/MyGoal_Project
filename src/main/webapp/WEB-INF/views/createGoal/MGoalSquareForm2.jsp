@@ -982,7 +982,7 @@ $(function() {
 			</div>
 			<div class="btn-group">
 				<input type="button" value="8" id="mBtn8" name="8" class="btn btn-default-outline">
-				<input type="button" value="${topGoal.tGoalTitle}" id="tGoalTitle" name="tGoalTitle" class="btn btn-default-outline">
+				<input type="button" value="${topGoal.tGoalTitle}" id="tGoalTitle" name="tGoalTitle" class="btn btn-default-outline"  style="background-color: #FBB137">
 				<input type="button" value="4" id="mBtn4" name="4" class="btn btn-default-outline">
 			</div>
 			<div class="btn-group">
@@ -997,10 +997,10 @@ $(function() {
 
 <!-- 플레이 할 유저 목록, 초대, 색상지정, 진행상황을 표시한다. -->
 <aside>
-<table class="table table-bordered table-hover">
+<table class="table table-bordered table-hover" style="content: "."; visibility: hidden; display: block; height: 0; clear: both;">
 	<tr>
-		<th colspan="2" align="center">참여자</th>
-		<th align="center">색상</th>
+		<th colspan="2" align="center" style="background-color: #042006; color: white">참여자</th>
+		<th align="center" style="background-color: #042006; color: white">색상</th>
 	</tr>
 	<c:set var="id" value="1"></c:set>
 	<c:forEach items="${memberList}" var="memberList" begin="0" end="${fn:length(memberList)}">
