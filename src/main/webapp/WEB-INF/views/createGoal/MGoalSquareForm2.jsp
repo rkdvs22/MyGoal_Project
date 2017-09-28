@@ -732,7 +732,6 @@ $(function() {
 				var id = '${sessionScope.userid}';
 				for(var i=0; i<memberLength; i++) {
 					if(id == $("#userid"+(i+1)).text()) {
-						alert("당첨!");
 						$("#userColor"+(i+1)).text("");
 						
 						$.ajax({
