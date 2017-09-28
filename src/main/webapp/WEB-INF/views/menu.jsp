@@ -169,12 +169,12 @@
 					<span class="lbl">Create Goal</span>
 				</a>
 			</li>
-			<li class="green">
+			<!-- <li class="green">
 				<a href="/goal/createGoal/MidGoalForm1">
 					<i class="font-icon font-icon-cart"></i>
 					<span class="lbl">My Goal List</span>
 				</a>
-			</li>
+			</li> -->
 			
 			<li class="blue">
 				<a href="/goal/friend/openFriend">
