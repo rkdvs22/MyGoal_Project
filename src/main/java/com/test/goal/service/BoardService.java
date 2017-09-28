@@ -26,5 +26,7 @@ public interface BoardService {
 
 	public TopGoalVO inputTopGoal(TopGoalVO tvo); // TopGoal 테이블에 user에 대한 데이터 입력
 
+	public TopGoalVO getProgressNum(TopGoalVO vo);
+
 	
 }

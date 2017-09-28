@@ -76,6 +76,12 @@ public class BoardDAOImpl implements BoardDAO {
 		return mapper.inputTopGoal(tvo);
 	}
 
+	@Override
+	public TopGoalVO getProgressNum(TopGoalVO vo) {
+		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
+		return mapper.getProgressNum(vo);
+	}
+
 
 	
 }

@@ -72,6 +72,11 @@ public class BoardServiceImpl implements BoardService {
 		return dao.inputTopGoal(tvo);
 	}
 
+	@Override
+	public TopGoalVO getProgressNum(TopGoalVO vo) {
+		return dao.getProgressNum(vo);
+	}
+
 
 	
 	

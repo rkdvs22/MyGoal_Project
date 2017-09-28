@@ -59,6 +59,9 @@
 		select * from MainProgress where progressNum = #{progressNum}
 	</select>
 	
+	<insert id = "insertBoard" parameterType="TopGoalVO">
+		insert into Board values(BOARD_SEQ.NEXTVAL,#{userid},0,#{tGoalNum})
+	</insert>
 	
 	
 	

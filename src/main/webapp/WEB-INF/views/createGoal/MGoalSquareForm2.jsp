@@ -959,53 +959,6 @@ $(function() {
 		$("#dialog").attr("readonly", true);
 	}
 	
-	/* 
-	// 시작버튼 클릭 시 참가한 사용자들이 모든 준비를 마쳤는지 확인하고 목표를 시작한다.
-	$("#startBtn").click(function() {
-		
-		// 무결성 처리는 연동이 끝난 후에 진행 ============================================
-		// 색 지정 했는지, 레디 했는지..
-		var startConfirm = confirm("목표를 시작 하시겠습니까?");
-		if(startConfirm) {
-			// 유저들의 색상지정 여부와 레디 여부를 확인한다
-			$.ajax ({
-				url: "/goal/createGoal/checkUsers",
-				method: "post",
-				data: {"progressNum":'${b_info.progressNum}'},
-				success: function(list) {
-// 					var idList = new Array();
-// 					var pNum = -1;
-					
-					console.log(list);
-					
-// 					$(list).each(function(index, item) {
-// 						if(item.ready == "N") {
-// 							alert("아직 준비하지 않은 유저가 있습니다");
-// 							return false;
-// 						}
-						
-// 						if(item.color == null) {
-// 							alert("아직 색상지정이 완료되지 않은 유저가 있습니다");
-// 							return false;
-// 						} else {
-// 							console.log(item.color);
-// 							alert("색상지정 체크 로.직.오.류~~~~~~~~~~~~~~~~~~~~~~");
-// 							return false;
-// 						}
-						
-// 						console.log("is There bBtn num ? : " + bBtn_num);
-						
-// 						idList[index] = item.userId;
-// 						pNum = item.progressNum;
-// 					});
-// 					console.log(idList);
-// 					console.log(pNum);
-// 					location.href = '/goal/createGoal/startGoal?sectionNum=' + 1 + '&id_list=' + idList + '&progressNum=' + pNum;
-				},
-				error: function() { alert("하 진짜 ㅡㅡ 시작에러"); }
-			});
-		}
-	});*/
 	}
 });
 </script>
