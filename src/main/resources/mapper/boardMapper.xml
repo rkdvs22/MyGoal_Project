@@ -85,4 +85,8 @@
 		select image from Member where userid = #{userid}
 	</select>
 	
+	<select id = "getProgressNum" parameterType="TopGoalVO" resultType="TopGoalVO">
+		select * from topGoal where tGoalNum = #{tGoalNum}
+	</select>
+	
 </mapper>

@@ -68,7 +68,8 @@ public class CreateGoalController {
 		tvo.setProgressNum(progressSeq); //mainprogress 시퀀스를 TopGoal의 매개변수로 넘김
 		dao.create2(tvo); //topGoal 생성
 		tvo = dao.findTGoalNum(); //생성된 topGoal 불러오기
-		
+
+		dao.insertBoard(tvo);
 		MemberListVO mlvo = new MemberListVO();
 		mlvo.setProgressNum(progressSeq);
 		mlvo.setUserid(userid);
@@ -163,36 +164,13 @@ public class CreateGoalController {
 		return "/createGoal/MGoalSquareForm2";
 	}
 	
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String  () {
+	@RequestMapping(value = "openMindMap", method = RequestMethod.GET)
+	public String openMindMap(int mGoalNum) {
 		
+	    //
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		return "/createGoal/MGoalSquareForm2";
+		return "redirect:/mind/mindMap";
 	}
-	
 	
 	
 	

@@ -104,5 +104,7 @@ public interface CreateGoalMapper {
 	public void messageJoin(MemberListVO mlvo);
 	
 	public MainProgressVO findMainProgress(int progressNum);
+	
+	public void insertBoard(TopGoalVO tvo);
 
 }

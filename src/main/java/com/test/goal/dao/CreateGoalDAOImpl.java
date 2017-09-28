@@ -258,4 +258,11 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 		return mapper.findMainProgress(progressNum);
 	}
 
+	@Override
+	public void insertBoard(TopGoalVO tvo) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		mapper.insertBoard(tvo);
+		
+	}
+
 }

@@ -74,5 +74,7 @@ public interface CreateGoalDAO {
 	
 	public MainProgressVO findMainProgress(int progressNum);
 	
+	public void insertBoard(TopGoalVO tvo);
+	
 
 }
