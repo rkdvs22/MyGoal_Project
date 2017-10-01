@@ -108,5 +108,7 @@ public interface CreateGoalMapper {
 	public void insertBoard(TopGoalVO tvo);
 	
 	public ArrayList<TopGoalVO> findTopGoalSendProgressNum(TopGoalVO vo);
+	
+	public int switchReady(Map<String, String> map); // 사용자가 레디 버튼을 눌렀을 때 Ready 칼럼 값을 바꾼다.
 
 }

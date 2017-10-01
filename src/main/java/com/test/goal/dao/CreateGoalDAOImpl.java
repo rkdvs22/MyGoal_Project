@@ -271,4 +271,10 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 		return mapper.findTopGoalSendProgressNum(vo);
 	}
 
+	// 사용자가 레디 버튼을 눌렀을 때 Ready 칼럼 값을 바꾼다.
+	@Override
+	public void switchReady(Map<String, String> map) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		mapper.switchReady(map);
+	}
 }

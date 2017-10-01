@@ -35,10 +35,11 @@
 	}
 	
 	/* 방제 표시 */
-	.subject {
+	#subject {
 		position: absolute;
-		top: 120px;
+		top: 80px;
 		left: 300px;
+		width: 540px;
 	}
 	
 	/* 각 마방진 버튼 크기 지정 */
@@ -171,7 +172,7 @@
 	}
 	
 	/* 배경 이미지 */
-	/* #background {
+	#background {
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -183,7 +184,12 @@
 		background-size: 100%;
 		opacity: 0.2;
 		filter:alpha(opacity=40);
-	} */
+	}
+	
+	/* 초대, 색상선택, 준비, 시작, 나가기 버튼 */
+	#invitation, #selectcolor, #readyBtn, #startBtn, #exitBtn {
+		width: 250px;
+	}
 </style>
 
 </head>
@@ -194,19 +200,19 @@
 // 처음 페이지 이동 시 중간목표 타이틀 출력
 function mGoalTitle() {
 	<c:forEach items="${midGoal}" var="midGoal" varStatus="status">
-		$("#mBtn" + ${status.index + 1}).attr("value", "${midGoal.mGoalTitle}");
+		$("#mBtn" + '${status.index + 1}').attr("value", "${midGoal.mGoalTitle}");
 	</c:forEach>	
 }
 
 // 새로고침 시 같은 목표 중복 생성 방지
-/* function noEvent() {
+function noEvent() {
 	if (event.keyCode == 116) {
 		event.keyCode= 2;
 		return false;
 	} else if(event.ctrlKey && (event.keyCode==78 || event.keyCode == 82)) {
 		return false;
 	}
-} */
+}
 document.onkeydown = noEvent;
 
 var m_eDate = "";
@@ -507,7 +513,7 @@ $(function() {
 	}
 	
 	
-	if($("#mBtn8").val() == "8") {
+// 	if($("#mBtn8").val() == "8") {
 		
 		var bBtn_num = "";
 		var inputMgoalVal = "";
@@ -630,25 +636,25 @@ $(function() {
 				type: "post",
 				contentType: "application/json;charset=UTF-8",
 				dataType: "json",
-				data: JSON.stringify({"id":'${sessionScope.userid}', "tGoalNum":'${b_info.tGoalNum}'}),
+				data: JSON.stringify({"id":'${sessionScope.userid}', "tGoalNum":'${topGoal.tGoalNum}'}),
 				success: function(result) {
 					// Ready 상태가 N 일 경우 Y로, Y일 경우 N으로 바꾼다.
 					if(result) {
 						for(var i=1; i<4; i++) {
-							if($("#p"+(i+1)).text() == '${sessionScope.userid}') {
-								$("#p"+(i+1)+"_img").html("");
+							if($("#userid"+(i+1)).text() == '${sessionScope.userid}') {
+								$("#user-img"+(i+1)).html("");
 								
-								$("#p"+(i+1)+"_img").html('<img src="/goal/resources/img/avatar-2-64.png">');
+								$("#user-img"+(i+1)).html('<img src="/goal/resources/img/avatar-2-64.png">');
 								
 								$.ajax({
 									url: "/goal/createGoal/switchReady",
 									type: "post",
 									contentType: "application/json;charset=UTF-8",
 									dataType: "json",
-									data: JSON.stringify({"id":'${sessionScope.userid}', "ready":"N"}),
+									data: JSON.stringify({"progressNum":'${mainProgress.progressNum}', "id":'${sessionScope.userid}', "ready":"N"}),
 									success: function() {},
 									error: function(result) {
-										console.log("에러 : " + result)
+										console.log("에러 : " + result);
 									}
 								});
 								break;
@@ -656,28 +662,31 @@ $(function() {
 						}
 					} else {
 						for(var i=1; i<4; i++) {
-							if($("#p"+(i+1)).text() == '${sessionScope.userid}') {
-								$("#p"+(i+1)+"_img").html("");
+							if($("#userid"+(i+1)).text() == '${sessionScope.userid}') {
+								$("#user-img"+(i+1)).html("");
 								
-								$("#p"+(i+1)+"_img").html('<img src="/goal/resources/img/user_ready.png">');
+								$("#user-img"+(i+1)).html('<img src="/goal/resources/img/user_ready.png">');
 								
 								$.ajax({
 									url: "/goal/createGoal/switchReady",
 									type: "post",
 									contentType: "application/json;charset=UTF-8",
 									dataType: "json",
-									data: JSON.stringify({"id":'${sessionScope.userid}', "ready":"Y"}),
+									data: JSON.stringify({"progressNum":'${mainProgress.progressNum}', "id":'${sessionScope.userid}', "ready":"Y"}),
 									success: function() {},
 									error: function(result) {
-										console.log("에러 : " + result)
+										console.log("에러 : " + result);
 									}
 								});
 								break;
 							}
 						}
 					}
+				},
+				error: function() {
+					alert("Ready Error");
 				}
-			})
+			});
 		});
 		
 		// option 태그의 숫자가 달라질 때 마다 세부목표 개수를 조정한다.
@@ -804,22 +813,22 @@ $(function() {
 	});
 	
 	// 현재 인원수와 최대 인원수를 계산하여 동일할 경우 방장에게 쪽지를 보낸다
-	var maxMember = '${b_info.maxMember}';
-	var currentMember = 1;
-	for(var i=0; i<4; i++) {
-		if($("#p"+(i+1)).text() != "Empty") {
-			currentMember += 1;
-			if(maxMember == currentMember) {
-				$.ajax ({
-					url: "",
-					method: "post",
-					data: {},
-					success: function() {}
-				});
-				break;
-			}
-		}
-	}
+// 	var maxMember = '${b_info.maxMember}';
+// 	var currentMember = 1;
+// 	for(var i=0; i<4; i++) {
+// 		if($("#userid"+(i+1)).text() != "") {
+// 			currentMember += 1;
+// 			if(maxMember == currentMember) {
+// 				$.ajax ({
+// 					url: "",
+// 					method: "post",
+// 					data: {},
+// 					success: function() {}
+// 				});
+// 				break;
+// 			}
+// 		}
+// 	}
 	
 	// 친구초대를 위한 modal창 설정
 	$(".invite-modal").dialog({
@@ -834,7 +843,7 @@ $(function() {
 			"확인":function () {
 				var nameList = new Array();
 				var count = 0;
-				var progressNum = ${mainProgress.progressNum};
+				var progressNum = '${mainProgress.progressNum}';
 				
 				$("input[name=checkList]:checked").each(function() {
 					nameList[count] = $(this).val();
@@ -882,7 +891,7 @@ $(function() {
 	$("#exitBtn").click(function() {
 		var result = confirm("정말 나가시겠습니까? 해당하는 정보는 모두 삭제됩니다");
 		if(result) {
-			if($("#p1-tr").text() == '${sessionScope.userid}') {
+			if($("#userid1").text() == '${sessionScope.userid}') {
 				$.ajax ({
 					url: "exitCreateGoal",
 					type: "post",
@@ -933,15 +942,17 @@ $(function() {
 	var tGoal_m = tGoal_s / 60;
 	var tGoal_h = tGoal_m / 60;
 	tGoal_days = (tGoal_h / 24) + 1;
-	$(".subject > p > b").html("Title : " + '${topGoal.tGoalTitle}' + "  [ Period : " + tGoal_days + "days ]");
+	$("#subject > #title").html("Title : " + '${topGoal.tGoalTitle}' + "  [ Period : " + tGoal_days + "days ]");
 	var sDate_sp = tStartDate.toString().split(' ');
 	var eDate_sp = tEndDate.toString().split(' ');
 	$("#tGoal_date").html("${topGoal.tStartDate} ~ ${topGoal.tEndDate}");
 	
 	// 목표를 만든 사람일 경우 시작버튼, 참가한 사람일 경우 준비 버튼이 보이도록 한다.
-	if($("#p1").text() == '${sessionScope.userid}') {
+	if($("#userid1").text() == '${sessionScope.userid}') {
 		$("#readyBtn").hide();
-	} else $("#startBtn").hide();
+	} else {
+		$("#startBtn").hide();
+	}
 	
 	// 초대받은 유저가 방에 입장했을 경우 그 유저의 ID를 추가한다.
 	if('${newUser.userId}' != "") {
@@ -959,7 +970,6 @@ $(function() {
 	}
 	
 	
-	});
 });
 </script>
 
@@ -968,12 +978,13 @@ $(function() {
 
 <!-- 최종목표, 중간목표 마방진 버튼 -->
 <article>
-	<section>
-		<div class="subject">
-			<p><b></b></p>
-			<p id="tGoal_date"></p>
+	<section id="subject" class="card card-green mb-3">
+		<header class="card-header" id="title"></header>
+		<div class="card-block">
+			<p class="card-text" id="tGoal_date"></p>
 		</div>
-		
+	</section>
+	<section>
 		<div class="squares">
 		
 			<div class="btn-group">
@@ -1006,7 +1017,7 @@ $(function() {
 	<c:set var="id" value="1"></c:set>
 	<c:forEach items="${memberList}" var="memberList" begin="0" end="${fn:length(memberList)}">
 		<tr>
-			<td><img src="/goal/resources/img/avatar-2-48.png"></td>
+			<td id="user-img${id}"><img src="/goal/resources/img/avatar-2-48.png"></td>
 			<td id="userid${id}">${memberList.userid}</td>
 			<td><div id="userColor${id}" class="pickcolor" style="background-color:${memberList.color};"></div></td>
 			<c:set var="id" value="${id +1}"></c:set>
@@ -1015,8 +1026,11 @@ $(function() {
 </table>
 	<br>
 		<div id = "footButtonLine">
-			<div><input type="button" class="btn btn-rounded btn-success" value="초대" id="invitation"></div><br>
-			<div><input type="button" class="btn btn-rounded btn-success" value="색상지정" id="selectcolor"></div>
+			<div><input type="button" class="btn btn-inline btn-success-outline" value="초대" id="invitation"></div><br>
+			<div><input type="button" class="btn btn-inline btn-success-outline" value="색상지정" id="selectcolor"></div><br>
+			<div><input type="button" class="btn btn-inline btn-primary" value="레디" id="readyBtn"></div><br>
+			<div><input type="button" class="btn btn-inline btn-danger" value="시작" id="startBtn"></div><br>
+			<div><input type="button" class="btn btn-inline btn-success" value="나가기" id="selectcolor"></div>
 		</div>
 	
 </aside>

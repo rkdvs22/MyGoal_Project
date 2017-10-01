@@ -261,4 +261,10 @@
 		SELECT * FROM memberlist WHERE progressnum = #{progressNum}
 	</select>
 	
+	<!--  사용자가 레디 버튼을 눌렀을 때 Ready 칼럼 값을 바꾼다. -->
+	<update id="switchReady" parameterType="hashmap">
+		UPDATE memberlist set ready = #{ready}
+		WHERE userid = #{id}
+		AND progressnum = #{progressNum}
+	</update>
 </mapper>

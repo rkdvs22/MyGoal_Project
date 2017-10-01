@@ -359,24 +359,27 @@ public class CreateGoalController {
 	public void updateColor(@RequestBody Map<String, String> map) {
 		dao.updateColor(map);
 	}
-	
+	*/
 	// 준비를 누른 사람이 이전에 레디를 했는지에 대한 여부를 불러온다.
 	@RequestMapping(value = "getReadyFlag", method = RequestMethod.POST)
 	@ResponseBody
 	public boolean getReadyFlag(@RequestBody Map<String, String> map) {
+		System.out.println(map);
 		String ready_result = dao.getReadyFlag(map);
+		System.out.println("READY flag? : " + ready_result);
 		if(ready_result.equals("Y")) return true;
 		else return false;
 	}
 	
-	// 준비하지 않았을 경우 준비, 한 상태일 경우 취소
+	// 준비하지 않았을 경우 준비, 한 상태일 경우 취소한다.
 	@RequestMapping(value = "switchReady", method = RequestMethod.POST)
 	@ResponseBody
 	public void switchReady(@RequestBody Map<String, String> map) {
-//		System.out.println(map);
+		System.out.println(map);
+		dao.switchReady(map);
 	}
 	
-	// 준비를 누른 사람이 이전에 레디를 했는지에 대한 여부를 불러온다.
+	/*
 	@RequestMapping(value = "startGoal", method = RequestMethod.GET)
 	public String startGoal(int sectionNum, String[] id_list, int progressNum, Model model) {
 		
@@ -429,13 +432,11 @@ public class CreateGoalController {
 		return list;
 	}
 	
-	// 유저들의 색상지정 여부와 레디 여부를 불러온다.
 	@RequestMapping(value = "MidGoalForm1", method = RequestMethod.GET)
 	public String checkUsers() {
 		return "/createGoal/MidGoalForm1";
 	}
 	*/
-	
 	// 사용자가 선택한 색상의 hex값을 테이블에 갱신한다.
 	@RequestMapping(value = "updateColor", method = RequestMethod.POST)
 	@ResponseBody
