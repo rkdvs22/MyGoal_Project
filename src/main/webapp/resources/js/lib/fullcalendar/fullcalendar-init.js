@@ -560,7 +560,6 @@ $(document).ready(function(){
     	 	        		//클릭한것이 오늘이라면 readOnly를 하지 않는다.
     	 	        		if(parseInt(dateSplited) == parseInt(today) || parseInt(today) >= parseInt(PlanStartDate[index]) && parseInt(today) <=  parseInt(PlanEndDate[index])){
     	 	        			console.log("dateSplited: " + dateSplited + " PlanStartDate: " + PlanStartDate[index] + " PlanEndDate[index]: " +PlanEndDate[index]);
-    	 	        			alert('asdasdad');
     	 	        			$('#inputPercent').html('');
     	 	        			$('#inputPercent').attr('placeholder','100이내의 숫자');
     	 	        			$('#currentPercent').html('');

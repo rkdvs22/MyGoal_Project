@@ -34,19 +34,19 @@ public class MindMapController {
 	@RequestMapping(value = "mindMap", method = RequestMethod.GET)
 	public String home(Model model,HttpServletRequest request) {
 		
-		MidGoalVO midGoalVO = service.findMidGoal(93);
+		MidGoalVO midGoalVO = service.findMidGoal(101);
 		model.addAttribute("midGoalVO", midGoalVO);
 		model.addAttribute("btmGoalList", service.getBtmGoalList(midGoalVO));
 		HashMap<String, Integer> MemberGoalNum = new HashMap<>();
 		
-		MemberGoalNum.put("슈퍼맨", 93);
-		MemberGoalNum.put("아이언맨", 94);
-		MemberGoalNum.put("엔트맨", 95);
-		MemberGoalNum.put("승무쌤", 96);
+		MemberGoalNum.put("권근택", 101);
+		MemberGoalNum.put("조준석", 102);
+		MemberGoalNum.put("이유정", 103);
+		MemberGoalNum.put("高橋", 104);
 		ArrayList<MemberRecord> recordList = new ArrayList<>();
 		recordList = service.getRecordList(MemberGoalNum);
 		model.addAttribute("recordList", recordList);
-		request.getSession().setAttribute("loginUser", "승무쌤");
+		request.getSession().setAttribute("loginUser", "高橋");
 		
 		return "/mindMap/mindMap";
 	}
@@ -57,8 +57,8 @@ public class MindMapController {
 		
 		HashMap<String, ArrayList> sendInfoMap = new HashMap<>();
 		
-		sendInfoMap.put("BTMSectionList", service.findBTMSection(24));
-		sendInfoMap.put("BTMGoalList", service.findBTMGoal(96));
+		sendInfoMap.put("BTMSectionList", service.findBTMSection(26));
+		sendInfoMap.put("BTMGoalList", service.findBTMGoal(104));
 			
 		return sendInfoMap;
 	}
@@ -68,10 +68,10 @@ public class MindMapController {
 	public HashMap<String, ArrayList> getBTMRecord(int progressNum,String isClick,HttpServletRequest request,String clickedNodeTitle,int clickedNodeNum,int BTMSectionNum) {
 		
 		HashMap<String, Integer> MemberGoalNum = new HashMap<>();
-		MemberGoalNum.put("슈퍼맨", 93);
-		MemberGoalNum.put("아이언맨", 94);
-		MemberGoalNum.put("엔트맨", 95);
-		MemberGoalNum.put("승무쌤", 96);
+		MemberGoalNum.put("권근택", 101);
+		MemberGoalNum.put("조준석", 102);
+		MemberGoalNum.put("이유정", 103);
+		MemberGoalNum.put("高橋", 104);
 		
 		//준소쿠수 - 명예부원 (제5의 부원 조준석)
 		return service.randomAllocate(MemberGoalNum,progressNum,isClick,request,clickedNodeTitle,clickedNodeNum,BTMSectionNum);
