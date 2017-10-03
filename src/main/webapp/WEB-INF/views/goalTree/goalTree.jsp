@@ -26,21 +26,19 @@
 		var result = ${goalNum};
 		var date = new Date();	//오늘 날짜
 		var str = "";
-		
-		var time = new Date() 
-    	
-    	var year = time.getYear()+1900
-    	var month = time.getMonth() +1
+
+    	var year = date.getYear()+1900
+    	var month = date.getMonth() +1
     	if((month+"").length <2){
     		month = "0"+month;
     	}
-    	var day = time.getDate() 
+    	var day = date.getDate() 
     	if((day+"").length <2){
     		day = "0"+day;
     	}
     	
-    	var today = parseInt(year+month+day);
-		
+    	var today = parseInt(year+""+month+""+day);
+    	
 		<c:forEach var="goalList" items="${goalList}" varStatus="status">
 			var startDate = 0;
 			var endDate = 0;
