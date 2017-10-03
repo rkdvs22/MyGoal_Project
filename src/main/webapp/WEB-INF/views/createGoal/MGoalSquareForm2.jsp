@@ -332,7 +332,6 @@ var mGoal_modals = "";
 
 $(function() {
 	mGoalTitle();	//중간 목표 타이틀 출력
-	
 	// datepicker의 날짜 형식을 지정한다.
 	$.datepicker.setDefaults({
 		dateFormat: 'yy-mm-dd',
@@ -812,24 +811,6 @@ $(function() {
 		$(".invite-modal").dialog("open");
 	});
 	
-	// 현재 인원수와 최대 인원수를 계산하여 동일할 경우 방장에게 쪽지를 보낸다
-// 	var maxMember = '${b_info.maxMember}';
-// 	var currentMember = 1;
-// 	for(var i=0; i<4; i++) {
-// 		if($("#userid"+(i+1)).text() != "") {
-// 			currentMember += 1;
-// 			if(maxMember == currentMember) {
-// 				$.ajax ({
-// 					url: "",
-// 					method: "post",
-// 					data: {},
-// 					success: function() {}
-// 				});
-// 				break;
-// 			}
-// 		}
-// 	}
-	
 	// 친구초대를 위한 modal창 설정
 	$(".invite-modal").dialog({
 		autoOpen: false,
@@ -969,7 +950,10 @@ $(function() {
 		$("#dialog").attr("readonly", true);
 	}
 	
-	
+	// 시작 버튼 클릭 시 다른 사용자들이 준비를 마쳤나 판단한 후, 마인드맵으로 넘어간다.
+	$("#startBtn").click(function() {
+		location.href = '/goal/mind/mindMap';
+	});
 });
 </script>
 
@@ -1009,21 +993,27 @@ $(function() {
 
 <!-- 플레이 할 유저 목록, 초대, 색상지정, 진행상황을 표시한다. -->
 <aside>
-<table class="table table-bordered table-hover" style="content: "."; visibility: hidden; display: block; height: 0; clear: both;">
-	<tr>
-		<th colspan="2" align="center" style="background-color: #042006; color: white">참여자</th>
-		<th align="center" style="background-color: #042006; color: white">색상</th>
-	</tr>
-	<c:set var="id" value="1"></c:set>
-	<c:forEach items="${memberList}" var="memberList" begin="0" end="${fn:length(memberList)}">
+<form id="fm" name="startInfo" class="user-form" method="post" action="/goal/mind/mindMap">
+	<table class="table table-bordered table-hover" style="content: "."; visibility: hidden; display: block; height: 0; clear: both;">
 		<tr>
-			<td id="user-img${id}"><img src="/goal/resources/img/avatar-2-48.png"></td>
-			<td id="userid${id}">${memberList.userid}</td>
-			<td><div id="userColor${id}" class="pickcolor" style="background-color:${memberList.color};"></div></td>
-			<c:set var="id" value="${id +1}"></c:set>
+			<th colspan="2" align="center" style="background-color: #042006; color: white">참여자</th>
+			<th align="center" style="background-color: #042006; color: white">색상</th>
 		</tr>
-	</c:forEach>
-</table>
+		<c:set var="id" value="1"></c:set>
+		<c:forEach items="${memberList}" var="memberList" begin="0" end="${fn:length(memberList)}">
+			<tr id="tr-user">
+				<td id="user-img${id}"><img src="/goal/resources/img/avatar-2-48.png"></td>
+				<td id="userid${id}">${memberList.userid}</td>
+				<td><div id="userColor${id}" class="pickcolor" style="background-color:${memberList.color};"></div></td>
+				<td><input type="hidden" name="userid${id}" value="${memberList.userid}"></td>
+				<c:set var="id" value="${id +1}"></c:set>
+			</tr>
+		</c:forEach>
+	</table>
+	<input type="hidden" name="progressNum" value="${mainProgress.progressNum}">
+	<input type="hidden" name="sectionNum" value="8">
+	
+</form>
 	<br>
 		<div id = "footButtonLine">
 			<div><input type="button" class="btn btn-inline btn-success-outline" value="초대" id="invitation"></div><br>
