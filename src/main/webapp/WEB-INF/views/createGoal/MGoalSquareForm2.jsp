@@ -37,7 +37,7 @@
 	/* 방제 표시 */
 	#subject {
 		position: absolute;
-		top: 120px;
+		top: 80px;
 		left: 300px;
 		width: 540px;
 	}
@@ -46,10 +46,6 @@
 	.btn-group > input {
 		height: 180px;
 		width: 180px;
-		/* border: 5px !important; */
-		border-color: grey !important;
-		opacity: 0.7;
-		filter:alpha(opacity=40);
 	}
 	
 	/* 최종목표 옵션 및 색상 지정 */
@@ -209,7 +205,7 @@ function mGoalTitle() {
 }
 
 // 새로고침 시 같은 목표 중복 생성 방지
-/*  function noEvent() {
+function noEvent() {
 	if (event.keyCode == 116) {
 		event.keyCode= 2;
 		return false;
@@ -217,7 +213,7 @@ function mGoalTitle() {
 		return false;
 	}
 }
-document.onkeydown = noEvent; */
+document.onkeydown = noEvent;
 
 var m_eDate = "";
 var m_sDate = "";
@@ -1009,9 +1005,9 @@ $(function() {
 				<td id="user-img${id}"><img src="/goal/resources/img/avatar-2-48.png"></td>
 				<td id="userid${id}">${memberList.userid}</td>
 				<td><div id="userColor${id}" class="pickcolor" style="background-color:${memberList.color};"></div></td>
+				<td><input type="hidden" name="userid${id}" value="${memberList.userid}"></td>
 				<c:set var="id" value="${id +1}"></c:set>
 			</tr>
-			<input type="hidden" name="userid${id}" value="${memberList.userid}">
 		</c:forEach>
 	</table>
 	<input type="hidden" name="progressNum" value="${mainProgress.progressNum}">
