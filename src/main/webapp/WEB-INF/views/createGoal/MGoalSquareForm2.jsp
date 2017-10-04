@@ -48,7 +48,8 @@
 		width: 180px;
 		/* border: 5px !important; */
 		border-color: grey !important;
-		
+		opacity: 0.7;
+		filter:alpha(opacity=40);
 	}
 	
 	/* 최종목표 옵션 및 색상 지정 */
@@ -181,12 +182,12 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-image: url('/goal/resources/img/Goals.jpg');
+		background-image: url('/goal/resources/img/artboard.png');
 		background-repeat: no-repeat;
 		background-attachment: fixed;
 		background-size: 100%;
-		opacity: 0.2;
-		filter:alpha(opacity=40);
+		opacity: 0.5;
+		filter:alpha(opacity=70);
 	}
 	
 	/* 초대, 색상선택, 준비, 시작, 나가기 버튼 */
@@ -966,7 +967,7 @@ $(function() {
 <!-- 최종목표, 중간목표 마방진 버튼 -->
 <article>
 	<section id="subject">
-		<header id="title" style="font-size: 24px"></header>
+		<header id="title" style="font-size: 28px"></header>
 		<div>
 			<p class="card-text" id="tGoal_date"></p>
 		</div>
@@ -997,7 +998,7 @@ $(function() {
 <!-- 플레이 할 유저 목록, 초대, 색상지정, 진행상황을 표시한다. -->
 <aside>
 <form id="fm" name="startInfo" class="user-form" method="post" action="/goal/mind/mindMap">
-	<table class="table table-bordered table-hover" style="content: "."; visibility: hidden; display: block; height: 0; clear: both;">
+	<table class="table table-bordered table-hover" style="content: "."; visibility: hidden; display: block; height: 0; clear: both; opacity:60;">
 		<tr>
 			<th colspan="2" align="center" style="background-color: #042006; color: white">참여자</th>
 			<th align="center" style="background-color: #042006; color: white">색상</th>
@@ -1019,9 +1020,9 @@ $(function() {
 </form>
 	<br>
 		<div id = "footButtonLine">
-			<div><input type="button" class="btn" style="background-color: #85CD8D; border:1px" value="초대" id="invitation"></div><br>
-			<div><input type="button" class="btn" style="background-color: #85CD8D; border:1px" value="색상지정" id="selectcolor"></div><br>
-			<div><input type="button" class="btn btn-inline btn-primary" value="레디" id="readyBtn"></div><br>
+			<div><input type="button" class="btn" style="background-color: #79C881; border:1px" value="초대" id="invitation"></div><br>
+			<div><input type="button" class="btn" style="background-color: #79C881; border:1px" value="색상지정" id="selectcolor"></div><br>
+			<div><input type="button" class="btn" style="background-color: #FBB137; border:1px" value="레디" id="readyBtn"></div><br>
 			<div><input type="button" class="btn" style="background-color: #FBB137; border:1px" value="시작" id="startBtn"></div><br>
 			<div><input type="button" class="btn" style="background-color: #FBB137; border:1px" value="나가기" id="selectcolor"></div>
 		</div>
