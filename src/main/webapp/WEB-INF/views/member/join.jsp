@@ -20,10 +20,28 @@
     <link rel="stylesheet" href="/goal/resources/css/lib/font-awesome/font-awesome.min.css">
     <link rel="stylesheet" href="/goal/resources/css/lib/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="/goal/resources/css/main.css">
+
+<style>
+	/* 배경 이미지 */
+	#background {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-image: url('/goal/resources/img/pattern2.png');
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		background-size: 100%;
+		/* opacity: 0.5;
+		filter:alpha(opacity=30); */
+	}
+</style>
+
 </head>
 <body>
 
-    <div class="page-center">
+    <div class="page-center" id="background">
         <div class="page-center-in">
             <div class="container-fluid">
                 <form class="sign-box" action="join" method="post" enctype="multipart/form-data">

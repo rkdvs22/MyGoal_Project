@@ -8446,7 +8446,7 @@ a.label-light-grey:hover {
 .bootstrap-table .table, .fixed-table-body .table, .table {
 	font-size: .9375rem;
 	margin-bottom: 0;
-	background: #fff
+	background: #fff;
 }
 
 .bootstrap-table .table td, .bootstrap-table .table th,

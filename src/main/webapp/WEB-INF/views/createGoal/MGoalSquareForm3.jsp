@@ -44,6 +44,9 @@
 	.btn-group > input {
 		height: 180px;
 		width: 180px;
+		border-color: grey !important;
+		opacity: 0.7;
+		filter:alpha(opacity=40);
 	}
 	
 	/* 최종목표 옵션 및 색상 지정 */
@@ -176,12 +179,12 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-image: url('/goal/resources/img/Goals.jpg');
+		background-image: url('/goal/resources/img/artboard.png');
 		background-repeat: no-repeat;
 		background-attachment: fixed;
 		background-size: 100%;
-		opacity: 0.2;
-		filter:alpha(opacity=40);
+		opacity: 0.5;
+		filter:alpha(opacity=70);
 	}
 </style>
 
@@ -219,8 +222,10 @@ $(function() {
 <article>
 	<section>
 		<div class="subject">
-			<p><b></b></p>
-			<p id="tGoal_date"></p>
+			<header id="title" style="font-size: 28px">Title : ${topGoal.tGoalTitle}</header>
+		<div>
+			<p class="card-text" id="tGoal_date">${topGoal.tStartDate} ~ ${topGoal.tEndDate}</p>
+		</div>
 		</div>
 		
 		<div class="squares">
