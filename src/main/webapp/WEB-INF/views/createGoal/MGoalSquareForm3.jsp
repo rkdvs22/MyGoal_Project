@@ -231,8 +231,8 @@ $(function() {
 		<div class="squares">
 		
 			<div class="btn-group">
-				<input type="button" value="1" id="mBtn1" name="1" class="btn btn-default-outline">
-				<input type="button" value="2" id="mBtn2" name="2" class="btn btn-default-outline">
+				<input type="button" value="1" id="mBtn1" name="1" class="btn btn-default-outline" style="background-color: blue;">
+				<input type="button" value="2" id="mBtn2" name="2" class="btn btn-default-outline" style="color: black;">
 				<input type="button" value="3" id="mBtn3" name="3" class="btn btn-default-outline">
 			</div>
 			<div class="btn-group">
