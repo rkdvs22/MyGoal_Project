@@ -61,12 +61,16 @@
 		where t.tGoalNum = (select max(tGoalNum) from board where userid = #{userid})
 	</select>
 	
-	<!-- TopGoal 테이블의 progressNum을 이용하여 MemberList 테이블의 progressNum 가져옴 -->
+	<!-- TopGoal 테이블의 tGoalNum을 이용하여 MemberList 테이블의 progressNum 가져옴 -->
 	<select id="getMemberProgressNum" parameterType="TopGoalVO" resultType="MemberListVO">
 		select l.progressNum from MemberList l inner join mainProgress m
 		on l.progressNum = m.progressNum inner join TopGoal t
 		on m.progressNum = t.progressNum
-		where t.userid = #{userid} and t.tGoalNum = #{tGoalNum}
+		where t.tGoalNum = #{tGoalNum}
+	</select>
+	
+	<select id="getMemberList" parameterType="TopGoalVO" resultType="MemberListVO">
+		select * from memberList where progressNum = #{progressNum} and userid=#{userid}
 	</select>
 	
 	<!-- MemberList 테이블에 user에 대한 데이터 입력 -->

@@ -55,11 +55,18 @@ public class BoardDAOImpl implements BoardDAO {
 		return mapper.getGoalProgressNum(bvo);
 	}
 
-	//TopGoal 테이블의 progressNum을 이용하여 MemberList 테이블의 progressNum 가져옴
+	//TopGoal 테이블의 tGoalNum을 이용하여 MemberList 테이블의 progressNum 가져옴
 	@Override
 	public MemberListVO getMemberProgressNum(TopGoalVO tvo) {
 		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
 		return mapper.getMemberProgressNum(tvo);
+	}
+
+	//progressNum을 이용하여 MemberList를 불러옴
+	@Override
+	public MemberListVO getMemberList(TopGoalVO tvo) {
+		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
+		return mapper.getMemberList(tvo);
 	}
 
 	// MemberList 테이블에 user에 대한 데이터 입력
@@ -81,7 +88,5 @@ public class BoardDAOImpl implements BoardDAO {
 		BoardMapper mapper = sqlsession.getMapper(BoardMapper.class);
 		return mapper.getProgressNum(vo);
 	}
-
-
 	
 }

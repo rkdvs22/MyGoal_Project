@@ -68,43 +68,47 @@ public class BoardController {
 	// 완료된 마방진페이지로 이동
 	@RequestMapping(value = "toMsquare", method = RequestMethod.GET)
 	public String toMsquare(int tGoalNum, Model model, HttpSession session) {
+		String userid = (String)session.getAttribute("userid");
 		
 		model.addAttribute("topGoal", tree_dao.topGoalList(tGoalNum));
 		model.addAttribute("midGoal", tree_dao.midGoalList(tGoalNum));
 		
 		//인서트 해야됨 topGoal과 memberlist
-		
-		
 		TopGoalVO vo = new TopGoalVO();
 		vo.settGoalNum(tGoalNum);
-		int progressNum= service.getProgressNum(vo).getProgressNum();
 		
+		int progressNum = service.getProgressNum(vo).getProgressNum(); //해당 topGoal에 대응하는 progressNum 불러오기
+		
+		vo.setUserid(userid);
 		vo.setProgressNum(progressNum);
 		
-		TopGoalVO tVO =  dao.findTopGoal(vo);
-		vo.settGoalTitle(tVO.gettGoalTitle());
-		vo.settStartDate(tVO.gettStartDate());
-		vo.settEndDate(tVO.gettEndDate());
-		vo.settClear(tVO.gettClear());
-		vo.settStartStatus(tVO.gettStartStatus());
-		vo.setOpenStatus(tVO.getOpenStatus());
-		vo.setUserid((String)session.getAttribute("userid"));
-		vo.setProgressNum(progressNum);
-		System.out.println(vo.toString());
+		MemberListVO mvo = service.getMemberList(vo); //목표에 참여한 memberList
 		
-		dao.insertJoinTopGoal(vo);
-		MemberListVO mlvo = new MemberListVO();
-		mlvo.setProgressNum(progressNum);
-		mlvo.setUserid((String)session.getAttribute("userid"));
-		dao.messageJoin(mlvo); 
-		
-		ArrayList<MemberListVO> memberList = tree_dao.memberList(tGoalNum+1);
-		for (MemberListVO mvo : memberList) {
-			if (mvo.getColor() == null) {
-				mvo.setColor("black"); //색상 미지정시 검정색으로 전달
-			}
+		if (mvo == null) {	//이미 참여한 목표일 때 insert 하지 않음
+			vo = dao.findTopGoal(vo);
+			/*
+			TopGoalVO tVO = dao.findTopGoal(vo);
+			vo.settGoalTitle(tVO.gettGoalTitle());
+			vo.settStartDate(tVO.gettStartDate());
+			vo.settEndDate(tVO.gettEndDate());
+			vo.settClear(tVO.gettClear());
+			vo.settStartStatus(tVO.gettStartStatus());
+			vo.setOpenStatus(tVO.getOpenStatus());
+			System.out.println(vo.toString());
+			*/
+			dao.insertJoinTopGoal(vo);
+			MemberListVO mlvo = new MemberListVO();
+			mlvo.setProgressNum(progressNum);
+			mlvo.setUserid(userid);
+			dao.messageJoin(mlvo); //멤버리스트 생성
 		}
 		
+		ArrayList<MemberListVO> memberList = tree_dao.memberList(tGoalNum+1);
+		for (MemberListVO m : memberList) {
+			if (m.getColor() == null) {
+				m.setColor("black"); //색상 미지정시 검정색으로 전달
+			}
+		}
 		
 		model.addAttribute("memberList", memberList); //참여 멤버 정보 전달
 		model.addAttribute("currentMembers", memberList.size()); //현재 인원수

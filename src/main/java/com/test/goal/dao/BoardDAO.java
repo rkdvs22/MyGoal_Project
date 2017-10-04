@@ -19,7 +19,9 @@ public interface BoardDAO {
 	
 	public TopGoalVO getGoalProgressNum(BoardVO bvo); // TopGoal 테이블에서 tGoalNum을 이용 progressNum 가져옴
 	
-	public MemberListVO getMemberProgressNum(TopGoalVO tvo); //TopGoal 테이블의 progressNum을 이용하여 MemberList 테이블의 progressNum 가져옴
+	public MemberListVO getMemberProgressNum(TopGoalVO tvo); //TopGoal 테이블의 tGoalNum을 이용하여 MemberList 테이블의 progressNum 가져옴
+	
+	public MemberListVO getMemberList(TopGoalVO tvo); //progressNum, userid 이용하여 MemberList 불러옴
 	
 	public MemberListVO inputMemberList(MemberListVO lvo); // MemberList 테이블에 user에 대한 데이터 입력
 

@@ -25,6 +25,8 @@ public interface BoardMapper {
 
 	public MemberListVO inputMemberList(MemberListVO lvo); // MemberList 테이블에 user에 대한 데이터 입력
 
+	public MemberListVO getMemberList(TopGoalVO tvo); //progressNum을 이용하여 MemberList 불러옴
+	
 	public TopGoalVO inputTopGoal(TopGoalVO tvo); // TopGoal 테이블에 user에 대한 데이터 입력
 
 	public TopGoalVO getProgressNum(TopGoalVO vo);

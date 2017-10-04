@@ -39,7 +39,7 @@
 		position: absolute;
 		top: 80px;
 		left: 300px;
-		width: 540px;
+		width: 70%;
 	}
 	
 	/* 각 마방진 버튼 크기 지정 */
@@ -74,7 +74,7 @@
 	/* 입장한 유저, 초대, 진행상황 */
 	aside {
 		position: absolute;
-		top: 200px;
+		top: 150px;
 		left: 1000px;
 	}
 	
@@ -203,17 +203,6 @@ function mGoalTitle() {
 		$("#mBtn" + '${status.index + 1}').attr("value", "${midGoal.mGoalTitle}");
 	</c:forEach>	
 }
-
-// 새로고침 시 같은 목표 중복 생성 방지
-function noEvent() {
-	if (event.keyCode == 116) {
-		event.keyCode= 2;
-		return false;
-	} else if(event.ctrlKey && (event.keyCode==78 || event.keyCode == 82)) {
-		return false;
-	}
-}
-document.onkeydown = noEvent;
 
 var m_eDate = "";
 var m_sDate = "";
@@ -643,7 +632,7 @@ $(function() {
 							if($("#userid"+(i+1)).text() == '${sessionScope.userid}') {
 								$("#user-img"+(i+1)).html("");
 								
-								$("#user-img"+(i+1)).html('<img src="/goal/resources/img/avatar-2-64.png">');
+								$("#user-img"+(i+1)).html('<img src="/goal/resources/img/avatar-2-48.png">');
 								
 								$.ajax({
 									url: "/goal/createGoal/switchReady",
@@ -664,7 +653,7 @@ $(function() {
 							if($("#userid"+(i+1)).text() == '${sessionScope.userid}') {
 								$("#user-img"+(i+1)).html("");
 								
-								$("#user-img"+(i+1)).html('<img src="/goal/resources/img/user_ready.png">');
+								$("#user-img"+(i+1)).html('<img src="/goal/resources/img/user_ready_48.png">');
 								
 								$.ajax({
 									url: "/goal/createGoal/switchReady",
@@ -1005,9 +994,9 @@ $(function() {
 				<td id="user-img${id}"><img src="/goal/resources/img/avatar-2-48.png"></td>
 				<td id="userid${id}">${memberList.userid}</td>
 				<td><div id="userColor${id}" class="pickcolor" style="background-color:${memberList.color};"></div></td>
-				<td><input type="hidden" name="userid${id}" value="${memberList.userid}"></td>
 				<c:set var="id" value="${id +1}"></c:set>
 			</tr>
+			<input type="hidden" name="userid${id}" value="${memberList.userid}">
 		</c:forEach>
 	</table>
 	<input type="hidden" name="progressNum" value="${mainProgress.progressNum}">

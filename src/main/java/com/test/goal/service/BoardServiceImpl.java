@@ -59,6 +59,11 @@ public class BoardServiceImpl implements BoardService {
 	public MemberListVO getMemberProgressNum(TopGoalVO tvo) {
 		return dao.getMemberProgressNum(tvo);
 	}
+	
+	@Override
+	public MemberListVO getMemberList(TopGoalVO tvo) {
+		return dao.getMemberList(tvo);
+	}
 
 	// MemberList 테이블에 user에 대한 데이터 입력
 	@Override
@@ -76,9 +81,5 @@ public class BoardServiceImpl implements BoardService {
 	public TopGoalVO getProgressNum(TopGoalVO vo) {
 		return dao.getProgressNum(vo);
 	}
-
-
-	
-	
 	
 }
