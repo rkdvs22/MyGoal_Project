@@ -37,7 +37,7 @@
 	/* 방제 표시 */
 	#subject {
 		position: absolute;
-		top: 120px;
+		top: 80px;
 		left: 300px;
 		width: 540px;
 	}
@@ -46,9 +46,6 @@
 	.btn-group > input {
 		height: 180px;
 		width: 180px;
-		/* border: 5px !important; */
-		border-color: grey !important;
-		
 	}
 	
 	/* 최종목표 옵션 및 색상 지정 */
@@ -208,7 +205,7 @@ function mGoalTitle() {
 }
 
 // 새로고침 시 같은 목표 중복 생성 방지
-/*  function noEvent() {
+function noEvent() {
 	if (event.keyCode == 116) {
 		event.keyCode= 2;
 		return false;
@@ -216,7 +213,7 @@ function mGoalTitle() {
 		return false;
 	}
 }
-document.onkeydown = noEvent; */
+document.onkeydown = noEvent;
 
 var m_eDate = "";
 var m_sDate = "";
@@ -965,9 +962,9 @@ $(function() {
 
 <!-- 최종목표, 중간목표 마방진 버튼 -->
 <article>
-	<section id="subject">
-		<header id="title" style="font-size: 24px"></header>
-		<div>
+	<section id="subject" class="card card-green mb-3">
+		<header class="card-header" id="title"></header>
+		<div class="card-block">
 			<p class="card-text" id="tGoal_date"></p>
 		</div>
 	</section>
@@ -1008,9 +1005,9 @@ $(function() {
 				<td id="user-img${id}"><img src="/goal/resources/img/avatar-2-48.png"></td>
 				<td id="userid${id}">${memberList.userid}</td>
 				<td><div id="userColor${id}" class="pickcolor" style="background-color:${memberList.color};"></div></td>
+				<td><input type="hidden" name="userid${id}" value="${memberList.userid}"></td>
 				<c:set var="id" value="${id +1}"></c:set>
 			</tr>
-			<input type="hidden" name="userid${id}" value="${memberList.userid}">
 		</c:forEach>
 	</table>
 	<input type="hidden" name="progressNum" value="${mainProgress.progressNum}">
@@ -1019,11 +1016,11 @@ $(function() {
 </form>
 	<br>
 		<div id = "footButtonLine">
-			<div><input type="button" class="btn" style="background-color: #85CD8D; border:1px" value="초대" id="invitation"></div><br>
-			<div><input type="button" class="btn" style="background-color: #85CD8D; border:1px" value="색상지정" id="selectcolor"></div><br>
+			<div><input type="button" class="btn btn-inline btn-success-outline" value="초대" id="invitation"></div><br>
+			<div><input type="button" class="btn btn-inline btn-success-outline" value="색상지정" id="selectcolor"></div><br>
 			<div><input type="button" class="btn btn-inline btn-primary" value="레디" id="readyBtn"></div><br>
-			<div><input type="button" class="btn" style="background-color: #FBB137; border:1px" value="시작" id="startBtn"></div><br>
-			<div><input type="button" class="btn" style="background-color: #FBB137; border:1px" value="나가기" id="selectcolor"></div>
+			<div><input type="button" class="btn btn-inline btn-danger" value="시작" id="startBtn"></div><br>
+			<div><input type="button" class="btn btn-inline btn-success" value="나가기" id="selectcolor"></div>
 		</div>
 	
 </aside>
