@@ -364,9 +364,7 @@ public class CreateGoalController {
 	@RequestMapping(value = "getReadyFlag", method = RequestMethod.POST)
 	@ResponseBody
 	public boolean getReadyFlag(@RequestBody Map<String, String> map) {
-		System.out.println(map);
 		String ready_result = dao.getReadyFlag(map);
-		System.out.println("READY flag? : " + ready_result);
 		if(ready_result.equals("Y")) return true;
 		else return false;
 	}
@@ -375,7 +373,6 @@ public class CreateGoalController {
 	@RequestMapping(value = "switchReady", method = RequestMethod.POST)
 	@ResponseBody
 	public void switchReady(@RequestBody Map<String, String> map) {
-		System.out.println(map);
 		dao.switchReady(map);
 	}
 	
@@ -442,5 +439,74 @@ public class CreateGoalController {
 	@ResponseBody
 	public void updateColor(@RequestBody Map<String, String> map) {
 		dao.updateColor(map);
+	}
+	
+	// 이전에 등록한 중간목표인지 검사하여 등록한 목표일 경우 중간목표를 불러온다.
+	@RequestMapping(value = "findMgoal", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> findMgoal(MidGoalVO mvo, Map<String, Object> map) {
+		MidGoalVO result_vo = dao.findMgoal(mvo);
+		String[] startDate = result_vo.getmStartDate().split(" ");
+		String[] endDate = result_vo.getmEndDate().split(" ");
+		result_vo.setmStartDate(startDate[0]);
+		result_vo.setmEndDate(endDate[0]);
+		
+		System.out.println("MID GOAL VO : " + result_vo);
+		if(result_vo.getmGoalTitle() != "") {
+			map.put("mGoal", result_vo);
+			map.put("bGoal_list", dao.findBTMgoal(result_vo.getmGoalNum()));
+//			model.addAttribute("mGoal", result_vo);
+//			model.addAttribute("bGoal_list", dao.findBTMgoal(result_vo.getmGoalNum()));
+		}
+		
+		return map;
+	}
+	
+	// HOST가 중간목표 및 그에 따른 세부목표를 입력하는 메서드이다.
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "inputGoal", method = RequestMethod.POST 
+			, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public void inputGoal(@RequestBody Map<String, Object> map
+						, MidGoalVO mvo) {
+		System.out.println(map);
+		
+		// 중간목표
+		String mGoal = ( (HashMap<Object, Object>) ( (HashMap<Object, Object>)
+						map.get("midGoal") ).get("key1") ).get("mGoal").toString();
+		System.out.println("mgoal : " + mGoal);
+		String m_sDate = ( (HashMap<Object, Object>) ( (HashMap<Object, Object>)
+						map.get("midGoal") ).get("key1") ).get("sDate").toString();
+		System.out.println("m_sDate : " + m_sDate);
+		String m_eDate = ( (HashMap<Object, Object>) ( (HashMap<Object, Object>)
+						map.get("midGoal") ).get("key1") ).get("eDate").toString();
+		System.out.println("m_eDate : " + m_eDate);
+		String tGoalNum = map.get("tGoalNum").toString();
+		System.out.println("tGoalNum : " + tGoalNum);
+		
+		mvo.setmGoalTitle(mGoal);
+		String[] m_sDateSp = m_sDate.split("-");
+		String[] m_eDateSp = m_eDate.split("-");
+		mvo.setmStartDate(m_sDateSp[0] + "/" + m_sDateSp[1] + "/" + m_sDateSp[2]);
+		mvo.setmEndDate(m_eDateSp[0] + "/" + m_eDateSp[1] + "/" + m_eDateSp[2]);
+		mvo.settGoalNum(Integer.parseInt(tGoalNum));
+		
+		dao.inputMidGoal(mvo);
+		
+		// 세부목표
+		MidGoalVO current_vo = dao.selectNowMidGoal(mvo);
+		for(int i=0; i<Integer.parseInt(map.get("goalCount").toString()); i++) {
+			String bGoal = ( (HashMap<Object, Object>) ( (ArrayList<Object>)
+							( (HashMap<Object, Object>)map.get("btmGoal") ).get("key2")).get(i)).get("bGoal").toString();
+			String bGoalDay = ( (HashMap<Object, Object>) ( (ArrayList<Object>)
+							( (HashMap<Object, Object>)map.get("btmGoal") ).get("key2")).get(i)).get("bGoalDay").toString();
+			String[] bGoalDaySp = bGoalDay.split("-");
+			
+			BTMGoalVO bvo_temp = new BTMGoalVO();
+			bvo_temp.setbGoalTitle(bGoal);
+			bvo_temp.setPeriod(Integer.parseInt(bGoalDaySp[2]));
+			bvo_temp.setmGoalNum(current_vo.getmGoalNum());
+			dao.inputBtmGoal(bvo_temp);
+		}
 	}
 }

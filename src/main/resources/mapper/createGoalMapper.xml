@@ -267,4 +267,18 @@
 		WHERE userid = #{id}
 		AND progressnum = #{progressNum}
 	</update>
+	
+	<!-- 이전에 등록한 중간목표인지 검사하여 등록한 목표일 경우 중간목표를 불러온다. -->
+	<select id="findMgoal" parameterType="MidGoalVO" resultType="MidGoalVO">
+		SELECT * FROM midgoal
+		WHERE tgoalnum = #{tGoalNum}
+		AND mgoaltitle = #{mGoalTitle}
+	</select>
+	
+	<!-- 이전에 등록한 중간목표인지 검사하여 등록한 목표일 경우 세부목표를 불러온다. -->
+	<select id="findBTMgoal" parameterType="int" resultType="BTMGoalVO">
+		SELECT * FROM btmgoal
+		WHERE mgoalnum = #{mGoalNum}
+		ORDER BY mgoalnum
+	</select>
 </mapper>

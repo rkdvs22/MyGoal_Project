@@ -271,7 +271,7 @@ $(function() {
 					method: "post",
 					dataType: "json",
 					contentType: "application/json;charset=UTF-8",
-					data: JSON.stringify({"midGoal":{"key1":midGoal}, "btmGoal":{"key2":bGoal_modals}, "tGoalNum":'${b_info.tGoalNum}'}),
+					data: JSON.stringify({"midGoal":{"key1":midGoal}, "btmGoal":{"key2":bGoal_modals}, "tGoalNum":'${topGoal.tGoalNum}', "goalCount":$("#bGoalcount option:selected").val()}),
 					success: function() {
 						inputMbtnValue(bBtn_num);
 						$("#m_eventdays > b").text("");
@@ -333,6 +333,32 @@ $(function() {
 		createGoalModals();
 	}
 	
+	// 이전에 등록한 중간목표인지 검사하여 등록한 목표일 경우 중간목표와 세부목표를 불러온다.
+	function findMgoal(mTitle) {
+		if(mTitle != "1" && mTitle != "2" && mTitle != "3"
+		&& mTitle != "4" && mTitle != "5" && mTitle != "6"
+		&& mTitle != "7" && mTitle != "8") {
+			$.ajax({
+				url: "/goal/createGoal/findMgoal",
+				type: "post",
+				data: {"tGoalNum":'${topGoal.tGoalNum}', "mGoalTitle":mTitle},
+				success: function() {
+					$("#Mgoal").val('${mGoal.mGoalTitle}');
+					$("#startMpicker").val('${mGoal.mStartDate}');
+					$("#endMpicker").val('${mGoal.mEndDate}');
+					
+					$("#bGoalcount").val('${fn:length(bGoal_list)}');
+					// 왜 이 결과값이 "" 인지에 대해..............
+					console.log('${mGoal}');
+					console.log('${bGoal_list}');
+					$('${bGoal_list}').each(function(index, item) {
+						$("#b_goal" + index).val(item.bGoalTitle);
+						$("#b_progressday" + index).val(item.period);
+					});
+				}
+			});
+		}
+	}
 	
 // 	if($("#mBtn8").val() == "8") {
 		
@@ -341,6 +367,8 @@ $(function() {
 		
 		// 1번버튼 : 마방진 버튼을 클릭했을 때 중간, 세부목표 관련 modal창이 뜬다.
 		$("#mBtn1").click(function() {
+			var mTitle = $("#mBtn1").val();
+			findMgoal(mTitle);
 			btnsClickCount[0] += 1;
 			bBtn_num = 1;
 			catchbBtnNum(bBtn_num);

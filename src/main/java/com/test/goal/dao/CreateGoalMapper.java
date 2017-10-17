@@ -110,5 +110,9 @@ public interface CreateGoalMapper {
 	public ArrayList<TopGoalVO> findTopGoalSendProgressNum(TopGoalVO vo);
 	
 	public int switchReady(Map<String, String> map); // 사용자가 레디 버튼을 눌렀을 때 Ready 칼럼 값을 바꾼다.
+	
+	public MidGoalVO findMgoal(MidGoalVO mVO); // 이전에 등록한 중간목표인지 검사하여 등록한 목표일 경우 중간목표와 세부목표를 불러온다.
+	
+	public ArrayList<BTMGoalVO> findBTMgoal(int mGoalNum); // 이전에 등록한 세부목표인지 검사하여 등록한 목표일 경우 세부목표를 불러온다.
 
 }

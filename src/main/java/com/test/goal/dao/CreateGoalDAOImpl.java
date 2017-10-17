@@ -277,4 +277,18 @@ public class CreateGoalDAOImpl implements CreateGoalDAO {
 		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
 		mapper.switchReady(map);
 	}
+
+	// 이전에 등록한 중간목표인지 검사하여 등록한 목표일 경우 중간목표를 불러온다.
+	@Override
+	public MidGoalVO findMgoal(MidGoalVO mVO) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		return mapper.findMgoal(mVO);
+	}
+
+	// 이전에 등록한 세부목표인지 검사하여 등록한 목표일 경우 세부목표를 불러온다.
+	@Override
+	public ArrayList<BTMGoalVO> findBTMgoal(int mGoalNum) {
+		CreateGoalMapper mapper = sqlsession.getMapper(CreateGoalMapper.class);
+		return mapper.findBTMgoal(mGoalNum);
+	}
 }
