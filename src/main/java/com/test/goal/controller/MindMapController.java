@@ -67,6 +67,7 @@ public class MindMapController {
 	@ResponseBody
 	public HashMap<String, ArrayList> getBTMRecord(int progressNum,String isClick,HttpServletRequest request,String clickedNodeTitle,int clickedNodeNum,int BTMSectionNum) {
 		
+		
 		HashMap<String, Integer> MemberGoalNum = new HashMap<>();
 		MemberGoalNum.put("권근택", 101);
 		MemberGoalNum.put("조준석", 102);

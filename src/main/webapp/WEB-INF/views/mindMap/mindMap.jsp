@@ -76,14 +76,16 @@
 		           sys.addEdge('중간목표',sendInfo.BTMGoalList[i].bGoalTitle,{'color':'black'});
 		       }
 	       	   
-	       	   // 여기서 지금 임의로 progressNum을 줬지만 웅희씨에게 넘겨 받아야 함.
-	       	   var progressNum = 16;
+	       	   // 여기서 지금 임의로 progressNum을 줬지만 웅희씨에게 넘겨 받아야 함. 컬러 안받아옴  임시로 강제 지정해놓음 - 수정 필요
+	       	   var progressNum = 23;
 		       	$.ajax({
 					url:"/goal/mind/getBTMRecord?progressNum="+progressNum+"&isClick="+""+"&clickedNodeTitle="+""+"&clickedNodeNum="+0+"&BTMSectionNum="+0,
 					type:"get",
 					dataType:"json",
 					success:function(resultMapping){
+						console.log(resultMapping);
 			       	   for(var i =0; i < resultMapping.memberId.length; i++){
+			       		   
 			       		  sys.addNode(resultMapping.memberId[i],{'color':resultMapping.memberColor[i],'label':resultMapping.memberId[i],
 				     	  'shape':'dot'});   
 					      sys.addEdge(resultMapping.bGoalTitleList[i],resultMapping.memberId[i],{'color':'black'});
@@ -93,11 +95,21 @@
 					    	str += ", "+ resultMapping.bGoalTitleList[i];
 					      }
 				       }  
-			       	      if(resultMapping.memberId.length !=0){
-					      	$("#playingGoal").append(" "+str+" 목표를 진행중입니다.");
-			       	      }else{
-			       	    	$("#playingGoal").append(" 현재 진행중인 목표가 없습니다 설정해 주세요..");  
-			       	      }
+			       	   	if(resultMapping.memberId.length !=0){
+			       	   		var f = 0;
+			       	   		for(var i =0; i < resultMapping.memberId.length; i++){
+			       	   			if(resultMapping.memberId == '${sessionScope.userid}'){
+			       	   				$("#playingGoal").append(" "+str+" 목표를 진행중입니다.");
+			       	   			}else{
+			       	   				f = 1;
+			       	   			}
+			       	   		}
+			       	   		
+			       	   		if(f==1){
+			       	   			$("#playingGoal").append(" 현재 진행중인 목표가 없습니다 설정해 주세요..");
+			       	   		}
+			       	   	}
+			       	   	
 					},
 					error: function(){
 						alert('다시 시도해 주세요');
@@ -110,7 +122,7 @@
         	function startGoal(clickedNode){
        			
 		 	    // 여기서 지금 임의로 progressNum을 줬지만 웅희씨에게 넘겨 받아야 함.
-		        var progressNum = 16;	
+		        var progressNum = 23;	
 		 	    
 	 			$.ajax({
 					url:"/goal/mind/getBTMRecord?progressNum="+progressNum+"&isClick="+"Y"+"&clickedNodeTitle="+clickedNode.name+"&clickedNodeNum="+clickedNode.data.bGoalNum+
